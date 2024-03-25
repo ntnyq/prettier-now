@@ -1,0 +1,16 @@
+{
+  "eslint.enable": true,
+  "prettier.enable": true,
+  "cSpell.words": [
+    "bumpp",
+    "changelogithub",
+    "Destructurable",
+    "estree",
+    "iconify",
+    "nocheck",
+    "ofetch",
+    "pinia",
+    "unplugin",
+    "vueuse"
+  ]
+}
