@@ -1,5 +1,12 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useEditorStore } from '@/stores/editor'
+
+const editorStore = useEditorStore()
+</script>
 
 <template>
-  <nav class="navbar" />
+  <Editor
+    v-model="editorStore.sourceCode"
+    :language="editorStore.activeLanguage"
+  />
 </template>

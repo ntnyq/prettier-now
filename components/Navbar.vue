@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { toggleDark } from '@/hooks/useDark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
+import { useEditorStore } from '@/stores/editor'
 
 const appStore = useAppStore()
-
-const formatCost = ref(23)
+const editorStore = useEditorStore()
 </script>
 
 <template>
@@ -23,7 +22,7 @@ const formatCost = ref(23)
 
     <div class="flex gap-2">
       <LanguageSelect />
-      <div class="p-1 opacity-80">{{ +formatCost.toFixed(1) }}ms</div>
+      <div class="p-1 opacity-80">{{ +editorStore.formatCost.toFixed(1) }}ms</div>
       <button
         type="button"
         title="Open Prettier Options"

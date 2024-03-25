@@ -27,7 +27,7 @@ const handleClick = (evt: MouseEvent) => {
     v-bind="$attrs"
     ref="elRef"
     :aria-label="text"
-    class="flex cursor-pointer items-center justify-between gap-2 px-3 py-2 hover:bg-zinc-100"
+    class="flex cursor-pointer items-center justify-between gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600"
   >
     <div class="flex items-center gap-2">
       <div
