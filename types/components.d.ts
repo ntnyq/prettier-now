@@ -7,15 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ActionBar: typeof import('./../components/ActionBar.vue')['default']
     Dropdown: typeof import('./../components/dropdown/Dropdown.vue')['default']
     DropdownItem: typeof import('./../components/dropdown/DropdownItem.vue')['default']
     Editor: typeof import('./../components/Editor/index.vue')['default']
-    EditorBase: typeof import('./../components/EditorBase.vue')['default']
     EditorResult: typeof import('./../components/EditorResult.vue')['default']
     EditorSource: typeof import('./../components/EditorSource.vue')['default']
     LanguageSelect: typeof import('./../components/LanguageSelect.vue')['default']
     Navbar: typeof import('./../components/Navbar.vue')['default']
-    ResultView: typeof import('./../components/ResultView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

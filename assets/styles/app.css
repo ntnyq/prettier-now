@@ -1,14 +1,14 @@
 :root {
   --c-bg-base: #fff;
   --c-text-base: #232323;
-  --c-border: #eee;
+  --c-border: #ccc;
 }
 
 :root.dark {
   color-scheme: dark;
   --c-bg-base: #1e1e1e;
   --c-text-base: #fff;
-  --c-border: #222;
+  --c-border: #666;
 }
 
 body {

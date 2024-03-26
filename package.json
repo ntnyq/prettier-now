@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "packageManager": "pnpm@8.15.5",
-  "description": "manifest.json description",
+  "description": "Yet another Prettier browser extension",
   "scripts": {
     "build": "wxt build",
     "build:firefox": "wxt build -b firefox",
@@ -23,6 +23,7 @@
     "@iconify/json": "^2.2.196",
     "@unocss/reset": "^0.58.6",
     "@vueuse/core": "^10.9.0",
+    "copy-text-to-clipboard": "^3.2.0",
     "dayjs": "^1.11.10",
     "defu": "^6.1.4",
     "floating-vue": "^5.2.2",
@@ -31,6 +32,8 @@
     "pinia": "^2.1.7",
     "prettier": "^3.2.5",
     "type-fest": "^4.14.0",
+    "valibot": "^0.30.0",
+    "vercel-toast": "^1.8.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "webext-bridge": "^6.0.1"

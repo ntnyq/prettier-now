@@ -57,8 +57,6 @@ const currentLanguage = computed(() => {
 <template>
   <VMenu
     :class="{ dark: isDark }"
-    :auto-hide="false"
-    :dispose-timeout="1000000"
     class="flex"
   >
     <button class="flex items-center gap-1">

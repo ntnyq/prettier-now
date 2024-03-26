@@ -3,8 +3,9 @@
  */
 
 /**
- * Language to parser map
+ * @file Language to parser map
  */
+
 export const PARSERS_MAP = {
   css: 'css',
   flow: 'flow',
@@ -15,6 +16,7 @@ export const PARSERS_MAP = {
   less: 'css',
   sass: 'css',
   scss: 'css',
+  vue: 'vue',
   ts: 'typescript',
   typescript: 'typescript',
   yaml: 'yaml',

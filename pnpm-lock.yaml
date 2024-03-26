@@ -14,6 +14,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.9.0
     version: 10.9.0(vue@3.4.21)
+  copy-text-to-clipboard:
+    specifier: ^3.2.0
+    version: 3.2.0
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
@@ -38,6 +41,12 @@ dependencies:
   type-fest:
     specifier: ^4.14.0
     version: 4.14.0
+  valibot:
+    specifier: ^0.30.0
+    version: 0.30.0
+  vercel-toast:
+    specifier: ^1.8.0
+    version: 1.8.0
   vue:
     specifier: ^3.4.21
     version: 3.4.21(typescript@5.4.3)
@@ -2353,6 +2362,11 @@ packages:
   /convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
     dev: true
+
+  /copy-text-to-clipboard@3.2.0:
+    resolution: {integrity: sha512-RnJFp1XR/LOBDckxTib5Qjr/PMfkatD0MUCQgdpqS8MdKiNUzBjAQBEN6oUy+jW7LI93BBG3DtMB2KOOKpGs2Q==}
+    engines: {node: '>=12'}
+    dev: false
 
   /core-js-compat@3.36.0:
     resolution: {integrity: sha512-iV9Pd/PsgjNWBXeq8XRtWVSgz2tKAfhfvBs7qxYty+RlRd+OCksaWmOnc4JKrTc1cToXL1N0s3l/vwlxPtdElw==}
@@ -6388,12 +6402,20 @@ packages:
     hasBin: true
     dev: true
 
+  /valibot@0.30.0:
+    resolution: {integrity: sha512-5POBdbSkM+3nvJ6ZlyQHsggisfRtyT4tVTo1EIIShs6qCdXJnyWU5TJ68vr8iTg5zpOLjXLRiBqNx+9zwZz/rA==}
+    dev: false
+
   /validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
     dependencies:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
     dev: true
+
+  /vercel-toast@1.8.0:
+    resolution: {integrity: sha512-mpaa7pDNByukH5jFI9cSc5P/Ey7VRY1/FBvOyxwDNqTz6hcL9pZ95f3hM139vVDLoeuwYNdOHaD7ofXLvrTV5Q==}
+    dev: false
 
   /vite@5.1.5:
     resolution: {integrity: sha512-BdN1xh0Of/oQafhU+FvopafUp6WaYenLU/NFoL5WyJL++GxkNfieKzBhM24H3HVsPQrlAqB7iJYTHabzaRed5Q==}

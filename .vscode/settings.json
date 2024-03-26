@@ -12,6 +12,8 @@
     "ofetch",
     "pinia",
     "unplugin",
+    "valibot",
+    "vercel",
     "vueuse"
   ]
 }

@@ -9,7 +9,7 @@ const editorStore = useEditorStore()
 </script>
 
 <template>
-  <nav class="flex flex-wrap items-center justify-between p-2">
+  <div class="flex flex-wrap items-center justify-between border-b border-base p-2">
     <div class="flex gap-1">
       <img
         src="/icon/48.png"
@@ -72,5 +72,5 @@ const editorStore = useEditorStore()
         <div class="i-ri-github-line" />
       </a>
     </div>
-  </nav>
+  </div>
 </template>

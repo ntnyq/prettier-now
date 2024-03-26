@@ -1,23 +1,26 @@
 <script lang="ts" setup>
 import './monaco.worker'
 import { defu } from 'defu'
-import { computed, shallowRef, watch } from 'vue'
+import { computed, onBeforeUnmount, shallowRef, watch } from 'vue'
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import { isDark } from '@/hooks/useDark'
 import type { EditorInstance, EditorModel, EditorOptions } from '@/components/Editor/types'
 
 const props = withDefaults(
   defineProps<{
+    modelValue?: string
     language?: string
     options?: EditorOptions
-    autoUpdate?: boolean
   }>(),
   {
+    modelValue: '',
     options: () => ({}),
   },
 )
+const emits = defineEmits<{
+  'update:modelValue': [value: string]
+}>()
 
-const inputValue = defineModel<string>()
 const editorElRef = shallowRef<HTMLDivElement>()
 const editorInstance = shallowRef<EditorInstance | null>(null)
 const editorModel = shallowRef<EditorModel | null>(null)
@@ -35,10 +38,12 @@ const options = computed(() =>
 )
 
 watch(
-  () => inputValue.value,
+  () => props.modelValue,
   () => {
-    if (!props.autoUpdate) return
-    editorModel.value?.setValue(inputValue.value ?? '')
+    if (editorInstance.value?.getValue() === props.modelValue) {
+      return
+    }
+    editorInstance.value?.setValue(props.modelValue)
   },
 )
 
@@ -46,7 +51,7 @@ watch(
   () => props.language,
   () => {
     editorModel.value?.dispose()
-    editorModel.value = editor.createModel(inputValue.value ?? '', language.value)
+    editorModel.value = editor.createModel(props.modelValue, language.value)
     editorInstance.value?.setModel(editorModel.value)
   },
 )
@@ -63,14 +68,19 @@ watch(editorElRef, (newEl, odlEl) => {
     return
   }
   editorInstance.value = editor.create(editorElRef.value, options.value)
-  editorModel.value = editor.createModel(inputValue.value ?? '', language.value)
+  editorModel.value = editor.createModel(props.modelValue, language.value)
 
   editorInstance.value.layout()
   editorInstance.value.setModel(editorModel.value)
 
   editorInstance.value.onDidChangeModelContent(() => {
-    inputValue.value = editorModel.value?.getValue() ?? ''
+    emits('update:modelValue', editorModel.value?.getValue() || '')
   })
+})
+
+onBeforeUnmount(() => {
+  editorInstance.value?.dispose()
+  editorModel.value?.dispose()
 })
 </script>
 

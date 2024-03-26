@@ -16,7 +16,6 @@ export const useEditorStore = defineStore('editor', () => {
   const updateActiveLanguage = (language: string) => {
     activeLanguage.value = language
   }
-
   const formatStartTime = ref(0)
   const formatEndTime = ref(0)
   const formatCost = ref(0)
@@ -44,6 +43,12 @@ export const useEditorStore = defineStore('editor', () => {
     }
   }
 
+  const clearCode = () => {
+    sourceCode.value = ''
+    resultCode.value = ''
+    formatCost.value = 0
+  }
+
   return {
     sourceCode,
     resultCode,
@@ -53,5 +58,6 @@ export const useEditorStore = defineStore('editor', () => {
 
     formatCost,
     formatCode,
+    clearCode,
   }
 })
