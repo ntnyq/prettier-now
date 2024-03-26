@@ -4,7 +4,8 @@
   "version": "0.0.3",
   "private": true,
   "packageManager": "pnpm@8.15.5",
-  "description": "Yet another Prettier browser extension",
+  "description": "Yet another Prettier browser extension for formatting js, css, html, json codes",
+  "license": "MIT",
   "scripts": {
     "build": "wxt build",
     "build:firefox": "wxt build -b firefox",

@@ -10,11 +10,7 @@ export default defineConfig({
 
   manifest: {
     name: 'Prettier Now',
-    permissions: [
-      'storage',
-      // Open tabs in background
-      'tabs',
-    ],
+    permissions: ['storage'],
     homepage_url: 'https://github.com/ntnyq/prettier-now',
   },
 
