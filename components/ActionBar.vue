@@ -6,9 +6,19 @@ import { useEditorStore } from '@/stores/editor'
 
 const editorStore = useEditorStore()
 
-const toast = (msg: string) => {
+interface ToastOptions {
+  isError?: boolean
+}
+
+const toast = (msg: string, options: ToastOptions = {}) => {
   destroyAllToasts()
-  createToast(msg, { timeout: 2e3 })
+  if (options.isError) {
+    const msgNode = document.createElement('div')
+    msgNode.innerHTML = `<span style="font-weight: bold; color: red;">❌ Error</span>: ${msg}`
+    createToast(msgNode, { timeout: 2e3 })
+  } else {
+    createToast(msg, { timeout: 2e3 })
+  }
 }
 
 const handleFormat = async () => {
@@ -18,21 +28,21 @@ const handleFormat = async () => {
   try {
     await editorStore.formatCode()
     toast('Format Success')
-  } catch {
-    toast('Ops, something happened')
+  } catch (err: unknown) {
+    toast((err as Error)?.message || 'Unknown error', { isError: true })
   }
 }
 const copyResult = () => {
-  if (!editorStore.sourceCode) {
+  if (!editorStore.resultCode) {
     return toast('Nothing to copy')
   }
 
   const isSuccess = copy(editorStore.resultCode)
 
-  isSuccess ? toast('Copied to clipboard') : toast('Failed to copy to clipboard')
+  isSuccess ? toast('Copied to clipboard') : toast('Failed to copy to clipboard', { isError: true })
 }
 const clearCode = () => {
-  if (!editorStore.sourceCode) {
+  if (!editorStore.sourceCode && !editorStore.resultCode) {
     return toast('Nothing to clear')
   }
 

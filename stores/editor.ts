@@ -21,26 +21,21 @@ export const useEditorStore = defineStore('editor', () => {
   const formatCost = ref(0)
 
   const formatCode = async () => {
-    try {
-      formatStartTime.value = Date.now()
+    formatStartTime.value = Date.now()
 
-      const parser = PARSERS_MAP[activeLanguage.value as keyof typeof PARSERS_MAP]
-      if (!parser) return
+    const parser = PARSERS_MAP[activeLanguage.value as keyof typeof PARSERS_MAP]
+    if (!parser) return
 
-      const result = await format(sourceCode.value, {
-        plugins,
-        parser,
-      })
+    const result = await format(sourceCode.value, {
+      plugins,
+      parser: activeLanguage.value,
+    })
 
-      resultCode.value = result
-    } catch (err) {
-      console.log(err)
-    } finally {
-      formatEndTime.value = Date.now()
-      formatCost.value = formatEndTime.value - formatStartTime.value
-      formatStartTime.value = 0
-      formatEndTime.value = 0
-    }
+    resultCode.value = result
+    formatEndTime.value = Date.now()
+    formatCost.value = formatEndTime.value - formatStartTime.value
+    formatStartTime.value = 0
+    formatEndTime.value = 0
   }
 
   const clearCode = () => {

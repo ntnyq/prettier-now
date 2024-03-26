@@ -6,18 +6,35 @@
  * @file Language to parser map
  */
 
+/**
+ * language => parser
+ */
 export const PARSERS_MAP = {
-  css: 'css',
-  flow: 'flow',
-  html: 'html',
+  // plugin babel
   javascript: 'babel',
-  js: 'babel',
-  json: 'babel',
-  less: 'css',
-  sass: 'css',
-  scss: 'css',
-  vue: 'vue',
-  ts: 'typescript',
+  json: 'json',
+  json5: 'json5',
+  jsonc: 'jsonc',
+
+  // plugin markdown
+  mdx: 'mdx',
+  remark: 'remark',
+  markdown: 'markdown',
+
+  // plugin typescript
   typescript: 'typescript',
+
+  // plugin postCSS
+  css: 'css',
+  less: 'less',
+  sass: 'scss',
+  scss: 'scss',
+
+  // plugin HTML
+  html: 'html',
+  vue: 'vue',
+  angular: 'angular',
+
+  // plugin yaml
   yaml: 'yaml',
 }
