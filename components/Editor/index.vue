@@ -1,93 +1,70 @@
 <script lang="ts" setup>
-import './monaco.worker'
-import { defu } from 'defu'
-import { computed, onBeforeUnmount, shallowRef, watch } from 'vue'
-import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
+import { Codemirror } from 'vue-codemirror'
+import { computed, shallowRef } from 'vue'
 import { isDark } from '@/hooks/useDark'
-import type { EditorInstance, EditorModel, EditorOptions } from '@/components/Editor/types'
+import { githubDark, githubLight } from '@/constants/theme'
+import { languages } from '@/constants/language'
+import type { Extension } from '@codemirror/state'
 
 const props = withDefaults(
   defineProps<{
     modelValue?: string
     language?: string
-    options?: EditorOptions
+    extensions?: Extension[]
+    placeholder?: string
+    readonly?: boolean
   }>(),
   {
     modelValue: '',
-    options: () => ({}),
+    extensions: () => [],
+    placeholder: '',
+    readonly: false,
   },
 )
 const emits = defineEmits<{
   'update:modelValue': [value: string]
+  change: [value: string]
 }>()
 
-const editorElRef = shallowRef<HTMLDivElement>()
-const editorInstance = shallowRef<EditorInstance | null>(null)
-const editorModel = shallowRef<EditorModel | null>(null)
-const language = computed(() => props.language || props.options.language)
-const options = computed(() =>
-  defu(props.options, {
-    automaticLayout: true,
-    theme: isDark.value ? 'vs-dark' : 'vs',
-    fontSize: 14,
-    tabSize: 2,
-    minimap: {
-      enabled: false,
-    },
-  }),
-)
-
-watch(
-  () => props.modelValue,
-  () => {
-    if (editorInstance.value?.getValue() === props.modelValue) {
-      return
-    }
-    editorInstance.value?.setValue(props.modelValue)
+const code = computed({
+  get() {
+    return props.modelValue
   },
-)
-
-watch(
-  () => props.language,
-  () => {
-    editorModel.value?.dispose()
-    editorModel.value = editor.createModel(props.modelValue, language.value)
-    editorInstance.value?.setModel(editorModel.value)
+  set(val: string) {
+    emits('update:modelValue', val)
   },
-)
-
-watch(
-  () => props.options,
-  () => {
-    editorInstance.value?.updateOptions(options.value)
-  },
-)
-
-watch(editorElRef, (newEl, odlEl) => {
-  if (!editorElRef.value || odlEl) {
-    return
-  }
-  editorInstance.value = editor.create(editorElRef.value, options.value)
-  editorModel.value = editor.createModel(props.modelValue, language.value)
-
-  editorInstance.value.layout()
-  editorInstance.value.setModel(editorModel.value)
-
-  editorInstance.value.onDidChangeModelContent(() => {
-    emits('update:modelValue', editorModel.value?.getValue() || '')
-  })
 })
 
-onBeforeUnmount(() => {
-  editorInstance.value?.dispose()
-  editorModel.value?.dispose()
+const codeMirrorRef = shallowRef<InstanceType<typeof Codemirror>>()
+const resolvedExtensions = computed<Extension[]>(() => {
+  return [
+    // External extension
+    ...(props.extensions ?? []),
+
+    ...(props.language ? [languages.find(item => item.id === props.language)!.extension()] : []),
+
+    // Theme extension
+    isDark.value ? githubDark : githubLight,
+  ]
 })
+
+const handleContentChange = (content: string) => {
+  emits('change', content)
+}
 </script>
 
 <template>
-  <div
-    :key="options.theme"
-    ref="editorElRef"
-    class="v-monaco-editor"
-  />
+  <div class="">
+    <Codemirror
+      @change="handleContentChange"
+      v-model="code"
+      ref="codeMirrorRef"
+      :extensions="resolvedExtensions"
+      :tab-size="2"
+      :placeholder="placeholder"
+      :autofocus="!readonly"
+      :disabled="readonly"
+      indent-with-tab
+    />
+  </div>
 </template>

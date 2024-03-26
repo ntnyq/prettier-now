@@ -8,6 +8,7 @@
     "Destructurable",
     "estree",
     "iconify",
+    "lezer",
     "nocheck",
     "ofetch",
     "pinia",

@@ -7,7 +7,7 @@
  */
 
 /**
- * language => parser
+ * language => prettier parser
  */
 export const PARSERS_MAP = {
   // plugin babel

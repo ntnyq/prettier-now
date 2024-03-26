@@ -39,11 +39,6 @@ const languages = ref<Language[]>([
     icon: 'i-vscode-icons:file-type-html',
   },
   {
-    id: 'angular',
-    label: 'Angular',
-    icon: 'i-vscode-icons:file-type-angular',
-  },
-  {
     id: 'css',
     label: 'CSS',
     icon: 'i-vscode-icons:file-type-css',
@@ -67,11 +62,6 @@ const languages = ref<Language[]>([
     id: 'markdown',
     label: 'Markdown',
     icon: 'i-vscode-icons:file-type-markdown',
-  },
-  {
-    id: 'mdx',
-    label: 'MDX',
-    icon: 'i-vscode-icons:file-type-mdx',
   },
 ])
 const currentLanguage = computed(() => {

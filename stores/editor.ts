@@ -28,7 +28,7 @@ export const useEditorStore = defineStore('editor', () => {
 
     const result = await format(sourceCode.value, {
       plugins,
-      parser: activeLanguage.value,
+      parser,
     })
 
     resultCode.value = result

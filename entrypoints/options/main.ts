@@ -1,7 +1,7 @@
 import '@unocss/reset/tailwind.css'
 import 'uno.css'
 import 'floating-vue/dist/style.css'
-import '@/assets/styles/app.css'
+import './style.css'
 import { createApp } from 'vue'
 import FloatingVue from 'floating-vue'
 import pinia from '@/stores'

@@ -9,8 +9,8 @@ const editorStore = useEditorStore()
     <Editor
       v-model="editorStore.resultCode"
       :language="editorStore.activeLanguage"
-      :options="{ readOnly: true }"
       class="h-full min-w-0 flex-1"
+      readonly
     />
   </div>
 </template>
