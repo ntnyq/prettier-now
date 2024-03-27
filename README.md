@@ -20,9 +20,9 @@
 
 ## Screenshots
 
-[light](./screenshots/light.png)
+![light](./screenshots/light.png)
 
-[dark](./screenshots/dark.png)
+![dark](./screenshots/dark.png)
 
 ## Prior Art
 
