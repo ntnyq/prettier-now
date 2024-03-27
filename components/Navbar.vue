@@ -22,18 +22,24 @@ const editorStore = useEditorStore()
 
     <div class="flex gap-2">
       <LanguageSelect />
-      <div class="p-1 opacity-80">{{ +editorStore.formatCost.toFixed(1) }}ms</div>
+
+      <div
+        v-tooltip="{ content: 'Format Cost Time' }"
+        class="p-1 opacity-80"
+      >
+        {{ +editorStore.formatCost.toFixed(1) }}ms
+      </div>
       <button
+        v-tooltip="{ content: 'Config Prettier Options' }"
         type="button"
-        title="Open Prettier Options"
-        class="h-8 w-8 inline-flex items-center justify-center rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700"
+        class="btn-icon"
       >
         <div class="i-ri-settings-line" />
       </button>
       <button
         @click="appStore.toggleLeftLayout"
-        title="Toggle Left Layout"
-        class="h-8 w-8 inline-flex items-center justify-center rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700"
+        v-tooltip="{ content: 'Toggle Left Layout' }"
+        class="btn-icon"
       >
         <div
           v-if="appStore.showLeftLayout"
@@ -46,8 +52,8 @@ const editorStore = useEditorStore()
       </button>
       <button
         @click="appStore.toggleRightLayout"
-        title="Toggle Right Layout"
-        class="h-8 w-8 inline-flex items-center justify-center rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700"
+        v-tooltip="{ content: 'Toggle Right Layout' }"
+        class="btn-icon"
       >
         <div
           v-if="appStore.showRightLayout"
@@ -60,16 +66,17 @@ const editorStore = useEditorStore()
       </button>
       <button
         @click="toggleDark()"
-        class="h-8 w-8 inline-flex items-center justify-center rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700"
+        v-tooltip="{ content: 'Toggle Color Mode' }"
+        class="btn-icon"
       >
         <div class="i-ri-sun-line dark:i-ri-moon-line" />
       </button>
       <a
         href="https://github.com/ntnyq/prettier-now"
         target="_blank"
-        class="h-8 w-8 flex inline-flex items-center items-center justify-center rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700"
+        class="btn-icon"
       >
-        <div class="i-ri-github-line" />
+        <div class="i-ri-github-fill" />
       </a>
     </div>
   </div>

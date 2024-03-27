@@ -58,23 +58,23 @@ const clearCode = () => {
     <button
       @click="clearCode"
       type="button"
-      class="text-md rounded-md bg-$c-text-base px-3 py-1 text-$c-bg-base transition hover:opacity-80"
+      class="btn-action"
     >
-      Clear
+      Clear All
     </button>
     <button
       @click="copyResult"
       type="button"
-      class="text-md rounded-md bg-$c-text-base px-3 py-1 text-$c-bg-base transition hover:opacity-80"
+      class="btn-action"
     >
-      Copy
+      Copy Result
     </button>
     <button
       @click="handleFormat"
       type="button"
-      class="text-md rounded-md bg-$c-text-base px-3 py-1 text-$c-bg-base transition hover:opacity-80"
+      class="btn-action"
     >
-      Format
+      Format Source
     </button>
   </div>
 </template>
