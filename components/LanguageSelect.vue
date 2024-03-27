@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { Menu as VMenu } from 'floating-vue'
-import { isDark } from '@/hooks/useDark'
 import { useEditorStore } from '@/stores/editor'
 
 export interface Language {

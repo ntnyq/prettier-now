@@ -6,10 +6,13 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { format, plugins } from '@/utils/format'
 import { PARSERS_MAP } from '@/constants/parsers'
+import { useOptionsStore } from '@/stores/options'
 
 export const useEditorStore = defineStore('editor', () => {
   const sourceCode = ref('')
   const resultCode = ref('')
+
+  const optionsStore = useOptionsStore()
 
   const activeLanguage = useStorage<string>('activeLanguage', 'javascript')
 
@@ -27,6 +30,7 @@ export const useEditorStore = defineStore('editor', () => {
     if (!parser) return
 
     const result = await format(sourceCode.value, {
+      ...optionsStore.options,
       plugins,
       parser,
     })

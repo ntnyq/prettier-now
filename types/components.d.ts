@@ -13,9 +13,13 @@ declare module 'vue' {
     Editor: typeof import('./../components/Editor/index.vue')['default']
     EditorResult: typeof import('./../components/EditorResult.vue')['default']
     EditorSource: typeof import('./../components/EditorSource.vue')['default']
+    InputNumber: typeof import('./../components/ui/InputNumber.vue')['default']
     LanguageSelect: typeof import('./../components/LanguageSelect.vue')['default']
     Navbar: typeof import('./../components/Navbar.vue')['default']
+    OptionItem: typeof import('./../components/ui/OptionItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Select: typeof import('./../components/ui/Select.vue')['default']
+    Switch: typeof import('./../components/ui/Switch.vue')['default']
   }
 }
