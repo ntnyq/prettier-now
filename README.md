@@ -8,8 +8,11 @@
 ## Install
 
 [link-chrome]: https://chromewebstore.google.com/detail/prettier-now/jdclalpfpcpojbhnkjebiepeeegmlhdf 'Version published on Chrome Web Store'
+[link-firefox]: https://addons.mozilla.org/zh-CN/firefox/addon/prettier-now 'Version published to Mozilla Addons'
 
 [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle">][link-chrome] [<img valign="middle" src="https://img.shields.io/chrome-web-store/v/jdclalpfpcpojbhnkjebiepeeegmlhdf.svg?label=%20" alt="version">][link-chrome] and other Chromium browsers
+
+[<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/firefox/firefox.svg" width="48" alt="Chrome" valign="middle">][link-firefox] [<img valign="middle" src="https://img.shields.io/amo/v/prettier-now.svg?label=%20" alt="version">][link-firefox]
 
 ## Supported languages
 
