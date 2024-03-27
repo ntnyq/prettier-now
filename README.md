@@ -1,15 +1,33 @@
 # prettier-now
 
-> Yet another browser extension about prettier.
+> :hammer: Yet another [prettier](https://prettier.io) browser extension.
 
 [![CI](https://github.com/ntnyq/prettier-now/workflows/CI/badge.svg)](https://github.com/ntnyq/prettier-now/actions)
 [![LICENSE](https://img.shields.io/github/license/ntnyq/prettier-now.svg)](https://github.com/ntnyq/prettier-now/blob/main/LICENSE)
 
-## Refs
+## Supported languages
 
-- [Tempad Dev](https://github.com/ecomfe/tempad-dev)
-- [Open Related Websites](https://github.com/tjx666/open-related-websites)
-- [GitHub: better line count](https://github.com/aklinker1/github-better-line-counts)
+- JavaScript
+- TypeScript
+- JSON
+- vue
+- HTML
+- CSS
+- Less
+- SCSS
+- YAML
+- Markdown
+
+## Screenshots
+
+[light](./screenshots/light.png)
+
+[dark](./screenshots/dark.png)
+
+## Prior Art
+
+- UI design from [AST Explorer](https://ast.sxzz.moe) created by [sxzz](https://github.com/sxzz)
+- Built on top of [WXT](https://wxt.dev), the Next-gen web extension framework
 
 ## License
 
