@@ -1,21 +1,4 @@
-:root {
-  --c-bg-base: #fff;
-  --c-text-base: #232323;
-  --c-border: #ccc;
-}
-
-:root.dark {
-  color-scheme: dark;
-  --c-bg-base: #1e1e1e;
-  --c-text-base: #fff;
-  --c-border: #666;
-}
-
-body {
-  background-color: var(--c-bg-base);
-  font-size: 16px;
-  color: var(--c-text-base);
-}
+@import '@/styles/base.css';
 
 .v-codemirror .cm-editor {
   --at-apply: 'h-full';
