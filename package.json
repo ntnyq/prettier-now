@@ -1,7 +1,7 @@
 {
   "name": "prettier-now",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "packageManager": "pnpm@8.15.5",
   "description": "Yet another Prettier browser extension for formatting js, css, html, json codes",
