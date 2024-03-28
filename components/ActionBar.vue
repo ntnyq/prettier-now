@@ -1,53 +1,53 @@
 <script lang="ts" setup>
-import 'vercel-toast/css'
 import copy from 'copy-text-to-clipboard'
-import { createToast, destroyAllToasts } from 'vercel-toast'
 import { useEditorStore } from '@/stores/editor'
+import { Toast } from '@/utils/toast'
+import { Logger } from '@/utils/logger'
 
 const editorStore = useEditorStore()
 
-interface ToastOptions {
-  isError?: boolean
-}
-
-const toast = (msg: string, options: ToastOptions = {}) => {
-  destroyAllToasts()
-  if (options.isError) {
-    const msgNode = document.createElement('div')
-    msgNode.innerHTML = `<span style="font-weight: bold; color: red;">❌ Error</span>: ${msg}`
-    createToast(msgNode, { timeout: 2e3 })
-  } else {
-    createToast(msg, { timeout: 2e3 })
-  }
-}
-
 const handleFormat = async () => {
   if (!editorStore.sourceCode) {
-    return toast('Nothing to format')
+    Logger.warn('Nothing to format')
+    return Toast.info('Nothing to format')
   }
+
   try {
     await editorStore.formatCode()
-    toast('Format Success')
+
+    Logger.success('Format Success')
+    Toast.info('Format Success')
   } catch (err: unknown) {
-    toast((err as Error)?.message || 'Unknown error', { isError: true })
+    Logger.error((err as Error)?.message || 'Unknown error')
+    Toast.error((err as Error)?.message || 'Unknown error')
   }
 }
 const copyResult = () => {
   if (!editorStore.resultCode) {
-    return toast('Nothing to copy')
+    Logger.warn('Nothing to copy')
+    return Toast.info('Nothing to copy')
   }
 
   const isSuccess = copy(editorStore.resultCode)
 
-  isSuccess ? toast('Copied to clipboard') : toast('Failed to copy to clipboard', { isError: true })
+  if (isSuccess) {
+    Logger.success('Copied to clipboard')
+    Toast.info('Copied to clipboard')
+  } else {
+    Logger.error('Failed to copy to clipboard')
+    Toast.error('Failed to copy to clipboard')
+  }
 }
 const clearCode = () => {
   if (!editorStore.sourceCode && !editorStore.resultCode) {
-    return toast('Nothing to clear')
+    Logger.warn('Nothing to clear')
+    return Toast.info('Nothing to clear')
   }
 
   editorStore.clearCode()
-  toast('Clear Success')
+
+  Logger.success('Clear Success')
+  Toast.info('Clear Success')
 }
 </script>
 

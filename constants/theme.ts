@@ -1,5 +1,5 @@
 /**
- * Copied from {@link https://github.com/uiwjs/react-codemirror/blob/master/themes/github/src/index.ts} with a little changes
+ * @file Copied from {@link https://github.com/uiwjs/react-codemirror/blob/master/themes/github/src/index.ts} with a little changes
  */
 
 import { tags as t } from '@lezer/highlight'

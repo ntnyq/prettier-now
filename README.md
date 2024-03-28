@@ -19,7 +19,7 @@
 - JavaScript
 - TypeScript
 - JSON
-- vue
+- Vue
 - HTML
 - CSS
 - Less
@@ -36,7 +36,7 @@
 ## Prior Art
 
 - UI design from [AST Explorer](https://ast.sxzz.moe) created by [sxzz](https://github.com/sxzz)
-- Built on top of [WXT](https://wxt.dev), the Next-gen web extension framework
+- Built on top of [WXT](https://wxt.dev), the next-gen web extension framework
 
 ## License
 
