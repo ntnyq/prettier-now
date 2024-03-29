@@ -2,6 +2,7 @@
   --c-bg-base: #fff;
   --c-text-base: #232323;
   --c-border: #ccc;
+  --h-header: 50px;
 }
 
 :root.dark {

@@ -8,7 +8,7 @@ useConfigStore()
 
 <template>
   <main class="h-screen flex flex-col">
-    <Navbar class="mb-1" />
-    <RouterView />
+    <Navbar class="h-$h-header" />
+    <RouterView class="h-[calc(100vh-var(--h-header))]" />
   </main>
 </template>
