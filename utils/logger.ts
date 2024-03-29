@@ -28,7 +28,7 @@ export class Logger {
 
     const emoji = logEmojiMap.get(options.type satisfies LogType)
     const content: string[] = [
-      `[${META.name} ${dayjs().format('mm:ss')}]`,
+      `[${META.name} ${dayjs().format('HH:mm:ss')}]`,
       `${emoji} ${options.type.toUpperCase()}`,
       `- ${msg}`,
     ]
