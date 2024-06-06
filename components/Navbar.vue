@@ -73,7 +73,7 @@ const editorStore = useEditorStore()
         </button>
       </template>
       <button
-        @click="toggleDark()"
+        @click="toggleDark"
         v-tooltip="{ content: 'Toggle Color Mode' }"
         class="btn-icon"
       >
