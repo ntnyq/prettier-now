@@ -21,8 +21,8 @@ export const logEmojiMap = new Map<LogType, string>([
   ['debug', '🐛'],
 ])
 
-export class Logger {
-  static log(msg: string, options: LogOptions) {
+export const Logger = {
+  log(msg: string, options: LogOptions) {
     const configStore = useConfigStoreWithout()
     if (!configStore.debug) return
 
@@ -33,25 +33,25 @@ export class Logger {
       `- ${msg}`,
     ]
     console.log(content.join(' '))
-  }
+  },
 
-  static info(msg: string) {
+  info(msg: string) {
     Logger.log(msg, { type: 'info' })
-  }
+  },
 
-  static success(msg: string) {
+  success(msg: string) {
     Logger.log(msg, { type: 'success' })
-  }
+  },
 
-  static warn(msg: string) {
+  warn(msg: string) {
     Logger.log(msg, { type: 'warn' })
-  }
+  },
 
-  static error(msg: string) {
+  error(msg: string) {
     Logger.log(msg, { type: 'error' })
-  }
+  },
 
-  static debug(msg: string) {
+  debug(msg: string) {
     Logger.log(msg, { type: 'debug' })
-  }
+  },
 }

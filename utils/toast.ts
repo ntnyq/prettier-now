@@ -23,8 +23,8 @@ export interface ToastOptions extends Options {
   clearAll?: boolean
 }
 
-export class Toast {
-  static show(msg: string, options: ToastOptions = {}) {
+export const Toast = {
+  show(msg: string, options: ToastOptions = {}) {
     const opts = {
       // Default options
       clearAll: true,
@@ -48,17 +48,17 @@ export class Toast {
     } else {
       createToast(msg, opts)
     }
-  }
+  },
 
-  static info(msg: string, options: Omit<ToastOptions, 'isError'> = {}) {
+  info(msg: string, options: Omit<ToastOptions, 'isError'> = {}) {
     Toast.show(msg, options)
-  }
+  },
 
-  static error(msg: string, options: Omit<ToastOptions, 'isError'> = {}) {
+  error(msg: string, options: Omit<ToastOptions, 'isError'> = {}) {
     Toast.show(msg, { ...options, isError: true })
-  }
+  },
 
-  static clearAll() {
+  clearAll() {
     destroyAllToasts()
-  }
+  },
 }
