@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { Codemirror } from 'vue-codemirror'
-import { computed, shallowRef } from 'vue'
 import { githubDark, githubLight } from '@/constants/theme'
 import { languages } from '@/constants/language'
 import type { Extension } from '@codemirror/state'

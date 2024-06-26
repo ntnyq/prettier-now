@@ -2,8 +2,6 @@
  * @file Prettier Options
  */
 
-import { defineStore } from 'pinia'
-import { computed } from 'vue'
 import { DEFAULT_OPTIONS } from '@/constants/options'
 import type { PrettierOptions } from '@/types/options'
 

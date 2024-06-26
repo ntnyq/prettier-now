@@ -2,7 +2,6 @@
  * @file user preferences
  */
 
-import { defineStore } from 'pinia'
 import pinia from '@/stores'
 
 export const useConfigStore = defineStore('config', () => {
@@ -16,9 +15,15 @@ export const useConfigStore = defineStore('config', () => {
    */
   const silent = useStorage<boolean>('silent', false)
 
+  /**
+   * Locale
+   */
+  const locale = useStorage<string>('locale', 'en')
+
   return {
     debug,
     silent,
+    locale,
   }
 })
 

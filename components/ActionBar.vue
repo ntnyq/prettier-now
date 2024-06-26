@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import copy from 'copy-text-to-clipboard'
 import { useEditorStore } from '@/stores/editor'
 import { Toast } from '@/utils/toast'
 import { Logger } from '@/utils/logger'
 
+const { t } = useI18n()
 const editorStore = useEditorStore()
+const { copy } = useClipboard({ legacy: true })
 
 const handleFormat = async () => {
   if (!editorStore.sourceCode) {
@@ -22,18 +23,17 @@ const handleFormat = async () => {
     Toast.error((err as Error)?.message || 'Unknown error')
   }
 }
-const copyResult = () => {
+const copyResult = async () => {
   if (!editorStore.resultCode) {
     Logger.warn('Nothing to copy')
     return Toast.info('Nothing to copy')
   }
 
-  const isSuccess = copy(editorStore.resultCode)
-
-  if (isSuccess) {
+  try {
+    await copy(editorStore.resultCode)
     Logger.success('Copied to clipboard')
     Toast.info('Copied to clipboard')
-  } else {
+  } catch {
     Logger.error('Failed to copy to clipboard')
     Toast.error('Failed to copy to clipboard')
   }
@@ -60,21 +60,21 @@ const clearCode = () => {
       type="button"
       class="btn-action"
     >
-      Clear All
+      {{ t('clearAll') }}
     </button>
     <button
       @click="copyResult"
       type="button"
       class="btn-action"
     >
-      Copy Result
+      {{ t('copyResult') }}
     </button>
     <button
       @click="handleFormat"
       type="button"
       class="btn-action"
     >
-      Format Source
+      {{ t('formatSource') }}
     </button>
   </div>
 </template>

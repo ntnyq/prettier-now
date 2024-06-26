@@ -1,9 +1,21 @@
 <script lang="ts" setup>
 import { useConfigStore } from '@/stores/config'
 
+const { locale } = useI18n()
+
 // Init config store
 // Maybe there is a better way to do this
-useConfigStore()
+const configStore = useConfigStore()
+
+watch(
+  () => configStore.locale,
+  () => {
+    locale.value = configStore.locale
+  },
+  {
+    immediate: true,
+  },
+)
 </script>
 
 <template>

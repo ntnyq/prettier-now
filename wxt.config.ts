@@ -30,6 +30,23 @@ export default defineConfig({
   },
 
   imports: {
+    presets: [
+      'vue',
+      'pinia',
+      'vue-router',
+      'vue-i18n',
+      {
+        package: '@vueuse/core',
+        ignore: [
+          // exported from `vue`
+          'toRef',
+          'toRefs',
+          'toValue',
+          // exported from `wxt/storage`
+          'useStorage',
+        ],
+      },
+    ],
     addons: {
       vueTemplate: true,
     },
@@ -38,6 +55,11 @@ export default defineConfig({
   vite: () => ({
     css: {
       devSourcemap: true,
+    },
+
+    define: {
+      // Workaround for vue-i18n CSP issue
+      __INTLIFY_JIT_COMPILATION__: JSON.stringify(true),
     },
 
     plugins: [

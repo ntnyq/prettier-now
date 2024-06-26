@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { provide, ref } from 'vue'
 import { Dropdown as VDropdown } from 'floating-vue'
 import { dropdownContextKey } from './ctx'
 import type { Placement } from 'floating-vue'

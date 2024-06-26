@@ -193,6 +193,18 @@ const configStore = useConfigStore()
               <Switch v-model="configStore.debug" />
             </template>
           </OptionItem>
+
+          <OptionItem
+            title="locale"
+            description="Custom i18n locale."
+          >
+            <template #action>
+              <Select
+                v-model="configStore.locale"
+                :items="['en', 'zh-CN']"
+              />
+            </template>
+          </OptionItem>
         </div>
       </div>
     </div>

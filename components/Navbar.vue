@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { useRoute, useRouter } from 'vue-router'
 import { toggleDark } from '@/hooks/useDark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
 import { useEditorStore } from '@/stores/editor'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
@@ -30,14 +30,14 @@ const editorStore = useEditorStore()
       <template v-if="route.name === 'Home'">
         <LanguageSelect />
         <div
-          v-tooltip="{ content: 'Format Cost Time' }"
+          v-tooltip="{ content: t('formatCostTime') }"
           class="p-1 opacity-80"
         >
           {{ +editorStore.formatCost.toFixed(1) }}ms
         </div>
         <button
           @click="router.push({ name: 'Options' })"
-          v-tooltip="{ content: 'Config Prettier Options' }"
+          v-tooltip="{ content: t('settings') }"
           type="button"
           class="btn-icon"
         >
@@ -45,7 +45,7 @@ const editorStore = useEditorStore()
         </button>
         <button
           @click="appStore.toggleLeftLayout"
-          v-tooltip="{ content: 'Toggle Left Layout' }"
+          v-tooltip="{ content: t('toggleLeftLayout') }"
           class="btn-icon"
         >
           <div
@@ -59,7 +59,7 @@ const editorStore = useEditorStore()
         </button>
         <button
           @click="appStore.toggleRightLayout"
-          v-tooltip="{ content: 'Toggle Right Layout' }"
+          v-tooltip="{ content: t('toggleRightLayout') }"
           class="btn-icon"
         >
           <div
@@ -74,7 +74,7 @@ const editorStore = useEditorStore()
       </template>
       <button
         @click="toggleDark"
-        v-tooltip="{ content: 'Toggle Color Mode' }"
+        v-tooltip="{ content: t('toggleColorMode') }"
         class="btn-icon"
       >
         <div class="i-ri-sun-line dark:i-ri-moon-line" />

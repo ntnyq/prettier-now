@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
 import { Menu as VMenu } from 'floating-vue'
 import { useEditorStore } from '@/stores/editor'
 
