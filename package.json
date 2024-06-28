@@ -33,7 +33,7 @@
     "@codemirror/language": "^6.10.2",
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.28.2",
-    "@iconify/json": "^2.2.221",
+    "@iconify/json": "^2.2.223",
     "@lezer/highlight": "^1.2.0",
     "@uiw/codemirror-themes": "^4.22.2",
     "@unocss/reset": "^0.61.0",
@@ -45,14 +45,14 @@
     "prettier": "^3.3.2",
     "type-fest": "^4.20.1",
     "vercel-toast": "^1.8.0",
-    "vue": "^3.4.30",
+    "vue": "^3.4.31",
     "vue-codemirror": "^6.1.1",
     "vue-i18n": "^9.13.1",
     "vue-router": "^4.4.0",
     "webext-bridge": "^6.0.1"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^2.2.0",
+    "@ntnyq/eslint-config": "^2.2.1",
     "@ntnyq/prettier-config": "^1.21.2",
     "@unocss/eslint-config": "^0.61.0",
     "@vitejs/plugin-vue": "^5.0.5",
@@ -64,9 +64,9 @@
     "tsx": "^4.15.7",
     "typescript": "^5.5.2",
     "unocss": "^0.61.0",
-    "unplugin-vue-components": "^0.27.0",
+    "unplugin-vue-components": "^0.27.2",
     "vue-tsc": "^2.0.22",
-    "wxt": "^0.18.9"
+    "wxt": "^0.18.10"
   },
   "prettier": "@ntnyq/prettier-config",
   "nano-staged": {

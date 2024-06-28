@@ -1,3 +1,8 @@
+/**
+ * @file WXT config
+ * @see {@link https://wxt.dev/api/config.html}
+ */
+
 import { defineConfig } from 'wxt'
 import vue from '@vitejs/plugin-vue'
 import unoCSS from 'unocss/vite'
@@ -6,7 +11,6 @@ import { resolve } from './scripts/utils'
 import type { Command } from '@/constants/command'
 import type { Manifest } from 'wxt/browser'
 
-// See https://wxt.dev/api/config.html
 export default defineConfig({
   outDir: 'dist',
 
@@ -29,28 +33,30 @@ export default defineConfig({
     startUrls: ['https://ntnyq.com'],
   },
 
-  imports: {
-    presets: [
-      'vue',
-      'pinia',
-      'vue-router',
-      'vue-i18n',
-      {
-        package: '@vueuse/core',
-        ignore: [
-          // exported from `vue`
-          'toRef',
-          'toRefs',
-          'toValue',
-          // exported from `wxt/storage`
-          'useStorage',
-        ],
-      },
-    ],
-    addons: {
-      vueTemplate: true,
-    },
-  },
+  imports: false,
+  // TODO: enable autoImport when possible
+  // imports: {
+  //   presets: [
+  //     'vue',
+  //     'pinia',
+  //     'vue-router',
+  //     'vue-i18n',
+  //     {
+  //       package: '@vueuse/core',
+  //       ignore: [
+  //         // exported from `vue`
+  //         'toRef',
+  //         'toRefs',
+  //         'toValue',
+  //         // exported from `wxt/storage`
+  //         'useStorage',
+  //       ],
+  //     },
+  //   ],
+  //   addons: {
+  //     vueTemplate: true,
+  //   },
+  // },
 
   vite: () => ({
     css: {

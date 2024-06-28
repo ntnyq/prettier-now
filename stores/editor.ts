@@ -2,6 +2,9 @@
  * @file Editor store
  */
 
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
+import { useStorage } from '@/hooks/useStorage'
 import { format, plugins } from '@/utils/format'
 import { PARSERS_MAP } from '@/constants/parsers'
 import { useOptionsStore } from '@/stores/options'

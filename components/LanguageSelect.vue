@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { Menu as VMenu } from 'floating-vue'
+import { computed, ref } from 'vue'
+import { isDark } from '@/hooks/useDark'
 import { useEditorStore } from '@/stores/editor'
 
 export interface Language {
@@ -68,7 +69,7 @@ const currentLanguage = computed(() => {
 </script>
 
 <template>
-  <VMenu
+  <Dropdown
     :class="{ dark: isDark }"
     class="flex"
   >
@@ -86,5 +87,5 @@ const currentLanguage = computed(() => {
         :checked="editorStore.activeLanguage === lang.id"
       />
     </template>
-  </VMenu>
+  </Dropdown>
 </template>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { inject, ref } from 'vue'
 import { dropdownContextKey } from './ctx'
 
 defineProps<{

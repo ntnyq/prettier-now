@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { provide, ref } from 'vue'
 import { Dropdown as VDropdown } from 'floating-vue'
+import { isDark } from '@/hooks/useDark'
 import { dropdownContextKey } from './ctx'
 import type { Placement } from 'floating-vue'
 
@@ -20,6 +22,7 @@ provide(dropdownContextKey, {
   <VDropdown
     v-bind="$attrs"
     ref="dropdownRef"
+    :show-triggers="['click']"
     :class="{ dark: isDark }"
     :placement="placement || 'auto'"
   >

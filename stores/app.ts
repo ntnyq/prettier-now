@@ -2,6 +2,9 @@
  * @file App
  */
 
+import { defineStore } from 'pinia'
+import { useStorage } from '@/hooks/useStorage'
+
 export const useAppStore = defineStore('app', () => {
   const showLeftLayout = useStorage<boolean>('showLeftLayout', true)
   const showRightLayout = useStorage<boolean>('showRightLayout', true)

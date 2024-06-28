@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { isDark } from '@/hooks/useDark'
+
 withDefaults(
   defineProps<{
     items?: string[]

@@ -1,3 +1,10 @@
+/**
+ * @file useDark
+ */
+
+import { nextTick } from 'vue'
+import { useDark } from '@vueuse/core'
+
 export const isDark = useDark()
 
 export interface ViewTransition {

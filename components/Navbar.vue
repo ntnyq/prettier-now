@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n'
+import { useRoute, useRouter } from 'vue-router'
 import { toggleDark } from '@/hooks/useDark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
