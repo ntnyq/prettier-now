@@ -7,6 +7,7 @@ export type LocaleMessageKey =
   | 'clearAll'
   | 'copyResult'
   | 'formatSource'
+  | 'sourceCode'
 
 export type Messages = Record<LocaleMessageKey, string>
 
@@ -19,6 +20,7 @@ export const localeEn: Messages = {
   clearAll: 'Clear All',
   copyResult: 'Copy Result',
   formatSource: 'Format Source',
+  sourceCode: 'Source Code',
 }
 
 export const localeZhCN: Messages = {
@@ -30,4 +32,5 @@ export const localeZhCN: Messages = {
   clearAll: '清除所有',
   copyResult: '复制结果',
   formatSource: '格式化代码',
+  sourceCode: '源代码',
 }

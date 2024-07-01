@@ -82,9 +82,12 @@ const editorStore = useEditorStore()
         <div class="i-ri-sun-line dark:i-ri-moon-line" />
       </button>
       <a
+        v-tooltip="{ content: t('sourceCode') }"
         href="https://github.com/ntnyq/prettier-now"
         target="_blank"
+        rel="noopener noreferrer"
         class="btn-icon"
+        role="button"
       >
         <div class="i-ri-github-fill" />
       </a>

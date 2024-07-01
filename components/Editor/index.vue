@@ -2,8 +2,8 @@
 import { computed, shallowRef } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { isDark } from '@/hooks/useDark'
-import { githubDark, githubLight } from '@/constants/theme'
-import { languages } from '@/constants/language'
+import { githubDark, githubLight } from './theme'
+import { languages } from './language'
 import type { Extension } from '@codemirror/state'
 
 const props = withDefaults(
@@ -13,12 +13,16 @@ const props = withDefaults(
     extensions?: Extension[]
     placeholder?: string
     readonly?: boolean
+    tabSize?: number
+    indentWithTab?: boolean
   }>(),
   {
     modelValue: '',
     extensions: () => [],
     placeholder: '',
     readonly: false,
+    tabSize: 2,
+    indentWithTab: true,
   },
 )
 const emits = defineEmits<{
@@ -60,11 +64,11 @@ const handleContentChange = (content: string) => {
       v-model="code"
       ref="codeMirrorRef"
       :extensions="resolvedExtensions"
-      :tab-size="2"
+      :tab-size="tabSize"
       :placeholder="placeholder"
       :autofocus="!readonly"
       :disabled="readonly"
-      indent-with-tab
+      :indent-with-tab="indentWithTab"
     />
   </div>
 </template>
