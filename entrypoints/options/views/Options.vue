@@ -1,7 +1,9 @@
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 import { useOptionsStore } from '@/stores/options'
 
+const { t } = useI18n()
 const optionsStore = useOptionsStore()
 const configStore = useConfigStore()
 </script>
@@ -10,7 +12,7 @@ const configStore = useConfigStore()
   <div class="relative overflow-y-auto">
     <div class="mx-auto max-w-[720px] p-8">
       <div class="relative py-6">
-        <h3 class="mb-5 text-3xl font-semibold">Prettier Options</h3>
+        <h3 class="mb-5 text-3xl font-semibold">{{ t('prettierOptions') }}</h3>
         <div class="flex flex-col gap-4">
           <OptionItem
             title="printWidth"
@@ -174,7 +176,7 @@ const configStore = useConfigStore()
       </div>
 
       <div class="relative py-6">
-        <h3 class="mb-5 text-3xl font-semibold">User Configs</h3>
+        <h3 class="mb-5 text-3xl font-semibold">{{ t('userConfigs') }}</h3>
         <div class="flex flex-col gap-4">
           <OptionItem
             title="silent"
@@ -201,7 +203,16 @@ const configStore = useConfigStore()
             <template #action>
               <Select
                 v-model="configStore.locale"
-                :items="['en', 'zh-CN']"
+                :items="[
+                  {
+                    label: t('en'),
+                    value: 'en',
+                  },
+                  {
+                    label: t('zhCN'),
+                    value: 'zh-CN',
+                  },
+                ]"
               />
             </template>
           </OptionItem>

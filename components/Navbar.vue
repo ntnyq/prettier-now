@@ -35,7 +35,7 @@ const editorStore = useEditorStore()
           v-tooltip="{ content: t('formatCostTime') }"
           class="p-1 opacity-80"
         >
-          {{ +editorStore.formatCost.toFixed(1) }}ms
+          {{ t('ms', { n: +editorStore.formatCost.toFixed(1) }) }}
         </div>
         <button
           @click="router.push({ name: 'Options' })"
