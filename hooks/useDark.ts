@@ -2,25 +2,14 @@
  * @file useDark
  */
 
-import { nextTick } from 'vue'
 import { useDark } from '@vueuse/core'
+import { nextTick } from 'vue'
 
 export const isDark = useDark()
 
-export interface ViewTransition {
-  ready: Promise<void>
-  finished: Promise<void>
-  updateCallbackDone: Promise<void>
-}
-declare global {
-  interface Document {
-    startViewTransition?: (callback: () => Promise<void> | void) => ViewTransition
-  }
-}
-
 const isAppearanceTransition =
   typeof document !== 'undefined' &&
-  document.startViewTransition &&
+  'startViewTransition' in document &&
   !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 /**
@@ -36,7 +25,6 @@ export function toggleDark(event?: MouseEvent) {
   const x = event.clientX
   const y = event.clientY
   const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
-  // @ts-expect-error: Transition API
   const transition = document.startViewTransition(async () => {
     isDark.value = !isDark.value
     await nextTick()

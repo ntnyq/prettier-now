@@ -2,12 +2,12 @@
  * @file Editor store
  */
 
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useStorage } from '@/hooks/useStorage'
-import { format, plugins } from '@/utils/format'
+import { ref } from 'vue'
 import { PARSERS_MAP } from '@/constants/parsers'
+import { useStorage } from '@/hooks/useStorage'
 import { useOptionsStore } from '@/stores/options'
+import { format, plugins } from '@/utils/format'
 
 export const useEditorStore = defineStore('editor', () => {
   const sourceCode = ref('')

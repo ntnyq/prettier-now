@@ -2,10 +2,10 @@
  * @file Prettier Options
  */
 
-import { computed } from 'vue'
 import { defineStore } from 'pinia'
-import { useStorage } from '@/hooks/useStorage'
+import { computed } from 'vue'
 import { DEFAULT_OPTIONS } from '@/constants/options'
+import { useStorage } from '@/hooks/useStorage'
 import type { PrettierOptions } from '@/types/options'
 
 export const useOptionsStore = defineStore('options', () => {

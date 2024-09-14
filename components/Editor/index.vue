@@ -2,8 +2,8 @@
 import { computed, shallowRef } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { isDark } from '@/hooks/useDark'
-import { githubDark, githubLight } from './theme'
 import { languages } from './language'
+import { githubDark, githubLight } from './theme'
 import type { Extension } from '@codemirror/state'
 
 const props = withDefaults(

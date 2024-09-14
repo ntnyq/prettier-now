@@ -4,8 +4,6 @@
 
 import { ntnyq } from '@ntnyq/eslint-config'
 
-export default ntnyq([
-  {
-    ignores: ['**/.wxt'],
-  },
-])
+export default ntnyq({
+  ignores: ['**/.wxt'],
+})

@@ -2,9 +2,9 @@
  * @file Toast
  */
 
-import 'vercel-toast/css'
 import { createToast, destroyAllToasts } from 'vercel-toast'
 import { useConfigStoreWithout } from '@/stores/config'
+import 'vercel-toast/css'
 import type { ToastOptions as Options } from 'vercel-toast'
 
 export interface ToastOptions extends Options {

@@ -2,12 +2,12 @@ import '@unocss/reset/tailwind.css'
 import 'uno.css'
 import 'floating-vue/dist/style.css'
 import './style.css'
-import { createApp } from 'vue'
 import FloatingVue from 'floating-vue'
-import pinia from '@/stores'
+import { createApp } from 'vue'
 import i18n from '@/i18n'
-import router from './router'
+import pinia from '@/stores'
 import App from './App.vue'
+import router from './router'
 
 const app = createApp(App)
 

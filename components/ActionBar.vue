@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n'
 import { useClipboard } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 import { useEditorStore } from '@/stores/editor'
-import { Toast } from '@/utils/toast'
 import { Logger } from '@/utils/logger'
+import { Toast } from '@/utils/toast'
 
 const { t } = useI18n()
 const editorStore = useEditorStore()

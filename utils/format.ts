@@ -2,14 +2,14 @@
  * @file format
  */
 
-import prettier from 'prettier/standalone'
-import pluginEstree from 'prettier/plugins/estree'
 import pluginBabel from 'prettier/plugins/babel'
-import pluginMarkdown from 'prettier/plugins/markdown'
+import pluginEstree from 'prettier/plugins/estree'
 import pluginHtml from 'prettier/plugins/html'
+import pluginMarkdown from 'prettier/plugins/markdown'
+import pluginPostCSS from 'prettier/plugins/postcss'
 import pluginTypeScript from 'prettier/plugins/typescript'
 import pluginYaml from 'prettier/plugins/yaml'
-import pluginPostCSS from 'prettier/plugins/postcss'
+import prettier from 'prettier/standalone'
 import type { Options, Plugin } from 'prettier'
 
 export const plugins: Plugin[] = [

@@ -4,8 +4,8 @@
 
 import { ref, watch } from 'vue'
 import { storage } from 'wxt/storage'
-import type { Ref } from 'vue'
 import type { JsonValue } from 'type-fest'
+import type { Ref } from 'vue'
 import type { StorageItemKey } from 'wxt/storage'
 
 export interface UseStorageOptions<T> {

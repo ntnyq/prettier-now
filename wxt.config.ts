@@ -3,13 +3,13 @@
  * @see {@link https://wxt.dev/api/config.html}
  */
 
-import { defineConfig } from 'wxt'
 import vue from '@vitejs/plugin-vue'
 import unoCSS from 'unocss/vite'
 import vueComponents from 'unplugin-vue-components/vite'
+import { defineConfig } from 'wxt'
 import { resolve } from './scripts/utils'
-import type { Command } from '@/constants/command'
 import type { Manifest } from 'wxt/browser'
+import type { Command } from '@/constants/command'
 
 export default defineConfig({
   outDir: 'dist',

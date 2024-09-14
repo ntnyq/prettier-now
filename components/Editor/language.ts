@@ -3,14 +3,14 @@
  */
 
 import { css } from '@codemirror/lang-css'
-import { vue } from '@codemirror/lang-vue'
-import { sass } from '@codemirror/lang-sass'
-import { less } from '@codemirror/lang-less'
-import { yaml } from '@codemirror/lang-yaml'
-import { json } from '@codemirror/lang-json'
 import { html } from '@codemirror/lang-html'
-import { markdown } from '@codemirror/lang-markdown'
 import { javascript } from '@codemirror/lang-javascript'
+import { json } from '@codemirror/lang-json'
+import { less } from '@codemirror/lang-less'
+import { markdown } from '@codemirror/lang-markdown'
+import { sass } from '@codemirror/lang-sass'
+import { vue } from '@codemirror/lang-vue'
+import { yaml } from '@codemirror/lang-yaml'
 import type { LanguageSupport } from '@codemirror/language'
 
 export interface Language {
