@@ -3,9 +3,9 @@
  * @see {@link https://wxt.dev/api/config.html}
  */
 
-import vue from '@vitejs/plugin-vue'
-import unoCSS from 'unocss/vite'
-import vueComponents from 'unplugin-vue-components/vite'
+import Vue from '@vitejs/plugin-vue'
+import UnoCSS from 'unocss/vite'
+import VueComponents from 'unplugin-vue-components/vite'
 import { defineConfig } from 'wxt'
 import { resolve } from './scripts/utils'
 import type { Manifest } from 'wxt/browser'
@@ -40,7 +40,6 @@ export default defineConfig({
   //     'vue',
   //     'pinia',
   //     'vue-router',
-  //     'vue-i18n',
   //     {
   //       package: '@vueuse/core',
   //       ignore: [
@@ -64,16 +63,15 @@ export default defineConfig({
     },
 
     define: {
-      // Workaround for vue-i18n CSP issue
       __INTLIFY_JIT_COMPILATION__: JSON.stringify(true),
     },
 
     plugins: [
-      vue(),
+      Vue(),
 
-      unoCSS(),
+      UnoCSS(),
 
-      vueComponents({
+      VueComponents({
         dirs: [resolve('components')],
         dts: 'types/components.d.ts',
         resolvers: [],

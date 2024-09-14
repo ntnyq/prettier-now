@@ -2,7 +2,7 @@
  * @file i18n
  */
 
-import { createI18n as createI18nInstance } from 'vue-i18n'
+import { createI18n as createI18nInstance } from 'petite-vue-i18n'
 import { useConfigStoreWithout } from '@/stores/config'
 import { localeEn as en, localeZhCN as zhCN } from './locales'
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import { useI18n } from 'petite-vue-i18n'
 import { watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useConfigStore } from '@/stores/config'
 
 const { locale } = useI18n()

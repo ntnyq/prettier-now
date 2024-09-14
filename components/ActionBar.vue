@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useClipboard } from '@vueuse/core'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from 'petite-vue-i18n'
 import { useEditorStore } from '@/stores/editor'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
