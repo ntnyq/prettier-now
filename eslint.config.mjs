@@ -1,9 +1,3 @@
-/**
- * @file ESLint config
- */
+import { defineESLintConfig } from '@ntnyq/eslint-config'
 
-import { ntnyq } from '@ntnyq/eslint-config'
-
-export default ntnyq({
-  ignores: ['**/.wxt'],
-})
+export default defineESLintConfig()
