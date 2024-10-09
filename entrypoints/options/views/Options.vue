@@ -216,6 +216,15 @@ const configStore = useConfigStore()
               />
             </template>
           </OptionItem>
+
+          <OptionItem
+            title="autoFormat"
+            description="Auto format source code after pasting."
+          >
+            <template #action>
+              <Switch v-model="configStore.autoFormat" />
+            </template>
+          </OptionItem>
         </div>
       </div>
     </div>

@@ -15,15 +15,7 @@ const handleFormat = async () => {
     return Toast.info('Nothing to format')
   }
 
-  try {
-    await editorStore.formatCode()
-
-    Logger.success('Format Success')
-    Toast.info('Format Success')
-  } catch (err: unknown) {
-    Logger.error((err as Error)?.message || 'Unknown error')
-    Toast.error((err as Error)?.message || 'Unknown error')
-  }
+  editorStore.formatCode()
 }
 const copyResult = async () => {
   if (!editorStore.resultCode) {

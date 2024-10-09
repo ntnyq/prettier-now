@@ -22,10 +22,16 @@ export const useConfigStore = defineStore('config', () => {
    */
   const locale = useStorage<string>('locale', 'en')
 
+  /**
+   * Auto format source code after pasting
+   */
+  const autoFormat = useStorage<boolean>('autoFormat', false)
+
   return {
     debug,
     silent,
     locale,
+    autoFormat,
   }
 })
 

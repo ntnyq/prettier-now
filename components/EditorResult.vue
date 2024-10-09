@@ -10,7 +10,7 @@ const editorStore = useEditorStore()
       v-model="editorStore.resultCode"
       :language="editorStore.activeLanguage"
       class="h-full min-w-0 flex-1"
-      readonly
+      disabled
     />
   </div>
 </template>

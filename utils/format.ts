@@ -9,7 +9,7 @@ import pluginMarkdown from 'prettier/plugins/markdown'
 import pluginPostCSS from 'prettier/plugins/postcss'
 import pluginTypeScript from 'prettier/plugins/typescript'
 import pluginYaml from 'prettier/plugins/yaml'
-import prettier from 'prettier/standalone'
+import { format } from 'prettier/standalone'
 import type { Options, Plugin } from 'prettier'
 
 export const plugins: Plugin[] = [
@@ -22,6 +22,6 @@ export const plugins: Plugin[] = [
   pluginPostCSS,
 ]
 
-export const format = (source: string, options: Options = {}) => {
-  return prettier.format(source, options)
+export function formatViaPrettier(source: string, options: Options = {}) {
+  return format(source, options)
 }

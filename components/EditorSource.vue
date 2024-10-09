@@ -1,17 +1,26 @@
 <script lang="ts" setup>
+import { watch } from 'vue'
+import { useConfigStore } from '@/stores/config'
 import { useEditorStore } from '@/stores/editor'
 
+const configStore = useConfigStore()
 const editorStore = useEditorStore()
 
-const handleSourceChange = (source: string) => {
-  if (source.length > 0) return
-  editorStore.clearCode()
-}
+watch(
+  () => editorStore.sourceCode,
+  () => {
+    if (editorStore.sourceCode.length > 0) {
+      if (!configStore.autoFormat) return
+      editorStore.formatCode()
+    } else {
+      editorStore.clearCode()
+    }
+  },
+)
 </script>
 
 <template>
   <Editor
-    @change="handleSourceChange"
     v-model="editorStore.sourceCode"
     :language="editorStore.activeLanguage"
   />
