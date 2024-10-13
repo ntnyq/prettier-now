@@ -75,6 +75,15 @@ const editorStore = useEditorStore()
         </button>
       </template>
       <button
+        @click="router.push({ name: 'Home' })"
+        v-tooltip="{ content: t('home') }"
+        v-else
+        type="button"
+        class="btn-icon"
+      >
+        <div class="i-ri-home-3-line" />
+      </button>
+      <button
         @click="toggleDark"
         v-tooltip="{ content: t('toggleColorMode') }"
         class="btn-icon"

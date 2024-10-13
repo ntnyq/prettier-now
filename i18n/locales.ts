@@ -4,6 +4,7 @@ export type LocaleMessageKey =
   | 'toggleRightLayout'
   | 'toggleColorMode'
   | 'settings'
+  | 'home'
   | 'clearAll'
   | 'copyResult'
   | 'formatSource'
@@ -21,6 +22,7 @@ export const localeEn: Messages = {
   toggleRightLayout: 'Toggle Right Layout',
   toggleColorMode: 'Toggle Color Mode',
   settings: 'Settings',
+  home: 'Home',
   sourceCode: 'Source Code',
   formatCostTime: 'Format Cost Time',
   ms: '{n}ms',
@@ -41,6 +43,7 @@ export const localeZhCN: Messages = {
   toggleRightLayout: '切换右侧布局',
   toggleColorMode: '切换色彩模式',
   settings: '设置',
+  home: '首页',
   sourceCode: '源代码',
   formatCostTime: '格式化耗时',
   ms: '{n}毫秒',
