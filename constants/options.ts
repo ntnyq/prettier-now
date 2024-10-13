@@ -9,7 +9,7 @@ import type { PrettierOptions } from '@/types/options'
  *
  * @see {@link https://prettier.io/docs/en/options}
  */
-export const DEFAULT_OPTIONS = {
+export const DEFAULT_OPTIONS: PrettierOptions = {
   printWidth: 80,
 
   tabWidth: 2,
@@ -45,4 +45,4 @@ export const DEFAULT_OPTIONS = {
   embeddedLanguageFormatting: 'auto',
 
   experimentalTernaries: false,
-} satisfies PrettierOptions
+}

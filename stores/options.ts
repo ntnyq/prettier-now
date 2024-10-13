@@ -28,16 +28,25 @@ export const useOptionsStore = defineStore('options', () => {
     DEFAULT_OPTIONS.experimentalTernaries,
   )
 
-  const quoteProps = useStorage<string>('quoteProps', DEFAULT_OPTIONS.quoteProps)
-  const trailingComma = useStorage<string>('trailingComma', DEFAULT_OPTIONS.trailingComma)
-  const arrowParens = useStorage<string>('arrowParens', DEFAULT_OPTIONS.arrowParens)
-  const proseWrap = useStorage<string>('proseWrap', DEFAULT_OPTIONS.proseWrap)
-  const htmlWhitespaceSensitivity = useStorage<string>(
+  const quoteProps = useStorage<PrettierOptions['quoteProps']>(
+    'quoteProps',
+    DEFAULT_OPTIONS.quoteProps,
+  )
+  const trailingComma = useStorage<PrettierOptions['trailingComma']>(
+    'trailingComma',
+    DEFAULT_OPTIONS.trailingComma,
+  )
+  const arrowParens = useStorage<PrettierOptions['arrowParens']>(
+    'arrowParens',
+    DEFAULT_OPTIONS.arrowParens,
+  )
+  const proseWrap = useStorage<PrettierOptions['proseWrap']>('proseWrap', DEFAULT_OPTIONS.proseWrap)
+  const htmlWhitespaceSensitivity = useStorage<PrettierOptions['htmlWhitespaceSensitivity']>(
     'htmlWhitespaceSensitivity',
     DEFAULT_OPTIONS.htmlWhitespaceSensitivity,
   )
-  const endOfLine = useStorage<string>('endOfLine', DEFAULT_OPTIONS.endOfLine)
-  const embeddedLanguageFormatting = useStorage<string>(
+  const endOfLine = useStorage<PrettierOptions['endOfLine']>('endOfLine', DEFAULT_OPTIONS.endOfLine)
+  const embeddedLanguageFormatting = useStorage<PrettierOptions['embeddedLanguageFormatting']>(
     'embeddedLanguageFormatting',
     DEFAULT_OPTIONS.embeddedLanguageFormatting,
   )

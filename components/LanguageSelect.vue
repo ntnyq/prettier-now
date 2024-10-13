@@ -79,7 +79,7 @@ const currentLanguage = computed(() => {
     </button>
     <template #popper>
       <DropdownItem
-        @click="editorStore.updateActiveLanguage(lang.id)"
+        @click="editorStore.setActiveLanguage(lang.id)"
         v-for="lang in languages"
         :key="lang.id"
         :icon="lang.icon"

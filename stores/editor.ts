@@ -19,18 +19,19 @@ export const useEditorStore = defineStore('editor', () => {
 
   const activeLanguage = useStorage<string>('activeLanguage', 'javascript')
 
-  const updateActiveLanguage = (language: string) => {
+  const setActiveLanguage = (language: string) => {
     activeLanguage.value = language
   }
+
   const formatStartTime = ref(0)
   const formatEndTime = ref(0)
   const formatCost = ref(0)
 
   const formatCode = async () => {
-    formatStartTime.value = Date.now()
-
     const parser = PARSERS_MAP[activeLanguage.value as keyof typeof PARSERS_MAP]
     if (!parser) return
+
+    formatStartTime.value = Date.now()
 
     try {
       const result = await formatViaPrettier(sourceCode.value, {
@@ -65,7 +66,7 @@ export const useEditorStore = defineStore('editor', () => {
     resultCode,
 
     activeLanguage,
-    updateActiveLanguage,
+    setActiveLanguage,
 
     formatCost,
     formatCode,
