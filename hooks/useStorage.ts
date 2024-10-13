@@ -8,11 +8,6 @@ import type { JsonValue } from 'type-fest'
 import type { Ref } from 'vue'
 import type { StorageItemKey } from 'wxt/storage'
 
-export interface UseStorageOptions<T> {
-  mode?: 'local' | 'session'
-  defaultValue?: T
-}
-
 export function useStorage<V extends JsonValue>(key: string): Ref<V | null>
 export function useStorage<V extends JsonValue>(key: string, defaultValue: V): Ref<V>
 export function useStorage<V extends JsonValue>(key: string, defaultValue?: V): Ref<V | null> {

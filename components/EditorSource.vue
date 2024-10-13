@@ -6,12 +6,19 @@ import { useEditorStore } from '@/stores/editor'
 const configStore = useConfigStore()
 const editorStore = useEditorStore()
 
+let timer: ReturnType<typeof setTimeout> | undefined
+
 watch(
   () => editorStore.sourceCode,
   () => {
+    if (timer) {
+      clearTimeout(timer)
+    }
     if (editorStore.sourceCode.length > 0) {
       if (!configStore.autoFormat) return
-      editorStore.formatCode()
+      timer = setTimeout(() => {
+        editorStore.formatCode()
+      }, 300)
     } else {
       editorStore.clearCode()
     }
