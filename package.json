@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.11",
   "private": true,
-  "packageManager": "pnpm@9.12.1",
+  "packageManager": "pnpm@9.12.2",
   "description": "Yet another Prettier browser extension for formatting js, css, html, json codes",
   "license": "MIT",
   "scripts": {
@@ -33,7 +33,7 @@
     "@codemirror/language": "^6.10.3",
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.34.1",
-    "@iconify/json": "^2.2.259",
+    "@iconify/json": "^2.2.261",
     "@lezer/highlight": "^1.2.1",
     "@uiw/codemirror-themes": "^4.23.5",
     "@unocss/reset": "^0.63.4",
@@ -51,7 +51,7 @@
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^3.0.0-beta.20",
+    "@ntnyq/eslint-config": "^3.0.2",
     "@ntnyq/prettier-config": "^1.21.3",
     "@unocss/eslint-config": "^0.63.4",
     "@vitejs/plugin-vue": "^5.1.4",
@@ -59,7 +59,7 @@
     "eslint": "^9.12.0",
     "husky": "^9.1.6",
     "nano-staged": "^0.8.0",
-    "npm-run-all2": "^6.2.3",
+    "npm-run-all2": "^6.2.4",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3",
     "unocss": "^0.63.4",
