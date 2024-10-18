@@ -13,13 +13,15 @@ import { sass } from '@codemirror/lang-sass'
 import { vue } from '@codemirror/lang-vue'
 import { yaml } from '@codemirror/lang-yaml'
 import { svelte } from '@replit/codemirror-lang-svelte'
+import { graphql } from 'cm6-graphql'
 import type { LanguageSupport } from '@codemirror/language'
+import type { Extension } from '@codemirror/state'
 
 export interface Language {
   id: string
   name: string
   alias?: string[]
-  extension: () => LanguageSupport
+  extension: () => LanguageSupport | Extension[]
 }
 
 export const languages: Language[] = [
@@ -77,6 +79,11 @@ export const languages: Language[] = [
     id: 'less',
     name: 'Less',
     extension: () => less(),
+  },
+  {
+    id: 'graphql',
+    name: 'GraphQL',
+    extension: () => graphql(),
   },
   {
     id: 'json',

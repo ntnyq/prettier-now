@@ -38,6 +38,9 @@ export const PARSERS_MAP = {
   // plugin yaml
   yaml: 'yaml',
 
+  // plugin graphql
+  graphql: 'graphql',
+
   // plugin svelte
   svelte: 'svelte',
 }

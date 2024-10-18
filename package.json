@@ -40,6 +40,7 @@
     "@uiw/codemirror-themes": "^4.23.5",
     "@unocss/reset": "^0.63.4",
     "@vueuse/core": "^11.1.0",
+    "cm6-graphql": "^0.1.1",
     "codemirror": "^6.0.1",
     "dayjs": "^1.11.13",
     "floating-vue": "^5.2.2",
