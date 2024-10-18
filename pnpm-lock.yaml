@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@codemirror/lang-angular':
+        specifier: ^0.1.3
+        version: 0.1.3
       '@codemirror/lang-css':
         specifier: ^6.3.0
         version: 6.3.0(@codemirror/view@6.34.1)
@@ -200,6 +203,9 @@ packages:
 
   '@codemirror/commands@6.7.0':
     resolution: {integrity: sha512-+cduIZ2KbesDhbykV02K25A5xIVrquSPz4UxxYBemRlAT2aW8dhwUgLDwej7q/RJUHKk4nALYcR1puecDvbdqw==}
+
+  '@codemirror/lang-angular@0.1.3':
+    resolution: {integrity: sha512-xgeWGJQQl1LyStvndWtruUvb4SnBZDAu/gvFH/ZU+c0W25tQR8e5hq7WTwiIY2dNxnf+49mRiGI/9yxIwB6f5w==}
 
   '@codemirror/lang-css@6.3.0':
     resolution: {integrity: sha512-CyR4rUNG9OYcXDZwMPvJdtb6PHbBDKUc/6Na2BIwZ6dKab1JQqKa4di+RNRY9Myn7JB81vayKwJeQ7jEdmNVDA==}
@@ -3988,6 +3994,15 @@ snapshots:
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.34.1
       '@lezer/common': 1.2.2
+
+  '@codemirror/lang-angular@0.1.3':
+    dependencies:
+      '@codemirror/lang-html': 6.4.9
+      '@codemirror/lang-javascript': 6.2.2
+      '@codemirror/language': 6.10.3
+      '@lezer/common': 1.2.2
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
 
   '@codemirror/lang-css@6.3.0(@codemirror/view@6.34.1)':
     dependencies:

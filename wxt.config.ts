@@ -33,29 +33,28 @@ export default defineConfig({
     startUrls: ['https://ntnyq.com'],
   },
 
-  imports: false,
-  // TODO: enable autoImport when possible
-  // imports: {
-  //   presets: [
-  //     'vue',
-  //     'pinia',
-  //     'vue-router',
-  //     {
-  //       package: '@vueuse/core',
-  //       ignore: [
-  //         // exported from `vue`
-  //         'toRef',
-  //         'toRefs',
-  //         'toValue',
-  //         // exported from `wxt/storage`
-  //         'useStorage',
-  //       ],
-  //     },
-  //   ],
-  //   addons: {
-  //     vueTemplate: true,
-  //   },
-  // },
+  imports: {
+    dirs: [],
+    presets: [
+      'vue',
+      'pinia',
+      'vue-router',
+      {
+        package: '@vueuse/core',
+        ignore: [
+          // exported from `vue`
+          'toRef',
+          'toRefs',
+          'toValue',
+          // exported from `wxt/storage`
+          'useStorage',
+        ],
+      },
+    ],
+    addons: {
+      vueTemplate: true,
+    },
+  },
 
   vite: () => ({
     css: {

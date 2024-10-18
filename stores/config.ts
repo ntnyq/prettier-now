@@ -3,7 +3,7 @@
  */
 
 import { defineStore } from 'pinia'
-import { useStorage } from '@/hooks/useStorage'
+import { useStorage } from '@/composables/useStorage'
 import pinia from '@/stores'
 
 export const useConfigStore = defineStore('config', () => {

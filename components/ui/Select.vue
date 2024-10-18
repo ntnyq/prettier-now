@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { isDark } from '@/hooks/useDark'
+import { isDark } from '@/composables/useDark'
 
 type SelectItem = string | { label: string; value: string }
 

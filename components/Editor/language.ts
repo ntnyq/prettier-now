@@ -2,6 +2,7 @@
  * @file Languages
  */
 
+import { angular } from '@codemirror/lang-angular'
 import { css } from '@codemirror/lang-css'
 import { html } from '@codemirror/lang-html'
 import { javascript } from '@codemirror/lang-javascript'
@@ -16,6 +17,7 @@ import type { LanguageSupport } from '@codemirror/language'
 export interface Language {
   id: string
   name: string
+  alias?: string[]
   extension: () => LanguageSupport
 }
 
@@ -41,11 +43,6 @@ export const languages: Language[] = [
     extension: () => javascript({ jsx: true, typescript: true }),
   },
   {
-    id: 'css',
-    name: 'CSS',
-    extension: () => css(),
-  },
-  {
     id: 'html',
     name: 'HTML',
     extension: () => html(),
@@ -56,10 +53,24 @@ export const languages: Language[] = [
     extension: () => vue(),
   },
   {
-    id: 'markdown',
-    name: 'Markdown',
-    alias: ['md'],
-    extension: () => markdown(),
+    id: 'angular',
+    name: 'Angular',
+    extension: () => angular(),
+  },
+  {
+    id: 'css',
+    name: 'CSS',
+    extension: () => css(),
+  },
+  {
+    id: 'scss',
+    name: 'Sass',
+    extension: () => sass(),
+  },
+  {
+    id: 'less',
+    name: 'Less',
+    extension: () => less(),
   },
   {
     id: 'json',
@@ -72,13 +83,9 @@ export const languages: Language[] = [
     extension: () => yaml(),
   },
   {
-    id: 'scss',
-    name: 'Sass',
-    extension: () => sass(),
-  },
-  {
-    id: 'less',
-    name: 'Less',
-    extension: () => less(),
+    id: 'markdown',
+    name: 'Markdown',
+    alias: ['md'],
+    extension: () => markdown(),
   },
 ].sort((a, b) => (a.name < b.name ? -1 : 1))

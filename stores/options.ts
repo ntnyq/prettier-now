@@ -4,8 +4,8 @@
 
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
+import { useStorage } from '@/composables/useStorage'
 import { DEFAULT_OPTIONS } from '@/constants/options'
-import { useStorage } from '@/hooks/useStorage'
 import type { PrettierOptions } from '@/types/options'
 
 export const useOptionsStore = defineStore('options', () => {

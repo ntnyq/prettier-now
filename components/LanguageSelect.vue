@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { isDark } from '@/hooks/useDark'
+import { isDark } from '@/composables/useDark'
 import { useEditorStore } from '@/stores/editor'
 
 export interface Language {
@@ -18,14 +18,14 @@ const languages = ref<Language[]>([
     icon: 'i-vscode-icons:file-type-js-official',
   },
   {
-    id: 'json',
-    label: 'JSON',
-    icon: 'i-vscode-icons:file-type-json',
-  },
-  {
     id: 'typescript',
     label: 'TypeScript',
     icon: 'i-vscode-icons:file-type-typescript',
+  },
+  {
+    id: 'html',
+    label: 'HTML',
+    icon: 'i-vscode-icons:file-type-html',
   },
   {
     id: 'vue',
@@ -33,9 +33,9 @@ const languages = ref<Language[]>([
     icon: 'i-vscode-icons:file-type-vue',
   },
   {
-    id: 'html',
-    label: 'HTML',
-    icon: 'i-vscode-icons:file-type-html',
+    id: 'angular',
+    label: 'Angular',
+    icon: 'i-vscode-icons:file-type-angular',
   },
   {
     id: 'css',
@@ -51,6 +51,11 @@ const languages = ref<Language[]>([
     id: 'scss',
     label: 'SCSS',
     icon: 'i-vscode-icons:file-type-scss',
+  },
+  {
+    id: 'json',
+    label: 'JSON',
+    icon: 'i-vscode-icons:file-type-json',
   },
   {
     id: 'yaml',

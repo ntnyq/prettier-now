@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'petite-vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
-import { toggleDark } from '@/hooks/useDark'
+import { toggleDark } from '@/composables/useDark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
 import { useEditorStore } from '@/stores/editor'

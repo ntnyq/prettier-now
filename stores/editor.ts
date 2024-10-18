@@ -4,8 +4,8 @@
 
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { useStorage } from '@/composables/useStorage'
 import { PARSERS_MAP } from '@/constants/parsers'
-import { useStorage } from '@/hooks/useStorage'
 import { useOptionsStore } from '@/stores/options'
 import { formatViaPrettier, plugins } from '@/utils/format'
 import { Logger } from '@/utils/logger'

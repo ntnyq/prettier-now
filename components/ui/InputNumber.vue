@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-const number = defineModel<number>({
-  default: 0,
-})
+const number = defineModel<number>({ default: 0 })
 </script>
 
 <template>
