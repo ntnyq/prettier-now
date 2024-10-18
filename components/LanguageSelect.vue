@@ -33,6 +33,11 @@ const languages = ref<Language[]>([
     icon: 'i-vscode-icons:file-type-vue',
   },
   {
+    id: 'svelte',
+    label: 'Svelte',
+    icon: 'i-vscode-icons:file-type-svelte',
+  },
+  {
     id: 'angular',
     label: 'Angular',
     icon: 'i-vscode-icons:file-type-angular',

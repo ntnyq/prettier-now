@@ -12,6 +12,7 @@ import { markdown } from '@codemirror/lang-markdown'
 import { sass } from '@codemirror/lang-sass'
 import { vue } from '@codemirror/lang-vue'
 import { yaml } from '@codemirror/lang-yaml'
+import { svelte } from '@replit/codemirror-lang-svelte'
 import type { LanguageSupport } from '@codemirror/language'
 
 export interface Language {
@@ -51,6 +52,11 @@ export const languages: Language[] = [
     id: 'vue',
     name: 'Vue',
     extension: () => vue(),
+  },
+  {
+    id: 'svelte',
+    name: 'Svelte',
+    extension: () => svelte(),
   },
   {
     id: 'angular',

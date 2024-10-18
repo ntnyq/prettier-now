@@ -11,6 +11,8 @@ import pluginPostCSS from 'prettier/plugins/postcss'
 import pluginTypeScript from 'prettier/plugins/typescript'
 import pluginYaml from 'prettier/plugins/yaml'
 import { format } from 'prettier/standalone'
+// @ts-expect-error missing types
+import * as pluginSvelte from 'prettier-plugin-svelte/browser'
 import type { Options, Plugin } from 'prettier'
 
 export const plugins: Plugin[] = [
@@ -22,6 +24,7 @@ export const plugins: Plugin[] = [
   pluginPostCSS,
   pluginYaml,
   pluginTypeScript,
+  pluginSvelte,
 ]
 
 export function formatViaPrettier(source: string, options: Options = {}) {

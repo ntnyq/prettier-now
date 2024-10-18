@@ -16,16 +16,23 @@
 
 ## Supported languages
 
+### Built-in language plugins
+
 - JavaScript
 - TypeScript
-- JSON
-- Vue
 - HTML
+- Vue
+- Angular
 - CSS
 - Less
 - SCSS
+- JSON
 - YAML
 - Markdown
+
+### Community language plugins
+
+- Svelte (via [prettier-plugin-svelte](https://github.com/sveltejs/prettier-plugin-svelte))
 
 ## Screenshots
 
