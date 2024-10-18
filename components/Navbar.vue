@@ -51,12 +51,7 @@ const editorStore = useEditorStore()
           class="btn-icon"
         >
           <div
-            v-if="appStore.showLeftLayout"
-            class="i-ri-layout-column-fill"
-          />
-          <div
-            v-else
-            class="i-ri-layout-left-line"
+            :class="appStore.showLeftLayout ? 'i-ri-layout-column-fill' : 'i-ri-layout-left-line'"
           />
         </button>
         <button
@@ -65,13 +60,16 @@ const editorStore = useEditorStore()
           class="btn-icon"
         >
           <div
-            v-if="appStore.showRightLayout"
-            class="i-ri-layout-column-fill rotate-180"
+            :class="appStore.showRightLayout ? 'i-ri-layout-column-fill' : 'i-ri-layout-left-line'"
+            class="rotate-180"
           />
-          <div
-            v-else
-            class="i-ri-layout-left-line rotate-180"
-          />
+        </button>
+        <button
+          @click="router.push({ name: 'Log' })"
+          v-tooltip="{ content: t('log') }"
+          class="btn-icon"
+        >
+          <div class="i-lucide-logs" />
         </button>
       </template>
       <button
