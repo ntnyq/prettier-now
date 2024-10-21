@@ -3,6 +3,8 @@
   --c-text-base: #232323;
   --c-border: #ccc;
   --h-header: 50px;
+  --c-scrollbar: #d9d9d9;
+  --c-scrollbar-hover: #bbbbbb;
 }
 
 :root.dark {
@@ -10,10 +12,38 @@
   --c-bg-base: #1e1e1e;
   --c-text-base: #fff;
   --c-border: #666;
+  --c-scrollbar: #333333;
+  --c-scrollbar-hover: #555555;
 }
 
 body {
   background-color: var(--c-bg-base);
   font-size: 16px;
   color: var(--c-text-base);
+}
+
+::selection {
+  background: #8884;
+}
+
+* {
+  scrollbar-color: var(--c-scrollbar) var(--c-bg-base);
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar:horizontal {
+  height: 6px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: var(--c-bg-base);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-hover);
 }
