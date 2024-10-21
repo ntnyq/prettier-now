@@ -27,10 +27,13 @@
 - Less
 - SCSS
 - GraphQL
-- XML
 - JSON
 - YAML
 - Markdown
+
+### Official language plugins
+
+- XML (via [@prettier/plugin-xml](https://github.com/prettier/plugin-xml))
 
 ### Community language plugins
 
