@@ -27,3 +27,81 @@ export type PrettierOptions = Required<
     | 'experimentalTernaries'
   >
 >
+
+export type PluginSvelteOptions = {
+  /**
+   * Sort order for scripts, markup, and styles
+   *
+   * @default `options-scripts-markup-styles`
+   */
+  svelteSortOrder:
+    | 'options-scripts-markup-styles'
+    | 'options-scripts-styles-markup'
+    | 'options-markup-styles-scripts'
+    | 'options-markup-scripts-styles'
+    | 'options-styles-markup-scripts'
+    | 'options-styles-scripts-markup'
+    | 'scripts-options-markup-styles'
+    | 'scripts-options-styles-markup'
+    | 'markup-options-styles-scripts'
+    | 'markup-options-scripts-styles'
+    | 'styles-options-markup-scripts'
+    | 'styles-options-scripts-markup'
+    | 'scripts-markup-options-styles'
+    | 'scripts-styles-options-markup'
+    | 'markup-styles-options-scripts'
+    | 'markup-scripts-options-styles'
+    | 'styles-markup-options-scripts'
+    | 'styles-scripts-options-markup'
+    | 'scripts-markup-styles-options'
+    | 'scripts-styles-markup-options'
+    | 'markup-styles-scripts-options'
+    | 'markup-scripts-styles-options'
+    | 'styles-markup-scripts-options'
+    | 'styles-scripts-markup-options'
+    | 'none'
+
+  /**
+   * Enable/disable component attribute shorthand if attribute name and expressions are same
+   *
+   * @default true
+   */
+  svelteAllowShorthand: boolean
+
+  /**
+   * Whether or not to indent the code inside <script> and <style> tags in Svelte files
+   *
+   * @default true
+   */
+  svelteIndentScriptAndStyle: boolean
+}
+
+export type PluginXMLOptions = {
+  /**
+   * Adds a space before self-closing tags
+   *
+   * @default true
+   */
+  xmlSelfClosingSpace: boolean
+
+  /**
+   * Orders XML attributes by key alphabetically while prioritizing xmlns attributes
+   *
+   * @default false
+   */
+  xmlSortAttributesByKey: boolean
+
+  /**
+   * How to quoted attributes in XML
+   *
+   * @default `preserve`
+   */
+  xmlQuoteAttributes: 'preserve' | 'double' | 'single'
+
+  /**
+   * How to handle whitespaces in XML
+   *
+   * @default `strict`
+   */
+  xmlWhitespaceSensitivity: 'strict' | 'ignore' | 'preserve'
+}

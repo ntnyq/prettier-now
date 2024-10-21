@@ -6,7 +6,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex flex-row items-center justify-between gap-20 border border-base rounded-lg p-4">
+  <div class="flex flex-row items-center justify-between gap-10 border border-base rounded-lg p-4">
     <div class="flex flex-col">
       <h3 class="mb-2 text-2xl font-500">
         <slot name="title">

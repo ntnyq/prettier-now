@@ -5,8 +5,8 @@
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
 import { useStorage } from '@/composables/useStorage'
-import { DEFAULT_OPTIONS } from '@/constants/options'
-import type { PrettierOptions } from '@/types/options'
+import { DEFAULT_OPTIONS, DEFAULT_SVELTE_OPTIONS, DEFAULT_XML_OPTIONS } from '@/constants/options'
+import type { PluginSvelteOptions, PluginXMLOptions, PrettierOptions } from '@/types/options'
 
 export const useOptionsStore = defineStore('options', () => {
   const useTabs = useStorage<boolean>('useTabs', DEFAULT_OPTIONS.useTabs)
@@ -75,6 +75,47 @@ export const useOptionsStore = defineStore('options', () => {
     tabWidth: tabWidth.value,
   }))
 
+  const xmlSelfClosingSpace = useStorage<boolean>(
+    'xmlSelfClosingSpace',
+    DEFAULT_XML_OPTIONS.xmlSelfClosingSpace,
+  )
+  const xmlSortAttributesByKey = useStorage<boolean>(
+    'xmlSortAttributesByKey',
+    DEFAULT_XML_OPTIONS.xmlSortAttributesByKey,
+  )
+  const xmlQuoteAttributes = useStorage<PluginXMLOptions['xmlQuoteAttributes']>(
+    'xmlQuoteAttributes',
+    DEFAULT_XML_OPTIONS.xmlQuoteAttributes,
+  )
+  const xmlWhitespaceSensitivity = useStorage<PluginXMLOptions['xmlWhitespaceSensitivity']>(
+    'xmlWhitespaceSensitivity',
+    DEFAULT_XML_OPTIONS.xmlWhitespaceSensitivity,
+  )
+  const xmlPluginOptions = computed<PluginXMLOptions>(() => ({
+    xmlSelfClosingSpace: xmlSelfClosingSpace.value,
+    xmlSortAttributesByKey: xmlSortAttributesByKey.value,
+    xmlQuoteAttributes: xmlQuoteAttributes.value,
+    xmlWhitespaceSensitivity: xmlWhitespaceSensitivity.value,
+  }))
+
+  const svelteSortOrder = useStorage<PluginSvelteOptions['svelteSortOrder']>(
+    'svelteSortOrder',
+    DEFAULT_SVELTE_OPTIONS.svelteSortOrder,
+  )
+  const svelteAllowShorthand = useStorage<boolean>(
+    'svelteAllowShorthand',
+    DEFAULT_SVELTE_OPTIONS.svelteAllowShorthand,
+  )
+  const svelteIndentScriptAndStyle = useStorage<boolean>(
+    'svelteIndentScriptAndStyle',
+    DEFAULT_SVELTE_OPTIONS.svelteIndentScriptAndStyle,
+  )
+  const sveltePluginOptions = computed<PluginSvelteOptions>(() => ({
+    svelteSortOrder: svelteSortOrder.value,
+    svelteAllowShorthand: svelteAllowShorthand.value,
+    svelteIndentScriptAndStyle: svelteIndentScriptAndStyle.value,
+  }))
+
   return {
     options,
 
@@ -101,5 +142,16 @@ export const useOptionsStore = defineStore('options', () => {
     // Number
     printWidth,
     tabWidth,
+
+    xmlSelfClosingSpace,
+    xmlSortAttributesByKey,
+    xmlQuoteAttributes,
+    xmlWhitespaceSensitivity,
+    xmlPluginOptions,
+
+    svelteSortOrder,
+    svelteAllowShorthand,
+    svelteIndentScriptAndStyle,
+    sveltePluginOptions,
   }
 })

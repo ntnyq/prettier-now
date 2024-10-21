@@ -2,7 +2,7 @@
  * @file Default prettier options
  */
 
-import type { PrettierOptions } from '@/types/options'
+import type { PluginSvelteOptions, PluginXMLOptions, PrettierOptions } from '@/types/options'
 
 /**
  * Prettier default options
@@ -45,4 +45,17 @@ export const DEFAULT_OPTIONS: PrettierOptions = {
   embeddedLanguageFormatting: 'auto',
 
   experimentalTernaries: false,
+}
+
+export const DEFAULT_XML_OPTIONS: PluginXMLOptions = {
+  xmlSelfClosingSpace: true,
+  xmlSortAttributesByKey: false,
+  xmlQuoteAttributes: 'preserve',
+  xmlWhitespaceSensitivity: 'strict',
+}
+
+export const DEFAULT_SVELTE_OPTIONS: PluginSvelteOptions = {
+  svelteSortOrder: 'options-scripts-markup-styles',
+  svelteAllowShorthand: true,
+  svelteIndentScriptAndStyle: true,
 }

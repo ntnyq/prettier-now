@@ -16,6 +16,7 @@ import { format } from 'prettier/standalone'
 // @ts-expect-error missing types
 import * as pluginSvelte from 'prettier-plugin-svelte/browser'
 import type { Options, Plugin } from 'prettier'
+import type { PluginSvelteOptions, PluginXMLOptions } from '@/types/options'
 
 export const plugins: Plugin[] = [
   pluginAngular,
@@ -31,6 +32,8 @@ export const plugins: Plugin[] = [
   pluginXml,
 ]
 
-export function formatViaPrettier(source: string, options: Options = {}) {
+export type FormatOptions = Options & Partial<PluginXMLOptions> & Partial<PluginSvelteOptions>
+
+export function formatViaPrettier(source: string, options: FormatOptions = {}) {
   return format(source, options)
 }

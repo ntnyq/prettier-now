@@ -11,6 +11,7 @@ const configStore = useConfigStore()
 <template>
   <div class="relative overflow-y-auto">
     <div class="mx-auto max-w-[720px] p-8">
+      <!-- Prettier Core Options -->
       <div class="relative py-6">
         <h3 class="mb-5 text-3xl font-semibold">{{ t('prettierOptions') }}</h3>
         <div class="flex flex-col gap-4">
@@ -175,6 +176,112 @@ const configStore = useConfigStore()
         </div>
       </div>
 
+      <!-- Plugin Svelte Options -->
+      <div class="relative py-6">
+        <h3 class="mb-5 text-3xl font-semibold">{{ t('pluginSvelteOptions') }}</h3>
+        <div class="flex flex-col gap-4">
+          <OptionItem
+            title="svelteSortOrder"
+            description="Sort order for scripts, markup, and styles."
+          >
+            <template #action>
+              <Select
+                v-model="optionsStore.svelteSortOrder"
+                :items="[
+                  'options-scripts-markup-styles',
+                  'options-scripts-styles-markup',
+                  'options-markup-styles-scripts',
+                  'options-markup-scripts-styles',
+                  'options-styles-markup-scripts',
+                  'options-styles-scripts-markup',
+                  'scripts-options-markup-styles',
+                  'scripts-options-styles-markup',
+                  'markup-options-styles-scripts',
+                  'markup-options-scripts-styles',
+                  'styles-options-markup-scripts',
+                  'styles-options-scripts-markup',
+                  'scripts-markup-options-styles',
+                  'scripts-styles-options-markup',
+                  'markup-styles-options-scripts',
+                  'markup-scripts-options-styles',
+                  'styles-markup-options-scripts',
+                  'styles-scripts-options-markup',
+                  'scripts-markup-styles-options',
+                  'scripts-styles-markup-options',
+                  'markup-styles-scripts-options',
+                  'markup-scripts-styles-options',
+                  'styles-markup-scripts-options',
+                  'styles-scripts-markup-options',
+                  'none',
+                ]"
+              />
+            </template>
+          </OptionItem>
+          <OptionItem
+            title="svelteAllowShorthand"
+            description="Enable/disable component attribute shorthand if attribute name and expressions are same."
+          >
+            <template #action>
+              <Switch v-model="optionsStore.svelteAllowShorthand" />
+            </template>
+          </OptionItem>
+          <OptionItem
+            title="svelteIndentScriptAndStyle"
+            description="Whether or not to indent the code inside <script> and <style> tags in Svelte files."
+          >
+            <template #action>
+              <Switch v-model="optionsStore.svelteIndentScriptAndStyle" />
+            </template>
+          </OptionItem>
+        </div>
+      </div>
+
+      <!-- Plugin XML Options -->
+      <div class="relative py-6">
+        <h3 class="mb-5 text-3xl font-semibold">{{ t('pluginXMLOptions') }}</h3>
+        <div class="flex flex-col gap-4">
+          <OptionItem
+            title="xmlSelfClosingSpace"
+            description="Adds a space before self-closing tags."
+          >
+            <template #action>
+              <Switch v-model="optionsStore.xmlSelfClosingSpace" />
+            </template>
+          </OptionItem>
+          <OptionItem
+            title="xmlSortAttributesByKey"
+            description="Orders XML attributes by key alphabetically while prioritizing xmlns attributes."
+          >
+            <template #action>
+              <Switch v-model="optionsStore.xmlSortAttributesByKey" />
+            </template>
+          </OptionItem>
+          <OptionItem
+            title="xmlQuoteAttributes"
+            description="How to quoted attributes in XML."
+          >
+            <template #action>
+              <Select
+                v-model="optionsStore.xmlQuoteAttributes"
+                :items="['preserve', 'double', 'single']"
+              />
+            </template>
+          </OptionItem>
+          <OptionItem
+            title="xmlWhitespaceSensitivity"
+            description="How to handle whitespaces in XML."
+          >
+            <template #action>
+              <Select
+                v-model="optionsStore.xmlWhitespaceSensitivity"
+                :items="['strict', 'ignore', 'preserve']"
+              />
+            </template>
+          </OptionItem>
+        </div>
+      </div>
+
+      <!-- User Configs -->
       <div class="relative py-6">
         <h3 class="mb-5 text-3xl font-semibold">{{ t('userConfigs') }}</h3>
         <div class="flex flex-col gap-4">
