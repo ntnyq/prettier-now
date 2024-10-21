@@ -34,7 +34,7 @@
     "@codemirror/language": "^6.10.3",
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.34.1",
-    "@iconify/json": "^2.2.261",
+    "@iconify/json": "^2.2.262",
     "@lezer/highlight": "^1.2.1",
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "@uiw/codemirror-themes": "^4.23.5",
@@ -55,12 +55,12 @@
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^3.0.2",
+    "@ntnyq/eslint-config": "^3.1.0",
     "@ntnyq/prettier-config": "^1.21.3",
     "@unocss/eslint-config": "^0.63.4",
     "@vitejs/plugin-vue": "^5.1.4",
     "bumpp": "^9.7.1",
-    "eslint": "^9.12.0",
+    "eslint": "^9.13.0",
     "husky": "^9.1.6",
     "nano-staged": "^0.8.0",
     "npm-run-all2": "^6.2.4",
@@ -69,7 +69,7 @@
     "unocss": "^0.63.4",
     "unplugin-vue-components": "^0.27.4",
     "vue-tsc": "^2.1.6",
-    "wxt": "^0.19.11"
+    "wxt": "^0.19.12"
   },
   "prettier": "@ntnyq/prettier-config",
   "nano-staged": {
