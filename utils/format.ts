@@ -2,6 +2,7 @@
  * @file format
  */
 
+import pluginXml from '@prettier/plugin-xml'
 import pluginAngular from 'prettier/plugins/angular'
 import pluginBabel from 'prettier/plugins/babel'
 import pluginEstree from 'prettier/plugins/estree'
@@ -25,8 +26,9 @@ export const plugins: Plugin[] = [
   pluginMarkdown,
   pluginPostCSS,
   pluginYaml,
-  pluginTypeScript,
   pluginSvelte,
+  pluginTypeScript,
+  pluginXml,
 ]
 
 export function formatViaPrettier(source: string, options: Options = {}) {

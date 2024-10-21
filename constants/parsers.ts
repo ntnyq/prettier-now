@@ -1,8 +1,4 @@
 /**
- * @file Parsers
- */
-
-/**
  * @file Language to parser map
  */
 
@@ -37,6 +33,9 @@ export const PARSERS_MAP = {
 
   // plugin yaml
   yaml: 'yaml',
+
+  // plugin xml
+  xml: 'xml',
 
   // plugin graphql
   graphql: 'graphql',

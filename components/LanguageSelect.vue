@@ -63,6 +63,11 @@ const languages = ref<Language[]>([
     icon: 'i-vscode-icons:file-type-graphql',
   },
   {
+    id: 'xml',
+    label: 'XML',
+    icon: 'i-vscode-icons:file-type-xml',
+  },
+  {
     id: 'json',
     label: 'JSON',
     icon: 'i-vscode-icons:file-type-json',

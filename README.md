@@ -27,6 +27,7 @@
 - Less
 - SCSS
 - GraphQL
+- XML
 - JSON
 - YAML
 - Markdown

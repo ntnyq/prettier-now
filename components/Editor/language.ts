@@ -11,6 +11,7 @@ import { less } from '@codemirror/lang-less'
 import { markdown } from '@codemirror/lang-markdown'
 import { sass } from '@codemirror/lang-sass'
 import { vue } from '@codemirror/lang-vue'
+import { xml } from '@codemirror/lang-xml'
 import { yaml } from '@codemirror/lang-yaml'
 import { svelte } from '@replit/codemirror-lang-svelte'
 import { graphql } from 'cm6-graphql'
@@ -84,6 +85,11 @@ export const languages: Language[] = [
     id: 'graphql',
     name: 'GraphQL',
     extension: () => graphql(),
+  },
+  {
+    id: 'xml',
+    name: 'XML',
+    extension: () => xml(),
   },
   {
     id: 'json',
