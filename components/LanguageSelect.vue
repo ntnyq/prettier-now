@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { isDark } from '@/composables/useDark'
+import { languages } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
 
 export interface Language {
@@ -11,80 +12,8 @@ export interface Language {
 
 const editorStore = useEditorStore()
 
-const languages = ref<Language[]>([
-  {
-    id: 'javascript',
-    label: 'JavaScript',
-    icon: 'i-vscode-icons:file-type-js-official',
-  },
-  {
-    id: 'typescript',
-    label: 'TypeScript',
-    icon: 'i-vscode-icons:file-type-typescript',
-  },
-  {
-    id: 'html',
-    label: 'HTML',
-    icon: 'i-vscode-icons:file-type-html',
-  },
-  {
-    id: 'vue',
-    label: 'Vue',
-    icon: 'i-vscode-icons:file-type-vue',
-  },
-  {
-    id: 'svelte',
-    label: 'Svelte',
-    icon: 'i-vscode-icons:file-type-svelte',
-  },
-  {
-    id: 'angular',
-    label: 'Angular',
-    icon: 'i-vscode-icons:file-type-angular',
-  },
-  {
-    id: 'css',
-    label: 'CSS',
-    icon: 'i-vscode-icons:file-type-css',
-  },
-  {
-    id: 'less',
-    label: 'Less',
-    icon: 'i-vscode-icons:file-type-less',
-  },
-  {
-    id: 'scss',
-    label: 'SCSS',
-    icon: 'i-vscode-icons:file-type-scss',
-  },
-  {
-    id: 'graphql',
-    label: 'GraphQL',
-    icon: 'i-vscode-icons:file-type-graphql',
-  },
-  {
-    id: 'xml',
-    label: 'XML',
-    icon: 'i-vscode-icons:file-type-xml',
-  },
-  {
-    id: 'json',
-    label: 'JSON',
-    icon: 'i-vscode-icons:file-type-json',
-  },
-  {
-    id: 'yaml',
-    label: 'YAML',
-    icon: 'i-vscode-icons:file-type-light-yaml',
-  },
-  {
-    id: 'markdown',
-    label: 'Markdown',
-    icon: 'i-vscode-icons:file-type-markdown',
-  },
-])
 const currentLanguage = computed(() => {
-  return languages.value.find(lang => lang.id === editorStore.activeLanguage)
+  return languages.find(lang => lang.id === editorStore.activeLanguage)
 })
 </script>
 
@@ -95,7 +24,7 @@ const currentLanguage = computed(() => {
   >
     <button class="flex items-center gap-1">
       <div :class="currentLanguage?.icon" />
-      {{ currentLanguage?.label }}
+      {{ currentLanguage?.name }}
     </button>
     <template #popper>
       <DropdownItem
@@ -103,7 +32,7 @@ const currentLanguage = computed(() => {
         v-for="lang in languages"
         :key="lang.id"
         :icon="lang.icon"
-        :text="lang.label"
+        :text="lang.name"
         :checked="editorStore.activeLanguage === lang.id"
       />
     </template>

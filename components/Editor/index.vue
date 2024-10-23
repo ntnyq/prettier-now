@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { isDark } from '@/composables/useDark'
-import { languages } from './language'
+import { languages } from '@/constants/language'
 import { githubDark, githubLight } from './theme'
 import type { Extension } from '@codemirror/state'
 

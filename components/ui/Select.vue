@@ -61,7 +61,7 @@ function handleSelect(value: string) {
 </template>
 
 <style lang="css">
-.v-select-popper-container .v-popper__inner {
-  --at-apply: 'max-h-400px of-y-auto';
+.v-select-popper-container .v-popper__inner > div {
+  --at-apply: 'max-h-400px of-y-scroll';
 }
 </style>

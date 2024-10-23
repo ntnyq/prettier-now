@@ -38,7 +38,7 @@ provide(dropdownContextKey, {
 </template>
 
 <style lang="css">
-.v-dropdown-popper-container .v-popper__inner {
-  --at-apply: 'max-h-400px of-y-auto';
+.v-dropdown-popper-container .v-popper__inner > div {
+  --at-apply: 'max-h-400px of-y-scroll';
 }
 </style>
