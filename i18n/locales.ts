@@ -9,6 +9,10 @@ export type LocaleMessageKey =
   | 'copyResult'
   | 'formatSource'
   | 'sourceCode'
+  | 'feedback'
+  | 'changelog'
+  | 'about'
+  | 'aboutApp'
   | 'ms'
   | 'zhCN'
   | 'en'
@@ -26,6 +30,10 @@ export const localeEn: Messages = {
   settings: 'Settings',
   home: 'Home',
   sourceCode: 'Source Code',
+  feedback: 'Feedback',
+  changelog: 'ChangeLog',
+  about: 'About',
+  aboutApp: 'About {name}',
   formatCostTime: 'Format Cost Time',
   ms: '{n}ms',
 
@@ -49,6 +57,10 @@ export const localeZhCN: Messages = {
   settings: '设置',
   home: '首页',
   sourceCode: '源代码',
+  feedback: '意见反馈',
+  changelog: '更新日志',
+  about: '关于',
+  aboutApp: '关于 {name}',
   formatCostTime: '格式化耗时',
   ms: '{n}毫秒',
 

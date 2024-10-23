@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActionBar: typeof import('./../components/ActionBar.vue')['default']
+    Dialog: typeof import('./../components/ui/Dialog.vue')['default']
     Dropdown: typeof import('./../components/dropdown/Dropdown.vue')['default']
     DropdownItem: typeof import('./../components/dropdown/DropdownItem.vue')['default']
     Editor: typeof import('./../components/Editor/index.vue')['default']
@@ -15,7 +16,8 @@ declare module 'vue' {
     EditorSource: typeof import('./../components/EditorSource.vue')['default']
     InputNumber: typeof import('./../components/ui/InputNumber.vue')['default']
     LanguageSelect: typeof import('./../components/LanguageSelect.vue')['default']
-    Navbar: typeof import('./../components/Navbar.vue')['default']
+    MoreAction: typeof import('./../components/navbar/MoreAction.vue')['default']
+    Navbar: typeof import('./../components/navbar/index.vue')['default']
     OptionItem: typeof import('./../components/ui/OptionItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

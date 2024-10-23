@@ -4,4 +4,8 @@
 
 import type { InjectionKey } from 'vue'
 
-export const dropdownContextKey: InjectionKey<{ hide: () => void }> = Symbol('dropdownContextKey')
+export interface DropdownContext {
+  hide: () => void
+}
+
+export const dropdownContextKey: InjectionKey<DropdownContext> = Symbol('dropdownContextKey')

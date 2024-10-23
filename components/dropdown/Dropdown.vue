@@ -3,11 +3,17 @@ import { Dropdown as VDropdown } from 'floating-vue'
 import { provide, useTemplateRef } from 'vue'
 import { isDark } from '@/composables/useDark'
 import { dropdownContextKey } from './ctx'
-import type { Placement } from 'floating-vue'
+import type { Placement, TriggerEvent } from 'floating-vue'
 
-defineProps<{
-  placement?: Placement
-}>()
+withDefaults(
+  defineProps<{
+    placement?: Placement
+    showTriggers?: TriggerEvent[]
+  }>(),
+  {
+    showTriggers: () => ['click'],
+  },
+)
 
 const dropdownRef = useTemplateRef('dropdownRef')
 
@@ -22,7 +28,7 @@ provide(dropdownContextKey, {
   <VDropdown
     v-bind="$attrs"
     ref="dropdownRef"
-    :show-triggers="['click']"
+    :show-triggers="showTriggers"
     :class="{ dark: isDark }"
     :placement="placement || 'auto'"
     popper-class="v-dropdown-popper-container"

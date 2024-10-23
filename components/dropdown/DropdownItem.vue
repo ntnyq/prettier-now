@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { inject, ref } from 'vue'
+import { inject } from 'vue'
 import { dropdownContextKey } from './ctx'
 
 defineProps<{
@@ -7,13 +7,13 @@ defineProps<{
   description?: string
   icon?: string
   checked?: boolean
+  checkable?: boolean
 }>()
 const emits = defineEmits<{
   click: [evt: MouseEvent]
 }>()
 
 const { hide } = inject(dropdownContextKey, undefined) || {}
-const elRef = ref<HTMLDivElement>()
 
 const handleClick = (evt: MouseEvent) => {
   hide?.()
@@ -25,7 +25,6 @@ const handleClick = (evt: MouseEvent) => {
   <div
     @click="handleClick"
     v-bind="$attrs"
-    ref="elRef"
     :aria-label="text"
     class="flex cursor-pointer items-center justify-between gap-2 px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-600"
   >
@@ -38,13 +37,12 @@ const handleClick = (evt: MouseEvent) => {
         {{ text }}
       </slot>
       <div
-        v-if="!checked"
+        v-if="!checked && checkable"
         class="h-[1.2em] w-[1.2em]"
       />
     </div>
-
     <div
-      v-if="checked"
+      v-if="checked && checkable"
       class="i-ri-check-line"
     />
   </div>
