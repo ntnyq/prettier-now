@@ -2,7 +2,12 @@
  * @file Default prettier options
  */
 
-import type { PluginSvelteOptions, PluginXMLOptions, PrettierOptions } from '@/types/options'
+import type {
+  PluginPHPOptions,
+  PluginSvelteOptions,
+  PluginXMLOptions,
+  PrettierOptions,
+} from '@/types/options'
 
 /**
  * Prettier default options
@@ -52,6 +57,12 @@ export const DEFAULT_XML_OPTIONS: PluginXMLOptions = {
   xmlSortAttributesByKey: false,
   xmlQuoteAttributes: 'preserve',
   xmlWhitespaceSensitivity: 'strict',
+}
+
+export const DEFAULT_PHP_OPTIONS: PluginPHPOptions = {
+  phpVersion: '7.0',
+  trailingCommaPHP: true,
+  braceStyle: 'per-cs',
 }
 
 export const DEFAULT_SVELTE_OPTIONS: PluginSvelteOptions = {

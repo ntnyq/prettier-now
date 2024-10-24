@@ -5,8 +5,18 @@
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
 import { useStorage } from '@/composables/useStorage'
-import { DEFAULT_OPTIONS, DEFAULT_SVELTE_OPTIONS, DEFAULT_XML_OPTIONS } from '@/constants/options'
-import type { PluginSvelteOptions, PluginXMLOptions, PrettierOptions } from '@/types/options'
+import {
+  DEFAULT_OPTIONS,
+  DEFAULT_PHP_OPTIONS,
+  DEFAULT_SVELTE_OPTIONS,
+  DEFAULT_XML_OPTIONS,
+} from '@/constants/options'
+import type {
+  PluginPHPOptions,
+  PluginSvelteOptions,
+  PluginXMLOptions,
+  PrettierOptions,
+} from '@/types/options'
 
 export const useOptionsStore = defineStore('options', () => {
   const useTabs = useStorage<boolean>('useTabs', DEFAULT_OPTIONS.useTabs)
@@ -98,6 +108,24 @@ export const useOptionsStore = defineStore('options', () => {
     xmlWhitespaceSensitivity: xmlWhitespaceSensitivity.value,
   }))
 
+  const phpVersion = useStorage<PluginPHPOptions['phpVersion']>(
+    'phpVersion',
+    DEFAULT_PHP_OPTIONS.phpVersion,
+  )
+  const trailingCommaPHP = useStorage<boolean>(
+    'trailingCommaPHP',
+    DEFAULT_PHP_OPTIONS.trailingCommaPHP,
+  )
+  const braceStyle = useStorage<PluginPHPOptions['braceStyle']>(
+    'braceStyle',
+    DEFAULT_PHP_OPTIONS.braceStyle,
+  )
+  const phpPluginOptions = computed<PluginPHPOptions>(() => ({
+    phpVersion: phpVersion.value,
+    trailingCommaPHP: trailingCommaPHP.value,
+    braceStyle: braceStyle.value,
+  }))
+
   const svelteSortOrder = useStorage<PluginSvelteOptions['svelteSortOrder']>(
     'svelteSortOrder',
     DEFAULT_SVELTE_OPTIONS.svelteSortOrder,
@@ -148,6 +176,11 @@ export const useOptionsStore = defineStore('options', () => {
     xmlQuoteAttributes,
     xmlWhitespaceSensitivity,
     xmlPluginOptions,
+
+    phpVersion,
+    trailingCommaPHP,
+    braceStyle,
+    phpPluginOptions,
 
     svelteSortOrder,
     svelteAllowShorthand,

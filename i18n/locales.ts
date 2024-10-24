@@ -19,6 +19,7 @@ export type LocaleMessageKey =
   | 'prettierOptions'
   | 'pluginSvelteOptions'
   | 'pluginXMLOptions'
+  | 'pluginPHPOptions'
   | 'userConfigs'
 
 export type Messages = Record<LocaleMessageKey, string>
@@ -47,6 +48,7 @@ export const localeEn: Messages = {
   prettierOptions: 'Prettier Options',
   pluginSvelteOptions: 'Svelte Plugin Options',
   pluginXMLOptions: 'XML Plugin Options',
+  pluginPHPOptions: 'PHP Plugin Options',
   userConfigs: 'User Configs',
 }
 
@@ -74,5 +76,6 @@ export const localeZhCN: Messages = {
   prettierOptions: 'Prettier 配置',
   pluginSvelteOptions: 'Svelte 插件配置',
   pluginXMLOptions: 'XML 插件件配置',
+  pluginPHPOptions: 'PHP 插件配置',
   userConfigs: '用户配置',
 }

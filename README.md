@@ -34,6 +34,7 @@
 ### Official language plugins
 
 - XML (via [@prettier/plugin-xml](https://github.com/prettier/plugin-xml))
+- PHP (via [@prettier/plugin-php](https://github.com/prettier/plugin-php))
 
 ### Community language plugins
 

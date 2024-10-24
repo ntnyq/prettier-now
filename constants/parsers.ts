@@ -37,6 +37,9 @@ export const PARSERS_MAP = {
   // plugin xml
   xml: 'xml',
 
+  // plugin php
+  php: 'php',
+
   // plugin graphql
   graphql: 'graphql',
 

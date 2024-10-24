@@ -13,6 +13,7 @@ import { javascript } from '@codemirror/lang-javascript'
 import { json } from '@codemirror/lang-json'
 import { less } from '@codemirror/lang-less'
 import { markdown } from '@codemirror/lang-markdown'
+import { php } from '@codemirror/lang-php'
 import { sass } from '@codemirror/lang-sass'
 import { vue } from '@codemirror/lang-vue'
 import { xml } from '@codemirror/lang-xml'
@@ -95,6 +96,12 @@ export const languages: Language[] = [
     name: 'Sass',
     icon: 'i-vscode-icons:file-type-scss',
     extension: () => sass(),
+  },
+  {
+    id: 'php',
+    name: 'PHP',
+    icon: 'i-vscode-icons:file-type-php',
+    extension: () => php(),
   },
   {
     id: 'graphql',

@@ -1,7 +1,8 @@
 /**
- * @file format
+ * @file format via prettier
  */
 
+import pluginPhp from '@prettier/plugin-php/standalone'
 import pluginXml from '@prettier/plugin-xml'
 import pluginAngular from 'prettier/plugins/angular'
 import pluginBabel from 'prettier/plugins/babel'
@@ -13,10 +14,9 @@ import pluginPostCSS from 'prettier/plugins/postcss'
 import pluginTypeScript from 'prettier/plugins/typescript'
 import pluginYaml from 'prettier/plugins/yaml'
 import { format } from 'prettier/standalone'
-// @ts-expect-error missing types
 import * as pluginSvelte from 'prettier-plugin-svelte/browser'
 import type { Options, Plugin } from 'prettier'
-import type { PluginSvelteOptions, PluginXMLOptions } from '@/types/options'
+import type { PluginPHPOptions, PluginSvelteOptions, PluginXMLOptions } from '@/types/options'
 
 export const plugins: Plugin[] = [
   pluginAngular,
@@ -30,9 +30,11 @@ export const plugins: Plugin[] = [
   pluginSvelte,
   pluginTypeScript,
   pluginXml,
+  pluginPhp,
 ]
 
-export type FormatOptions = Options & Partial<PluginXMLOptions> & Partial<PluginSvelteOptions>
+export type FormatOptions = Options &
+  Partial<PluginXMLOptions & PluginPHPOptions & PluginSvelteOptions>
 
 export function formatViaPrettier(source: string, options: FormatOptions = {}) {
   return format(source, options)

@@ -25,17 +25,16 @@ const props = withDefaults(
 )
 const code = defineModel<string>()
 
-const resolvedExtensions = computed<Extension[]>(() => {
-  return [
-    // External extension
-    ...(props.extensions ?? []),
+const resolvedExtensions = computed<Extension[]>(() => [
+  // External extension
+  ...props.extensions,
 
-    ...(props.language ? [languages.find(item => item.id === props.language)!.extension()] : []),
+  // Language extension
+  ...(props.language ? [languages.find(item => item.id === props.language)!.extension()] : []),
 
-    // Theme extension
-    isDark.value ? githubDark : githubLight,
-  ]
-})
+  // Theme extension
+  isDark.value ? githubDark : githubLight,
+])
 </script>
 
 <template>

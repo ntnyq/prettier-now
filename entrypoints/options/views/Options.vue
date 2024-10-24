@@ -176,6 +176,104 @@ const configStore = useConfigStore()
         </div>
       </div>
 
+      <!-- Plugin XML Options -->
+      <div class="relative py-6">
+        <h3 class="mb-5 text-3xl font-semibold">{{ t('pluginXMLOptions') }}</h3>
+        <div class="flex flex-col gap-4">
+          <OptionItem
+            title="xmlSelfClosingSpace"
+            description="Adds a space before self-closing tags."
+          >
+            <template #action>
+              <Switch v-model="optionsStore.xmlSelfClosingSpace" />
+            </template>
+          </OptionItem>
+          <OptionItem
+            title="xmlSortAttributesByKey"
+            description="Orders XML attributes by key alphabetically while prioritizing xmlns attributes."
+          >
+            <template #action>
+              <Switch v-model="optionsStore.xmlSortAttributesByKey" />
+            </template>
+          </OptionItem>
+          <OptionItem
+            title="xmlQuoteAttributes"
+            description="How to quoted attributes in XML."
+          >
+            <template #action>
+              <Select
+                v-model="optionsStore.xmlQuoteAttributes"
+                :items="['preserve', 'double', 'single']"
+              />
+            </template>
+          </OptionItem>
+          <OptionItem
+            title="xmlWhitespaceSensitivity"
+            description="How to handle whitespaces in XML."
+          >
+            <template #action>
+              <Select
+                v-model="optionsStore.xmlWhitespaceSensitivity"
+                :items="['strict', 'ignore', 'preserve']"
+              />
+            </template>
+          </OptionItem>
+        </div>
+      </div>
+
+      <!-- Plugin PHP Options -->
+      <div class="relative py-6">
+        <h3 class="mb-5 text-3xl font-semibold">{{ t('pluginPHPOptions') }}</h3>
+        <div class="flex flex-col gap-4">
+          <OptionItem
+            title="phpVersion"
+            description="Specifying the minimum target PHP version."
+          >
+            <template #action>
+              <Select
+                v-model="optionsStore.phpVersion"
+                :items="[
+                  '5.0',
+                  '5.1',
+                  '5.2',
+                  '5.3',
+                  '5.4',
+                  '5.5',
+                  '5.6',
+                  '7.0',
+                  '7.1',
+                  '7.2',
+                  '7.3',
+                  '7.4',
+                  '8.0',
+                  '8.1',
+                  '8.2',
+                ]"
+              />
+            </template>
+          </OptionItem>
+          <OptionItem
+            title="trailingCommaPHP"
+            description="Print trailing commas wherever possible when multi-line."
+          >
+            <template #action>
+              <Switch v-model="optionsStore.trailingCommaPHP" />
+            </template>
+          </OptionItem>
+          <OptionItem
+            title="braceStyle"
+            description="Print one space or newline for code blocks (classes and functions)."
+          >
+            <template #action>
+              <Select
+                v-model="optionsStore.braceStyle"
+                :items="['per-cs', '1tbs']"
+              />
+            </template>
+          </OptionItem>
+        </div>
+      </div>
+
       <!-- Plugin Svelte Options -->
       <div class="relative py-6">
         <h3 class="mb-5 text-3xl font-semibold">{{ t('pluginSvelteOptions') }}</h3>
@@ -231,51 +329,6 @@ const configStore = useConfigStore()
           >
             <template #action>
               <Switch v-model="optionsStore.svelteIndentScriptAndStyle" />
-            </template>
-          </OptionItem>
-        </div>
-      </div>
-
-      <!-- Plugin XML Options -->
-      <div class="relative py-6">
-        <h3 class="mb-5 text-3xl font-semibold">{{ t('pluginXMLOptions') }}</h3>
-        <div class="flex flex-col gap-4">
-          <OptionItem
-            title="xmlSelfClosingSpace"
-            description="Adds a space before self-closing tags."
-          >
-            <template #action>
-              <Switch v-model="optionsStore.xmlSelfClosingSpace" />
-            </template>
-          </OptionItem>
-          <OptionItem
-            title="xmlSortAttributesByKey"
-            description="Orders XML attributes by key alphabetically while prioritizing xmlns attributes."
-          >
-            <template #action>
-              <Switch v-model="optionsStore.xmlSortAttributesByKey" />
-            </template>
-          </OptionItem>
-          <OptionItem
-            title="xmlQuoteAttributes"
-            description="How to quoted attributes in XML."
-          >
-            <template #action>
-              <Select
-                v-model="optionsStore.xmlQuoteAttributes"
-                :items="['preserve', 'double', 'single']"
-              />
-            </template>
-          </OptionItem>
-          <OptionItem
-            title="xmlWhitespaceSensitivity"
-            description="How to handle whitespaces in XML."
-          >
-            <template #action>
-              <Select
-                v-model="optionsStore.xmlWhitespaceSensitivity"
-                :items="['strict', 'ignore', 'preserve']"
-              />
             </template>
           </OptionItem>
         </div>
