@@ -9,6 +9,7 @@
 import { angular } from '@codemirror/lang-angular'
 import { css } from '@codemirror/lang-css'
 import { html } from '@codemirror/lang-html'
+import { java } from '@codemirror/lang-java'
 import { javascript } from '@codemirror/lang-javascript'
 import { json } from '@codemirror/lang-json'
 import { less } from '@codemirror/lang-less'
@@ -98,18 +99,6 @@ export const languages: Language[] = [
     extension: () => sass(),
   },
   {
-    id: 'php',
-    name: 'PHP',
-    icon: 'i-vscode-icons:file-type-php',
-    extension: () => php(),
-  },
-  {
-    id: 'graphql',
-    name: 'GraphQL',
-    icon: 'i-vscode-icons:file-type-graphql',
-    extension: () => graphql(),
-  },
-  {
     id: 'xml',
     name: 'XML',
     icon: 'i-vscode-icons:file-type-xml',
@@ -132,5 +121,23 @@ export const languages: Language[] = [
     name: 'Markdown',
     icon: 'i-vscode-icons:file-type-markdown',
     extension: () => markdown(),
+  },
+  {
+    id: 'php',
+    name: 'PHP',
+    icon: 'i-vscode-icons:file-type-php',
+    extension: () => php(),
+  },
+  {
+    id: 'java',
+    name: 'Java',
+    icon: 'i-vscode-icons:file-type-java',
+    extension: () => java(),
+  },
+  {
+    id: 'graphql',
+    name: 'GraphQL',
+    icon: 'i-vscode-icons:file-type-graphql',
+    extension: () => graphql(),
   },
 ]

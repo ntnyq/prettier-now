@@ -14,7 +14,6 @@ declare module 'vue' {
     Editor: typeof import('./../components/Editor/index.vue')['default']
     EditorResult: typeof import('./../components/EditorResult.vue')['default']
     EditorSource: typeof import('./../components/EditorSource.vue')['default']
-    Input: typeof import('./../components/ui/Input.vue')['default']
     InputNumber: typeof import('./../components/ui/InputNumber.vue')['default']
     LanguageSelect: typeof import('./../components/LanguageSelect.vue')['default']
     MoreAction: typeof import('./../components/navbar/MoreAction.vue')['default']

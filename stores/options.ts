@@ -6,12 +6,14 @@ import { defineStore } from 'pinia'
 import { computed } from 'vue'
 import { useStorage } from '@/composables/useStorage'
 import {
+  DEFAULT_JAVA_OPTIONS,
   DEFAULT_OPTIONS,
   DEFAULT_PHP_OPTIONS,
   DEFAULT_SVELTE_OPTIONS,
   DEFAULT_XML_OPTIONS,
 } from '@/constants/options'
 import type {
+  PluginJavaOptions,
   PluginPHPOptions,
   PluginSvelteOptions,
   PluginXMLOptions,
@@ -126,6 +128,11 @@ export const useOptionsStore = defineStore('options', () => {
     braceStyle: braceStyle.value,
   }))
 
+  const entrypoint = useStorage<string>('entrypoint', DEFAULT_JAVA_OPTIONS.entrypoint)
+  const javaPluginOptions = computed<PluginJavaOptions>(() => ({
+    entrypoint: entrypoint.value,
+  }))
+
   const svelteSortOrder = useStorage<PluginSvelteOptions['svelteSortOrder']>(
     'svelteSortOrder',
     DEFAULT_SVELTE_OPTIONS.svelteSortOrder,
@@ -181,6 +188,9 @@ export const useOptionsStore = defineStore('options', () => {
     trailingCommaPHP,
     braceStyle,
     phpPluginOptions,
+
+    entrypoint,
+    javaPluginOptions,
 
     svelteSortOrder,
     svelteAllowShorthand,

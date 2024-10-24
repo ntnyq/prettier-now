@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useI18n } from 'petite-vue-i18n'
+import { JAVA_ENTRYPOINTS } from '@/constants/options'
 import { useConfigStore } from '@/stores/config'
 import { useOptionsStore } from '@/stores/options'
 
@@ -268,6 +269,24 @@ const configStore = useConfigStore()
               <Select
                 v-model="optionsStore.braceStyle"
                 :items="['per-cs', '1tbs']"
+              />
+            </template>
+          </OptionItem>
+        </div>
+      </div>
+
+      <!-- Plugin Java Options -->
+      <div class="relative py-6">
+        <h3 class="mb-5 text-3xl font-semibold">{{ t('pluginJavaOptions') }}</h3>
+        <div class="flex flex-col gap-4">
+          <OptionItem
+            title="entrypoint"
+            description="Prettify from the entrypoint, allowing to use prettier on snippet."
+          >
+            <template #action>
+              <Select
+                v-model="optionsStore.entrypoint"
+                :items="JAVA_ENTRYPOINTS"
               />
             </template>
           </OptionItem>

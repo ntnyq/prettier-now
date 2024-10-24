@@ -139,3 +139,7 @@ export type PluginPHPOptions = {
    */
   braceStyle: 'per-cs' | '1tbs'
 }
+
+export type PluginJavaOptions = {
+  entrypoint: string
+}

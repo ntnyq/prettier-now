@@ -37,6 +37,8 @@ export const useEditorStore = defineStore('editor', () => {
       const result = await formatViaPrettier(sourceCode.value, {
         ...optionsStore.options,
         ...optionsStore.xmlPluginOptions,
+        ...optionsStore.phpPluginOptions,
+        ...optionsStore.javaPluginOptions,
         ...optionsStore.sveltePluginOptions,
         plugins,
         parser,

@@ -40,6 +40,9 @@ export const PARSERS_MAP = {
   // plugin php
   php: 'php',
 
+  // plugin java
+  java: 'java',
+
   // plugin graphql
   graphql: 'graphql',
 

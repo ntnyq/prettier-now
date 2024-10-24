@@ -38,6 +38,7 @@
 
 ### Community language plugins
 
+- Java (via [prettier-plugin-java](https://github.com/jhipster/prettier-java))
 - Svelte (via [prettier-plugin-svelte](https://github.com/sveltejs/prettier-plugin-svelte))
 
 ## Screenshots

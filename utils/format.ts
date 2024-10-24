@@ -14,9 +14,15 @@ import pluginPostCSS from 'prettier/plugins/postcss'
 import pluginTypeScript from 'prettier/plugins/typescript'
 import pluginYaml from 'prettier/plugins/yaml'
 import { format } from 'prettier/standalone'
+import pluginJava from 'prettier-plugin-java'
 import * as pluginSvelte from 'prettier-plugin-svelte/browser'
 import type { Options, Plugin } from 'prettier'
-import type { PluginPHPOptions, PluginSvelteOptions, PluginXMLOptions } from '@/types/options'
+import type {
+  PluginJavaOptions,
+  PluginPHPOptions,
+  PluginSvelteOptions,
+  PluginXMLOptions,
+} from '@/types/options'
 
 export const plugins: Plugin[] = [
   pluginAngular,
@@ -27,14 +33,16 @@ export const plugins: Plugin[] = [
   pluginMarkdown,
   pluginPostCSS,
   pluginYaml,
-  pluginSvelte,
   pluginTypeScript,
+
   pluginXml,
+  pluginJava,
   pluginPhp,
+  pluginSvelte,
 ]
 
 export type FormatOptions = Options &
-  Partial<PluginXMLOptions & PluginPHPOptions & PluginSvelteOptions>
+  Partial<PluginXMLOptions & PluginPHPOptions & PluginJavaOptions & PluginSvelteOptions>
 
 export function formatViaPrettier(source: string, options: FormatOptions = {}) {
   return format(source, options)
