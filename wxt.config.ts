@@ -12,6 +12,43 @@ import type { Manifest } from 'wxt/browser'
 import type { Command } from '@/constants/command'
 
 export default defineConfig({
+  // TODO: use dynamic import
+  hooks: {
+    'vite:build:extendConfig': (entrypoints, viteConfig) => {
+      if (entrypoints.some(entrypoint => entrypoint.type === 'options')) {
+        if (!viteConfig.build?.rollupOptions?.output) return
+
+        function manualChunks(id: string) {
+          if (!id.includes('node_modules')) return
+
+          if (id.includes('codemirror')) {
+            return 'libs-codemirror'
+          } else if (id.includes('vue')) {
+            return 'libs-vue'
+          } else if (id.includes('lodash')) {
+            return 'libs-lodash'
+          } else if (id.includes('@prettier') || id.includes('prettier/plugin')) {
+            return 'libs-prettier-official'
+          } else if (id.includes('svelte')) {
+            return 'libs-lang-svelte'
+          } else if (id.includes('java')) {
+            return 'libs-lang-java'
+          } else if (id.includes('graphql')) {
+            return 'libs-lang-graphql'
+          }
+        }
+
+        if (Array.isArray(viteConfig.build.rollupOptions.output)) {
+          viteConfig.build.rollupOptions.output.forEach(item => {
+            item.manualChunks = manualChunks
+          })
+        } else {
+          viteConfig.build.rollupOptions.output.manualChunks = manualChunks
+        }
+      }
+    },
+  },
+
   outDir: 'dist',
 
   manifest: {
@@ -33,32 +70,16 @@ export default defineConfig({
     startUrls: ['https://ntnyq.com'],
   },
 
-  imports: {
-    dirs: [],
-    presets: [
-      'vue',
-      'pinia',
-      'vue-router',
-      {
-        package: '@vueuse/core',
-        ignore: [
-          // exported from `vue`
-          'toRef',
-          'toRefs',
-          'toValue',
-          // exported from `wxt/storage`
-          'useStorage',
-        ],
-      },
-    ],
-    addons: {
-      vueTemplate: true,
-    },
-  },
+  imports: false,
 
   vite: () => ({
     css: {
       devSourcemap: true,
+    },
+
+    build: {
+      // Max per file size for Firefox is 4MB.
+      chunkSizeWarningLimit: 4 * 1024,
     },
 
     define: {
