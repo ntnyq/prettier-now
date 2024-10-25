@@ -14,6 +14,10 @@ const appStore = useAppStore()
       />
       <EditorResult v-show="appStore.showRightLayout" />
     </div>
+
     <ActionBar />
+
+    <DropZone />
+    <LogPanel />
   </div>
 </template>

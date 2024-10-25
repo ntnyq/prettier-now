@@ -5,10 +5,12 @@ import { toggleDark } from '@/composables/useDark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
 import { useEditorStore } from '@/stores/editor'
+import { useLogStore } from '@/stores/log'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
+const logStore = useLogStore()
 const appStore = useAppStore()
 const editorStore = useEditorStore()
 </script>
@@ -37,59 +39,39 @@ const editorStore = useEditorStore()
         >
           {{ t('ms', { n: +editorStore.formatCost.toFixed(1) }) }}
         </div>
-        <button
+        <IconButton
           @click="router.push({ name: 'Options' })"
-          v-tooltip="{ content: t('settings') }"
-          type="button"
-          class="btn-icon"
-        >
-          <div class="i-ri-settings-line" />
-        </button>
-        <button
+          :tooltip="t('settings')"
+          icon="i-ri-settings-line"
+        />
+        <IconButton
           @click="appStore.toggleLeftLayout"
-          v-tooltip="{ content: t('toggleLeftLayout') }"
-          class="btn-icon"
-        >
-          <div
-            v-if="appStore.showLeftLayout"
-            class="i-ri-layout-column-fill"
-          />
-          <div
-            v-else
-            class="i-ri-layout-left-line"
-          />
-        </button>
-        <button
+          :icon="appStore.showLeftLayout ? 'i-ri-layout-column-fill' : 'i-ri-layout-left-line'"
+          :tooltip="t('toggleLeftLayout')"
+        />
+        <IconButton
           @click="appStore.toggleRightLayout"
-          v-tooltip="{ content: t('toggleRightLayout') }"
-          class="btn-icon"
-        >
-          <div
-            v-if="appStore.showRightLayout"
-            class="i-ri-layout-column-fill rotate-180"
-          />
-          <div
-            v-else
-            class="i-ri-layout-left-line rotate-180"
-          />
-        </button>
+          :icon="appStore.showRightLayout ? 'i-ri-layout-column-fill' : 'i-ri-layout-left-line'"
+          :tooltip="t('toggleRightLayout')"
+          icon-class="rotate-180"
+        />
+        <IconButton
+          @click="logStore.setIsLogPanelVisible(true)"
+          :tooltip="t('log')"
+          icon="i-lucide-logs"
+        />
       </template>
-      <button
+      <IconButton
         @click="router.push({ name: 'Home' })"
-        v-tooltip="{ content: t('home') }"
         v-else
-        type="button"
-        class="btn-icon"
-      >
-        <div class="i-ri-home-3-line" />
-      </button>
-      <button
+        :tooltip="t('home')"
+        icon="i-ri-home-3-line"
+      />
+      <IconButton
         @click="toggleDark"
-        v-tooltip="{ content: t('toggleColorMode') }"
-        class="btn-icon"
-      >
-        <div class="i-ri-sun-line dark:i-ri-moon-line" />
-      </button>
+        :tooltip="t('toggleColorMode')"
+        icon="i-ri-sun-line dark:i-ri-moon-line"
+      />
       <MoreAction />
     </div>
   </div>

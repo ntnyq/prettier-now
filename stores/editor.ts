@@ -5,7 +5,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useStorage } from '@/composables/useStorage'
-import { PARSERS_MAP } from '@/constants/parsers'
+import { languageParsers } from '@/constants/language'
 import { useOptionsStore } from '@/stores/options'
 import { formatViaPrettier, plugins } from '@/utils/format'
 import { Logger } from '@/utils/logger'
@@ -28,7 +28,7 @@ export const useEditorStore = defineStore('editor', () => {
   const formatCost = ref(0)
 
   const formatCode = async () => {
-    const parser = PARSERS_MAP[activeLanguage.value as keyof typeof PARSERS_MAP]
+    const parser = languageParsers[activeLanguage.value as keyof typeof languageParsers]
     if (!parser) return
 
     formatStartTime.value = Date.now()

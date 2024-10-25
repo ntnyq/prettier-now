@@ -51,9 +51,7 @@ function handleShowDialog() {
     placement="bottom"
     class="flex"
   >
-    <button class="btn-icon">
-      <div class="i-ri:menu-fill" />
-    </button>
+    <IconButton icon="i-ri:menu-fill" />
 
     <template #popper>
       <DropdownItem

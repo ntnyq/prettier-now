@@ -3,7 +3,9 @@ export type LocaleMessageKey =
   | 'toggleLeftLayout'
   | 'toggleRightLayout'
   | 'toggleColorMode'
+  | 'dragFileHere'
   | 'settings'
+  | 'log'
   | 'home'
   | 'clearAll'
   | 'copyResult'
@@ -22,6 +24,8 @@ export type LocaleMessageKey =
   | 'pluginJavaOptions'
   | 'pluginSvelteOptions'
   | 'userConfigs'
+  | 'emptyFile'
+  | 'unsupportedFileFormat'
 
 export type Messages = Record<LocaleMessageKey, string>
 
@@ -29,7 +33,9 @@ export const localeEn: Messages = {
   toggleLeftLayout: 'Toggle Left Layout',
   toggleRightLayout: 'Toggle Right Layout',
   toggleColorMode: 'Toggle Color Mode',
+  dragFileHere: 'Drag File Here',
   settings: 'Settings',
+  log: 'Log',
   home: 'Home',
   sourceCode: 'Source Code',
   feedback: 'Feedback',
@@ -52,13 +58,18 @@ export const localeEn: Messages = {
   pluginJavaOptions: 'Java Plugin Options',
   pluginSvelteOptions: 'Svelte Plugin Options',
   userConfigs: 'User Configs',
+
+  emptyFile: 'Empty File',
+  unsupportedFileFormat: 'Unsupported File Format',
 }
 
 export const localeZhCN: Messages = {
   toggleLeftLayout: '切换左侧布局',
   toggleRightLayout: '切换右侧布局',
   toggleColorMode: '切换色彩模式',
+  dragFileHere: '拖拽文件到这里',
   settings: '设置',
+  log: '日志',
   home: '首页',
   sourceCode: '源代码',
   feedback: '意见反馈',
@@ -81,4 +92,7 @@ export const localeZhCN: Messages = {
   pluginJavaOptions: 'Java 插件配置',
   pluginSvelteOptions: 'Svelte 插件配置',
   userConfigs: '用户配置',
+
+  emptyFile: '空文件',
+  unsupportedFileFormat: '不支持的文件格式',
 }

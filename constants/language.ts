@@ -31,6 +31,10 @@ export interface Language {
   extension: () => LanguageSupport | Extension[]
 }
 
+/**
+ * Supported languages
+ * Both prettier and codemirror
+ */
 export const languages: Language[] = [
   {
     id: 'javascript',
@@ -141,3 +145,95 @@ export const languages: Language[] = [
     extension: () => graphql(),
   },
 ]
+
+/**
+ * language => prettier parser
+ */
+export const languageParsers = {
+  // plugin babel
+  javascript: 'babel',
+  json: 'json',
+  json5: 'json5',
+  jsonc: 'jsonc',
+
+  // plugin markdown
+  mdx: 'mdx',
+  remark: 'remark',
+  markdown: 'markdown',
+
+  // plugin typescript
+  typescript: 'typescript',
+
+  // plugin postCSS
+  css: 'css',
+  less: 'less',
+  sass: 'scss',
+  scss: 'scss',
+
+  // plugin HTML
+  html: 'html',
+  vue: 'vue',
+  angular: 'angular',
+
+  // plugin yaml
+  yaml: 'yaml',
+
+  // plugin xml
+  xml: 'xml',
+
+  // plugin php
+  php: 'php',
+
+  // plugin java
+  java: 'java',
+
+  // plugin graphql
+  graphql: 'graphql',
+
+  // plugin svelte
+  svelte: 'svelte',
+}
+
+/**
+ * extendsions => language
+ */
+export const languageExtensions = {
+  js: 'javascript',
+  cjs: 'javascript',
+  mjs: 'javascript',
+  jsx: 'javascript',
+
+  ts: 'typescript',
+  cts: 'typescript',
+  mts: 'typescript',
+  tsx: 'typescript',
+
+  html: 'html',
+  htm: 'html',
+
+  vue: 'vue',
+
+  svelte: 'svelte',
+
+  css: 'css',
+  less: 'less',
+  scss: 'scss',
+
+  xml: 'xml',
+  svg: 'xml',
+
+  json: 'json',
+
+  yml: 'yaml',
+  yaml: 'yaml',
+
+  md: 'markdown',
+  mdown: 'markdown',
+  markdown: 'markdown',
+
+  php: 'php',
+
+  java: 'java',
+
+  graphql: 'graphql',
+}

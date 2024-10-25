@@ -17,11 +17,9 @@ const openOptionsPage = () => {
     >
       Open Options Page
     </button>
-    <p class="text-lg">
-      or use
-      <kbd
-        class="border border-gray-300 rounded bg-gray-200 px-2 py-1 text-sm text-gray-700 font-mono shadow"
-      >
+    <p class="inline-flex items-center text-lg">
+      <span class="mr-2">or use</span>
+      <kbd class="kbd-key">
         {{ `${isMac ? 'Option' : 'Alt'}+O` }}
       </kbd>
     </p>
