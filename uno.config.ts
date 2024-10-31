@@ -38,6 +38,7 @@ export default defineConfig({
     presetUno(),
     presetIcons({
       scale: 1.2,
+      autoInstall: true,
       extraProperties: {
         color: 'inherit',
         // Avoid crushing of icons in crowded situations

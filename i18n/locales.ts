@@ -87,7 +87,7 @@ export const localeZhCN: Messages = {
   en: 'English',
 
   prettierOptions: 'Prettier 配置',
-  pluginXMLOptions: 'XML 插件件配置',
+  pluginXMLOptions: 'XML 插件配置',
   pluginPHPOptions: 'PHP 插件配置',
   pluginJavaOptions: 'Java 插件配置',
   pluginSvelteOptions: 'Svelte 插件配置',

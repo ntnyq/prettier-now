@@ -42,35 +42,35 @@ const editorStore = useEditorStore()
         <IconButton
           @click="router.push({ name: 'Options' })"
           :tooltip="t('settings')"
-          icon="i-ri-settings-line"
+          icon="i-ri:settings-line"
         />
         <IconButton
           @click="appStore.toggleLeftLayout"
-          :icon="appStore.showLeftLayout ? 'i-ri-layout-column-fill' : 'i-ri-layout-left-line'"
+          :icon="appStore.showLeftLayout ? 'i-ri:layout-column-fill' : 'i-ri:layout-left-line'"
           :tooltip="t('toggleLeftLayout')"
         />
         <IconButton
           @click="appStore.toggleRightLayout"
-          :icon="appStore.showRightLayout ? 'i-ri-layout-column-fill' : 'i-ri-layout-left-line'"
+          :icon="appStore.showRightLayout ? 'i-ri:layout-column-fill' : 'i-ri:layout-left-line'"
           :tooltip="t('toggleRightLayout')"
           icon-class="rotate-180"
         />
         <IconButton
           @click="logStore.setIsLogPanelVisible(true)"
           :tooltip="t('log')"
-          icon="i-lucide-logs"
+          icon="i-lucide:logs"
         />
       </template>
       <IconButton
         @click="router.push({ name: 'Home' })"
         v-else
         :tooltip="t('home')"
-        icon="i-ri-home-3-line"
+        icon="i-ri:home-3-line"
       />
       <IconButton
         @click="toggleDark"
         :tooltip="t('toggleColorMode')"
-        icon="i-ri-sun-line dark:i-ri-moon-line"
+        icon="i-ri:sun-line dark:i-ri:moon-line"
       />
       <MoreAction />
     </div>

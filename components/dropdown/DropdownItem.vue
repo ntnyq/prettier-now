@@ -43,7 +43,7 @@ const handleClick = (evt: MouseEvent) => {
     </div>
     <div
       v-if="checked && checkable"
-      class="i-ri-check-line"
+      class="i-ri:check-line"
     />
   </div>
 </template>
