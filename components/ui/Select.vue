@@ -67,7 +67,7 @@ function handleSelect(value: string) {
       role="button"
       class="h-10 min-w-120px flex items-center justify-between gap-1 border border-base rounded-md pl-2"
     >
-      <span class="block h-9 max-w-120px of-x-auto whitespace-nowrap lh-9">{{ showValue }}</span>
+      <span class="block h-9 max-w-280px of-x-auto whitespace-nowrap lh-9">{{ showValue }}</span>
       <div class="i-ri:arrow-drop-down-line text-xl text-zinc-400" />
     </button>
     <template #popper>
