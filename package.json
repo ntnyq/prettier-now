@@ -37,7 +37,7 @@
     "@codemirror/language": "^6.10.3",
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.34.2",
-    "@iconify-json/lucide": "^1.2.13",
+    "@iconify-json/lucide": "^1.2.14",
     "@iconify-json/ri": "^1.2.3",
     "@iconify-json/vscode-icons": "^1.2.2",
     "@lezer/highlight": "^1.2.1",
@@ -55,7 +55,7 @@
     "pinia": "^2.2.6",
     "prettier": "^3.3.3",
     "prettier-plugin-java": "^2.6.5",
-    "prettier-plugin-svelte": "^3.2.7",
+    "prettier-plugin-svelte": "^3.2.8",
     "type-fest": "^4.26.1",
     "vercel-toast": "^1.8.0",
     "vue": "^3.5.12",
@@ -63,9 +63,8 @@
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^3.2.0",
+    "@ntnyq/eslint-config": "^3.2.1",
     "@ntnyq/prettier-config": "^1.21.3",
-    "@unocss/eslint-config": "^0.64.0",
     "@vitejs/plugin-vue": "^5.1.5",
     "bumpp": "^9.8.1",
     "eslint": "^9.14.0",

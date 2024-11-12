@@ -12,14 +12,14 @@ const dialogRef = useTemplateRef('dialogRef')
 const actions = computed(() => [
   {
     name: t('feedback'),
-    icon: 'i-ri:feedback-fill',
+    icon: 'i-ri:feedback-line',
     action() {
       openExternalURL(LINKS.feedback)
     },
   },
   {
     name: t('changelog'),
-    icon: 'i-ri:price-tag-3-fill',
+    icon: 'i-ri:price-tag-3-line',
     action() {
       openExternalURL(LINKS.changelog)
     },
@@ -33,7 +33,7 @@ const actions = computed(() => [
   },
   {
     name: t('about'),
-    icon: 'i-ri:file-info-fill',
+    icon: 'i-ri:file-info-line',
     action() {
       handleShowDialog()
     },
