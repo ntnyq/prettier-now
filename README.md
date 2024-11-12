@@ -14,6 +14,11 @@
 
 [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/firefox/firefox.svg" width="48" alt="Chrome" valign="middle">][link-firefox] [<img valign="middle" src="https://img.shields.io/amo/v/prettier-now.svg?label=%20" alt="version">][link-firefox]
 
+## Features
+
+- Format source code with customable options
+- Drag and drop file to format
+
 ## Supported languages
 
 ### Built-in language plugins
