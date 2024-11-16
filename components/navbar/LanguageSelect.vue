@@ -12,7 +12,11 @@ const currentLanguage = computed(() =>
 
 <template>
   <Dropdown class="flex">
-    <button class="flex items-center gap-1">
+    <button
+      type="button"
+      role="button"
+      class="flex items-center gap-1"
+    >
       <div :class="currentLanguage?.icon" />
       {{ currentLanguage?.name }}
     </button>

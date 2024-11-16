@@ -1,3 +1,7 @@
+/**
+ * @file i18n locales
+ */
+
 export type LocaleMessageKey =
   | 'formatCostTime'
   | 'toggleLeftLayout'

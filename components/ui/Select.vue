@@ -65,6 +65,7 @@ function handleSelect(value: string) {
   >
     <button
       role="button"
+      type="button"
       class="h-10 min-w-120px flex items-center justify-between gap-1 border border-base rounded-md pl-2"
     >
       <span class="block h-9 max-w-280px of-x-auto whitespace-nowrap lh-9">{{ showValue }}</span>

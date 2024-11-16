@@ -12,6 +12,9 @@ defineProps<{
 const emits = defineEmits<{
   click: [evt: MouseEvent]
 }>()
+defineOptions({
+  inheritAttrs: false,
+})
 
 const { hide } = inject(dropdownContextKey, undefined) || {}
 

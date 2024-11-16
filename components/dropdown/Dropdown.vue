@@ -14,6 +14,9 @@ withDefaults(
     showTriggers: () => ['click'],
   },
 )
+defineOptions({
+  inheritAttrs: false,
+})
 
 const dropdownRef = useTemplateRef('dropdownRef')
 
