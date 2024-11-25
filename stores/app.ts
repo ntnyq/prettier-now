@@ -3,7 +3,7 @@
  */
 
 import { defineStore } from 'pinia'
-import { useStorage } from '@/composables/useStorage'
+import { useStorage } from '@/composables/storage'
 
 export const useAppStore = defineStore('app', () => {
   const showLeftLayout = useStorage<boolean>('showLeftLayout', true)

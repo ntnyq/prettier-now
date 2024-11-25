@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Dropdown as VDropdown } from 'floating-vue'
 import { provide, useTemplateRef } from 'vue'
-import { isDark } from '@/composables/useDark'
+import { isDark } from '@/composables/dark'
 import { dropdownContextKey } from './ctx'
 import type { Placement, TriggerEvent } from 'floating-vue'
 

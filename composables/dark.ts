@@ -7,7 +7,7 @@ import { nextTick } from 'vue'
 
 export const isDark = useDark()
 
-const isAppearanceTransition =
+const supportViewTransition =
   typeof document !== 'undefined' &&
   !!document.startViewTransition &&
   !window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -17,7 +17,7 @@ const isAppearanceTransition =
  * @see https://github.com/vuejs/vitepress/pull/2347
  */
 export function toggleDark(event?: MouseEvent) {
-  if (!isAppearanceTransition || !event) {
+  if (!supportViewTransition || !event) {
     isDark.value = !isDark.value
     return
   }

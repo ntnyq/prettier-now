@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { Codemirror } from 'vue-codemirror'
-import { isDark } from '@/composables/useDark'
+import { isDark } from '@/composables/dark'
 import { languages } from '@/constants/language'
 import { githubDark, githubLight } from './theme'
 import type { Extension } from '@codemirror/state'

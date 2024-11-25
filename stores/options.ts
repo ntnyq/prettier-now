@@ -4,7 +4,7 @@
 
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
-import { useStorage } from '@/composables/useStorage'
+import { useStorage } from '@/composables/storage'
 import {
   DEFAULT_JAVA_OPTIONS,
   DEFAULT_OPTIONS,

@@ -4,6 +4,8 @@
 
 import pluginPhp from '@prettier/plugin-php/standalone'
 import pluginXml from '@prettier/plugin-xml'
+import pluginJava from 'prettier-plugin-java'
+import * as pluginSvelte from 'prettier-plugin-svelte/browser'
 import pluginAngular from 'prettier/plugins/angular'
 import pluginBabel from 'prettier/plugins/babel'
 import pluginEstree from 'prettier/plugins/estree'
@@ -14,8 +16,6 @@ import pluginPostCSS from 'prettier/plugins/postcss'
 import pluginTypeScript from 'prettier/plugins/typescript'
 import pluginYaml from 'prettier/plugins/yaml'
 import { format } from 'prettier/standalone'
-import pluginJava from 'prettier-plugin-java'
-import * as pluginSvelte from 'prettier-plugin-svelte/browser'
 import type { Options, Plugin } from 'prettier'
 import type {
   PluginJavaOptions,
