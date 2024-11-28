@@ -15,10 +15,11 @@ const currentLanguage = computed(() =>
     <button
       type="button"
       role="button"
-      class="flex items-center gap-1"
+      class="flex items-center gap-1 px-2 hover:bg-zinc-100 dark:hover:bg-zinc-700"
     >
       <div :class="currentLanguage?.icon" />
-      {{ currentLanguage?.name }}
+      <span>{{ currentLanguage?.name }}</span>
+      <div class="i-ri:arrow-down-s-line op-50" />
     </button>
     <template #popper>
       <DropdownItem

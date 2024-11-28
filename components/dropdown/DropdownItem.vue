@@ -41,7 +41,7 @@ const handleClick = (evt: MouseEvent) => {
       </slot>
       <div
         v-if="!checked && checkable"
-        class="h-[1.2em] w-[1.2em]"
+        class="h-1.2em w-1.2em"
       />
     </div>
     <div

@@ -5,12 +5,12 @@ import { toggleDark } from '@/composables/dark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
 import { useEditorStore } from '@/stores/editor'
-import { useLogStore } from '@/stores/log'
+// import { useLogStore } from '@/stores/log'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
-const logStore = useLogStore()
+// const logStore = useLogStore()
 const appStore = useAppStore()
 const editorStore = useEditorStore()
 </script>
@@ -55,11 +55,13 @@ const editorStore = useEditorStore()
           :tooltip="t('toggleRightLayout')"
           icon-class="rotate-180"
         />
-        <IconButton
+        <!--
+          <IconButton
           @click="logStore.setIsLogPanelVisible(true)"
           :tooltip="t('log')"
           icon="i-lucide:logs"
-        />
+          /> 
+        -->
       </template>
       <IconButton
         @click="router.push({ name: 'Home' })"

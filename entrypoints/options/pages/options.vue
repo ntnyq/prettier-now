@@ -11,7 +11,7 @@ const configStore = useConfigStore()
 
 <template>
   <div class="relative overflow-y-auto">
-    <div class="mx-auto max-w-[720px] p-8">
+    <div class="mx-auto max-w-720px p-8">
       <!-- Prettier Core Options -->
       <div class="relative py-6">
         <h3 class="mb-5 text-3xl font-semibold">{{ t('prettierOptions') }}</h3>

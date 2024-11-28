@@ -38,7 +38,7 @@ const resolvedExtensions = computed<Extension[]>(() => [
 </script>
 
 <template>
-  <div class="">
+  <div class="relative">
     <Codemirror
       v-model="code"
       :extensions="resolvedExtensions"
