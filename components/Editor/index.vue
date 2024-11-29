@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { isDark } from '@/composables/dark'
-import { languages } from '@/constants/language'
+import { codemirrorLanguageCache } from '@/utils/cache'
 import { githubDark, githubLight } from './theme'
 import type { Extension } from '@codemirror/state'
 
@@ -30,7 +30,9 @@ const resolvedExtensions = computed<Extension[]>(() => [
   ...props.extensions,
 
   // Language extension
-  ...(props.language ? [languages.find(item => item.id === props.language)!.extension()] : []),
+  ...(props.language && codemirrorLanguageCache.get(props.language)
+    ? [codemirrorLanguageCache.get(props.language)!]
+    : []),
 
   // Theme extension
   isDark.value ? githubDark : githubLight,

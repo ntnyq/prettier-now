@@ -1,18 +1,37 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { languages } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
+import { codemirrorLanguageCache } from '@/utils/cache'
 import type { Language } from '@/constants/language'
 
 const editorStore = useEditorStore()
 
 const currentLanguage = computed(() =>
-  languages.find(lang => lang.id === editorStore.activeLanguageId),
+  languages.find(language => language.id === editorStore.activeLanguageId),
 )
 
-function handSelectLanguage(lang: Language) {
-  editorStore.setActiveLanguageId(lang.id)
+function handSelectLanguage(language: Language) {
+  editorStore.setActiveLanguageId(language.id)
 }
+
+watch(
+  currentLanguage,
+  async () => {
+    const languageId = editorStore.activeLanguageId
+
+    if (codemirrorLanguageCache.has(languageId)) return
+
+    const languageSupport = await currentLanguage.value?.extension()
+
+    if (!languageSupport) return
+
+    codemirrorLanguageCache.set(languageId, languageSupport)
+  },
+  {
+    immediate: true,
+  },
+)
 </script>
 
 <template>
@@ -28,12 +47,12 @@ function handSelectLanguage(lang: Language) {
     </button>
     <template #popper>
       <DropdownItem
-        @click="handSelectLanguage(lang)"
-        v-for="lang in languages"
-        :key="lang.id"
-        :icon="lang.icon"
-        :text="lang.name"
-        :checked="editorStore.activeLanguageId === lang.id"
+        @click="handSelectLanguage(language)"
+        v-for="language in languages"
+        :key="language.id"
+        :icon="language.icon"
+        :text="language.name"
+        :checked="editorStore.activeLanguageId === language.id"
         checkable
       />
     </template>

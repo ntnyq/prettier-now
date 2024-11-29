@@ -47,16 +47,16 @@ async function onImportFile(files?: FileList | null) {
   const fileExt = file.name.split('.').pop()?.toLowerCase()
   const fileContent = await file.text()
 
-  const language = languageExtensions[fileExt as keyof typeof languageExtensions]
+  const languageId = languageExtensions[fileExt as keyof typeof languageExtensions]
 
-  if (!language) {
+  if (!languageId) {
     return Toast.error(t('unsupportedFileFormat'))
   }
   if (!fileContent.trim().length) {
     return Toast.error(t('emptyFile'))
   }
 
-  editorStore.setActiveLanguage(language)
+  editorStore.setActiveLanguageId(languageId)
   editorStore.sourceCode = fileContent
 
   editorStore.formatCode()
