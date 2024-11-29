@@ -8,7 +8,7 @@ const editorStore = useEditorStore()
   <div class="min-w-0 flex flex-1">
     <Editor
       v-model="editorStore.resultCode"
-      :language="editorStore.activeLanguage"
+      :language="editorStore.activeLanguageId"
       class="h-full min-w-0 flex-1"
       disabled
     />

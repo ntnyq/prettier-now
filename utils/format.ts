@@ -15,7 +15,6 @@ import pluginMarkdown from 'prettier/plugins/markdown'
 import pluginPostCSS from 'prettier/plugins/postcss'
 import pluginTypeScript from 'prettier/plugins/typescript'
 import pluginYaml from 'prettier/plugins/yaml'
-import { format } from 'prettier/standalone'
 import type { Options, Plugin } from 'prettier'
 import type {
   PluginJavaOptions,
@@ -44,6 +43,7 @@ export const plugins: Plugin[] = [
 export type FormatOptions = Options &
   Partial<PluginXMLOptions & PluginPHPOptions & PluginJavaOptions & PluginSvelteOptions>
 
-export function formatViaPrettier(source: string, options: FormatOptions = {}) {
+export async function formatViaPrettier(source: string, options: FormatOptions = {}) {
+  const { format } = await import('prettier/standalone')
   return format(source, options)
 }

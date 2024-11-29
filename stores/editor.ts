@@ -17,10 +17,10 @@ export const useEditorStore = defineStore('editor', () => {
 
   const optionsStore = useOptionsStore()
 
-  const activeLanguage = useStorage<string>('activeLanguage', 'javascript')
+  const activeLanguageId = useStorage<string>('activeLanguageId', 'javascript')
 
-  const setActiveLanguage = (language: string) => {
-    activeLanguage.value = language
+  const setActiveLanguageId = (languageId: string) => {
+    activeLanguageId.value = languageId
   }
 
   const formatStartTime = ref(0)
@@ -28,7 +28,7 @@ export const useEditorStore = defineStore('editor', () => {
   const formatCost = ref(0)
 
   const formatCode = async () => {
-    const parser = languageParsers[activeLanguage.value as keyof typeof languageParsers]
+    const parser = languageParsers[activeLanguageId.value as keyof typeof languageParsers]
     if (!parser) return
 
     formatStartTime.value = Date.now()
@@ -69,8 +69,8 @@ export const useEditorStore = defineStore('editor', () => {
     sourceCode,
     resultCode,
 
-    activeLanguage,
-    setActiveLanguage,
+    activeLanguageId,
+    setActiveLanguageId,
 
     formatCost,
     formatCode,

@@ -29,6 +29,6 @@ watch(
 <template>
   <Editor
     v-model="editorStore.sourceCode"
-    :language="editorStore.activeLanguage"
+    :language="editorStore.activeLanguageId"
   />
 </template>

@@ -2,12 +2,17 @@
 import { computed } from 'vue'
 import { languages } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
+import type { Language } from '@/constants/language'
 
 const editorStore = useEditorStore()
 
 const currentLanguage = computed(() =>
-  languages.find(lang => lang.id === editorStore.activeLanguage),
+  languages.find(lang => lang.id === editorStore.activeLanguageId),
 )
+
+function handSelectLanguage(lang: Language) {
+  editorStore.setActiveLanguageId(lang.id)
+}
 </script>
 
 <template>
@@ -23,12 +28,12 @@ const currentLanguage = computed(() =>
     </button>
     <template #popper>
       <DropdownItem
-        @click="editorStore.setActiveLanguage(lang.id)"
+        @click="handSelectLanguage(lang)"
         v-for="lang in languages"
         :key="lang.id"
         :icon="lang.icon"
         :text="lang.name"
-        :checked="editorStore.activeLanguage === lang.id"
+        :checked="editorStore.activeLanguageId === lang.id"
         checkable
       />
     </template>
