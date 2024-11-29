@@ -2,9 +2,7 @@
  * @file Supported languages
  */
 
-/**
- * @unocss-include
- */
+// @unocss-include
 
 import { angular } from '@codemirror/lang-angular'
 import { css } from '@codemirror/lang-css'

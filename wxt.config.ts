@@ -13,41 +13,43 @@ import type { Command } from '@/constants/command'
 
 export default defineConfig({
   // TODO: use dynamic import
-  hooks: {
-    'vite:build:extendConfig': (entrypoints, viteConfig) => {
-      if (entrypoints.some(entrypoint => entrypoint.type === 'options')) {
-        if (!viteConfig.build?.rollupOptions?.output) return
+  // hooks: {
+  //   'vite:build:extendConfig': (entrypoints, viteConfig) => {
+  //     if (entrypoints.some(entrypoint => entrypoint.type === 'options')) {
+  //       if (!viteConfig.build?.rollupOptions?.output) return
 
-        function manualChunks(id: string) {
-          if (!id.includes('node_modules')) return
+  //       function manualChunks(id: string) {
+  //         if (!id.includes('node_modules')) return
 
-          if (id.includes('codemirror')) {
-            return 'libs-codemirror'
-          } else if (id.includes('vue')) {
-            return 'libs-vue'
-          } else if (id.includes('lodash')) {
-            return 'libs-lodash'
-          } else if (id.includes('@prettier') || id.includes('prettier/plugin')) {
-            return 'libs-prettier-official'
-          } else if (id.includes('svelte')) {
-            return 'libs-lang-svelte'
-          } else if (id.includes('java')) {
-            return 'libs-lang-java'
-          } else if (id.includes('graphql')) {
-            return 'libs-lang-graphql'
-          }
-        }
+  //         if (id.includes('codemirror')) {
+  //           return 'libs-codemirror'
+  //         } else if (id.includes('vue')) {
+  //           return 'libs-vue'
+  //         } else if (id.includes('lodash')) {
+  //           return 'libs-lodash'
+  //         } else if (id.includes('@prettier') || id.includes('prettier/plugin')) {
+  //           return 'libs-prettier-official'
+  //         } else if (id.includes('svelte')) {
+  //           return 'libs-lang-svelte'
+  //         } else if (id.includes('javascript')) {
+  //           return 'libs-lang-javascript'
+  //         } else if (id.includes('java')) {
+  //           return 'libs-lang-java'
+  //         } else if (id.includes('graphql')) {
+  //           return 'libs-lang-graphql'
+  //         }
+  //       }
 
-        if (Array.isArray(viteConfig.build.rollupOptions.output)) {
-          viteConfig.build.rollupOptions.output.forEach(item => {
-            item.manualChunks = manualChunks
-          })
-        } else {
-          viteConfig.build.rollupOptions.output.manualChunks = manualChunks
-        }
-      }
-    },
-  },
+  //       if (Array.isArray(viteConfig.build.rollupOptions.output)) {
+  //         viteConfig.build.rollupOptions.output.forEach(item => {
+  //           item.manualChunks = manualChunks
+  //         })
+  //       } else {
+  //         viteConfig.build.rollupOptions.output.manualChunks = manualChunks
+  //       }
+  //     }
+  //   },
+  // },
 
   outDir: 'dist',
 
