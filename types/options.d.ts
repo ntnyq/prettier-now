@@ -4,109 +4,16 @@
 
 import type { RequiredOptions } from 'prettier'
 
-export type PrettierOptions = Required<
-  Pick<
-    RequiredOptions,
-    | 'printWidth'
-    | 'tabWidth'
-    | 'useTabs'
-    | 'semi'
-    | 'singleQuote'
-    | 'jsxSingleQuote'
-    | 'trailingComma'
-    | 'bracketSpacing'
-    | 'bracketSameLine'
-    | 'arrowParens'
-    | 'proseWrap'
-    | 'htmlWhitespaceSensitivity'
-    | 'endOfLine'
-    | 'quoteProps'
-    | 'vueIndentScriptAndStyle'
-    | 'embeddedLanguageFormatting'
-    | 'singleAttributePerLine'
-    | 'experimentalTernaries'
-  >
->
-
-export type PluginSvelteOptions = {
-  /**
-   * Sort order for scripts, markup, and styles
-   *
-   * @default `options-scripts-markup-styles`
-   */
-  svelteSortOrder:
-    | 'options-scripts-markup-styles'
-    | 'options-scripts-styles-markup'
-    | 'options-markup-styles-scripts'
-    | 'options-markup-scripts-styles'
-    | 'options-styles-markup-scripts'
-    | 'options-styles-scripts-markup'
-    | 'scripts-options-markup-styles'
-    | 'scripts-options-styles-markup'
-    | 'markup-options-styles-scripts'
-    | 'markup-options-scripts-styles'
-    | 'styles-options-markup-scripts'
-    | 'styles-options-scripts-markup'
-    | 'scripts-markup-options-styles'
-    | 'scripts-styles-options-markup'
-    | 'markup-styles-options-scripts'
-    | 'markup-scripts-options-styles'
-    | 'styles-markup-options-scripts'
-    | 'styles-scripts-options-markup'
-    | 'scripts-markup-styles-options'
-    | 'scripts-styles-markup-options'
-    | 'markup-styles-scripts-options'
-    | 'markup-scripts-styles-options'
-    | 'styles-markup-scripts-options'
-    | 'styles-scripts-markup-options'
-    | 'none'
-
-  /**
-   * Enable/disable component attribute shorthand if attribute name and expressions are same
-   *
-   * @default true
-   */
-  svelteAllowShorthand: boolean
-
-  /**
-   * Whether or not to indent the code inside <script> and <style> tags in Svelte files
-   *
-   * @default true
-   */
-  svelteIndentScriptAndStyle: boolean
-}
-
-export type PluginXMLOptions = {
-  /**
-   * Adds a space before self-closing tags
-   *
-   * @default true
-   */
-  xmlSelfClosingSpace: boolean
-
-  /**
-   * Orders XML attributes by key alphabetically while prioritizing xmlns attributes
-   *
-   * @default false
-   */
-  xmlSortAttributesByKey: boolean
-
-  /**
-   * How to quoted attributes in XML
-   *
-   * @default `preserve`
-   */
-  xmlQuoteAttributes: 'preserve' | 'double' | 'single'
-
-  /**
-   * How to handle whitespaces in XML
-   *
-   * @default `strict`
-   */
-  xmlWhitespaceSensitivity: 'strict' | 'ignore' | 'preserve'
+export type PluginJavaOptions = {
+  entrypoint: string
 }
 
 export type PluginPHPOptions = {
+  /**
+   * @default `per-cs`
+   */
+  braceStyle: '1tbs' | 'per-cs'
+
   /**
    * The version of PHP to use for formatting
    *
@@ -133,13 +40,106 @@ export type PluginPHPOptions = {
    * @default true
    */
   trailingCommaPHP: boolean
+}
+
+export type PluginSvelteOptions = {
+  /**
+   * Enable/disable component attribute shorthand if attribute name and expressions are same
+   *
+   * @default true
+   */
+  svelteAllowShorthand: boolean
 
   /**
-   * @default `per-cs`
+   * Whether or not to indent the code inside <script> and <style> tags in Svelte files
+   *
+   * @default true
    */
-  braceStyle: 'per-cs' | '1tbs'
+  svelteIndentScriptAndStyle: boolean
+
+  /**
+   * Sort order for scripts, markup, and styles
+   *
+   * @default `options-scripts-markup-styles`
+   */
+  svelteSortOrder:
+    | 'markup-options-scripts-styles'
+    | 'markup-options-styles-scripts'
+    | 'markup-scripts-options-styles'
+    | 'markup-scripts-styles-options'
+    | 'markup-styles-options-scripts'
+    | 'markup-styles-scripts-options'
+    | 'none'
+    | 'options-markup-scripts-styles'
+    | 'options-markup-styles-scripts'
+    | 'options-scripts-markup-styles'
+    | 'options-scripts-styles-markup'
+    | 'options-styles-markup-scripts'
+    | 'options-styles-scripts-markup'
+    | 'scripts-markup-options-styles'
+    | 'scripts-markup-styles-options'
+    | 'scripts-options-markup-styles'
+    | 'scripts-options-styles-markup'
+    | 'scripts-styles-markup-options'
+    | 'scripts-styles-options-markup'
+    | 'styles-markup-options-scripts'
+    | 'styles-markup-scripts-options'
+    | 'styles-options-markup-scripts'
+    | 'styles-options-scripts-markup'
+    | 'styles-scripts-markup-options'
+    | 'styles-scripts-options-markup'
 }
 
-export type PluginJavaOptions = {
-  entrypoint: string
+export type PluginXMLOptions = {
+  /**
+   * How to quoted attributes in XML
+   *
+   * @default `preserve`
+   */
+  xmlQuoteAttributes: 'double' | 'preserve' | 'single'
+
+  /**
+   * Adds a space before self-closing tags
+   *
+   * @default true
+   */
+  xmlSelfClosingSpace: boolean
+
+  /**
+   * Orders XML attributes by key alphabetically while prioritizing xmlns attributes
+   *
+   * @default false
+   */
+  xmlSortAttributesByKey: boolean
+
+  /**
+   * How to handle whitespaces in XML
+   *
+   * @default `strict`
+   */
+  xmlWhitespaceSensitivity: 'ignore' | 'preserve' | 'strict'
 }
+
+export type PrettierOptions = Required<
+  Pick<
+    RequiredOptions,
+    | 'arrowParens'
+    | 'bracketSameLine'
+    | 'bracketSpacing'
+    | 'embeddedLanguageFormatting'
+    | 'endOfLine'
+    | 'experimentalTernaries'
+    | 'htmlWhitespaceSensitivity'
+    | 'jsxSingleQuote'
+    | 'printWidth'
+    | 'proseWrap'
+    | 'quoteProps'
+    | 'semi'
+    | 'singleAttributePerLine'
+    | 'singleQuote'
+    | 'tabWidth'
+    | 'trailingComma'
+    | 'useTabs'
+    | 'vueIndentScriptAndStyle'
+  >
+>

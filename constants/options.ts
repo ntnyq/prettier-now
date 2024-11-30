@@ -16,60 +16,60 @@ import type {
  * @see {@link https://prettier.io/docs/en/options}
  */
 export const DEFAULT_OPTIONS: PrettierOptions = {
-  printWidth: 80,
-
-  tabWidth: 2,
-
-  useTabs: false,
-
-  semi: true,
-
-  singleQuote: false,
-
-  bracketSpacing: true,
+  arrowParens: 'always',
 
   bracketSameLine: false,
 
-  jsxSingleQuote: false,
-
-  singleAttributePerLine: false,
-
-  vueIndentScriptAndStyle: false,
-
-  quoteProps: 'as-needed',
-
-  trailingComma: 'all',
-
-  arrowParens: 'always',
-
-  proseWrap: 'preserve',
-
-  htmlWhitespaceSensitivity: 'css',
-
-  endOfLine: 'auto',
+  bracketSpacing: true,
 
   embeddedLanguageFormatting: 'auto',
 
+  endOfLine: 'auto',
+
   experimentalTernaries: false,
+
+  htmlWhitespaceSensitivity: 'css',
+
+  jsxSingleQuote: false,
+
+  printWidth: 80,
+
+  proseWrap: 'preserve',
+
+  quoteProps: 'as-needed',
+
+  semi: true,
+
+  singleAttributePerLine: false,
+
+  singleQuote: false,
+
+  tabWidth: 2,
+
+  trailingComma: 'all',
+
+  useTabs: false,
+
+  vueIndentScriptAndStyle: false,
 }
 
 export const DEFAULT_XML_OPTIONS: PluginXMLOptions = {
+  xmlQuoteAttributes: 'preserve',
   xmlSelfClosingSpace: true,
   xmlSortAttributesByKey: false,
-  xmlQuoteAttributes: 'preserve',
   xmlWhitespaceSensitivity: 'strict',
 }
 
 export const DEFAULT_PHP_OPTIONS: PluginPHPOptions = {
+  braceStyle: 'per-cs',
   phpVersion: '7.0',
   trailingCommaPHP: true,
-  braceStyle: 'per-cs',
 }
 
 export const DEFAULT_SVELTE_OPTIONS: PluginSvelteOptions = {
-  svelteSortOrder: 'options-scripts-markup-styles',
   svelteAllowShorthand: true,
   svelteIndentScriptAndStyle: true,
+  svelteSortOrder: 'options-scripts-markup-styles',
 }
 
 export const DEFAULT_JAVA_OPTIONS: PluginJavaOptions = {

@@ -12,37 +12,37 @@ import type { Manifest } from 'wxt/browser'
 import type { Command } from '@/constants/command'
 
 export default defineConfig({
-  outDir: 'dist',
+  imports: false,
 
   manifest: {
-    name: 'Prettier Now',
-    permissions: ['storage'],
-    homepage_url: 'https://github.com/ntnyq/prettier-now',
     commands: {
       openOptionsPage: {
+        description: 'Open the Options page',
         suggested_key: {
           default: 'Alt+O',
         },
-        description: 'Open the Options page',
       },
     } satisfies Record<Command, Manifest.WebExtensionManifestCommandsType>,
+    homepage_url: 'https://github.com/ntnyq/prettier-now',
+    name: 'Prettier Now',
+    permissions: ['storage'],
   },
+
+  outDir: 'dist',
 
   runner: {
     chromiumArgs: ['--auto-open-devtools-for-tabs'],
     startUrls: ['https://ntnyq.com'],
   },
 
-  imports: false,
-
   vite: () => ({
-    css: {
-      devSourcemap: true,
-    },
-
     build: {
       // Max per file size for Firefox is 4MB.
       chunkSizeWarningLimit: 4 * 1024,
+    },
+
+    css: {
+      devSourcemap: true,
     },
 
     define: {

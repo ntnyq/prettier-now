@@ -20,13 +20,13 @@ export interface Language {
  */
 export const languages: Language[] = [
   {
-    id: 'javascript',
-    name: 'JavaScript',
-    icon: 'i-vscode-icons:file-type-js-official',
     extension: async () => {
       const { javascript } = await import('@codemirror/lang-javascript')
       return javascript()
     },
+    icon: 'i-vscode-icons:file-type-js-official',
+    id: 'javascript',
+    name: 'JavaScript',
   },
   // {
   //   id: 'jsx',
@@ -35,13 +35,13 @@ export const languages: Language[] = [
   //   extension: () => javascript({ jsx: true }),
   // },
   {
-    id: 'typescript',
-    name: 'TypeScript',
-    icon: 'i-vscode-icons:file-type-typescript-official',
     extension: async () => {
       const { javascript } = await import('@codemirror/lang-javascript')
       return javascript({ typescript: true })
     },
+    icon: 'i-vscode-icons:file-type-typescript-official',
+    id: 'typescript',
+    name: 'TypeScript',
   },
   // {
   //   id: 'tsx',
@@ -50,130 +50,130 @@ export const languages: Language[] = [
   //   extension: () => javascript({ jsx: true, typescript: true }),
   // },
   {
-    id: 'html',
-    name: 'HTML',
-    icon: 'i-vscode-icons:file-type-html',
     extension: async () => {
       const { html } = await import('@codemirror/lang-html')
       return html()
     },
+    icon: 'i-vscode-icons:file-type-html',
+    id: 'html',
+    name: 'HTML',
   },
   {
-    id: 'vue',
-    name: 'Vue',
-    icon: 'i-vscode-icons:file-type-vue',
     extension: async () => {
       const { vue } = await import('@codemirror/lang-vue')
       return vue()
     },
+    icon: 'i-vscode-icons:file-type-vue',
+    id: 'vue',
+    name: 'Vue',
   },
   {
-    id: 'svelte',
-    name: 'Svelte',
-    icon: 'i-vscode-icons:file-type-svelte',
     extension: async () => {
       const { svelte } = await import('@replit/codemirror-lang-svelte')
       return svelte()
     },
+    icon: 'i-vscode-icons:file-type-svelte',
+    id: 'svelte',
+    name: 'Svelte',
   },
   {
-    id: 'angular',
-    name: 'Angular',
-    icon: 'i-vscode-icons:file-type-angular',
     extension: async () => {
       const { angular } = await import('@codemirror/lang-angular')
       return angular()
     },
+    icon: 'i-vscode-icons:file-type-angular',
+    id: 'angular',
+    name: 'Angular',
   },
   {
-    id: 'css',
-    name: 'CSS',
-    icon: 'i-vscode-icons:file-type-css',
     extension: async () => {
       const { css } = await import('@codemirror/lang-css')
       return css()
     },
+    icon: 'i-vscode-icons:file-type-css',
+    id: 'css',
+    name: 'CSS',
   },
   {
-    id: 'less',
-    name: 'Less',
-    icon: 'i-vscode-icons:file-type-less',
     extension: async () => {
       const { less } = await import('@codemirror/lang-less')
       return less()
     },
+    icon: 'i-vscode-icons:file-type-less',
+    id: 'less',
+    name: 'Less',
   },
   {
-    id: 'scss',
-    name: 'Sass',
-    icon: 'i-vscode-icons:file-type-scss',
     extension: async () => {
       const { sass } = await import('@codemirror/lang-sass')
       return sass()
     },
+    icon: 'i-vscode-icons:file-type-scss',
+    id: 'scss',
+    name: 'Sass',
   },
   {
-    id: 'xml',
-    name: 'XML',
-    icon: 'i-vscode-icons:file-type-xml',
     extension: async () => {
       const { xml } = await import('@codemirror/lang-xml')
       return xml()
     },
+    icon: 'i-vscode-icons:file-type-xml',
+    id: 'xml',
+    name: 'XML',
   },
   {
-    id: 'json',
-    name: 'JSON',
-    icon: 'i-vscode-icons:file-type-light-json',
     extension: async () => {
       const { json } = await import('@codemirror/lang-json')
       return json()
     },
+    icon: 'i-vscode-icons:file-type-light-json',
+    id: 'json',
+    name: 'JSON',
   },
   {
-    id: 'yaml',
-    name: 'YAML',
-    icon: 'i-vscode-icons:file-type-light-yaml',
     extension: async () => {
       const { yaml } = await import('@codemirror/lang-yaml')
       return yaml()
     },
+    icon: 'i-vscode-icons:file-type-light-yaml',
+    id: 'yaml',
+    name: 'YAML',
   },
   {
-    id: 'markdown',
-    name: 'Markdown',
-    icon: 'i-vscode-icons:file-type-markdown',
     extension: async () => {
       const { markdown } = await import('@codemirror/lang-markdown')
       return markdown()
     },
+    icon: 'i-vscode-icons:file-type-markdown',
+    id: 'markdown',
+    name: 'Markdown',
   },
   {
-    id: 'php',
-    name: 'PHP',
-    icon: 'i-vscode-icons:file-type-php',
     extension: async () => {
       const { php } = await import('@codemirror/lang-php')
       return php()
     },
+    icon: 'i-vscode-icons:file-type-php',
+    id: 'php',
+    name: 'PHP',
   },
   {
-    id: 'java',
-    name: 'Java',
-    icon: 'i-vscode-icons:file-type-java',
     extension: async () => {
       const { java } = await import('@codemirror/lang-java')
       return java()
     },
+    icon: 'i-vscode-icons:file-type-java',
+    id: 'java',
+    name: 'Java',
   },
   {
-    id: 'graphql',
-    name: 'GraphQL',
-    icon: 'i-vscode-icons:file-type-graphql',
     extension: async () => {
       const { graphql } = await import('cm6-graphql')
       return graphql()
     },
+    icon: 'i-vscode-icons:file-type-graphql',
+    id: 'graphql',
+    name: 'GraphQL',
   },
 ]
 
@@ -181,90 +181,127 @@ export const languages: Language[] = [
  * language => prettier parser
  */
 export const languageParsers = {
-  // plugin babel
+  /**
+   * plugin babel
+   */
   javascript: 'babel',
   json: 'json',
   json5: 'json5',
   jsonc: 'jsonc',
 
-  // plugin markdown
-  mdx: 'mdx',
-  remark: 'remark',
-  markdown: 'markdown',
-
-  // plugin typescript
+  /**
+   * plugin typescript
+   */
   typescript: 'typescript',
 
-  // plugin postCSS
+  /**
+   * plugin postcss
+   */
   css: 'css',
   less: 'less',
   sass: 'scss',
   scss: 'scss',
 
-  // plugin HTML
-  html: 'html',
-  vue: 'vue',
-  angular: 'angular',
+  /**
+   * plugin markdown
+   */
+  markdown: 'markdown',
+  mdx: 'mdx',
+  remark: 'remark',
 
-  // plugin yaml
-  yaml: 'yaml',
-
-  // plugin xml
-  xml: 'xml',
-
-  // plugin php
+  /**
+   * plugin php
+   */
   php: 'php',
 
-  // plugin java
-  java: 'java',
+  /**
+   * plugin svelte
+   */
+  svelte: 'svelte',
 
-  // plugin graphql
+  /**
+   * plugin html
+   */
+  angular: 'angular',
+  html: 'html',
+  vue: 'vue',
+
+  /**
+   * plugin xml
+   */
+  xml: 'xml',
+
+  /**
+   * plugin yaml
+   */
+  yaml: 'yaml',
+
+  /**
+   * plugin graphql
+   */
   graphql: 'graphql',
 
-  // plugin svelte
-  svelte: 'svelte',
+  /**
+   * plugin java
+   */
+  java: 'java',
 }
 
 /**
  * extendsions => language
  */
 export const languageExtensions = {
-  js: 'javascript',
+  /**
+   * javascript
+   */
   cjs: 'javascript',
-  mjs: 'javascript',
+  js: 'javascript',
   jsx: 'javascript',
+  mjs: 'javascript',
 
-  ts: 'typescript',
+  /**
+   * typescript
+   */
   cts: 'typescript',
   mts: 'typescript',
+  ts: 'typescript',
   tsx: 'typescript',
 
-  html: 'html',
-  htm: 'html',
-
-  vue: 'vue',
-
-  svelte: 'svelte',
-
+  /**
+   * css
+   */
   css: 'css',
   less: 'less',
   scss: 'scss',
 
-  xml: 'xml',
-  svg: 'xml',
-
-  json: 'json',
-
-  yml: 'yaml',
-  yaml: 'yaml',
-
+  /**
+   * markdown
+   */
+  markdown: 'markdown',
   md: 'markdown',
   mdown: 'markdown',
-  markdown: 'markdown',
 
-  php: 'php',
+  /**
+   * frameworks
+   */
+  svelte: 'svelte',
+  vue: 'vue',
 
-  java: 'java',
+  /**
+   * extensions
+   */
+  htm: 'html',
+  html: 'html',
+  json: 'json',
+  svg: 'xml',
+  xml: 'xml',
+  yaml: 'yaml',
+  yml: 'yaml',
 
+  /**
+   * others
+   */
   graphql: 'graphql',
+  java: 'java',
+  php: 'php',
 }
