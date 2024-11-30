@@ -78,8 +78,8 @@
     "wxt": "^0.19.17"
   },
   "pnpm": {
-    "overrides": {
-      "typescript": "5.6.3"
+    "patchedDependencies": {
+      "vue-tsc@2.1.10": "patches/vue-tsc@2.1.10.patch"
     }
   },
   "prettier": "@ntnyq/prettier-config",
