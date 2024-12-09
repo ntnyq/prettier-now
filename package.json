@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.17",
   "private": true,
-  "packageManager": "pnpm@9.14.4",
+  "packageManager": "pnpm@9.15.0",
   "description": "Yet another Prettier browser extension for formatting js, css, html, json codes",
   "license": "MIT",
   "scripts": {
@@ -36,24 +36,24 @@
     "@codemirror/lang-yaml": "^6.1.1",
     "@codemirror/language": "^6.10.6",
     "@codemirror/state": "^6.4.1",
-    "@codemirror/view": "^6.35.0",
-    "@iconify-json/lucide": "^1.2.17",
+    "@codemirror/view": "^6.35.2",
+    "@iconify-json/lucide": "^1.2.18",
     "@iconify-json/ri": "^1.2.3",
-    "@iconify-json/vscode-icons": "^1.2.3",
+    "@iconify-json/vscode-icons": "^1.2.4",
     "@lezer/highlight": "^1.2.1",
     "@prettier/plugin-php": "^0.22.2",
     "@prettier/plugin-xml": "^3.4.1",
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "@uiw/codemirror-themes": "^4.23.6",
-    "@unocss/reset": "^0.65.0-beta.3",
+    "@unocss/reset": "^0.65.1",
     "@vueuse/core": "^12.0.0",
     "cm6-graphql": "^0.2.0",
     "codemirror": "^6.0.1",
     "dayjs": "^1.11.13",
     "floating-vue": "^5.2.2",
     "petite-vue-i18n": "^10.0.5",
-    "pinia": "^2.2.8",
-    "prettier": "^3.4.1",
+    "pinia": "^2.3.0",
+    "prettier": "^3.4.2",
     "prettier-plugin-java": "^2.6.5",
     "prettier-plugin-svelte": "^3.3.2",
     "vercel-toast": "^1.8.0",
@@ -62,27 +62,26 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^3.7.1",
+    "@ntnyq/eslint-config": "^3.9.1",
     "@ntnyq/prettier-config": "^1.22.0",
     "@vitejs/plugin-vue": "^5.2.1",
-    "bumpp": "^9.8.1",
+    "bumpp": "^9.9.0",
     "eslint": "^9.16.0",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
     "npm-run-all2": "^7.0.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "unocss": "^0.65.0-beta.3",
+    "unocss": "^0.65.1",
     "unplugin-vue-components": "^0.27.5",
     "vue-tsc": "^2.1.10",
-    "wxt": "^0.19.17"
+    "wxt": "^0.19.19"
   },
   "pnpm": {
     "patchedDependencies": {
       "vue-tsc@2.1.10": "patches/vue-tsc@2.1.10.patch"
     }
   },
-  "prettier": "@ntnyq/prettier-config",
   "nano-staged": {
     "*.{js,ts,cjs,mjs,vue,html,md,json,yml,yaml}": "eslint --fix"
   }

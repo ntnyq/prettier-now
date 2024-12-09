@@ -73,6 +73,9 @@ export const useEditorStore = defineStore('editor', () => {
     setActiveLanguageId,
 
     formatCost,
+    formatStartTime,
+    formatEndTime,
+
     formatCode,
     clearCode,
   }
