@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.17",
   "private": true,
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@9.15.1",
   "description": "Yet another Prettier browser extension for formatting js, css, html, json codes",
   "license": "MIT",
   "scripts": {
@@ -34,24 +34,24 @@
     "@codemirror/lang-vue": "^0.1.3",
     "@codemirror/lang-xml": "^6.1.0",
     "@codemirror/lang-yaml": "^6.1.2",
-    "@codemirror/language": "^6.10.6",
+    "@codemirror/language": "^6.10.8",
     "@codemirror/state": "^6.5.0",
-    "@codemirror/view": "^6.35.3",
-    "@iconify-json/lucide": "^1.2.18",
-    "@iconify-json/ri": "^1.2.3",
-    "@iconify-json/vscode-icons": "^1.2.5",
+    "@codemirror/view": "^6.36.1",
+    "@iconify-json/lucide": "^1.2.20",
+    "@iconify-json/ri": "^1.2.5",
+    "@iconify-json/vscode-icons": "^1.2.6",
     "@lezer/highlight": "^1.2.1",
     "@prettier/plugin-php": "^0.22.2",
     "@prettier/plugin-xml": "^3.4.1",
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "@uiw/codemirror-themes": "^4.23.7",
-    "@unocss/reset": "^0.65.1",
-    "@vueuse/core": "^12.0.0",
+    "@unocss/reset": "^0.65.3",
+    "@vueuse/core": "^12.2.0",
     "cm6-graphql": "^0.2.0",
     "codemirror": "^6.0.1",
     "dayjs": "^1.11.13",
     "floating-vue": "^5.2.2",
-    "petite-vue-i18n": "^10.0.5",
+    "petite-vue-i18n": "^11.0.0",
     "pinia": "^2.3.0",
     "prettier": "^3.4.2",
     "prettier-plugin-java": "^2.6.5",
@@ -62,25 +62,20 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^3.9.2",
+    "@ntnyq/eslint-config": "^3.10.2",
     "@ntnyq/prettier-config": "^1.22.0",
     "@vitejs/plugin-vue": "^5.2.1",
-    "bumpp": "^9.9.1",
+    "bumpp": "^9.9.2",
     "eslint": "^9.17.0",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
-    "npm-run-all2": "^7.0.1",
+    "npm-run-all2": "^7.0.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "unocss": "^0.65.1",
+    "unocss": "^0.65.3",
     "unplugin-vue-components": "^0.28.0",
-    "vue-tsc": "^2.1.10",
-    "wxt": "^0.19.22"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "vue-tsc@2.1.10": "patches/vue-tsc@2.1.10.patch"
-    }
+    "vue-tsc": "^2.2.0",
+    "wxt": "^0.19.23"
   },
   "nano-staged": {
     "*.{js,ts,cjs,mjs,vue,html,md,json,yml,yaml}": "eslint --fix"

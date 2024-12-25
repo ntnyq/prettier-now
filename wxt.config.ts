@@ -14,26 +14,7 @@ import type { Command } from '@/constants/command'
 export default defineConfig({
   imports: false,
 
-  manifest: {
-    commands: {
-      openOptionsPage: {
-        description: 'Open the Options page',
-        suggested_key: {
-          default: 'Alt+O',
-        },
-      },
-    } satisfies Record<Command, Manifest.WebExtensionManifestCommandsType>,
-    homepage_url: 'https://github.com/ntnyq/prettier-now',
-    name: 'Prettier Now',
-    permissions: ['storage'],
-  },
-
   outDir: 'dist',
-
-  runner: {
-    chromiumArgs: ['--auto-open-devtools-for-tabs'],
-    startUrls: ['https://ntnyq.com'],
-  },
 
   vite: () => ({
     build: {
@@ -61,4 +42,23 @@ export default defineConfig({
       }),
     ],
   }),
+
+  manifest: {
+    homepage_url: 'https://github.com/ntnyq/prettier-now',
+    name: 'Prettier Now',
+    permissions: ['storage'],
+    commands: {
+      openOptionsPage: {
+        description: 'Open the Options page',
+        suggested_key: {
+          default: 'Alt+O',
+        },
+      },
+    } satisfies Record<Command, Manifest.WebExtensionManifestCommandsType>,
+  },
+
+  runner: {
+    chromiumArgs: ['--auto-open-devtools-for-tabs'],
+    startUrls: ['https://ntnyq.com'],
+  },
 })
