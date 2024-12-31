@@ -18,6 +18,7 @@
 
 - Format source code with customable options
 - Drag and drop file to format
+- Open format page in contextMenu
 
 ## Supported languages
 

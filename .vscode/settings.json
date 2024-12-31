@@ -5,6 +5,7 @@
   "eslint.validate": [
     "vue",
     "yaml",
+    "xml",
     "html",
     "toml",
     "json",

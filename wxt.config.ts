@@ -46,7 +46,7 @@ export default defineConfig({
   manifest: {
     homepage_url: 'https://github.com/ntnyq/prettier-now',
     name: 'Prettier Now',
-    permissions: ['storage'],
+    permissions: ['storage', 'contextMenus'],
     commands: {
       openOptionsPage: {
         description: 'Open the Options page',
