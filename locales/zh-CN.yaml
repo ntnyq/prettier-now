@@ -1,0 +1,27 @@
+about: 关于
+aboutApp: 关于 $1
+changelog: 更新日志
+clearAll: 清除所有
+copyResult: 复制结果
+dragFileHere: 拖拽文件到这里
+emptyFile: 空文件
+en: English
+feedback: 意见反馈
+formatCostTime: 格式化耗时
+formatSource: 格式化代码
+home: 首页
+log: 日志
+ms: $1毫秒
+pluginJavaOptions: Java 插件配置
+pluginPHPOptions: PHP 插件配置
+pluginSvelteOptions: Svelte 插件配置
+pluginXMLOptions: XML 插件配置
+prettierOptions: Prettier 配置
+settings: 设置
+sourceCode: 源代码
+toggleColorMode: 切换色彩模式
+toggleLeftLayout: 切换左侧布局
+toggleRightLayout: 切换右侧布局
+unsupportedFileFormat: 不支持的文件格式
+userConfigs: 用户配置
+zhCN: 中文

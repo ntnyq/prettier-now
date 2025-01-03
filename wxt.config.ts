@@ -3,8 +3,6 @@
  * @see {@link https://wxt.dev/api/config.html}
  */
 
-import Vue from '@vitejs/plugin-vue'
-import UnoCSS from 'unocss/vite'
 import VueComponents from 'unplugin-vue-components/vite'
 import { defineConfig } from 'wxt'
 import { resolve } from './scripts/utils'
@@ -26,15 +24,7 @@ export default defineConfig({
       devSourcemap: true,
     },
 
-    define: {
-      __INTLIFY_JIT_COMPILATION__: JSON.stringify(true),
-    },
-
     plugins: [
-      Vue(),
-
-      UnoCSS(),
-
       VueComponents({
         dirs: [resolve('components')],
         dts: 'types/components.d.ts',
@@ -43,7 +33,12 @@ export default defineConfig({
     ],
   }),
 
+  autoIcons: {
+    baseIconPath: 'assets/images/icon.png',
+  },
+
   manifest: {
+    default_locale: 'en',
     homepage_url: 'https://github.com/ntnyq/prettier-now',
     name: 'Prettier Now',
     permissions: ['storage', 'contextMenus'],
@@ -57,8 +52,14 @@ export default defineConfig({
     } satisfies Record<Command, Manifest.WebExtensionManifestCommandsType>,
   },
 
-  runner: {
-    chromiumArgs: ['--auto-open-devtools-for-tabs'],
-    startUrls: ['https://ntnyq.com'],
-  },
+  modules: [
+    '@wxt-dev/unocss',
+    '@wxt-dev/auto-icons',
+    '@wxt-dev/module-vue',
+    /**
+     * @see {@link https://wxt.dev/i18n.html}
+     * @see {@link https://developer.chrome.com/docs/extensions/reference/api/i18n}
+     */
+    '@wxt-dev/i18n/module',
+  ],
 })

@@ -1,18 +1,20 @@
 <script lang="ts" setup>
-import { useI18n } from 'petite-vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
+import { browser } from 'wxt/browser'
+import { i18n } from '#i18n'
 import { toggleDark } from '@/composables/dark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
 import { useEditorStore } from '@/stores/editor'
 // import { useLogStore } from '@/stores/log'
 
-const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 // const logStore = useLogStore()
 const appStore = useAppStore()
 const editorStore = useEditorStore()
+
+const logoUrl = browser.runtime.getURL('/icons/48.png')
 </script>
 
 <template>
@@ -22,7 +24,7 @@ const editorStore = useEditorStore()
       class="flex gap-1"
     >
       <img
-        src="/icon/48.png"
+        :src="logoUrl"
         class="h-6 w-6"
         alt="Logo"
       />
@@ -34,25 +36,25 @@ const editorStore = useEditorStore()
       <template v-if="route.name === 'Home'">
         <LanguageSelect />
         <div
-          v-tooltip="{ content: t('formatCostTime') }"
+          v-tooltip="{ content: i18n.t('formatCostTime') }"
           class="p-1 opacity-80"
         >
-          {{ t('ms', { n: +editorStore.formatCost.toFixed(1) }) }}
+          {{ i18n.t('ms', [+editorStore.formatCost.toFixed(1)]) }}
         </div>
         <IconButton
           @click="router.push({ name: 'Options' })"
-          :tooltip="t('settings')"
+          :tooltip="i18n.t('settings')"
           icon="i-ri:settings-line"
         />
         <IconButton
           @click="appStore.toggleLeftLayout"
           :icon="appStore.showLeftLayout ? 'i-ri:layout-column-fill' : 'i-ri:layout-left-line'"
-          :tooltip="t('toggleLeftLayout')"
+          :tooltip="i18n.t('toggleLeftLayout')"
         />
         <IconButton
           @click="appStore.toggleRightLayout"
           :icon="appStore.showRightLayout ? 'i-ri:layout-column-fill' : 'i-ri:layout-left-line'"
-          :tooltip="t('toggleRightLayout')"
+          :tooltip="i18n.t('toggleRightLayout')"
           icon-class="rotate-180"
         />
         <!--
@@ -66,12 +68,12 @@ const editorStore = useEditorStore()
       <IconButton
         @click="router.push({ name: 'Home' })"
         v-else
-        :tooltip="t('home')"
+        :tooltip="i18n.t('home')"
         icon="i-ri:home-3-line"
       />
       <IconButton
         @click="toggleDark"
-        :tooltip="t('toggleColorMode')"
+        :tooltip="i18n.t('toggleColorMode')"
         icon="i-ri:sun-line dark:i-ri:moon-line"
       />
       <MoreAction />

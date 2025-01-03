@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import { useEventListener } from '@vueuse/core'
-import { useI18n } from 'petite-vue-i18n'
 import { onMounted, ref } from 'vue'
+import { i18n } from '#i18n'
 import { languageExtensions } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
 import { Toast } from '@/utils/toast'
 
-const { t } = useI18n()
 const editorStore = useEditorStore()
 
 const isDragging = ref(false)
@@ -50,10 +49,10 @@ async function onImportFile(files?: FileList | null) {
   const languageId = languageExtensions[fileExt as keyof typeof languageExtensions]
 
   if (!languageId) {
-    return Toast.error(t('unsupportedFileFormat'))
+    return Toast.error(i18n.t('unsupportedFileFormat'))
   }
   if (!fileContent.trim().length) {
-    return Toast.error(t('emptyFile'))
+    return Toast.error(i18n.t('emptyFile'))
   }
 
   editorStore.setActiveLanguageId(languageId)
@@ -90,7 +89,7 @@ onMounted(() => {
       class="border-dashed- h-full w-full flex-center flex-col border-3 border-base rounded-2xl bg-white/50 dark:bg-black:50"
     >
       <p class="text-xl">
-        {{ t('dragFileHere') }}
+        {{ i18n.t('dragFileHere') }}
       </p>
     </div>
   </div>

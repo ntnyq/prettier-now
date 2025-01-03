@@ -1,38 +1,39 @@
 <script lang="ts" setup>
-import { useI18n } from 'petite-vue-i18n'
 import { computed, useTemplateRef } from 'vue'
+import { browser } from 'wxt/browser'
+import { i18n } from '#i18n'
 import { LINKS } from '@/constants/meta'
 import { version } from '@/package.json'
 import { openExternalURL } from '@/utils'
 
-const { t } = useI18n()
+const logoUrl = browser.runtime.getURL('/icons/48.png')
 
 const dialogRef = useTemplateRef('dialogRef')
 
 const actions = computed(() => [
   {
-    name: t('feedback'),
+    name: i18n.t('feedback'),
     icon: 'i-ri:feedback-line',
     action() {
       openExternalURL(LINKS.feedback)
     },
   },
   {
-    name: t('changelog'),
+    name: i18n.t('changelog'),
     icon: 'i-ri:price-tag-3-line',
     action() {
       openExternalURL(LINKS.changelog)
     },
   },
   {
-    name: t('sourceCode'),
+    name: i18n.t('sourceCode'),
     icon: 'i-ri:github-fill',
     action() {
       openExternalURL(LINKS.github)
     },
   },
   {
-    name: t('about'),
+    name: i18n.t('about'),
     icon: 'i-ri:file-info-line',
     action() {
       handleShowDialog()
@@ -66,11 +67,11 @@ function handleShowDialog() {
 
   <Dialog
     ref="dialogRef"
-    :title="t('aboutApp', { name: 'Prettier Now' })"
+    :title="i18n.t('aboutApp', ['Prettier Now'])"
   >
     <div class="h-full flex flex-col items-center justify-center gap-2">
       <img
-        src="/icon/128.png"
+        :src="logoUrl"
         class="mx-auto mt-10 block w-80px"
         alt="PrettierNow"
       />

@@ -1,5 +1,5 @@
 /**
- * @file user preferences
+ * @file user config
  */
 
 import { defineStore } from 'pinia'
@@ -18,11 +18,6 @@ export const useConfigStore = defineStore('config', () => {
   const silent = useStorage<boolean>('silent', false)
 
   /**
-   * Locale
-   */
-  const locale = useStorage<string>('locale', 'en')
-
-  /**
    * Auto format source code after pasting
    */
   const autoFormat = useStorage<boolean>('autoFormat', false)
@@ -30,7 +25,6 @@ export const useConfigStore = defineStore('config', () => {
   return {
     debug,
     silent,
-    locale,
     autoFormat,
   }
 })

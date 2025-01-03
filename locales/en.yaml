@@ -1,0 +1,27 @@
+about: About
+aboutApp: About $1
+changelog: ChangeLog
+clearAll: Clear All
+copyResult: Copy Result
+dragFileHere: Drag File Here
+emptyFile: Empty File
+en: English
+feedback: Feedback
+formatCostTime: Format Cost Time
+formatSource: Format Source
+home: Home
+log: Log
+ms: $1ms
+pluginJavaOptions: Java Plugin Options
+pluginPHPOptions: PHP Plugin Options
+pluginSvelteOptions: Svelte Plugin Options
+pluginXMLOptions: XML Plugin Options
+prettierOptions: Prettier Options
+settings: Settings
+sourceCode: Source Code
+toggleColorMode: Toggle Color Mode
+toggleLeftLayout: Toggle Left Layout
+toggleRightLayout: Toggle Right Layout
+unsupportedFileFormat: Unsupported File Format
+userConfigs: User Configs
+zhCN: 中文

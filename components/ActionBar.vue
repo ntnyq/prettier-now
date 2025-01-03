@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import { useClipboard } from '@vueuse/core'
-import { useI18n } from 'petite-vue-i18n'
+import { i18n } from '#i18n'
 import { useEditorStore } from '@/stores/editor'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
 
-const { t } = useI18n()
 const editorStore = useEditorStore()
 const { copy } = useClipboard({ legacy: true })
 
@@ -54,21 +53,21 @@ const clearCode = () => {
       type="button"
       class="btn-action"
     >
-      {{ t('clearAll') }}
+      {{ i18n.t('clearAll') }}
     </button>
     <button
       @click="copyResult"
       type="button"
       class="btn-action"
     >
-      {{ t('copyResult') }}
+      {{ i18n.t('copyResult') }}
     </button>
     <button
       @click="handleFormat"
       type="button"
       class="btn-action"
     >
-      {{ t('formatSource') }}
+      {{ i18n.t('formatSource') }}
     </button>
   </div>
 </template>
