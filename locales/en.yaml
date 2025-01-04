@@ -17,6 +17,7 @@ pluginPHPOptions: PHP Plugin Options
 pluginSvelteOptions: Svelte Plugin Options
 pluginXMLOptions: XML Plugin Options
 prettierOptions: Prettier Options
+selectFile: Select File
 settings: Settings
 sourceCode: Source Code
 toggleColorMode: Toggle Color Mode

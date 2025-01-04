@@ -17,6 +17,7 @@ pluginPHPOptions: PHP 插件配置
 pluginSvelteOptions: Svelte 插件配置
 pluginXMLOptions: XML 插件配置
 prettierOptions: Prettier 配置
+selectFile: 选择文件
 settings: 设置
 sourceCode: 源代码
 toggleColorMode: 切换色彩模式

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { useClipboard } from '@vueuse/core'
+import { useClipboard, useFileDialog } from '@vueuse/core'
 import { i18n } from '#i18n'
+import { languageExtensions } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
@@ -8,7 +9,49 @@ import { Toast } from '@/utils/toast'
 const editorStore = useEditorStore()
 const { copy } = useClipboard({ legacy: true })
 
-const handleFormat = async () => {
+const {
+  open: openFileDialog,
+  reset: resetSelectedFile,
+  onChange: handleFileDialogChange,
+} = useFileDialog({
+  multiple: false,
+})
+
+handleFileDialogChange(files => {
+  if (!files?.length) return
+
+  const file = files[0]
+  const fileExt = file.name.split('.').pop()?.toLowerCase()
+
+  const languageId = languageExtensions[fileExt as keyof typeof languageExtensions]
+
+  if (!languageId) {
+    return Toast.error(i18n.t('unsupportedFileFormat'))
+  }
+
+  const reader = new FileReader()
+
+  reader.addEventListener('load', (event: ProgressEvent<FileReader>) => {
+    const content = event.target?.result ?? ''
+
+    if (typeof content !== 'string') return
+
+    if (!content.trim().length) {
+      return Toast.error(i18n.t('emptyFile'))
+    }
+
+    editorStore.setActiveLanguageId(languageId)
+    editorStore.sourceCode = content
+
+    editorStore.formatCode()
+
+    resetSelectedFile()
+  })
+
+  reader.readAsText(file)
+})
+
+async function formatSource() {
   if (!editorStore.sourceCode) {
     Logger.warn('Nothing to format')
     return Toast.info('Nothing to format')
@@ -16,7 +59,7 @@ const handleFormat = async () => {
 
   editorStore.formatCode()
 }
-const copyResult = async () => {
+async function copyResult() {
   if (!editorStore.resultCode) {
     Logger.warn('Nothing to copy')
     return Toast.info('Nothing to copy')
@@ -31,7 +74,7 @@ const copyResult = async () => {
     Toast.error('Failed to copy to clipboard')
   }
 }
-const clearCode = () => {
+function clearCode() {
   if (!editorStore.sourceCode && !editorStore.resultCode) {
     Logger.warn('Nothing to clear')
     return Toast.info('Nothing to clear')
@@ -42,32 +85,30 @@ const clearCode = () => {
   Logger.success('Clear Success')
   Toast.info('Clear Success')
 }
+function selectFile() {
+  openFileDialog()
+}
 </script>
 
 <template>
   <div
     class="flex flex-wrap items-center justify-center gap-3 border-t border-base bg-zinc-100 p-4 dark:bg-zinc-800"
   >
-    <button
+    <ActionButton
+      @click="selectFile"
+      :label="i18n.t('selectFile')"
+    />
+    <ActionButton
       @click="clearCode"
-      type="button"
-      class="btn-action"
-    >
-      {{ i18n.t('clearAll') }}
-    </button>
-    <button
+      :label="i18n.t('clearAll')"
+    />
+    <ActionButton
       @click="copyResult"
-      type="button"
-      class="btn-action"
-    >
-      {{ i18n.t('copyResult') }}
-    </button>
-    <button
-      @click="handleFormat"
-      type="button"
-      class="btn-action"
-    >
-      {{ i18n.t('formatSource') }}
-    </button>
+      :label="i18n.t('copyResult')"
+    />
+    <ActionButton
+      @click="formatSource"
+      :label="i18n.t('formatSource')"
+    />
   </div>
 </template>
