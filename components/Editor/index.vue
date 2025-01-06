@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { useIntervalFn } from '@vueuse/core'
+import { computed, shallowRef, watch } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { isDark } from '@/composables/dark'
 import { codemirrorLanguageCache } from '@/utils/cache'
 import { githubDark, githubLight } from './theme'
-import type { Extension } from '@codemirror/state'
+import type { CodemirrorExtension } from '@/types/vendor'
 
 const props = withDefaults(
   defineProps<{
     language?: string
-    extensions?: Extension[]
+    extensions?: CodemirrorExtension[]
     placeholder?: string
     disabled?: boolean
     tabSize?: number
@@ -25,18 +26,33 @@ const props = withDefaults(
 )
 const code = defineModel<string>()
 
-const resolvedExtensions = computed<Extension[]>(() => [
+const languageExtension = shallowRef<CodemirrorExtension>()
+
+const { pause, resume } = useIntervalFn(() => {
+  if (!props.language) return
+
+  if (codemirrorLanguageCache.has(props.language)) {
+    languageExtension.value = codemirrorLanguageCache.get(props.language)!
+    pause()
+  }
+}, 200)
+
+const resolvedExtensions = computed<CodemirrorExtension[]>(() => [
   // External extension
   ...props.extensions,
 
-  // Language extension
-  ...(props.language && codemirrorLanguageCache.get(props.language)
-    ? [codemirrorLanguageCache.get(props.language)!]
-    : []),
+  ...(languageExtension.value ? [languageExtension.value] : []),
 
   // Theme extension
   isDark.value ? githubDark : githubLight,
 ])
+
+watch(
+  () => props.language,
+  () => {
+    resume()
+  },
+)
 </script>
 
 <template>

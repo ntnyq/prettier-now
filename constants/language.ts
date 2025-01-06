@@ -4,248 +4,155 @@
 
 // @unocss-include
 
-import type { LanguageSupport } from '@codemirror/language'
-import type { Extension } from '@codemirror/state'
-
-export interface Language {
-  id: string
-  name: string
-  icon: string
-  extension: () => Promise<LanguageSupport | Extension[]>
+/**
+ * supported language id
+ */
+export const LANGUAGE_ID = {
+  angular: 'angular',
+  css: 'css',
+  graphql: 'graphql',
+  html: 'html',
+  java: 'java',
+  javascript: 'javascript',
+  json: 'json',
+  jsx: 'jsx',
+  less: 'less',
+  markdown: 'markdown',
+  php: 'php',
+  scss: 'scss',
+  svelte: 'svelte',
+  tsx: 'tsx',
+  typescript: 'typescript',
+  vue: 'vue',
+  xml: 'xml',
+  yaml: 'yaml',
 }
 
+export interface Language {
+  /**
+   * language id, unique
+   */
+  id: string
+
+  /**
+   * language name
+   */
+  name: string
+
+  /**
+   * langauge icon
+   */
+  icon: string
+
+  /**
+   * language parser, provided by prettier plugin, mostly same as language id
+   */
+  parser?: string
+}
+
+export type SupportedLanguageId = keyof typeof LANGUAGE_ID
+
 /**
- * Supported languages
- * Both prettier and codemirror
+ * Supported languages, both prettier and codemirror
  */
 export const languages: Language[] = [
   {
     icon: 'i-vscode-icons:file-type-js-official',
-    id: 'javascript',
+    id: LANGUAGE_ID.javascript,
     name: 'JavaScript',
-    extension: async () => {
-      const { javascript } = await import('@codemirror/lang-javascript')
-      return javascript()
-    },
+    /**
+     * language javascript parser names babel
+     */
+    parser: 'babel',
   },
   // {
-  //   id: 'jsx',
+  //   id: LANGUAGE_ID.jsx,
   //   name: 'JSX',
   //   icon: '',
-  //   extension: () => javascript({ jsx: true }),
+  //   parser: 'babel',
   // },
   {
     icon: 'i-vscode-icons:file-type-typescript-official',
-    id: 'typescript',
+    id: LANGUAGE_ID.typescript,
     name: 'TypeScript',
-    extension: async () => {
-      const { javascript } = await import('@codemirror/lang-javascript')
-      return javascript({ typescript: true })
-    },
   },
   // {
-  //   id: 'tsx',
+  //   id: LANGUAGE_ID.tsx,
   //   name: 'TSX',
   //   icon: '',
-  //   extension: () => javascript({ jsx: true, typescript: true }),
+  //   parser: 'typescript',
   // },
   {
     icon: 'i-vscode-icons:file-type-html',
-    id: 'html',
+    id: LANGUAGE_ID.html,
     name: 'HTML',
-    extension: async () => {
-      const { html } = await import('@codemirror/lang-html')
-      return html()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-vue',
-    id: 'vue',
+    id: LANGUAGE_ID.vue,
     name: 'Vue',
-    extension: async () => {
-      const { vue } = await import('@codemirror/lang-vue')
-      return vue()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-svelte',
-    id: 'svelte',
+    id: LANGUAGE_ID.svelte,
     name: 'Svelte',
-    extension: async () => {
-      const { svelte } = await import('@replit/codemirror-lang-svelte')
-      return svelte()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-angular',
-    id: 'angular',
+    id: LANGUAGE_ID.angular,
     name: 'Angular',
-    extension: async () => {
-      const { angular } = await import('@codemirror/lang-angular')
-      return angular()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-css',
-    id: 'css',
+    id: LANGUAGE_ID.css,
     name: 'CSS',
-    extension: async () => {
-      const { css } = await import('@codemirror/lang-css')
-      return css()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-less',
-    id: 'less',
+    id: LANGUAGE_ID.less,
     name: 'Less',
-    extension: async () => {
-      const { less } = await import('@codemirror/lang-less')
-      return less()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-scss',
-    id: 'scss',
+    id: LANGUAGE_ID.scss,
     name: 'Sass',
-    extension: async () => {
-      const { sass } = await import('@codemirror/lang-sass')
-      return sass()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-xml',
-    id: 'xml',
+    id: LANGUAGE_ID.xml,
     name: 'XML',
-    extension: async () => {
-      const { xml } = await import('@codemirror/lang-xml')
-      return xml()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-light-json',
-    id: 'json',
+    id: LANGUAGE_ID.json,
     name: 'JSON',
-    extension: async () => {
-      const { json } = await import('@codemirror/lang-json')
-      return json()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-light-yaml',
-    id: 'yaml',
+    id: LANGUAGE_ID.yaml,
     name: 'YAML',
-    extension: async () => {
-      const { yaml } = await import('@codemirror/lang-yaml')
-      return yaml()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-markdown',
-    id: 'markdown',
+    id: LANGUAGE_ID.markdown,
     name: 'Markdown',
-    extension: async () => {
-      const { markdown } = await import('@codemirror/lang-markdown')
-      return markdown()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-php',
-    id: 'php',
+    id: LANGUAGE_ID.php,
     name: 'PHP',
-    extension: async () => {
-      const { php } = await import('@codemirror/lang-php')
-      return php()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-java',
-    id: 'java',
+    id: LANGUAGE_ID.java,
     name: 'Java',
-    extension: async () => {
-      const { java } = await import('@codemirror/lang-java')
-      return java()
-    },
   },
   {
     icon: 'i-vscode-icons:file-type-graphql',
-    id: 'graphql',
+    id: LANGUAGE_ID.graphql,
     name: 'GraphQL',
-    extension: async () => {
-      const { graphql } = await import('cm6-graphql')
-      return graphql()
-    },
   },
 ]
-
-/**
- * language => prettier parser
- */
-export const languageParsers = {
-  /**
-   * plugin babel
-   */
-  javascript: 'babel',
-  json: 'json',
-  json5: 'json5',
-  jsonc: 'jsonc',
-
-  /**
-   * plugin typescript
-   */
-  typescript: 'typescript',
-
-  /**
-   * plugin postcss
-   */
-  css: 'css',
-  less: 'less',
-  sass: 'scss',
-  scss: 'scss',
-
-  /**
-   * plugin markdown
-   */
-  markdown: 'markdown',
-  mdx: 'mdx',
-  remark: 'remark',
-
-  /**
-   * plugin php
-   */
-  php: 'php',
-
-  /**
-   * plugin svelte
-   */
-  svelte: 'svelte',
-
-  /**
-   * plugin html
-   */
-  angular: 'angular',
-  html: 'html',
-  vue: 'vue',
-
-  /**
-   * plugin xml
-   */
-  xml: 'xml',
-
-  /**
-   * plugin yaml
-   */
-  yaml: 'yaml',
-
-  /**
-   * plugin graphql
-   */
-  graphql: 'graphql',
-
-  /**
-   * plugin java
-   */
-  java: 'java',
-}
 
 /**
  * extendsions => language

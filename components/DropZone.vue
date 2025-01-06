@@ -55,7 +55,7 @@ async function onImportFile(files?: FileList | null) {
     return Toast.error(i18n.t('emptyFile'))
   }
 
-  editorStore.setActiveLanguageId(languageId)
+  editorStore.setLanguageId(languageId)
   editorStore.sourceCode = fileContent
 
   editorStore.formatCode()

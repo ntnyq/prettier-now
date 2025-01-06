@@ -14,7 +14,7 @@ declare module '@prettier/plugin-php/standalone' {
 declare module 'prettier-plugin-svelte/browser' {
   import type { Parser, Printer, SupportLanguage, SupportOption } from 'prettier'
   export declare const options: Record<string, SupportOption>
-  export declare const languages: Partial<SupportLanguage>[]
+  export declare const languages: SupportLanguage[]
   export declare const parsers: {
     svelte: Parser
     svelteExpressionParser: Parser

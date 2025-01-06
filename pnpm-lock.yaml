@@ -68,6 +68,9 @@ importers:
       '@lezer/highlight':
         specifier: ^1.2.1
         version: 1.2.1
+      '@ntnyq/utils':
+        specifier: ^0.4.5
+        version: 0.4.5
       '@prettier/plugin-php':
         specifier: ^0.22.2
         version: 0.22.2(prettier@3.4.2)
@@ -130,8 +133,8 @@ importers:
         specifier: ^1.22.1
         version: 1.22.1
       '@types/chrome':
-        specifier: ^0.0.289
-        version: 0.0.289
+        specifier: ^0.0.290
+        version: 0.0.290
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
         version: 5.2.1(vite@5.4.11(@types/node@22.9.4))(vue@3.5.13(typescript@5.7.2))
@@ -909,8 +912,8 @@ packages:
   '@ntnyq/prettier-config@1.22.1':
     resolution: {integrity: sha512-xZUFm7AKtsbeIMXqylVto/mimFeP26vgzug6EjxyO8kbKYIssYJ4Mf+2t4O9wcECTN+LYfuV6AldpVWpyAMa5Q==}
 
-  '@ntnyq/utils@0.4.1':
-    resolution: {integrity: sha512-e/mFTHQNRnKKqRXVN1xlSZJFk7Zh7G+sxvFBW+UdbPVKORnmDclzv+OCoo2oyM5FPRMNeXPN7I8fB74OPsoZtg==}
+  '@ntnyq/utils@0.4.5':
+    resolution: {integrity: sha512-A4ik6khNFMCdisUxUVINGwuQD51POdZDjbznK+Kf5XxHuFUfd6ayVfnzsIvfIXyPBZZO2N5NPxs5r9hPOubkpQ==}
     engines: {node: '>=18.18.0'}
 
   '@pkgr/core@0.1.1':
@@ -1073,8 +1076,8 @@ packages:
   '@types/chrome@0.0.280':
     resolution: {integrity: sha512-AotSmZrL9bcZDDmSI1D9dE7PGbhOur5L0cKxXd7IqbVizQWCY4gcvupPUVsQ4FfDj3V2tt/iOpomT9EY0s+w1g==}
 
-  '@types/chrome@0.0.289':
-    resolution: {integrity: sha512-JQifH2d4TFeIZ+ySBSQxCd4D+J6W0jIAyQipAzG1up4O7WApTYrBqnmpNbMqFR5f70wJ1FE6+axqtpfTtPzy/g==}
+  '@types/chrome@0.0.290':
+    resolution: {integrity: sha512-N92vsAdlwoWameDQ8D4K0EZXXvxsJ1+gJg+4TWjUUsZ6gpontVmwl1XVtysA3mso45Fcn5UPiX/yqiT8GcBV3A==}
 
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
@@ -5097,7 +5100,7 @@ snapshots:
 
   '@ntnyq/prettier-config@1.22.1': {}
 
-  '@ntnyq/utils@0.4.1':
+  '@ntnyq/utils@0.4.5':
     dependencies:
       scule: 1.3.0
 
@@ -5227,7 +5230,7 @@ snapshots:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.16
 
-  '@types/chrome@0.0.289':
+  '@types/chrome@0.0.290':
     dependencies:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.16
@@ -6504,7 +6507,7 @@ snapshots:
 
   eslint-plugin-github-action@0.0.12(eslint@9.17.0(jiti@2.4.1)):
     dependencies:
-      '@ntnyq/utils': 0.4.1
+      '@ntnyq/utils': 0.4.5
       '@types/json-schema': 7.0.15
       eslint: 9.17.0(jiti@2.4.1)
       yaml-eslint-parser: 1.2.3

@@ -40,7 +40,7 @@ handleFileDialogChange(files => {
       return Toast.error(i18n.t('emptyFile'))
     }
 
-    editorStore.setActiveLanguageId(languageId)
+    editorStore.setLanguageId(languageId)
     editorStore.sourceCode = content
 
     editorStore.formatCode()

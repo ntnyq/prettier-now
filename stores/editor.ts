@@ -3,55 +3,63 @@
  */
 
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useStorage } from '@/composables/storage'
-import { languageParsers } from '@/constants/language'
+import { languages } from '@/constants/language'
 import { useOptionsStore } from '@/stores/options'
-import { formatViaPrettier, plugins } from '@/utils/format'
+import { getAllPrettierPlugins, loadCodemirrorLanguage, loadPrettierPlugin } from '@/utils/cache'
+import { formatViaPrettier, preloadPlugins } from '@/utils/format'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
 
 export const useEditorStore = defineStore('editor', () => {
   const sourceCode = ref('')
   const resultCode = ref('')
+  const formatCost = ref(0)
 
   const optionsStore = useOptionsStore()
 
-  const activeLanguageId = useStorage<string>('activeLanguageId', 'javascript')
+  const languageId = useStorage<string>('languageId', 'javascript')
 
-  const setActiveLanguageId = (languageId: string) => {
-    activeLanguageId.value = languageId
+  const languageParser = computed(
+    () => languages.find(item => item.id === languageId.value)?.parser || languageId.value,
+  )
+
+  function setLanguageId(id: string) {
+    languageId.value = id
   }
 
-  const formatStartTime = ref(0)
-  const formatEndTime = ref(0)
-  const formatCost = ref(0)
+  function clearCode() {
+    sourceCode.value = ''
+    resultCode.value = ''
+    formatCost.value = 0
+  }
 
-  const formatCode = async () => {
-    const parser = languageParsers[activeLanguageId.value as keyof typeof languageParsers]
-    if (!parser) return
+  async function formatCode() {
+    const formatStartTime = window.performance.now()
 
-    formatStartTime.value = Date.now()
+    // ensure codemirror language is loaded
+    await loadCodemirrorLanguage(languageId.value)
+
+    // ensure prettier plugin is loaded
+    await loadPrettierPlugin(languageId.value)
 
     try {
-      const result = await formatViaPrettier(sourceCode.value, {
+      const formattedCode = await formatViaPrettier(sourceCode.value, {
         ...optionsStore.options,
         ...optionsStore.xmlPluginOptions,
         ...optionsStore.phpPluginOptions,
         ...optionsStore.javaPluginOptions,
         ...optionsStore.sveltePluginOptions,
-        plugins,
-        parser,
+        plugins: [...preloadPlugins, ...getAllPrettierPlugins()],
+        parser: languageParser.value,
       })
 
-      resultCode.value = result
-      formatEndTime.value = Date.now()
-      formatCost.value = formatEndTime.value - formatStartTime.value
-      formatStartTime.value = 0
-      formatEndTime.value = 0
+      resultCode.value = formattedCode
+      formatCost.value = window.performance.now() - formatStartTime
 
-      Logger.success('Format Success')
-      Toast.info('Format Success')
+      Logger.success('Format successfully')
+      Toast.info('Format successfully')
     } catch (err: unknown) {
       const message = (err as Error)?.message || 'Unknown error'
       Logger.error(message)
@@ -59,22 +67,14 @@ export const useEditorStore = defineStore('editor', () => {
     }
   }
 
-  const clearCode = () => {
-    sourceCode.value = ''
-    resultCode.value = ''
-    formatCost.value = 0
-  }
-
   return {
     sourceCode,
     resultCode,
 
-    activeLanguageId,
-    setActiveLanguageId,
+    languageId,
+    setLanguageId,
 
     formatCost,
-    formatStartTime,
-    formatEndTime,
 
     formatCode,
     clearCode,
