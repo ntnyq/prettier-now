@@ -20,7 +20,7 @@ watch(
         editorStore.formatCode()
       }, 300)
     } else {
-      editorStore.clearCode()
+      editorStore.clearWorkspace()
     }
   },
 )

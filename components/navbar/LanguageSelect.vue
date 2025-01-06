@@ -12,6 +12,9 @@ const currentLanguage = computed(() =>
 
 function handSelectLanguage(language: Language) {
   editorStore.setLanguageId(language.id)
+
+  // clear workspace after language change
+  editorStore.clearWorkspace()
 }
 </script>
 

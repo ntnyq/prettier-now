@@ -28,8 +28,11 @@ export const useEditorStore = defineStore('editor', () => {
   function setLanguageId(id: string) {
     languageId.value = id
   }
+  function setSourceCode(code = '') {
+    sourceCode.value = code
+  }
 
-  function clearCode() {
+  function clearWorkspace() {
     sourceCode.value = ''
     resultCode.value = ''
     formatCost.value = 0
@@ -69,6 +72,7 @@ export const useEditorStore = defineStore('editor', () => {
 
   return {
     sourceCode,
+    setSourceCode,
     resultCode,
 
     languageId,
@@ -77,6 +81,6 @@ export const useEditorStore = defineStore('editor', () => {
     formatCost,
 
     formatCode,
-    clearCode,
+    clearWorkspace,
   }
 })

@@ -74,13 +74,13 @@ async function copyResult() {
     Toast.error('Failed to copy to clipboard')
   }
 }
-function clearCode() {
+function clearAll() {
   if (!editorStore.sourceCode && !editorStore.resultCode) {
     Logger.warn('Nothing to clear')
     return Toast.info('Nothing to clear')
   }
 
-  editorStore.clearCode()
+  editorStore.clearWorkspace()
 
   Logger.success('Clear Success')
   Toast.info('Clear Success')
@@ -99,7 +99,7 @@ function selectFile() {
       :label="i18n.t('selectFile')"
     />
     <ActionButton
-      @click="clearCode"
+      @click="clearAll"
       :label="i18n.t('clearAll')"
     />
     <ActionButton

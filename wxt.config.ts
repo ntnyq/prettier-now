@@ -26,6 +26,11 @@ export default defineConfig({
       devSourcemap: true,
     },
 
+    optimizeDeps: {
+      // https://github.com/vitejs/vite/discussions/13306
+      entries: ['**/entrypoints/**/*.html'],
+    },
+
     plugins: [
       VueComponents({
         dirs: [resolve('components')],
