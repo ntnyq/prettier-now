@@ -10,6 +10,8 @@ import type { Manifest } from 'wxt/browser'
 import type { Command } from '@/constants/command'
 
 export default defineConfig({
+  extensionApi: 'chrome',
+
   imports: false,
 
   outDir: 'dist',
