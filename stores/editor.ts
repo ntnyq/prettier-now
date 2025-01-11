@@ -7,8 +7,8 @@ import { computed, ref } from 'vue'
 import { useStorage } from '@/composables/storage'
 import { languages } from '@/constants/language'
 import { useOptionsStore } from '@/stores/options'
-import { getAllPrettierPlugins, loadCodemirrorLanguage, loadPrettierPlugin } from '@/utils/cache'
-import { formatViaPrettier, preloadPlugins } from '@/utils/format'
+import { loadCodemirrorLanguage } from '@/utils/cache'
+import { formatViaPrettier } from '@/utils/format'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
 
@@ -44,9 +44,6 @@ export const useEditorStore = defineStore('editor', () => {
     // ensure codemirror language is loaded
     await loadCodemirrorLanguage(languageId.value)
 
-    // ensure prettier plugin is loaded
-    await loadPrettierPlugin(languageId.value)
-
     try {
       const formattedCode = await formatViaPrettier(sourceCode.value, {
         ...optionsStore.options,
@@ -54,8 +51,8 @@ export const useEditorStore = defineStore('editor', () => {
         ...optionsStore.phpPluginOptions,
         ...optionsStore.javaPluginOptions,
         ...optionsStore.sveltePluginOptions,
-        plugins: [...preloadPlugins, ...getAllPrettierPlugins()],
         parser: languageParser.value,
+        languageId: languageId.value,
       })
 
       resultCode.value = formattedCode

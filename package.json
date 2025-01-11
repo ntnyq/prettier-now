@@ -83,6 +83,7 @@
     "wxt": "^0.19.24"
   },
   "nano-staged": {
-    "*.{js,ts,cjs,mjs,vue,html,md,json,yml,yaml}": "eslint --fix"
+    "*.{js,ts,cjs,mjs,vue,html,md,json,yml,yaml}": "eslint --fix",
+    "*.{css}": "prettier -uw"
   }
 }

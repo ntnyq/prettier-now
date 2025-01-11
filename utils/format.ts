@@ -5,6 +5,7 @@
 import pluginAngular from 'prettier/plugins/angular'
 import pluginBabel from 'prettier/plugins/babel'
 import pluginEstree from 'prettier/plugins/estree'
+import { getAllPrettierPlugins, loadPrettierPlugin } from '@/utils/cache'
 import type { Options, Plugin } from 'prettier'
 import type {
   PluginJavaOptions,
@@ -24,7 +25,9 @@ export const preloadPlugins: Plugin[] = [
 ]
 
 export type FormatOptions = Options &
-  Partial<PluginXMLOptions & PluginPHPOptions & PluginJavaOptions & PluginSvelteOptions>
+  Partial<PluginXMLOptions & PluginPHPOptions & PluginJavaOptions & PluginSvelteOptions> & {
+    languageId: string
+  }
 
 /**
  * prettier instance
@@ -38,9 +41,21 @@ let prettier: typeof import('prettier/standalone') | undefined
  * @param options - format options
  * @returns formatted source code
  */
-export async function formatViaPrettier(source: string, options: FormatOptions = {}) {
+export async function formatViaPrettier(source: string, options: FormatOptions) {
   if (!prettier) {
     prettier = await import('prettier/standalone')
   }
-  return prettier.format(source, options)
+  const { languageId, ...formatOptions } = options
+  await loadPrettierPlugin(options.languageId)
+
+  return prettier.format(source, {
+    ...formatOptions,
+    plugins: [
+      // built-in plugins
+      ...preloadPlugins,
+
+      // get cached plugins
+      ...getAllPrettierPlugins(),
+    ],
+  })
 }
