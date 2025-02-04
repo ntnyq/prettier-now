@@ -16,6 +16,7 @@ export default defineConfig({
 
   outDir: 'dist',
 
+  // @ts-expect-error type
   vite: () => ({
     build: {
       // Max per file size for Firefox is 4MB.

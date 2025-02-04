@@ -12,5 +12,11 @@ export default defineConfig({
         singleQuote: false,
       },
     },
+    {
+      files: ['**/*.html'],
+      options: {
+        singleAttributePerLine: false,
+      },
+    },
   ],
 })
