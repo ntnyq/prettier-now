@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.19",
   "private": true,
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.2.0",
   "description": "Yet another Prettier browser extension for formatting js, css, html, json codes",
   "license": "MIT",
   "scripts": {
