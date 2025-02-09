@@ -3,7 +3,7 @@
  */
 
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useStorage } from '@/composables/storage'
 import { languages } from '@/constants/language'
 import { useOptionsStore } from '@/stores/options'
@@ -68,6 +68,17 @@ export const useEditorStore = defineStore('editor', () => {
       Toast.error(message)
     }
   }
+
+  watch(
+    languageId,
+    newLanguageId => {
+      loadCodemirrorLanguage(newLanguageId)
+    },
+    {
+      immediate: true,
+      flush: 'post',
+    },
+  )
 
   return {
     sourceCode,
