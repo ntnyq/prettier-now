@@ -24,8 +24,13 @@ export const preloadPlugins: Plugin[] = [
   pluginAngular,
 ]
 
-export type FormatOptions = Options &
-  Partial<PluginXMLOptions & PluginPHPOptions & PluginJavaOptions & PluginSvelteOptions> & {
+export type FormatOptions = Options
+  & Partial<
+    PluginXMLOptions
+      & PluginPHPOptions
+      & PluginJavaOptions
+      & PluginSvelteOptions
+  > & {
     languageId: string
   }
 
@@ -41,7 +46,10 @@ let prettier: typeof import('prettier/standalone') | undefined
  * @param options - format options
  * @returns formatted source code
  */
-export async function formatViaPrettier(source: string, options: FormatOptions) {
+export async function formatViaPrettier(
+  source: string,
+  options: FormatOptions,
+) {
   if (!prettier) {
     prettier = await import('prettier/standalone')
   }

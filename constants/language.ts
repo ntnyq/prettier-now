@@ -158,8 +158,36 @@ export const languages: Language[] = [
  * extendsions => language
  */
 export const languageExtensions = {
+  graphql: 'graphql',
+  java: 'java',
+  json: 'json',
+  php: 'php',
+  svelte: 'svelte',
+  svg: 'xml',
+  vue: 'vue',
+  xml: 'xml',
+
   /**
-   * javascript
+   * @pg yaml
+   */
+  yaml: 'yaml',
+  yml: 'yaml',
+
+  /**
+   * @pg html
+   */
+  htm: 'html',
+  html: 'html',
+
+  /**
+   * @pg markdown
+   */
+  markdown: 'markdown',
+  md: 'markdown',
+  mdown: 'markdown',
+
+  /**
+   * @pg javascript
    */
   cjs: 'javascript',
   js: 'javascript',
@@ -167,7 +195,7 @@ export const languageExtensions = {
   mjs: 'javascript',
 
   /**
-   * typescript
+   * @pg typescript
    */
   cts: 'typescript',
   mts: 'typescript',
@@ -175,40 +203,9 @@ export const languageExtensions = {
   tsx: 'typescript',
 
   /**
-   * css
+   * @pg styles
    */
   css: 'css',
   less: 'less',
   scss: 'scss',
-
-  /**
-   * markdown
-   */
-  markdown: 'markdown',
-  md: 'markdown',
-  mdown: 'markdown',
-
-  /**
-   * frameworks
-   */
-  svelte: 'svelte',
-  vue: 'vue',
-
-  /**
-   * extensions
-   */
-  htm: 'html',
-  html: 'html',
-  json: 'json',
-  svg: 'xml',
-  xml: 'xml',
-  yaml: 'yaml',
-  yml: 'yaml',
-
-  /**
-   * others
-   */
-  graphql: 'graphql',
-  java: 'java',
-  php: 'php',
 }

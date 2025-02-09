@@ -22,7 +22,9 @@ export const useEditorStore = defineStore('editor', () => {
   const languageId = useStorage<string>('languageId', 'javascript')
 
   const languageParser = computed(
-    () => languages.find(item => item.id === languageId.value)?.parser || languageId.value,
+    () =>
+      languages.find(item => item.id === languageId.value)?.parser
+      || languageId.value,
   )
 
   function setLanguageId(id: string) {

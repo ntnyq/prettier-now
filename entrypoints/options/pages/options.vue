@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { i18n } from '#i18n'
 import { JAVA_ENTRYPOINTS } from '@/constants/options'
 import { useConfigStore } from '@/stores/config'
 import { useOptionsStore } from '@/stores/options'
+import { i18n } from '#i18n'
 
 const optionsStore = useOptionsStore()
 const configStore = useConfigStore()
@@ -13,7 +13,9 @@ const configStore = useConfigStore()
     <div class="mx-auto max-w-720px p-8">
       <!-- Prettier Core Options -->
       <div class="relative py-6">
-        <h3 class="mb-5 text-3xl font-semibold">{{ i18n.t('prettierOptions') }}</h3>
+        <h3 class="mb-5 text-3xl font-semibold">
+          {{ i18n.t('prettierOptions') }}
+        </h3>
         <div class="flex flex-col gap-4">
           <OptionItem
             title="printWidth"
@@ -178,7 +180,9 @@ const configStore = useConfigStore()
 
       <!-- Plugin XML Options -->
       <div class="relative py-6">
-        <h3 class="mb-5 text-3xl font-semibold">{{ i18n.t('pluginXMLOptions') }}</h3>
+        <h3 class="mb-5 text-3xl font-semibold">
+          {{ i18n.t('pluginXMLOptions') }}
+        </h3>
         <div class="flex flex-col gap-4">
           <OptionItem
             title="xmlSelfClosingSpace"
@@ -223,7 +227,9 @@ const configStore = useConfigStore()
 
       <!-- Plugin PHP Options -->
       <div class="relative py-6">
-        <h3 class="mb-5 text-3xl font-semibold">{{ i18n.t('pluginPHPOptions') }}</h3>
+        <h3 class="mb-5 text-3xl font-semibold">
+          {{ i18n.t('pluginPHPOptions') }}
+        </h3>
         <div class="flex flex-col gap-4">
           <OptionItem
             title="phpVersion"
@@ -276,7 +282,9 @@ const configStore = useConfigStore()
 
       <!-- Plugin Java Options -->
       <div class="relative py-6">
-        <h3 class="mb-5 text-3xl font-semibold">{{ i18n.t('pluginJavaOptions') }}</h3>
+        <h3 class="mb-5 text-3xl font-semibold">
+          {{ i18n.t('pluginJavaOptions') }}
+        </h3>
         <div class="flex flex-col gap-4">
           <OptionItem
             title="entrypoint"
@@ -294,7 +302,9 @@ const configStore = useConfigStore()
 
       <!-- Plugin Svelte Options -->
       <div class="relative py-6">
-        <h3 class="mb-5 text-3xl font-semibold">{{ i18n.t('pluginSvelteOptions') }}</h3>
+        <h3 class="mb-5 text-3xl font-semibold">
+          {{ i18n.t('pluginSvelteOptions') }}
+        </h3>
         <div class="flex flex-col gap-4">
           <OptionItem
             title="svelteSortOrder"

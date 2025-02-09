@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { useRoute, useRouter } from 'vue-router'
 import { browser } from 'wxt/browser'
-import { i18n } from '#i18n'
 import { toggleDark } from '@/composables/dark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
 import { useEditorStore } from '@/stores/editor'
+import { i18n } from '#i18n'
 // import { useLogStore } from '@/stores/log'
 
 const route = useRoute()
@@ -18,7 +18,9 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
 </script>
 
 <template>
-  <div class="flex flex-wrap items-center justify-between border-b border-base p-2">
+  <div
+    class="flex flex-wrap items-center justify-between border-b border-base p-2"
+  >
     <RouterLink
       to="/"
       class="flex gap-1"
@@ -48,12 +50,20 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
         />
         <IconButton
           @click="appStore.toggleLeftLayout"
-          :icon="appStore.showLeftLayout ? 'i-ri:layout-column-fill' : 'i-ri:layout-left-line'"
+          :icon="
+            appStore.showLeftLayout ?
+              'i-ri:layout-column-fill'
+            : 'i-ri:layout-left-line'
+          "
           :tooltip="i18n.t('toggleLeftLayout')"
         />
         <IconButton
           @click="appStore.toggleRightLayout"
-          :icon="appStore.showRightLayout ? 'i-ri:layout-column-fill' : 'i-ri:layout-left-line'"
+          :icon="
+            appStore.showRightLayout ?
+              'i-ri:layout-column-fill'
+            : 'i-ri:layout-left-line'
+          "
           :tooltip="i18n.t('toggleRightLayout')"
           icon-class="rotate-180"
         />

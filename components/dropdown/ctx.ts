@@ -8,4 +8,5 @@ export interface DropdownContext {
   hide: () => void
 }
 
-export const dropdownContextKey: InjectionKey<DropdownContext> = Symbol('dropdownContextKey')
+export const dropdownContextKey: InjectionKey<DropdownContext> =
+  Symbol('dropdownContextKey')

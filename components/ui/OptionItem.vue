@@ -13,7 +13,9 @@ defineProps<{
           {{ title }}
         </slot>
       </h3>
-      <div class="max-w-300px min-w-160px flex flex-none flex-row items-center justify-end">
+      <div
+        class="max-w-300px min-w-160px flex flex-none flex-row items-center justify-end"
+      >
         <slot name="action" />
       </div>
     </div>

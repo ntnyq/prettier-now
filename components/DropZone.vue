@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { useEventListener } from '@vueuse/core'
 import { onMounted, ref } from 'vue'
-import { i18n } from '#i18n'
 import { languageExtensions } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
 import { Toast } from '@/utils/toast'
+import { i18n } from '#i18n'
 
 const editorStore = useEditorStore()
 
@@ -46,7 +46,8 @@ async function onImportFile(files?: FileList | null) {
   const fileExt = file.name.split('.').pop()?.toLowerCase()
   const fileContent = await file.text()
 
-  const languageId = languageExtensions[fileExt as keyof typeof languageExtensions]
+  const languageId =
+    languageExtensions[fileExt as keyof typeof languageExtensions]
 
   if (!languageId) {
     return Toast.error(i18n.t('unsupportedFileFormat'))

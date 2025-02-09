@@ -8,7 +8,8 @@ class CodeMirrorEditor {
   }
 
   static validate(element: HTMLElement) {
-    const wrapper = element.closest('.cm-editor') || element.closest('.CodeMirror')
+    const wrapper =
+      element.closest('.cm-editor') || element.closest('.CodeMirror')
     return !!wrapper
   }
 
@@ -17,7 +18,8 @@ class CodeMirrorEditor {
     const editorWrapperV5 = elememt.closest('.CodeMirror')
 
     if (editorWrapperV6) {
-      const editor = (editorWrapperV6.querySelector('.cm-content') as any)?.cmView?.view
+      const editor = (editorWrapperV6.querySelector('.cm-content') as any)
+        ?.cmView?.view
 
       this.isCodeMirrorV6 = true
       this.editor = editor

@@ -23,10 +23,22 @@ import type {
 export const useOptionsStore = defineStore('options', () => {
   const useTabs = useStorage<boolean>('useTabs', DEFAULT_OPTIONS.useTabs)
   const semi = useStorage<boolean>('semi', DEFAULT_OPTIONS.semi)
-  const singleQuote = useStorage<boolean>('singleQuote', DEFAULT_OPTIONS.singleQuote)
-  const bracketSpacing = useStorage<boolean>('bracketSpacing', DEFAULT_OPTIONS.bracketSpacing)
-  const bracketSameLine = useStorage<boolean>('bracketSameLine', DEFAULT_OPTIONS.bracketSameLine)
-  const jsxSingleQuote = useStorage<boolean>('jsxSingleQuote', DEFAULT_OPTIONS.jsxSingleQuote)
+  const singleQuote = useStorage<boolean>(
+    'singleQuote',
+    DEFAULT_OPTIONS.singleQuote,
+  )
+  const bracketSpacing = useStorage<boolean>(
+    'bracketSpacing',
+    DEFAULT_OPTIONS.bracketSpacing,
+  )
+  const bracketSameLine = useStorage<boolean>(
+    'bracketSameLine',
+    DEFAULT_OPTIONS.bracketSameLine,
+  )
+  const jsxSingleQuote = useStorage<boolean>(
+    'jsxSingleQuote',
+    DEFAULT_OPTIONS.jsxSingleQuote,
+  )
   const singleAttributePerLine = useStorage<boolean>(
     'singleAttributePerLine',
     DEFAULT_OPTIONS.singleAttributePerLine,
@@ -52,18 +64,25 @@ export const useOptionsStore = defineStore('options', () => {
     'arrowParens',
     DEFAULT_OPTIONS.arrowParens,
   )
-  const proseWrap = useStorage<PrettierOptions['proseWrap']>('proseWrap', DEFAULT_OPTIONS.proseWrap)
-  const htmlWhitespaceSensitivity = useStorage<PrettierOptions['htmlWhitespaceSensitivity']>(
-    'htmlWhitespaceSensitivity',
-    DEFAULT_OPTIONS.htmlWhitespaceSensitivity,
+  const proseWrap = useStorage<PrettierOptions['proseWrap']>(
+    'proseWrap',
+    DEFAULT_OPTIONS.proseWrap,
   )
-  const endOfLine = useStorage<PrettierOptions['endOfLine']>('endOfLine', DEFAULT_OPTIONS.endOfLine)
-  const embeddedLanguageFormatting = useStorage<PrettierOptions['embeddedLanguageFormatting']>(
-    'embeddedLanguageFormatting',
-    DEFAULT_OPTIONS.embeddedLanguageFormatting,
+  const htmlWhitespaceSensitivity = useStorage<
+    PrettierOptions['htmlWhitespaceSensitivity']
+  >('htmlWhitespaceSensitivity', DEFAULT_OPTIONS.htmlWhitespaceSensitivity)
+  const endOfLine = useStorage<PrettierOptions['endOfLine']>(
+    'endOfLine',
+    DEFAULT_OPTIONS.endOfLine,
   )
+  const embeddedLanguageFormatting = useStorage<
+    PrettierOptions['embeddedLanguageFormatting']
+  >('embeddedLanguageFormatting', DEFAULT_OPTIONS.embeddedLanguageFormatting)
 
-  const printWidth = useStorage<number>('printWidth', DEFAULT_OPTIONS.printWidth)
+  const printWidth = useStorage<number>(
+    'printWidth',
+    DEFAULT_OPTIONS.printWidth,
+  )
   const tabWidth = useStorage<number>('tabWidth', DEFAULT_OPTIONS.tabWidth)
 
   const options = computed<PrettierOptions>(() => ({
@@ -99,10 +118,9 @@ export const useOptionsStore = defineStore('options', () => {
     'xmlQuoteAttributes',
     DEFAULT_XML_OPTIONS.xmlQuoteAttributes,
   )
-  const xmlWhitespaceSensitivity = useStorage<PluginXMLOptions['xmlWhitespaceSensitivity']>(
-    'xmlWhitespaceSensitivity',
-    DEFAULT_XML_OPTIONS.xmlWhitespaceSensitivity,
-  )
+  const xmlWhitespaceSensitivity = useStorage<
+    PluginXMLOptions['xmlWhitespaceSensitivity']
+  >('xmlWhitespaceSensitivity', DEFAULT_XML_OPTIONS.xmlWhitespaceSensitivity)
   const xmlPluginOptions = computed<PluginXMLOptions>(() => ({
     xmlSelfClosingSpace: xmlSelfClosingSpace.value,
     xmlSortAttributesByKey: xmlSortAttributesByKey.value,
@@ -128,7 +146,10 @@ export const useOptionsStore = defineStore('options', () => {
     braceStyle: braceStyle.value,
   }))
 
-  const entrypoint = useStorage<string>('entrypoint', DEFAULT_JAVA_OPTIONS.entrypoint)
+  const entrypoint = useStorage<string>(
+    'entrypoint',
+    DEFAULT_JAVA_OPTIONS.entrypoint,
+  )
   const javaPluginOptions = computed<PluginJavaOptions>(() => ({
     entrypoint: entrypoint.value,
   }))

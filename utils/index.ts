@@ -7,7 +7,8 @@
  * @param ms - Time to wait in milliseconds
  * @returns Promise that resolves after the given time
  */
-export const waitFor = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+export const waitFor = (ms: number) =>
+  new Promise(resolve => setTimeout(resolve, ms))
 
 /**
  * Open an external URL in new tab

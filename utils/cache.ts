@@ -29,19 +29,27 @@ export async function loadCodemirrorLanguage(languageId?: string) {
   let codemirrorLanguage: CodemirrorLanguage | undefined
 
   if (languageId === LANGUAGE_ID.javascript) {
-    const { javascript } = await interopDefault(import('@codemirror/lang-javascript'))
+    const { javascript } = await interopDefault(
+      import('@codemirror/lang-javascript'),
+    )
     codemirrorLanguage = javascript()
   }
   if (languageId === LANGUAGE_ID.jsx) {
-    const { javascript } = await interopDefault(import('@codemirror/lang-javascript'))
+    const { javascript } = await interopDefault(
+      import('@codemirror/lang-javascript'),
+    )
     codemirrorLanguage = javascript({ jsx: true })
   }
   if (languageId === LANGUAGE_ID.typescript) {
-    const { javascript } = await interopDefault(import('@codemirror/lang-javascript'))
+    const { javascript } = await interopDefault(
+      import('@codemirror/lang-javascript'),
+    )
     codemirrorLanguage = javascript({ typescript: true })
   }
   if (languageId === LANGUAGE_ID.tsx) {
-    const { javascript } = await interopDefault(import('@codemirror/lang-javascript'))
+    const { javascript } = await interopDefault(
+      import('@codemirror/lang-javascript'),
+    )
     codemirrorLanguage = javascript({ jsx: true, typescript: true })
   }
   if (languageId === LANGUAGE_ID.html) {
@@ -53,7 +61,9 @@ export async function loadCodemirrorLanguage(languageId?: string) {
     codemirrorLanguage = vue()
   }
   if (languageId === LANGUAGE_ID.svelte) {
-    const { svelte } = await interopDefault(import('@replit/codemirror-lang-svelte'))
+    const { svelte } = await interopDefault(
+      import('@replit/codemirror-lang-svelte'),
+    )
     codemirrorLanguage = svelte()
   }
   if (languageId === LANGUAGE_ID.angular) {
@@ -85,7 +95,9 @@ export async function loadCodemirrorLanguage(languageId?: string) {
     codemirrorLanguage = yaml()
   }
   if (languageId === LANGUAGE_ID.markdown) {
-    const { markdown } = await interopDefault(import('@codemirror/lang-markdown'))
+    const { markdown } = await interopDefault(
+      import('@codemirror/lang-markdown'),
+    )
     codemirrorLanguage = markdown()
   }
   if (languageId === LANGUAGE_ID.php) {
@@ -144,7 +156,10 @@ export const prettierPluginCachekeyMap = {
 export async function loadPrettierPlugin(languageId?: string) {
   if (!languageId) return
 
-  const cacheKey = prettierPluginCachekeyMap[languageId as keyof typeof prettierPluginCachekeyMap]
+  const cacheKey =
+    prettierPluginCachekeyMap[
+      languageId as keyof typeof prettierPluginCachekeyMap
+    ]
 
   if (!cacheKey) return
 
@@ -176,13 +191,17 @@ export async function loadPrettierPlugin(languageId?: string) {
     prettierPlugin = await interopDefault(import('@prettier/plugin-xml'))
   }
   if (cacheKey === CACHE_KEY.php) {
-    prettierPlugin = await interopDefault(import('@prettier/plugin-php/standalone'))
+    prettierPlugin = await interopDefault(
+      import('@prettier/plugin-php/standalone'),
+    )
   }
   if (cacheKey === CACHE_KEY.java) {
     prettierPlugin = await interopDefault(import('prettier-plugin-java'))
   }
   if (cacheKey === CACHE_KEY.svelte) {
-    prettierPlugin = await interopDefault(import('prettier-plugin-svelte/browser'))
+    prettierPlugin = await interopDefault(
+      import('prettier-plugin-svelte/browser'),
+    )
   }
 
   if (prettierPlugin) {

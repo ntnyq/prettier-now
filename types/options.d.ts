@@ -15,6 +15,11 @@ export type PluginPHPOptions = {
   braceStyle: '1tbs' | 'per-cs'
 
   /**
+   * @default true
+   */
+  trailingCommaPHP: boolean
+
+  /**
    * The version of PHP to use for formatting
    *
    * @default `7.0`
@@ -35,11 +40,6 @@ export type PluginPHPOptions = {
     | '8.0'
     | '8.1'
     | '8.2'
-
-  /**
-   * @default true
-   */
-  trailingCommaPHP: boolean
 }
 
 export type PluginSvelteOptions = {

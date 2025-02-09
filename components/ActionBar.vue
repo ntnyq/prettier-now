@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { useClipboard, useFileDialog } from '@vueuse/core'
-import { i18n } from '#i18n'
 import { languageExtensions } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
+import { i18n } from '#i18n'
 
 const editorStore = useEditorStore()
 const { copy } = useClipboard({ legacy: true })
@@ -23,7 +23,8 @@ handleFileDialogChange(files => {
   const file = files[0]
   const fileExt = file.name.split('.').pop()?.toLowerCase()
 
-  const languageId = languageExtensions[fileExt as keyof typeof languageExtensions]
+  const languageId =
+    languageExtensions[fileExt as keyof typeof languageExtensions]
 
   if (!languageId) {
     return Toast.error(i18n.t('unsupportedFileFormat'))

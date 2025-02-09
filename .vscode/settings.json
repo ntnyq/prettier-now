@@ -3,11 +3,16 @@
   "prettier.enable": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.configPath": "./prettier.config.mjs",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never",
+    "source.sortImports": "never"
+  },
   "eslint.validate": [
     "vue",
-    "yaml",
     "xml",
-    "html",
+    "yaml",
     "toml",
     "json",
     "jsonc",
@@ -18,6 +23,7 @@
     "javascriptreact",
     "typescriptreact"
   ],
+  "cSpell.allowCompoundWords": true,
   "cSpell.words": [
     "bumpp",
     "changelogithub",
