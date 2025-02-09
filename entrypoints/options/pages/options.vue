@@ -75,6 +75,30 @@ const configStore = useConfigStore()
           </OptionItem>
 
           <OptionItem
+            title="objectWrap"
+            description="How to wrap object literals."
+          >
+            <template #action>
+              <Select
+                v-model="optionsStore.objectWrap"
+                :items="['preserve', 'collapse']"
+              />
+            </template>
+          </OptionItem>
+
+          <OptionItem
+            title="experimentalOperatorPosition"
+            description="Where to print operators when binary expressions wrap lines."
+          >
+            <template #action>
+              <Select
+                v-model="optionsStore.experimentalOperatorPosition"
+                :items="['start', 'end']"
+              />
+            </template>
+          </OptionItem>
+
+          <OptionItem
             title="jsxSingleQuote"
             description="Use single quotes instead of double quotes in JSX."
           >

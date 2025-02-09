@@ -68,6 +68,16 @@ export const useOptionsStore = defineStore('options', () => {
     'proseWrap',
     DEFAULT_OPTIONS.proseWrap,
   )
+  const objectWrap = useStorage<PrettierOptions['objectWrap']>(
+    'objectWrap',
+    DEFAULT_OPTIONS.objectWrap,
+  )
+  const experimentalOperatorPosition = useStorage<
+    PrettierOptions['experimentalOperatorPosition']
+  >(
+    'experimentalOperatorPosition',
+    DEFAULT_OPTIONS.experimentalOperatorPosition,
+  )
   const htmlWhitespaceSensitivity = useStorage<
     PrettierOptions['htmlWhitespaceSensitivity']
   >('htmlWhitespaceSensitivity', DEFAULT_OPTIONS.htmlWhitespaceSensitivity)
@@ -95,10 +105,12 @@ export const useOptionsStore = defineStore('options', () => {
     singleAttributePerLine: singleAttributePerLine.value,
     vueIndentScriptAndStyle: vueIndentScriptAndStyle.value,
     experimentalTernaries: experimentalTernaries.value,
+    experimentalOperatorPosition: experimentalOperatorPosition.value,
     quoteProps: quoteProps.value,
     trailingComma: trailingComma.value,
     arrowParens: arrowParens.value,
     proseWrap: proseWrap.value,
+    objectWrap: objectWrap.value,
     htmlWhitespaceSensitivity: htmlWhitespaceSensitivity.value,
     endOfLine: endOfLine.value,
     embeddedLanguageFormatting: embeddedLanguageFormatting.value,
@@ -191,6 +203,8 @@ export const useOptionsStore = defineStore('options', () => {
     trailingComma,
     arrowParens,
     proseWrap,
+    objectWrap,
+    experimentalOperatorPosition,
     htmlWhitespaceSensitivity,
     endOfLine,
     embeddedLanguageFormatting,

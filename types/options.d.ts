@@ -131,6 +131,7 @@ export type PrettierOptions = Required<
     | 'experimentalTernaries'
     | 'htmlWhitespaceSensitivity'
     | 'jsxSingleQuote'
+    | 'objectWrap'
     | 'printWidth'
     | 'proseWrap'
     | 'quoteProps'
@@ -141,5 +142,7 @@ export type PrettierOptions = Required<
     | 'trailingComma'
     | 'useTabs'
     | 'vueIndentScriptAndStyle'
-  >
+  > & {
+    experimentalOperatorPosition: 'end' | 'start'
+  }
 >

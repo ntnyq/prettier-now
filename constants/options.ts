@@ -17,39 +17,24 @@ import type {
  */
 export const DEFAULT_OPTIONS: PrettierOptions = {
   arrowParens: 'always',
-
   bracketSameLine: false,
-
   bracketSpacing: true,
-
   embeddedLanguageFormatting: 'auto',
-
   endOfLine: 'auto',
-
+  experimentalOperatorPosition: 'end',
   experimentalTernaries: false,
-
   htmlWhitespaceSensitivity: 'css',
-
   jsxSingleQuote: false,
-
+  objectWrap: 'preserve',
   printWidth: 80,
-
   proseWrap: 'preserve',
-
   quoteProps: 'as-needed',
-
   semi: true,
-
   singleAttributePerLine: false,
-
   singleQuote: false,
-
   tabWidth: 2,
-
   trailingComma: 'all',
-
   useTabs: false,
-
   vueIndentScriptAndStyle: false,
 }
 

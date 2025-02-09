@@ -68,20 +68,20 @@ function handleSelect(value: string) {
       type="button"
       class="h-10 min-w-120px flex items-center justify-between gap-1 border border-base rounded-md pl-2"
     >
-      <span class="block h-9 max-w-280px of-x-auto whitespace-nowrap lh-9">{{
-        showValue
-      }}</span>
+      <span class="block h-9 max-w-280px of-x-auto whitespace-nowrap lh-9">
+        {{ showValue }}
+      </span>
       <div class="i-ri:arrow-drop-down-line text-xl text-zinc-400" />
     </button>
     <template #popper>
       <input
         v-model.trim="keyword"
-        v-if="formatedItems.length > 10"
+        v-if="formatedItems.length > 20"
         type="text"
         placeholder="Search items..."
         class="h-10 w-full border border-base rounded-t-md px-2"
       />
-      <div class="v-select-item-wrapper">
+      <div class="v-select-item-wrapper min-w-100px">
         <DropdownItem
           @click="handleSelect(item.value)"
           v-for="item in filteredFormatedItems"
