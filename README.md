@@ -19,6 +19,7 @@
 - Format source code with customable options
 - Drag and drop file to format
 - Select file to format
+- Copy and Paste file to format
 - Open format page in contextMenu
 
 ## Supported languages

@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 import { useEventListener } from '@vueuse/core'
 import { onMounted, ref } from 'vue'
-import { languageExtensions } from '@/constants/language'
-import { useEditorStore } from '@/stores/editor'
-import { Toast } from '@/utils/toast'
+import { useFileHandler } from '@/composables/fileHandler'
 import { i18n } from '#i18n'
 
-const editorStore = useEditorStore()
+const { loadFileList } = useFileHandler()
 
 const isDragging = ref(false)
 
@@ -39,29 +37,7 @@ function onDragLeave(evt: DragEvent) {
 function onDragOver(evt: DragEvent) {
   evt.preventDefault()
 }
-async function onImportFile(files?: FileList | null) {
-  if (!files) return
-
-  const file = files[0]
-  const fileExt = file.name.split('.').pop()?.toLowerCase()
-  const fileContent = await file.text()
-
-  const languageId =
-    languageExtensions[fileExt as keyof typeof languageExtensions]
-
-  if (!languageId) {
-    return Toast.error(i18n.t('unsupportedFileFormat'))
-  }
-  if (!fileContent.trim().length) {
-    return Toast.error(i18n.t('emptyFile'))
-  }
-
-  editorStore.setLanguageId(languageId)
-  editorStore.sourceCode = fileContent
-
-  editorStore.formatCode()
-}
-async function onDrop(evt: DragEvent) {
+function onDrop(evt: DragEvent) {
   evt.preventDefault()
   if (!isFileDrag(evt)) {
     return
@@ -70,7 +46,7 @@ async function onDrop(evt: DragEvent) {
   isDragging.value = false
   dragCounter = 0
 
-  await onImportFile(evt.dataTransfer?.files)
+  loadFileList(evt.dataTransfer?.files)
 }
 
 onMounted(() => {

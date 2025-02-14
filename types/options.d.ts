@@ -128,6 +128,7 @@ export type PrettierOptions = Required<
     | 'bracketSpacing'
     | 'embeddedLanguageFormatting'
     | 'endOfLine'
+    | 'experimentalOperatorPosition'
     | 'experimentalTernaries'
     | 'htmlWhitespaceSensitivity'
     | 'jsxSingleQuote'
@@ -142,7 +143,5 @@ export type PrettierOptions = Required<
     | 'trailingComma'
     | 'useTabs'
     | 'vueIndentScriptAndStyle'
-  > & {
-    experimentalOperatorPosition: 'end' | 'start'
-  }
+  >
 >

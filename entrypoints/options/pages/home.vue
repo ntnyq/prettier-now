@@ -1,7 +1,15 @@
 <script lang="ts" setup>
+import { useEventListener } from '@vueuse/core'
+import { useFileHandler } from '@/composables/fileHandler'
 import { useAppStore } from '@/stores/app'
 
 const appStore = useAppStore()
+
+const { loadFileList } = useFileHandler()
+
+useEventListener('paste', (evt: ClipboardEvent) => {
+  loadFileList(evt.clipboardData?.files)
+})
 </script>
 
 <template>
