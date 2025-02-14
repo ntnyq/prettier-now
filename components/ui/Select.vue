@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { isString, waitFor } from '@ntnyq/utils'
 import { Menu as VMenu } from 'floating-vue'
 import { computed, ref, useTemplateRef } from 'vue'
 import { isDark } from '@/composables/dark'
-import { waitFor } from '@/utils'
 
 type SelectItem = string | { label: string; value: string }
 
@@ -20,12 +20,7 @@ const keyword = ref('')
 const menuRef = useTemplateRef('menuRef')
 const formatedItems = computed(() =>
   props.items.map(item =>
-    typeof item === 'string' ?
-      {
-        label: item,
-        value: item,
-      }
-    : item,
+    isString(item) ? { label: item, value: item } : item,
   ),
 )
 const showValue = computed(() => {

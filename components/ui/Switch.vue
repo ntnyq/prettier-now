@@ -6,9 +6,9 @@ const isChecked = defineModel<boolean>({ default: false })
   <button
     @click="isChecked = !isChecked"
     :class="[
-      isChecked ?
-        'bg-zinc-800 dark:bg-zinc-200'
-      : 'bg-zinc-200 dark:bg-zinc-600',
+      isChecked
+        ? 'bg-zinc-800 dark:bg-zinc-200'
+        : 'bg-zinc-200 dark:bg-zinc-600',
     ]"
     type="button"
     role="switch"

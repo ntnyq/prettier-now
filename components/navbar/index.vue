@@ -51,18 +51,18 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
         <IconButton
           @click="appStore.toggleLeftLayout"
           :icon="
-            appStore.showLeftLayout ?
-              'i-ri:layout-column-fill'
-            : 'i-ri:layout-left-line'
+            appStore.showLeftLayout
+              ? 'i-ri:layout-column-fill'
+              : 'i-ri:layout-left-line'
           "
           :tooltip="i18n.t('toggleLeftLayout')"
         />
         <IconButton
           @click="appStore.toggleRightLayout"
           :icon="
-            appStore.showRightLayout ?
-              'i-ri:layout-column-fill'
-            : 'i-ri:layout-left-line'
+            appStore.showRightLayout
+              ? 'i-ri:layout-column-fill'
+              : 'i-ri:layout-left-line'
           "
           :tooltip="i18n.t('toggleRightLayout')"
           icon-class="rotate-180"

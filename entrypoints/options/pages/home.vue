@@ -10,9 +10,9 @@ const appStore = useAppStore()
       <EditorSource
         v-show="appStore.showLeftLayout"
         :class="[
-          appStore.showRightLayout ?
-            'max-w-1/2 min-w-1/2'
-          : 'max-w-full min-w-full',
+          appStore.showRightLayout
+            ? 'max-w-1/2 min-w-1/2'
+            : 'max-w-full min-w-full',
         ]"
         class="flex-1"
       />

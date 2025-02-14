@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import { waitFor } from '@ntnyq/utils'
 import { computed, ref, watch } from 'vue'
-import { waitFor } from '@/utils'
 
 const props = withDefaults(
   defineProps<{

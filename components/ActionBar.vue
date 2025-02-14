@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { isString } from '@ntnyq/utils'
 import { useClipboard, useFileDialog } from '@vueuse/core'
 import { languageExtensions } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
@@ -35,7 +36,7 @@ handleFileDialogChange(files => {
   reader.addEventListener('load', (event: ProgressEvent<FileReader>) => {
     const content = event.target?.result ?? ''
 
-    if (typeof content !== 'string') return
+    if (!isString(content)) return
 
     if (!content.trim().length) {
       return Toast.error(i18n.t('emptyFile'))

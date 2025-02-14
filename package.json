@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.20",
   "private": true,
-  "packageManager": "pnpm@10.2.1",
+  "packageManager": "pnpm@10.3.0",
   "description": "Yet another Prettier browser extension for formatting js, css, html, json codes",
   "license": "MIT",
   "scripts": {
@@ -25,7 +25,7 @@
     "@codemirror/lang-css": "^6.3.1",
     "@codemirror/lang-html": "^6.4.9",
     "@codemirror/lang-java": "^6.0.1",
-    "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/lang-javascript": "^6.2.3",
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/lang-less": "^6.0.2",
     "@codemirror/lang-markdown": "^6.3.2",
@@ -39,9 +39,9 @@
     "@codemirror/view": "^6.36.2",
     "@iconify-json/lucide": "^1.2.26",
     "@iconify-json/ri": "^1.2.5",
-    "@iconify-json/vscode-icons": "^1.2.12",
+    "@iconify-json/vscode-icons": "^1.2.14",
     "@lezer/highlight": "^1.2.1",
-    "@ntnyq/utils": "^0.4.5",
+    "@ntnyq/utils": "^0.5.2",
     "@prettier/plugin-php": "^0.22.4",
     "@prettier/plugin-xml": "^3.4.1",
     "@replit/codemirror-lang-svelte": "^6.0.0",
@@ -52,8 +52,8 @@
     "codemirror": "^6.0.1",
     "dayjs": "^1.11.13",
     "floating-vue": "^5.2.2",
-    "pinia": "^2.3.1",
-    "prettier": "^3.5.0",
+    "pinia": "^3.0.1",
+    "prettier": "^3.5.1",
     "prettier-plugin-java": "^2.6.7",
     "prettier-plugin-svelte": "^3.3.3",
     "vercel-toast": "^1.8.0",
@@ -62,16 +62,16 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^4.0.0-beta.2",
-    "@ntnyq/prettier-config": "^2.0.0-beta.1",
+    "@ntnyq/eslint-config": "^4.0.0-beta.4",
+    "@ntnyq/prettier-config": "^2.0.0-beta.2",
     "@types/chrome": "^0.0.304",
     "@vitejs/plugin-vue": "^5.2.1",
     "@wxt-dev/auto-icons": "^1.0.2",
     "@wxt-dev/i18n": "^0.2.3",
     "@wxt-dev/module-vue": "^1.0.2",
     "@wxt-dev/unocss": "^1.0.0",
-    "bumpp": "^10.0.2",
-    "eslint": "^9.20.0",
+    "bumpp": "^10.0.3",
+    "eslint": "^9.20.1",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
     "npm-run-all2": "^7.0.2",
@@ -80,10 +80,18 @@
     "unocss": "^65.4.3",
     "unplugin-vue-components": "^28.0.0",
     "vue-tsc": "^2.2.0",
-    "wxt": "^0.19.26"
+    "wxt": "^0.19.27"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "dtrace-provider",
+      "esbuild",
+      "sharp",
+      "spawn-sync"
+    ]
   },
   "nano-staged": {
     "*.{js,ts,cjs,mjs,vue,svg,md,json,yml,yaml}": "eslint --fix",
-    "*.{css,html}": "prettier -uw"
+    "*.{css,scss,html}": "prettier -uw"
   }
 }

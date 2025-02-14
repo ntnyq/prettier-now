@@ -2,13 +2,14 @@
  * @file useDark
  */
 
+import { isUndefined } from '@ntnyq/utils'
 import { useDark } from '@vueuse/core'
 import { nextTick } from 'vue'
 
 export const isDark = useDark()
 
 const supportViewTransition =
-  typeof document !== 'undefined'
+  !isUndefined(document)
   && !!document.startViewTransition
   && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -45,9 +46,8 @@ export function toggleDark(event?: MouseEvent) {
       {
         duration: 400,
         easing: 'ease-in',
-        pseudoElement:
-          isDark.value ?
-            '::view-transition-old(root)'
+        pseudoElement: isDark.value
+          ? '::view-transition-old(root)'
           : '::view-transition-new(root)',
       },
     )

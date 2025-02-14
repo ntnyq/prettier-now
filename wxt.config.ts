@@ -16,31 +16,6 @@ export default defineConfig({
 
   outDir: 'dist',
 
-  // @ts-expect-error type
-  vite: () => ({
-    build: {
-      // Max per file size for Firefox is 4MB.
-      chunkSizeWarningLimit: 4 * 1024,
-    },
-
-    css: {
-      devSourcemap: true,
-    },
-
-    optimizeDeps: {
-      // https://github.com/vitejs/vite/discussions/13306
-      entries: ['**/entrypoints/**/*.html'],
-    },
-
-    plugins: [
-      VueComponents({
-        dirs: [resolve('components')],
-        dts: 'types/components.d.ts',
-        resolvers: [],
-      }),
-    ],
-  }),
-
   autoIcons: {
     baseIconPath: 'assets/images/icon.png',
   },
@@ -70,4 +45,28 @@ export default defineConfig({
      */
     '@wxt-dev/i18n/module',
   ],
+
+  vite: () => ({
+    build: {
+      // Max per file size for Firefox is 4MB.
+      chunkSizeWarningLimit: 4 * 1024,
+    },
+
+    css: {
+      devSourcemap: true,
+    },
+
+    optimizeDeps: {
+      // https://github.com/vitejs/vite/discussions/13306
+      entries: ['**/entrypoints/**/*.html'],
+    },
+
+    plugins: [
+      VueComponents({
+        dirs: [resolve('components')],
+        dts: 'types/components.d.ts',
+        resolvers: [],
+      }),
+    ],
+  }),
 })
