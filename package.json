@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.20",
   "private": true,
-  "packageManager": "pnpm@10.3.0",
+  "packageManager": "pnpm@10.4.1",
   "description": "Yet another Prettier browser extension for formatting js, css, html, json codes",
   "license": "MIT",
   "scripts": {
@@ -46,8 +46,8 @@
     "@prettier/plugin-xml": "^3.4.1",
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "@uiw/codemirror-themes": "^4.23.8",
-    "@unocss/reset": "^65.4.3",
-    "@vueuse/core": "^12.5.0",
+    "@unocss/reset": "^65.5.0",
+    "@vueuse/core": "^12.7.0",
     "cm6-graphql": "^0.2.0",
     "codemirror": "^6.0.1",
     "dayjs": "^1.11.13",
@@ -62,8 +62,8 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^4.0.0-beta.4",
-    "@ntnyq/prettier-config": "^2.0.0-beta.2",
+    "@ntnyq/eslint-config": "^4.0.0-beta.6",
+    "@ntnyq/prettier-config": "^2.0.0",
     "@types/chrome": "^0.0.304",
     "@vitejs/plugin-vue": "^5.2.1",
     "@wxt-dev/auto-icons": "^1.0.2",
@@ -77,9 +77,9 @@
     "npm-run-all2": "^7.0.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
-    "unocss": "^65.4.3",
-    "unplugin-vue-components": "^28.0.0",
-    "vue-tsc": "^2.2.0",
+    "unocss": "^65.5.0",
+    "unplugin-vue-components": "^28.1.0",
+    "vue-tsc": "^2.2.2",
     "wxt": "^0.19.27"
   },
   "pnpm": {
