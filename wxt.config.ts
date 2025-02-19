@@ -64,7 +64,7 @@ export default defineConfig({
     plugins: [
       VueComponents({
         dirs: [resolve('components')],
-        dts: 'types/components.d.ts',
+        dts: resolve('types/components.d.ts'),
         resolvers: [],
       }),
     ],

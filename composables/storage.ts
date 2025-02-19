@@ -6,7 +6,7 @@ import { ref, watch } from 'vue'
 import { storage } from 'wxt/storage'
 import type { Ref } from 'vue'
 import type { StorageItemKey } from 'wxt/storage'
-import type { JsonValue } from '@/types/json-value'
+import type { JsonValue } from '@/types/json'
 
 export function useStorage<V extends JsonValue>(key: string): Ref<V | null>
 export function useStorage<V extends JsonValue>(

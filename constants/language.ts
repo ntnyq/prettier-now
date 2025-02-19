@@ -156,6 +156,8 @@ export const languages: Language[] = [
 
 /**
  * extendsions => language
+ *
+ * Any extension need both prettier and codemirror support
  */
 export const languageExtensions = {
   graphql: 'graphql',
