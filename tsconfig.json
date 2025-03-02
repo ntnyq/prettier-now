@@ -1,6 +1,8 @@
 {
   "extends": "./.wxt/tsconfig.json",
   "compilerOptions": {
-    "types": ["chrome"]
+    "types": ["chrome"],
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true
   }
 }
