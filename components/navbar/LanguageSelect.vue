@@ -1,14 +1,23 @@
 <script lang="ts" setup>
+import { isString } from '@ntnyq/utils'
 import { computed } from 'vue'
+import { isDark } from '@/composables/dark'
 import { languages } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
-import type { Language } from '@/constants/language'
+import type { Language } from '@/types/language'
 
 const editorStore = useEditorStore()
 
 const currentLanguage = computed(() =>
   languages.find(language => language.id === editorStore.languageId),
 )
+const currentLanguageIcon = computed(() => {
+  if (!currentLanguage.value?.icon) return
+  if (isString(currentLanguage.value.icon)) return currentLanguage.value.icon
+  return isDark.value
+    ? currentLanguage.value.icon.dark
+    : currentLanguage.value.icon.light
+})
 
 function handSelectLanguage(language: Language) {
   editorStore.setLanguageId(language.id)
@@ -25,7 +34,7 @@ function handSelectLanguage(language: Language) {
       role="button"
       class="flex items-center gap-1 px-2 hover:bg-zinc-100 dark:hover:bg-zinc-700"
     >
-      <div :class="currentLanguage?.icon" />
+      <div :class="currentLanguageIcon" />
       <span>{{ currentLanguage?.name }}</span>
       <div class="i-ri:arrow-down-s-line op-50" />
     </button>

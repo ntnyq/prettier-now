@@ -1,11 +1,14 @@
 <script lang="ts" setup>
-import { inject } from 'vue'
+import { isString } from '@ntnyq/utils'
+import { computed, inject } from 'vue'
+import { isDark } from '@/composables/dark'
 import { dropdownContextKey } from './ctx'
+import type { ThemeableValue } from '@/types'
 
-defineProps<{
+const props = defineProps<{
   text?: string
   description?: string
-  icon?: string
+  icon?: ThemeableValue<string>
   checked?: boolean
   checkable?: boolean
 }>()
@@ -18,7 +21,13 @@ defineOptions({
 
 const { hide } = inject(dropdownContextKey, undefined) || {}
 
-const handleClick = (evt: MouseEvent) => {
+const resolvedIcon = computed(() => {
+  if (!props.icon) return
+  if (isString(props.icon)) return props.icon
+  return isDark.value ? props.icon.dark : props.icon.light
+})
+
+function handleClick(evt: MouseEvent) {
   hide?.()
   emits('click', evt)
 }
@@ -34,7 +43,7 @@ const handleClick = (evt: MouseEvent) => {
     <div class="flex items-center gap-2">
       <div
         v-if="icon"
-        :class="icon"
+        :class="resolvedIcon"
       />
       <slot>
         {{ text }}

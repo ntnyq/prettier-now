@@ -4,6 +4,8 @@
 
 // @unocss-include
 
+import type { Language } from '@/types/language'
+
 /**
  * supported language id
  */
@@ -29,33 +31,6 @@ export const LANGUAGE_ID = {
   xml: 'xml',
   yaml: 'yaml',
 }
-
-export interface Language {
-  /**
-   * language id, unique
-   */
-  id: string
-
-  /**
-   * language name
-   */
-  name: string
-
-  /**
-   * langauge icon
-   */
-  icon: string
-
-  /**
-   * language parser, provided by prettier plugin, mostly same as language id
-   */
-  parser?: string
-}
-
-/**
- * Type of supported language ids
- */
-export type SupportedLanguageId = keyof typeof LANGUAGE_ID
 
 /**
  * Supported languages, both prettier and codemirror
@@ -128,14 +103,20 @@ export const languages: Language[] = [
     name: 'XML',
   },
   {
-    icon: 'i-vscode-icons:file-type-light-json',
     id: LANGUAGE_ID.json,
     name: 'JSON',
+    icon: {
+      dark: 'i-vscode-icons:file-type-json',
+      light: 'i-vscode-icons:file-type-light-json',
+    },
   },
   {
-    icon: 'i-vscode-icons:file-type-light-yaml',
     id: LANGUAGE_ID.yaml,
     name: 'YAML',
+    icon: {
+      dark: 'i-vscode-icons:file-type-yaml-official',
+      light: 'i-vscode-icons:file-type-light-yaml-official',
+    },
   },
   {
     icon: 'i-vscode-icons:file-type-markdown',
@@ -158,9 +139,12 @@ export const languages: Language[] = [
     name: 'GraphQL',
   },
   {
-    icon: 'i-vscode-icons:file-type-light-toml',
     id: LANGUAGE_ID.toml,
     name: 'TOML',
+    icon: {
+      dark: 'i-vscode-icons:file-type-toml',
+      light: 'i-vscode-icons:file-type-light-toml',
+    },
   },
   {
     icon: 'i-vscode-icons:file-type-pug',
