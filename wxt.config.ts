@@ -4,6 +4,7 @@
  */
 
 import VueComponents from 'unplugin-vue-components/vite'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { defineConfig } from 'wxt'
 import { resolve } from './scripts/utils'
 import type { Manifest } from 'wxt/browser'
@@ -62,6 +63,9 @@ export default defineConfig({
     },
 
     plugins: [
+      nodePolyfills({
+        include: ['assert', 'process', 'util'],
+      }),
       VueComponents({
         dirs: [resolve('components')],
         dts: resolve('types/components.d.ts'),

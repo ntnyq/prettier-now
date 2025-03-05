@@ -19,6 +19,7 @@ export const LANGUAGE_ID = {
   less: 'less',
   markdown: 'markdown',
   php: 'php',
+  pug: 'pug',
   scss: 'scss',
   svelte: 'svelte',
   toml: 'toml',
@@ -161,6 +162,11 @@ export const languages: Language[] = [
     id: LANGUAGE_ID.toml,
     name: 'TOML',
   },
+  {
+    icon: 'i-vscode-icons:file-type-pug',
+    id: LANGUAGE_ID.pug,
+    name: 'Pug',
+  },
 ]
 
 /**
@@ -173,6 +179,7 @@ export const languageExtensions = {
   java: 'java',
   json: 'json',
   php: 'php',
+  pug: 'pug',
   svelte: 'svelte',
   svg: 'xml',
   toml: 'toml',

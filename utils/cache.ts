@@ -104,6 +104,11 @@ export async function loadCodemirrorLanguage(languageId?: string) {
       import('@codemirror/legacy-modes/mode/toml'),
     )
     codemirrorLanguage = StreamLanguage.define(toml)
+  } else if (languageId === LANGUAGE_ID.pug) {
+    const { pug } = await interopDefault(
+      import('@codemirror/legacy-modes/mode/pug'),
+    )
+    codemirrorLanguage = StreamLanguage.define(pug)
   }
 
   if (codemirrorLanguage) {
@@ -133,6 +138,7 @@ export const CACHE_KEY = {
   toml: 'toml',
   php: 'php',
   java: 'java',
+  pug: 'pug',
   svelte: 'svelte',
   graphql: 'graphql',
   markdown: 'markdown',
@@ -153,6 +159,7 @@ export const prettierPluginCachekeyMap = {
   [LANGUAGE_ID.svelte]: CACHE_KEY.svelte,
   [LANGUAGE_ID.graphql]: CACHE_KEY.graphql,
   [LANGUAGE_ID.toml]: CACHE_KEY.toml,
+  [LANGUAGE_ID.pug]: CACHE_KEY.pug,
 }
 
 /**
@@ -202,6 +209,8 @@ export async function loadPrettierPlugin(languageId?: string) {
     )
   } else if (cacheKey === CACHE_KEY.toml) {
     prettierPlugin = await interopDefault(import('prettier-plugin-toml'))
+  } else if (cacheKey === CACHE_KEY.pug) {
+    prettierPlugin = await interopDefault(import('@prettier/plugin-pug'))
   }
 
   if (prettierPlugin) {

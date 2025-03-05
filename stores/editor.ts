@@ -53,6 +53,7 @@ export const useEditorStore = defineStore('editor', () => {
         ...optionsStore.phpPluginOptions,
         ...optionsStore.javaPluginOptions,
         ...optionsStore.sveltePluginOptions,
+        ...optionsStore.tomlPluginOptions,
         parser: languageParser.value,
         languageId: languageId.value,
       })

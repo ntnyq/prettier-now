@@ -14,17 +14,6 @@ import type {
   PluginXMLOptions,
   PrettierCoreOptions,
 } from '@/types/options'
-import type { PrettierPlugin } from '@/types/vendor'
-
-/**
- * preload plugins
- */
-export const preloadPlugins: PrettierPlugin[] = [
-  // javascript, json and sharable parsers
-  pluginBabel,
-  pluginEstree,
-  pluginAngular,
-]
 
 export type FormatOptions = PrettierCoreOptions
   & Partial<
@@ -58,16 +47,21 @@ export async function formatViaPrettier(
   }
 
   const { languageId, ...formatOptions } = options
+
   await loadPrettierPlugin(options.languageId)
 
-  return prettier.format(source, {
+  const formatted = await prettier.format(source, {
     ...formatOptions,
     plugins: [
-      // built-in plugins
-      ...preloadPlugins,
+      // preload plugins javascript, json and sharable parsers
+      pluginBabel,
+      pluginEstree,
+      pluginAngular,
 
       // get cached plugins
       ...getAllPrettierPlugins(),
     ],
   })
+
+  return formatted
 }

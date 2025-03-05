@@ -43,6 +43,7 @@
 
 - XML (via [@prettier/plugin-xml](https://github.com/prettier/plugin-xml))
 - PHP (via [@prettier/plugin-php](https://github.com/prettier/plugin-php))
+- Pug (via [@prettier/plugin-pug](https://github.com/prettier/plugin-pug))
 
 ### Community language plugins
 
