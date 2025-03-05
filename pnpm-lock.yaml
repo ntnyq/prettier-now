@@ -7,6 +7,11 @@ settings:
 overrides:
   esbuild: ^0.25.0
 
+patchedDependencies:
+  prettier-plugin-toml:
+    hash: 56fbc3d9ea32aeda5de66f5a655760b0cfec0958a5a200d71edb349ee7cb3632
+    path: patches/prettier-plugin-toml.patch
+
 importers:
 
   .:
@@ -130,7 +135,7 @@ importers:
         version: 3.3.3(prettier@3.5.3)(svelte@5.22.1)
       prettier-plugin-toml:
         specifier: ^2.0.2
-        version: 2.0.2(prettier@3.5.3)
+        version: 2.0.2(patch_hash=56fbc3d9ea32aeda5de66f5a655760b0cfec0958a5a200d71edb349ee7cb3632)(prettier@3.5.3)
       vercel-toast:
         specifier: ^1.8.0
         version: 1.8.0
@@ -8175,7 +8180,7 @@ snapshots:
       prettier: 3.5.3
       svelte: 5.22.1
 
-  prettier-plugin-toml@2.0.2(prettier@3.5.3):
+  prettier-plugin-toml@2.0.2(patch_hash=56fbc3d9ea32aeda5de66f5a655760b0cfec0958a5a200d71edb349ee7cb3632)(prettier@3.5.3):
     dependencies:
       '@taplo/lib': 0.4.0-alpha.2
       prettier: 3.5.3

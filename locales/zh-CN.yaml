@@ -15,6 +15,7 @@ ms: $1毫秒
 pluginJavaOptions: Java 插件配置
 pluginPHPOptions: PHP 插件配置
 pluginSvelteOptions: Svelte 插件配置
+pluginTOMLOptions: TOML 插件配置
 pluginXMLOptions: XML 插件配置
 prettierOptions: Prettier 配置
 selectFile: 选择文件

@@ -10,12 +10,14 @@ import {
   DEFAULT_OPTIONS,
   DEFAULT_PHP_OPTIONS,
   DEFAULT_SVELTE_OPTIONS,
+  DEFAULT_TOML_OPTIONS,
   DEFAULT_XML_OPTIONS,
 } from '@/constants/options'
 import type {
   PluginJavaOptions,
   PluginPHPOptions,
   PluginSvelteOptions,
+  PluginTOMLOptions,
   PluginXMLOptions,
   PrettierOptions,
 } from '@/types/options'
@@ -184,6 +186,64 @@ export const useOptionsStore = defineStore('options', () => {
     svelteIndentScriptAndStyle: svelteIndentScriptAndStyle.value,
   }))
 
+  const alignComments = useStorage<boolean>(
+    'alignComments',
+    DEFAULT_TOML_OPTIONS.alignComments,
+  )
+  const alignEntries = useStorage<boolean>(
+    'alignEntries',
+    DEFAULT_TOML_OPTIONS.alignEntries,
+  )
+  const allowedBlankLines = useStorage<number>(
+    'allowedBlankLines',
+    DEFAULT_TOML_OPTIONS.allowedBlankLines,
+  )
+  const arrayAutoCollapse = useStorage<boolean>(
+    'arrayAutoCollapse',
+    DEFAULT_TOML_OPTIONS.arrayAutoCollapse,
+  )
+  const arrayAutoExpand = useStorage<boolean>(
+    'arrayAutoExpand',
+    DEFAULT_TOML_OPTIONS.arrayAutoExpand,
+  )
+  const compactArrays = useStorage<boolean>(
+    'compactArrays',
+    DEFAULT_TOML_OPTIONS.compactArrays,
+  )
+  const compactEntries = useStorage<boolean>(
+    'compactEntries',
+    DEFAULT_TOML_OPTIONS.compactEntries,
+  )
+  const compactInlineTables = useStorage<boolean>(
+    'compactInlineTables',
+    DEFAULT_TOML_OPTIONS.compactInlineTables,
+  )
+  const indentEntries = useStorage<boolean>(
+    'indentEntries',
+    DEFAULT_TOML_OPTIONS.indentEntries,
+  )
+  const indentTables = useStorage<boolean>(
+    'indentTables',
+    DEFAULT_TOML_OPTIONS.indentTables,
+  )
+  const reorderKeys = useStorage<boolean>(
+    'reorderKeys',
+    DEFAULT_TOML_OPTIONS.reorderKeys,
+  )
+  const tomlPluginOptions = computed<PluginTOMLOptions>(() => ({
+    alignComments: alignComments.value,
+    alignEntries: alignEntries.value,
+    allowedBlankLines: allowedBlankLines.value,
+    arrayAutoCollapse: arrayAutoCollapse.value,
+    arrayAutoExpand: arrayAutoExpand.value,
+    compactArrays: compactArrays.value,
+    compactEntries: compactEntries.value,
+    compactInlineTables: compactInlineTables.value,
+    indentEntries: indentEntries.value,
+    indentTables: indentTables.value,
+    reorderKeys: reorderKeys.value,
+  }))
+
   return {
     options,
 
@@ -213,23 +273,51 @@ export const useOptionsStore = defineStore('options', () => {
     printWidth,
     tabWidth,
 
+    /**
+     * XML
+     */
     xmlSelfClosingSpace,
     xmlSortAttributesByKey,
     xmlQuoteAttributes,
     xmlWhitespaceSensitivity,
     xmlPluginOptions,
 
+    /**
+     * PHP
+     */
     phpVersion,
     trailingCommaPHP,
     braceStyle,
     phpPluginOptions,
 
+    /**
+     * Java
+     */
     entrypoint,
     javaPluginOptions,
 
+    /**
+     * Svelte
+     */
     svelteSortOrder,
     svelteAllowShorthand,
     svelteIndentScriptAndStyle,
     sveltePluginOptions,
+
+    /**
+     * TOML
+     */
+    alignComments,
+    alignEntries,
+    allowedBlankLines,
+    arrayAutoCollapse,
+    arrayAutoExpand,
+    compactArrays,
+    compactEntries,
+    compactInlineTables,
+    indentEntries,
+    indentTables,
+    reorderKeys,
+    tomlPluginOptions,
   }
 })

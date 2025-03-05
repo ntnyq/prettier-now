@@ -21,6 +21,7 @@ export const LANGUAGE_ID = {
   php: 'php',
   scss: 'scss',
   svelte: 'svelte',
+  toml: 'toml',
   tsx: 'tsx',
   typescript: 'typescript',
   vue: 'vue',
@@ -50,6 +51,9 @@ export interface Language {
   parser?: string
 }
 
+/**
+ * Type of supported language ids
+ */
 export type SupportedLanguageId = keyof typeof LANGUAGE_ID
 
 /**
@@ -152,6 +156,11 @@ export const languages: Language[] = [
     id: LANGUAGE_ID.graphql,
     name: 'GraphQL',
   },
+  {
+    icon: 'i-vscode-icons:file-type-light-toml',
+    id: LANGUAGE_ID.toml,
+    name: 'TOML',
+  },
 ]
 
 /**
@@ -166,6 +175,7 @@ export const languageExtensions = {
   php: 'php',
   svelte: 'svelte',
   svg: 'xml',
+  toml: 'toml',
   vue: 'vue',
   xml: 'xml',
 

@@ -1,0 +1,10 @@
+diff --git a/lib/index.js b/lib/index.js
+index e4ce0fc8c1f6eb822d8110e92a434975ae1aa53c..c3b1a460b6e23ae54f599e95ac81f938b6f0312c 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -1,4 +1,4 @@
+-import taplo from '@taplo/lib';
++import * as taplo from '@taplo/lib';
+ import { languages } from './languages.js';
+ import { prettierOptionsDefinitions } from './options.js';
+ const PLUGIN_NAME = 'toml';

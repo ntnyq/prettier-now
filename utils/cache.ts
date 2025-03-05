@@ -2,14 +2,19 @@
  * @file cache
  */
 
+import { StreamLanguage } from '@codemirror/language'
 import { interopDefault } from '@ntnyq/utils'
 import { LANGUAGE_ID } from '@/constants/language'
 import type { CodemirrorLanguage, PrettierPlugin } from '@/types/vendor'
 
 /**
- * codemirror language
+ * codemirror language cache
  */
 export const codemirrorLanguageCache = new Map<string, CodemirrorLanguage>()
+
+/**
+ * clear codemirror language cache
+ */
 export function clearCodemirrorLanguageCache() {
   codemirrorLanguageCache.clear()
 }
@@ -33,95 +38,89 @@ export async function loadCodemirrorLanguage(languageId?: string) {
       import('@codemirror/lang-javascript'),
     )
     codemirrorLanguage = javascript()
-  }
-  if (languageId === LANGUAGE_ID.jsx) {
+  } else if (languageId === LANGUAGE_ID.jsx) {
     const { javascript } = await interopDefault(
       import('@codemirror/lang-javascript'),
     )
     codemirrorLanguage = javascript({ jsx: true })
-  }
-  if (languageId === LANGUAGE_ID.typescript) {
+  } else if (languageId === LANGUAGE_ID.typescript) {
     const { javascript } = await interopDefault(
       import('@codemirror/lang-javascript'),
     )
     codemirrorLanguage = javascript({ typescript: true })
-  }
-  if (languageId === LANGUAGE_ID.tsx) {
+  } else if (languageId === LANGUAGE_ID.tsx) {
     const { javascript } = await interopDefault(
       import('@codemirror/lang-javascript'),
     )
     codemirrorLanguage = javascript({ jsx: true, typescript: true })
-  }
-  if (languageId === LANGUAGE_ID.html) {
+  } else if (languageId === LANGUAGE_ID.html) {
     const { html } = await interopDefault(import('@codemirror/lang-html'))
     codemirrorLanguage = html()
-  }
-  if (languageId === LANGUAGE_ID.vue) {
+  } else if (languageId === LANGUAGE_ID.vue) {
     const { vue } = await interopDefault(import('@codemirror/lang-vue'))
     codemirrorLanguage = vue()
-  }
-  if (languageId === LANGUAGE_ID.svelte) {
+  } else if (languageId === LANGUAGE_ID.svelte) {
     const { svelte } = await interopDefault(
       import('@replit/codemirror-lang-svelte'),
     )
     codemirrorLanguage = svelte()
-  }
-  if (languageId === LANGUAGE_ID.angular) {
+  } else if (languageId === LANGUAGE_ID.angular) {
     const { angular } = await interopDefault(import('@codemirror/lang-angular'))
     codemirrorLanguage = angular()
-  }
-  if (languageId === LANGUAGE_ID.css) {
+  } else if (languageId === LANGUAGE_ID.css) {
     const { css } = await interopDefault(import('@codemirror/lang-css'))
     codemirrorLanguage = css()
-  }
-  if (languageId === LANGUAGE_ID.less) {
+  } else if (languageId === LANGUAGE_ID.less) {
     const { less } = await interopDefault(import('@codemirror/lang-less'))
     codemirrorLanguage = less()
-  }
-  if (languageId === LANGUAGE_ID.scss) {
+  } else if (languageId === LANGUAGE_ID.scss) {
     const { sass } = await interopDefault(import('@codemirror/lang-sass'))
     codemirrorLanguage = sass()
-  }
-  if (languageId === LANGUAGE_ID.xml) {
+  } else if (languageId === LANGUAGE_ID.xml) {
     const { xml } = await interopDefault(import('@codemirror/lang-xml'))
     codemirrorLanguage = xml()
-  }
-  if (languageId === LANGUAGE_ID.json) {
+  } else if (languageId === LANGUAGE_ID.json) {
     const { json } = await interopDefault(import('@codemirror/lang-json'))
     codemirrorLanguage = json()
-  }
-  if (languageId === LANGUAGE_ID.yaml) {
+  } else if (languageId === LANGUAGE_ID.yaml) {
     const { yaml } = await interopDefault(import('@codemirror/lang-yaml'))
     codemirrorLanguage = yaml()
-  }
-  if (languageId === LANGUAGE_ID.markdown) {
+  } else if (languageId === LANGUAGE_ID.markdown) {
     const { markdown } = await interopDefault(
       import('@codemirror/lang-markdown'),
     )
     codemirrorLanguage = markdown()
-  }
-  if (languageId === LANGUAGE_ID.php) {
+  } else if (languageId === LANGUAGE_ID.php) {
     const { php } = await interopDefault(import('@codemirror/lang-php'))
     codemirrorLanguage = php()
-  }
-  if (languageId === LANGUAGE_ID.java) {
+  } else if (languageId === LANGUAGE_ID.java) {
     const { java } = await interopDefault(import('@codemirror/lang-java'))
     codemirrorLanguage = java()
-  }
-  if (languageId === LANGUAGE_ID.graphql) {
+  } else if (languageId === LANGUAGE_ID.graphql) {
     const { graphql } = await interopDefault(import('cm6-graphql'))
     codemirrorLanguage = graphql()
+  } else if (languageId === LANGUAGE_ID.toml) {
+    const { toml } = await interopDefault(
+      import('@codemirror/legacy-modes/mode/toml'),
+    )
+    codemirrorLanguage = StreamLanguage.define(toml)
   }
+
   if (codemirrorLanguage) {
     codemirrorLanguageCache.set(languageId, codemirrorLanguage)
   }
+
   return codemirrorLanguage
 }
 
 /**
- * prettier plugin
+ * prettier plugin cache
  */
 export const prettierPluginCache = new Map<string, PrettierPlugin>()
+
+/**
+ * clear prettier plugin cache
+ */
 export function clearPrettierPluginCache() {
   prettierPluginCache.clear()
 }
@@ -131,6 +130,7 @@ export const CACHE_KEY = {
   postcss: 'postcss',
   xml: 'xml',
   yaml: 'yaml',
+  toml: 'toml',
   php: 'php',
   java: 'java',
   svelte: 'svelte',
@@ -152,7 +152,14 @@ export const prettierPluginCachekeyMap = {
   [LANGUAGE_ID.java]: CACHE_KEY.java,
   [LANGUAGE_ID.svelte]: CACHE_KEY.svelte,
   [LANGUAGE_ID.graphql]: CACHE_KEY.graphql,
+  [LANGUAGE_ID.toml]: CACHE_KEY.toml,
 }
+
+/**
+ * load prettier plugin
+ * @param languageId - language id
+ * @returns prettier plugin
+ */
 export async function loadPrettierPlugin(languageId?: string) {
   if (!languageId) return
 
@@ -171,37 +178,30 @@ export async function loadPrettierPlugin(languageId?: string) {
 
   if (cacheKey === CACHE_KEY.typescript) {
     prettierPlugin = await interopDefault(import('prettier/plugins/typescript'))
-  }
-  if (cacheKey === CACHE_KEY.html) {
+  } else if (cacheKey === CACHE_KEY.html) {
     prettierPlugin = await interopDefault(import('prettier/plugins/html'))
-  }
-  if (cacheKey === CACHE_KEY.markdown) {
+  } else if (cacheKey === CACHE_KEY.markdown) {
     prettierPlugin = await interopDefault(import('prettier/plugins/markdown'))
-  }
-  if (cacheKey === CACHE_KEY.postcss) {
+  } else if (cacheKey === CACHE_KEY.postcss) {
     prettierPlugin = await interopDefault(import('prettier/plugins/postcss'))
-  }
-  if (cacheKey === CACHE_KEY.yaml) {
+  } else if (cacheKey === CACHE_KEY.yaml) {
     prettierPlugin = await interopDefault(import('prettier/plugins/yaml'))
-  }
-  if (cacheKey === CACHE_KEY.graphql) {
+  } else if (cacheKey === CACHE_KEY.graphql) {
     prettierPlugin = await interopDefault(import('prettier/plugins/graphql'))
-  }
-  if (cacheKey === CACHE_KEY.xml) {
+  } else if (cacheKey === CACHE_KEY.xml) {
     prettierPlugin = await interopDefault(import('@prettier/plugin-xml'))
-  }
-  if (cacheKey === CACHE_KEY.php) {
+  } else if (cacheKey === CACHE_KEY.php) {
     prettierPlugin = await interopDefault(
       import('@prettier/plugin-php/standalone'),
     )
-  }
-  if (cacheKey === CACHE_KEY.java) {
+  } else if (cacheKey === CACHE_KEY.java) {
     prettierPlugin = await interopDefault(import('prettier-plugin-java'))
-  }
-  if (cacheKey === CACHE_KEY.svelte) {
+  } else if (cacheKey === CACHE_KEY.svelte) {
     prettierPlugin = await interopDefault(
       import('prettier-plugin-svelte/browser'),
     )
+  } else if (cacheKey === CACHE_KEY.toml) {
+    prettierPlugin = await interopDefault(import('prettier-plugin-toml'))
   }
 
   if (prettierPlugin) {

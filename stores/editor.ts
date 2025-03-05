@@ -63,6 +63,7 @@ export const useEditorStore = defineStore('editor', () => {
       Logger.success('Format successfully')
       Toast.info('Format successfully')
     } catch (err: unknown) {
+      console.log(err)
       const message = (err as Error)?.message || 'Unknown error'
       Logger.error(message)
       Toast.error(message)

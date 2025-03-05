@@ -48,6 +48,7 @@
 
 - Java (via [prettier-plugin-java](https://github.com/jhipster/prettier-java))
 - Svelte (via [prettier-plugin-svelte](https://github.com/sveltejs/prettier-plugin-svelte))
+- TOML (via [prettier-plugin-toml ](https://github.com/un-ts/prettier/tree/master/packages/toml))
 
 ## Screenshots
 

@@ -109,6 +109,9 @@
     ],
     "overrides": {
       "esbuild": "^0.25.0"
+    },
+    "patchedDependencies": {
+      "prettier-plugin-toml": "patches/prettier-plugin-toml.patch"
     }
   },
   "nano-staged": {

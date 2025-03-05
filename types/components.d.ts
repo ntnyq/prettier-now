@@ -25,6 +25,7 @@ declare module 'vue' {
     MoreAction: typeof import('./../components/navbar/MoreAction.vue')['default']
     Navbar: typeof import('./../components/navbar/index.vue')['default']
     OptionItem: typeof import('./../components/ui/OptionItem.vue')['default']
+    OptionsBlock: typeof import('./../components/ui/OptionsBlock.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Select: typeof import('./../components/ui/Select.vue')['default']

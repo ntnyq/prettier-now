@@ -6,30 +6,33 @@ import pluginAngular from 'prettier/plugins/angular'
 import pluginBabel from 'prettier/plugins/babel'
 import pluginEstree from 'prettier/plugins/estree'
 import { getAllPrettierPlugins, loadPrettierPlugin } from '@/utils/cache'
-import type { Options, Plugin } from 'prettier'
 import type {
   PluginJavaOptions,
   PluginPHPOptions,
   PluginSvelteOptions,
+  PluginTOMLOptions,
   PluginXMLOptions,
+  PrettierCoreOptions,
 } from '@/types/options'
+import type { PrettierPlugin } from '@/types/vendor'
 
 /**
  * preload plugins
  */
-export const preloadPlugins: Plugin[] = [
+export const preloadPlugins: PrettierPlugin[] = [
   // javascript, json and sharable parsers
   pluginBabel,
   pluginEstree,
   pluginAngular,
 ]
 
-export type FormatOptions = Options
+export type FormatOptions = PrettierCoreOptions
   & Partial<
     PluginXMLOptions
       & PluginPHPOptions
       & PluginJavaOptions
       & PluginSvelteOptions
+      & PluginTOMLOptions
   > & {
     languageId: string
   }
@@ -53,6 +56,7 @@ export async function formatViaPrettier(
   if (!prettier) {
     prettier = await import('prettier/standalone')
   }
+
   const { languageId, ...formatOptions } = options
   await loadPrettierPlugin(options.languageId)
 

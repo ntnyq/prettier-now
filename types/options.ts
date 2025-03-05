@@ -2,25 +2,40 @@
  * @file Prettier Options we use
  */
 
-import type { RequiredOptions } from 'prettier'
+import type { Options, RequiredOptions } from 'prettier'
 
+/**
+ * @see {@link https://github.com/jhipster/prettier-java/tree/main/packages/prettier-plugin-java}
+ */
 export type PluginJavaOptions = {
+  /**
+   * Prettify from the entrypoint, allowing to use prettier on snippet
+   *
+   * @default `compilationUnit`
+   */
   entrypoint: string
 }
 
+/**
+ * @see {@link https://github.com/prettier/plugin-php}
+ */
 export type PluginPHPOptions = {
   /**
+   * Print one space or newline for code blocks (classes and functions)
+   *
    * @default `per-cs`
    */
   braceStyle: '1tbs' | 'per-cs'
 
   /**
+   * Print trailing commas wherever possible when multi-line
+   *
    * @default true
    */
   trailingCommaPHP: boolean
 
   /**
-   * The version of PHP to use for formatting
+   * Minimum target PHP version
    *
    * @default `7.0`
    */
@@ -119,6 +134,87 @@ export type PluginXMLOptions = {
    */
   xmlWhitespaceSensitivity: 'ignore' | 'preserve' | 'strict'
 }
+
+export type PluginTOMLOptions = {
+  /**
+   * Align consecutive comments after entries and items vertically. This applies to comments that are after entries or array items
+   *
+   * @default true
+   */
+  alignComments: boolean
+
+  /**
+   * Align consecutive entries vertically
+   *
+   * @default false
+   */
+  alignEntries: boolean
+
+  /**
+   * The maximum number of allowed blank lines between entries and tables
+   *
+   * @default 1
+   */
+  allowedBlankLines: number
+
+  /**
+   * Collapse arrays that don't exceed the maximum column width and don't contain comments
+   *
+   * @default true
+   */
+  arrayAutoCollapse: boolean
+
+  /**
+   * Expand arrays to multiple lines that exceed the maximum column width
+   *
+   * @default true
+   */
+  arrayAutoExpand: boolean
+
+  /**
+   * Omit white space padding from single-line arrays
+   *
+   * @default true
+   */
+  compactArrays: boolean
+
+  /**
+   * Omit white space around `=`
+   *
+   * @default false
+   */
+  compactEntries: boolean
+
+  /**
+   * Omit white space padding from the start and end of inline tables
+   *
+   * @default false
+   */
+  compactInlineTables: boolean
+
+  /**
+   * Indent entries under tables
+   *
+   * @default false
+   */
+  indentEntries: boolean
+
+  /**
+   * Indent based on tables and arrays of tables and their subtables, subtables out of order are not indented
+   *
+   * @default false
+   */
+  indentTables: boolean
+
+  /**
+   * Alphabetically reorder keys that are not separated by empty lines
+   *
+   * @default false
+   */
+  reorderKeys: boolean
+}
+
+export type PrettierCoreOptions = Options
 
 export type PrettierOptions = Required<
   Pick<

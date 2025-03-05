@@ -6,6 +6,7 @@ import type {
   PluginJavaOptions,
   PluginPHPOptions,
   PluginSvelteOptions,
+  PluginTOMLOptions,
   PluginXMLOptions,
   PrettierOptions,
 } from '@/types/options'
@@ -59,6 +60,20 @@ export const DEFAULT_SVELTE_OPTIONS: PluginSvelteOptions = {
 
 export const DEFAULT_JAVA_OPTIONS: PluginJavaOptions = {
   entrypoint: 'compilationUnit',
+}
+
+export const DEFAULT_TOML_OPTIONS: PluginTOMLOptions = {
+  alignComments: true,
+  alignEntries: false,
+  allowedBlankLines: 1,
+  arrayAutoCollapse: true,
+  arrayAutoExpand: true,
+  compactArrays: true,
+  compactEntries: false,
+  compactInlineTables: false,
+  indentEntries: false,
+  indentTables: false,
+  reorderKeys: false,
 }
 
 export const JAVA_ENTRYPOINTS = [
