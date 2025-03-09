@@ -32,6 +32,9 @@ export default defineConfig({
         },
       },
     } satisfies Record<Command, Manifest.WebExtensionManifestCommandsType>,
+    content_security_policy: {
+      extension_pages: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`,
+    },
   },
 
   modules: [
