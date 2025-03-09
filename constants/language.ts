@@ -146,11 +146,11 @@ export const languages: Language[] = [
       light: 'i-vscode-icons:file-type-light-toml',
     },
   },
-  {
-    icon: 'i-vscode-icons:file-type-pug',
-    id: LANGUAGE_ID.pug,
-    name: 'Pug',
-  },
+  // {
+  //   icon: 'i-vscode-icons:file-type-pug',
+  //   id: LANGUAGE_ID.pug,
+  //   name: 'Pug',
+  // },
 ]
 
 /**

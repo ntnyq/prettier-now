@@ -12,9 +12,7 @@ import type { Command } from '@/constants/command'
 
 export default defineConfig({
   extensionApi: 'chrome',
-
   imports: false,
-
   outDir: 'dist',
 
   autoIcons: {
@@ -40,10 +38,6 @@ export default defineConfig({
     '@wxt-dev/unocss',
     '@wxt-dev/auto-icons',
     '@wxt-dev/module-vue',
-    /**
-     * @see {@link https://wxt.dev/i18n.html}
-     * @see {@link https://developer.chrome.com/docs/extensions/reference/api/i18n}
-     */
     '@wxt-dev/i18n/module',
   ],
 

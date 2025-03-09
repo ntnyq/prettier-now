@@ -3,8 +3,8 @@
   "type": "module",
   "version": "0.0.20",
   "private": true,
-  "packageManager": "pnpm@10.5.2",
-  "description": "Yet another Prettier browser extension for formatting js, css, html, json codes",
+  "packageManager": "pnpm@10.6.1",
+  "description": "Yet another Prettier browser extension for code formatting.",
   "keywords": [
     "browser-extension",
     "prettier"
@@ -25,7 +25,7 @@
     "compile": "vue-tsc --noEmit",
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
-    "lint": "eslint .",
+    "lint": "eslint",
     "postinstall": "wxt prepare",
     "prepare": "husky",
     "release": "bumpp",
@@ -62,7 +62,7 @@
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "@uiw/codemirror-themes": "^4.23.10",
     "@unocss/reset": "^66.1.0-beta.3",
-    "@vueuse/core": "^12.7.0",
+    "@vueuse/core": "^12.8.2",
     "cm6-graphql": "^0.2.0",
     "codemirror": "^6.0.1",
     "dayjs": "^1.11.13",
@@ -78,16 +78,16 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^4.0.0-beta.9",
+    "@ntnyq/eslint-config": "4.0.0-beta.10",
     "@ntnyq/prettier-config": "^2.0.0",
     "@types/chrome": "^0.0.308",
     "@vitejs/plugin-vue": "^5.2.1",
     "@wxt-dev/auto-icons": "^1.0.2",
     "@wxt-dev/i18n": "^0.2.3",
     "@wxt-dev/module-vue": "^1.0.2",
-    "@wxt-dev/unocss": "^1.0.0",
+    "@wxt-dev/unocss": "^1.0.1",
     "bumpp": "^10.0.3",
-    "eslint": "^9.21.0",
+    "eslint": "^9.22.0",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
     "npm-run-all2": "^7.0.2",
@@ -97,21 +97,7 @@
     "unplugin-vue-components": "^28.4.1",
     "vite-plugin-node-polyfills": "^0.23.0",
     "vue-tsc": "^2.2.8",
-    "wxt": "^0.19.28"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "dtrace-provider",
-      "esbuild",
-      "sharp",
-      "spawn-sync"
-    ],
-    "overrides": {
-      "esbuild": "^0.25.0"
-    },
-    "patchedDependencies": {
-      "prettier-plugin-toml": "patches/prettier-plugin-toml.patch"
-    }
+    "wxt": "^0.19.29"
   },
   "nano-staged": {
     "*.{js,ts,cjs,mjs,md,vue,svg,yml,yaml,toml,json}": "eslint --fix",

@@ -6,9 +6,9 @@ import { browser } from 'wxt/browser'
 import { defineBackground } from 'wxt/sandbox'
 import { COMMANDS } from '@/constants/command'
 
-enum ContextMenuId {
-  openOptionsPage = 'open-options-page',
-}
+const ContextMenuId = Object.freeze({
+  openOptionsPage: 'open-options-page',
+})
 
 export default defineBackground({
   type: 'module',
