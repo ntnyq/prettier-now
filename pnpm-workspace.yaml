@@ -1,9 +1,9 @@
+overrides:
+  esbuild: ^0.25.0
 onlyBuiltDependencies:
   - dtrace-provider
   - esbuild
   - sharp
   - spawn-sync
-overrides:
-  esbuild: ^0.25.0
 patchedDependencies:
   prettier-plugin-toml: patches/prettier-plugin-toml.patch
