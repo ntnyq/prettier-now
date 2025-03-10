@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.21",
   "private": true,
-  "packageManager": "pnpm@10.6.1",
+  "packageManager": "pnpm@10.6.2",
   "description": "Yet another Prettier browser extension for code formatting.",
   "keywords": [
     "browser-extension",
@@ -51,7 +51,7 @@
     "@codemirror/legacy-modes": "^6.4.3",
     "@codemirror/state": "^6.5.2",
     "@codemirror/view": "^6.36.4",
-    "@iconify-json/lucide": "^1.2.28",
+    "@iconify-json/lucide": "^1.2.29",
     "@iconify-json/ri": "^1.2.5",
     "@iconify-json/vscode-icons": "^1.2.16",
     "@lezer/highlight": "^1.2.1",
