@@ -62,7 +62,7 @@
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "@uiw/codemirror-themes": "^4.23.10",
     "@unocss/reset": "^66.1.0-beta.5",
-    "@vueuse/core": "^12.8.2",
+    "@vueuse/core": "^13.0.0",
     "cm6-graphql": "^0.2.0",
     "codemirror": "^6.0.1",
     "dayjs": "^1.11.13",
