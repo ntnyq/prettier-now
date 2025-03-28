@@ -7,11 +7,10 @@ import VueComponents from 'unplugin-vue-components/vite'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { defineConfig } from 'wxt'
 import { resolve } from './scripts/utils'
-import type { Manifest } from 'wxt/browser'
-import type { Command } from '@/constants/command'
+// import type { Browser } from 'wxt/browser'
+// import type { Command } from '@/constants/command'
 
 export default defineConfig({
-  extensionApi: 'chrome',
   imports: false,
   outDir: 'dist',
 
@@ -31,7 +30,8 @@ export default defineConfig({
           default: 'Alt+O',
         },
       },
-    } satisfies Record<Command, Manifest.WebExtensionManifestCommandsType>,
+    },
+    // Browser.Manifest.WebExtensionManifestCommandsType
     content_security_policy: {
       extension_pages: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`,
     },

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { browser } from 'wxt/browser'
+import { browser } from '#imports'
 
 const isMac = navigator.userAgent.includes('Mac OS X')
 

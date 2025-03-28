@@ -2,9 +2,8 @@
  * @file Background
  */
 
-import { browser } from 'wxt/browser'
-import { defineBackground } from 'wxt/sandbox'
 import { COMMANDS } from '@/constants/command'
+import { browser, defineBackground } from '#imports'
 
 const ContextMenuId = Object.freeze({
   openOptionsPage: 'open-options-page',
