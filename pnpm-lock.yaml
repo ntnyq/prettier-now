@@ -128,8 +128,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3(prettier@3.5.3)(svelte@5.25.10)
       prettier-plugin-toml:
-        specifier: 2.0.2
-        version: 2.0.2(patch_hash=56fbc3d9ea32aeda5de66f5a655760b0cfec0958a5a200d71edb349ee7cb3632)(prettier@3.5.3)
+        specifier: 2.0.4
+        version: 2.0.4(patch_hash=56fbc3d9ea32aeda5de66f5a655760b0cfec0958a5a200d71edb349ee7cb3632)(prettier@3.5.3)
       vercel-toast:
         specifier: ^1.8.0
         version: 1.8.0
@@ -1013,11 +1013,11 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@taplo/core@0.1.1':
-    resolution: {integrity: sha512-BG/zLGf5wiNXGEVPvUAAX/4ilB3PwDUY2o0MV0y47mZbDZ9ad9UK/cIQsILat3bqbPJsALVbU6k3cskNZ3vAQg==}
+  '@taplo/core@0.2.0':
+    resolution: {integrity: sha512-r8bl54Zj1In3QLkiW/ex694bVzpPJ9EhwqT9xkcUVODnVUGirdB1JTsmiIv0o1uwqZiwhi8xNnTOQBRQCpizrQ==}
 
-  '@taplo/lib@0.4.0-alpha.2':
-    resolution: {integrity: sha512-DV/Re3DPVY+BhBtLZ3dmP4mP6YMLSsgq9qGLXwOV38lvNF/fBlgvQswzlXmzCEefL/3q2eMoefZpOI/+GLuCNA==}
+  '@taplo/lib@0.5.0':
+    resolution: {integrity: sha512-+xIqpQXJco3T+VGaTTwmhxLa51qpkQxCjRwezjFZgr+l21ExlywJFcDfTrNmL6lG6tqb0h8GyJKO3UPGPtSCWg==}
 
   '@tybys/wasm-util@0.9.0':
     resolution: {integrity: sha512-6+7nlbMVX/PVDCwaIQ8nTOPveOcFLSt8GcXdx8hD0bt39uWxYT88uXzqTd4fTvqta7oeUJqudepapKNt2DYJFw==}
@@ -3761,8 +3761,8 @@ packages:
       prettier: ^3.0.0
       svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0
 
-  prettier-plugin-toml@2.0.2:
-    resolution: {integrity: sha512-tUIIhyfdVX5DMsLGKX/2qaEwi3W48OkUSR7XC91PRI5jFzhexmaYWkrSP1Xh/eWUcEc0TVMQenM3lB09xLQstQ==}
+  prettier-plugin-toml@2.0.4:
+    resolution: {integrity: sha512-uOTNPClqnE3T9XJ8hCqAJek70Jnk3/ZuAG/aXRTmrWbVe8lJyuZ60KV7OtgWqF+iGZOPVpkh+giHhX9GZYRHGA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       prettier: ^3.0.3
@@ -5563,11 +5563,11 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@taplo/core@0.1.1': {}
+  '@taplo/core@0.2.0': {}
 
-  '@taplo/lib@0.4.0-alpha.2':
+  '@taplo/lib@0.5.0':
     dependencies:
-      '@taplo/core': 0.1.1
+      '@taplo/core': 0.2.0
 
   '@tybys/wasm-util@0.9.0':
     dependencies:
@@ -8779,9 +8779,9 @@ snapshots:
       prettier: 3.5.3
       svelte: 5.25.10
 
-  prettier-plugin-toml@2.0.2(patch_hash=56fbc3d9ea32aeda5de66f5a655760b0cfec0958a5a200d71edb349ee7cb3632)(prettier@3.5.3):
+  prettier-plugin-toml@2.0.4(patch_hash=56fbc3d9ea32aeda5de66f5a655760b0cfec0958a5a200d71edb349ee7cb3632)(prettier@3.5.3):
     dependencies:
-      '@taplo/lib': 0.4.0-alpha.2
+      '@taplo/lib': 0.5.0
       prettier: 3.5.3
 
   prettier@3.5.3: {}
