@@ -1,3 +1,5 @@
+packages:
+  - .
 overrides:
   esbuild: ^0.25.2
 onlyBuiltDependencies:
@@ -5,5 +7,3 @@ onlyBuiltDependencies:
   - esbuild
   - sharp
   - spawn-sync
-patchedDependencies:
-  prettier-plugin-toml: patches/prettier-plugin-toml.patch
