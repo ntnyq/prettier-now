@@ -1,9 +1,12 @@
 packages:
   - .
+
 overrides:
-  esbuild: ^0.25.2
+  esbuild: ^0.25.3
+
 onlyBuiltDependencies:
   - dtrace-provider
   - esbuild
   - sharp
   - spawn-sync
+  - unrs-resolver

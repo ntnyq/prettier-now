@@ -44,6 +44,12 @@ export default defineConfig({
     '@wxt-dev/i18n/module',
   ],
 
+  unocss: {
+    configOrPath: {
+      inspector: false,
+    },
+  },
+
   vite: () => ({
     build: {
       // Max per file size for Firefox is 4MB.
