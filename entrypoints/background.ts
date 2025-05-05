@@ -2,8 +2,8 @@
  * @file Background
  */
 
-import { COMMANDS } from '@/constants/command'
 import { browser, defineBackground } from '#imports'
+import { COMMANDS } from '@/constants/command'
 
 const ContextMenuId = Object.freeze({
   openOptionsPage: 'open-options-page',

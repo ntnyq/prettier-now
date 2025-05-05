@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useLogStore } from '@/stores/log'
 import { i18n } from '#i18n'
+import { useLogStore } from '@/stores/log'
 
 const logStore = useLogStore()
 </script>

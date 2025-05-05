@@ -2,10 +2,10 @@
  * @file file
  */
 
+import { i18n } from '#i18n'
 import { languageExtensions } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
 import { Toast } from '@/utils/toast'
-import { i18n } from '#i18n'
 
 export function useFileHandler() {
   const editorStore = useEditorStore()

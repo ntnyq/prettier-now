@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { useRoute, useRouter } from 'vue-router'
+import { i18n } from '#i18n'
+import { browser } from '#imports'
 import { toggleDark } from '@/composables/dark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
 import { useEditorStore } from '@/stores/editor'
-import { i18n } from '#i18n'
-import { browser } from '#imports'
 // import { useLogStore } from '@/stores/log'
 
 const route = useRoute()

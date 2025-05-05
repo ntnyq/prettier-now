@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { isString } from '@ntnyq/utils'
 import { useClipboard, useFileDialog } from '@vueuse/core'
+import { i18n } from '#i18n'
 import { languageExtensions } from '@/constants/language'
 import { useEditorStore } from '@/stores/editor'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
-import { i18n } from '#i18n'
 
 const editorStore = useEditorStore()
 const { copy } = useClipboard({ legacy: true })
