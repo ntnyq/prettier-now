@@ -89,7 +89,7 @@
     "eslint": "^9.25.1",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
-    "npm-run-all2": "^7.0.2",
+    "npm-run-all2": "^8.0.1",
     "typescript": "^5.8.3",
     "unocss": "^66.1.0-beta.12",
     "unplugin-vue-components": "^28.5.0",
