@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { computed, useTemplateRef } from 'vue'
+import { i18n } from '#i18n'
+import { browser } from '#imports'
 import { LINKS } from '@/constants/meta'
 import { version } from '@/package.json'
 import { openExternalURL } from '@/utils'
-import { i18n } from '#i18n'
-import { browser } from '#imports'
 
 const logoUrl = browser.runtime.getURL('/icons/48.png')
 

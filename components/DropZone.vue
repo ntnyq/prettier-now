@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useEventListener } from '@vueuse/core'
 import { onMounted, ref } from 'vue'
-import { useFileHandler } from '@/composables/fileHandler'
 import { i18n } from '#i18n'
+import { useFileHandler } from '@/composables/fileHandler'
 
 const { loadFileList } = useFileHandler()
 

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { i18n } from '#i18n'
 import { JAVA_ENTRYPOINTS } from '@/constants/options'
 import { useConfigStore } from '@/stores/config'
 import { useOptionsStore } from '@/stores/options'
-import { i18n } from '#i18n'
 
 const optionsStore = useOptionsStore()
 const configStore = useConfigStore()
