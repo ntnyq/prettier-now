@@ -15,7 +15,9 @@ watch(
       clearTimeout(timer)
     }
     if (editorStore.sourceCode.length > 0) {
-      if (!configStore.autoFormat) return
+      if (!configStore.autoFormat) {
+        return
+      }
       timer = setTimeout(() => {
         editorStore.formatCode()
       }, 300)

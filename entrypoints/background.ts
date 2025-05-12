@@ -24,7 +24,9 @@ export default defineBackground({
     })
 
     browser.commands.onCommand.addListener(async command => {
-      if (command !== COMMANDS.openOptionsPage) return
+      if (command !== COMMANDS.openOptionsPage) {
+        return
+      }
       browser.runtime.openOptionsPage()
     })
 

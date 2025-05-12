@@ -24,7 +24,9 @@ export const logEmojiMap = new Map<LogType, string>([
 export const Logger = {
   log(msg: string, options: LogOptions) {
     const configStore = useConfigStoreWithout()
-    if (!configStore.debug) return
+    if (!configStore.debug) {
+      return
+    }
 
     const emoji = logEmojiMap.get(options.type satisfies LogType)
     const content: string[] = [

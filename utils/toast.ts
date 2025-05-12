@@ -35,7 +35,9 @@ export const Toast = {
       ...options,
     }
     const configStore = useConfigStoreWithout()
-    if (configStore.silent) return
+    if (configStore.silent) {
+      return
+    }
 
     if (opts.clearAll) {
       Toast.clearAll()

@@ -22,8 +22,12 @@ defineOptions({
 const { hide } = inject(dropdownContextKey, undefined) || {}
 
 const resolvedIcon = computed(() => {
-  if (!props.icon) return
-  if (isString(props.icon)) return props.icon
+  if (!props.icon) {
+    return
+  }
+  if (isString(props.icon)) {
+    return props.icon
+  }
   return isDark.value ? props.icon.dark : props.icon.light
 })
 

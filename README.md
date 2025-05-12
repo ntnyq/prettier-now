@@ -57,9 +57,9 @@
 
 ![dark](./screenshots/dark.png)
 
-## Prior Art
+## Credits
 
-- UI design from [AST Explorer](https://ast.sxzz.moe) created by [sxzz](https://github.com/sxzz)
+- UI design from [AST Explorer](https://ast-explorer.dev/) created by [sxzz](https://github.com/sxzz)
 - Built on top of [WXT](https://wxt.dev), the next-gen web extension framework
 
 ## License

@@ -25,7 +25,9 @@ export function clearCodemirrorLanguageCache() {
  * @returns codemirror language
  */
 export async function loadCodemirrorLanguage(languageId?: string) {
-  if (!languageId) return
+  if (!languageId) {
+    return
+  }
 
   if (codemirrorLanguageCache.has(languageId)) {
     return codemirrorLanguageCache.get(languageId)
@@ -168,14 +170,18 @@ export const prettierPluginCachekeyMap = {
  * @returns prettier plugin
  */
 export async function loadPrettierPlugin(languageId?: string) {
-  if (!languageId) return
+  if (!languageId) {
+    return
+  }
 
   const cacheKey =
     prettierPluginCachekeyMap[
       languageId as keyof typeof prettierPluginCachekeyMap
     ]
 
-  if (!cacheKey) return
+  if (!cacheKey) {
+    return
+  }
 
   if (prettierPluginCache.has(cacheKey)) {
     return prettierPluginCache.get(cacheKey)

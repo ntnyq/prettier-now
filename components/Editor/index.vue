@@ -29,7 +29,9 @@ const code = defineModel<string>()
 const languageExtension = shallowRef<CodemirrorExtension>()
 
 const { pause, resume } = useIntervalFn(() => {
-  if (!props.language) return
+  if (!props.language) {
+    return
+  }
 
   if (codemirrorLanguageCache.has(props.language)) {
     languageExtension.value = codemirrorLanguageCache.get(props.language)!
@@ -38,11 +40,10 @@ const { pause, resume } = useIntervalFn(() => {
 }, 200)
 
 const resolvedExtensions = computed<CodemirrorExtension[]>(() => [
-  // External extension
+  // External extensions
   ...props.extensions,
-
+  // Language extension
   ...(languageExtension.value ? [languageExtension.value] : []),
-
   // Theme extension
   isDark.value ? githubDark : githubLight,
 ])

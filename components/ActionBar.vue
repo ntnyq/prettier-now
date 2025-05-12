@@ -19,7 +19,9 @@ const {
 })
 
 handleFileDialogChange(files => {
-  if (!files?.length) return
+  if (!files?.length) {
+    return
+  }
 
   const file = files[0]
   const fileExt = file.name.split('.').pop()?.toLowerCase()
@@ -36,7 +38,9 @@ handleFileDialogChange(files => {
   reader.addEventListener('load', (event: ProgressEvent<FileReader>) => {
     const content = event.target?.result ?? ''
 
-    if (!isString(content)) return
+    if (!isString(content)) {
+      return
+    }
 
     if (!content.trim().length) {
       return Toast.error(i18n.t('emptyFile'))

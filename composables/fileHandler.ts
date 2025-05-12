@@ -11,7 +11,9 @@ export function useFileHandler() {
   const editorStore = useEditorStore()
 
   async function loadFileList(files?: FileList | null) {
-    if (!files || !files.length) return
+    if (!files || !files.length) {
+      return
+    }
 
     const file = files[0]
     const fileExt = file.name.split('.').pop()?.toLowerCase()

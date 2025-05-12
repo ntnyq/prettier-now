@@ -12,8 +12,12 @@ const currentLanguage = computed(() =>
   languages.find(language => language.id === editorStore.languageId),
 )
 const currentLanguageIcon = computed(() => {
-  if (!currentLanguage.value?.icon) return
-  if (isString(currentLanguage.value.icon)) return currentLanguage.value.icon
+  if (!currentLanguage.value?.icon) {
+    return
+  }
+  if (isString(currentLanguage.value.icon)) {
+    return currentLanguage.value.icon
+  }
   return isDark.value
     ? currentLanguage.value.icon.dark
     : currentLanguage.value.icon.light
