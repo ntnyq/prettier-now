@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@ntnyq/eslint-config": "^4.3.0",
-    "@ntnyq/prettier-config": "^2.1.0",
+    "@ntnyq/prettier-config": "^2.2.0",
     "@vitejs/plugin-vue": "^5.2.4",
     "@wxt-dev/auto-icons": "^1.0.2",
     "@wxt-dev/i18n": "^0.2.4",
@@ -89,7 +89,7 @@
     "eslint": "^9.27.0",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
-    "npm-run-all2": "^8.0.2",
+    "npm-run-all2": "^8.0.4",
     "typescript": "^5.8.3",
     "unocss": "^66.1.2",
     "unplugin-vue-components": "^28.5.0",

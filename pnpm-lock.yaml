@@ -142,8 +142,8 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0(@types/eslint@9.6.1)(@typescript-eslint/utils@8.32.1(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3))(@vue/compiler-sfc@3.5.14)(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
       '@ntnyq/prettier-config':
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.2.0
+        version: 2.2.0
       '@vitejs/plugin-vue':
         specifier: ^5.2.4
         version: 5.2.4(vite@6.3.2(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.8.0))(vue@3.5.14(typescript@5.8.3))
@@ -172,8 +172,8 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0
       npm-run-all2:
-        specifier: ^8.0.2
-        version: 8.0.2
+        specifier: ^8.0.4
+        version: 8.0.4
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -837,9 +837,8 @@ packages:
       eslint-plugin-unused-imports:
         optional: true
 
-  '@ntnyq/prettier-config@2.1.0':
-    resolution: {integrity: sha512-tmBfcQjzAPHavJRvsvuHUWAZBdBZXbmPbghbmkQGSyLhR+1r9nBp106R0DLlKyj7zVU1y7YTJ+irz1owJPZZ9Q==}
-    engines: {node: '>=18.18.0'}
+  '@ntnyq/prettier-config@2.2.0':
+    resolution: {integrity: sha512-FThP39/iAeyWACoXcWb52x6R3G1tD7J+UKcagbqepa18Kpz5PKuKLOShxAC4hwhAE09wHc7+gmmnW1K4EuN+Fw==}
 
   '@ntnyq/utils@0.6.4':
     resolution: {integrity: sha512-he9j01PRMEZHIvEBkiS55Fu+DJoV/swJIThEJ1+gOVCUDEDss8toAmeFVw02ALsF5aD9QHcFv7raT1deAgDEwg==}
@@ -3436,8 +3435,8 @@ packages:
     resolution: {integrity: sha512-TZKxPvItzai9kN9H/TkmCtx/ZN/hvr3vUycjlfmH0ootY9yFBzNOpiXAdIn1Iteqsvk4lQn6B5PTrt+n6h8k/w==}
     engines: {node: ^18.17.0 || >=20.5.0}
 
-  npm-run-all2@8.0.2:
-    resolution: {integrity: sha512-yU70kTcohhAETxUjJQxTdQbaDJWCyv+DlKHEWdOifxZ0hZUKRh26mY2mfzlPxfGbsTRbgBuEHeakB6wx0CvVaQ==}
+  npm-run-all2@8.0.4:
+    resolution: {integrity: sha512-wdbB5My48XKp2ZfJUlhnLVihzeuA1hgBnqB2J9ahV77wLS+/YAJAlN8I+X3DIFIPZ3m5L7nplmlbhNiFDmXRDA==}
     engines: {node: ^20.5.0 || >=22.0.0, npm: '>= 10'}
     hasBin: true
 
@@ -5349,7 +5348,7 @@ snapshots:
       - typescript
       - vitest
 
-  '@ntnyq/prettier-config@2.1.0': {}
+  '@ntnyq/prettier-config@2.2.0': {}
 
   '@ntnyq/utils@0.6.4': {}
 
@@ -8339,7 +8338,7 @@ snapshots:
 
   npm-normalize-package-bin@4.0.0: {}
 
-  npm-run-all2@8.0.2:
+  npm-run-all2@8.0.4:
     dependencies:
       ansi-styles: 6.2.1
       cross-spawn: 7.0.6
