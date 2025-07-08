@@ -3,7 +3,7 @@ import { browser } from '#imports'
 
 const isMac = navigator.userAgent.includes('Mac OS X')
 
-const openOptionsPage = () => {
+function openOptionsPage() {
   browser.runtime.openOptionsPage()
 }
 </script>

@@ -11,3 +11,7 @@ export const LINKS = Object.freeze({
   feedback: 'https://github.com/ntnyq/prettier-now/issues/new',
   github: 'https://github.com/ntnyq/prettier-now',
 })
+
+export const CONTEXT_MENU_ID = Object.freeze({
+  openOptionsPage: 'open-options-page',
+})

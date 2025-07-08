@@ -4,21 +4,18 @@
 
 import { browser, defineBackground } from '#imports'
 import { COMMANDS } from '@/constants/command'
-
-const ContextMenuId = Object.freeze({
-  openOptionsPage: 'open-options-page',
-})
+import { CONTEXT_MENU_ID } from '@/constants/meta'
 
 export default defineBackground({
   type: 'module',
   main() {
     browser.contextMenus.create({
-      id: ContextMenuId.openOptionsPage,
+      id: CONTEXT_MENU_ID.openOptionsPage,
       title: 'Open Options Page',
     })
 
     browser.contextMenus.onClicked.addListener(params => {
-      if (params.menuItemId === ContextMenuId.openOptionsPage) {
+      if (params.menuItemId === CONTEXT_MENU_ID.openOptionsPage) {
         browser.runtime.openOptionsPage()
       }
     })

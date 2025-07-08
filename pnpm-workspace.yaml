@@ -2,7 +2,7 @@ packages:
   - .
 
 overrides:
-  esbuild: ^0.25.5
+  esbuild: ^0.25.6
 
 onlyBuiltDependencies:
   - dtrace-provider
