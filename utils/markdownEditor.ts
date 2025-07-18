@@ -1,3 +1,7 @@
+/**
+ * @file Markdown Editor Utility
+ */
+
 class CodeMirrorEditor {
   public editor: any
 

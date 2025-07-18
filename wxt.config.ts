@@ -7,8 +7,6 @@ import VueComponents from 'unplugin-vue-components/vite'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { defineConfig } from 'wxt'
 import { resolve } from './scripts/utils'
-// import type { Browser } from 'wxt/browser'
-// import type { Command } from '@/constants/command'
 
 export default defineConfig({
   imports: false,
@@ -67,7 +65,7 @@ export default defineConfig({
 
     plugins: [
       nodePolyfills({
-        include: ['assert', 'process', 'util'],
+        include: ['assert', 'fs', 'path', 'process', 'util'],
       }),
       VueComponents({
         dirs: [resolve('components')],

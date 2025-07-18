@@ -1,15 +1,3 @@
-declare module 'prettier-plugin-java' {
-  import type { Plugin } from 'prettier'
-  declare const plugin: Plugin
-  export default plugin
-}
-
-declare module '@prettier/plugin-php/standalone' {
-  import type { Plugin } from 'prettier'
-  declare const plugin: Plugin
-  export default plugin
-}
-
 // TODO: sveltejs/prettier-plugin-svelte/469
 declare module 'prettier-plugin-svelte/browser' {
   import type {
