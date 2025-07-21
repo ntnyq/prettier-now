@@ -77,7 +77,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^5.0.0",
+    "@ntnyq/eslint-config": "^5.1.0",
     "@ntnyq/prettier-config": "^3.0.1",
     "@vitejs/plugin-vue": "^6.0.0",
     "@wxt-dev/auto-icons": "^1.0.2",
@@ -93,7 +93,7 @@
     "unocss": "^66.3.3",
     "unplugin-vue-components": "^28.8.0",
     "vite-plugin-node-polyfills": "^0.24.0",
-    "vue-tsc": "^3.0.2",
+    "vue-tsc": "^3.0.3",
     "wxt": "^0.20.7"
   },
   "nano-staged": {
