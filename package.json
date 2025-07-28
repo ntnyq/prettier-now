@@ -61,7 +61,7 @@
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "@uiw/codemirror-themes": "^4.24.1",
     "@unocss/reset": "^66.3.3",
-    "@vueuse/core": "^13.5.0",
+    "@vueuse/core": "^13.6.0",
     "cm6-graphql": "^0.2.1",
     "codemirror": "^6.0.2",
     "dayjs": "^1.11.13",
@@ -77,15 +77,15 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@ntnyq/eslint-config": "^5.1.0",
+    "@ntnyq/eslint-config": "^5.2.0",
     "@ntnyq/prettier-config": "^3.0.1",
-    "@vitejs/plugin-vue": "^6.0.0",
+    "@vitejs/plugin-vue": "^6.0.1",
     "@wxt-dev/auto-icons": "^1.0.2",
     "@wxt-dev/i18n": "^0.2.4",
     "@wxt-dev/module-vue": "^1.0.2",
     "@wxt-dev/unocss": "^1.0.1",
     "bumpp": "^10.2.0",
-    "eslint": "^9.31.0",
+    "eslint": "^9.32.0",
     "husky": "^9.1.7",
     "nano-staged": "^0.8.0",
     "npm-run-all2": "^8.0.4",
@@ -93,7 +93,7 @@
     "unocss": "^66.3.3",
     "unplugin-vue-components": "^28.8.0",
     "vite-plugin-node-polyfills": "^0.24.0",
-    "vue-tsc": "^3.0.3",
+    "vue-tsc": "^3.0.4",
     "wxt": "^0.20.7"
   },
   "nano-staged": {
