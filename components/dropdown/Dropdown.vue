@@ -11,6 +11,7 @@ withDefaults(
     showTriggers?: TriggerEvent[]
   }>(),
   {
+    placement: 'auto',
     showTriggers: () => ['click'],
   },
 )
@@ -31,9 +32,9 @@ provide(dropdownContextKey, {
   <VDropdown
     v-bind="$attrs"
     ref="dropdownRef"
-    :show-triggers="showTriggers"
+    :show-triggers
     :class="{ dark: isDark }"
-    :placement="placement || 'auto'"
+    :placement
     popper-class="v-dropdown-popper-container"
   >
     <slot />
