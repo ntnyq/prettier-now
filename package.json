@@ -91,7 +91,7 @@
     "npm-run-all2": "^8.0.4",
     "typescript": "^5.9.2",
     "unocss": "^66.4.1",
-    "unplugin-vue-components": "^28.8.0",
+    "unplugin-vue-components": "^29.0.0",
     "vite-plugin-node-polyfills": "^0.24.0",
     "vue-tsc": "^3.0.5",
     "wxt": "^0.20.7"
