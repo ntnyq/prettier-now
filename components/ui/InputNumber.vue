@@ -3,6 +3,7 @@ withDefaults(
   defineProps<{
     step?: number
     min?: number
+    max?: number
   }>(),
   {
     step: 1,
@@ -16,8 +17,9 @@ const number = defineModel<number>({ default: 0 })
 <template>
   <input
     v-model="number"
-    :min="min"
-    :step="step"
+    :min
+    :step
+    :max
     type="number"
     class="h-10 w-120px flex items-center justify-between gap-1 border border-base rounded-md px-2"
   />
