@@ -61,11 +61,11 @@ watch(
     <Codemirror
       v-model="code"
       :extensions="resolvedExtensions"
-      :tab-size="tabSize"
-      :placeholder="placeholder"
+      :tab-size
+      :placeholder
       :autofocus="!disabled"
-      :disabled="disabled"
-      :indent-with-tab="indentWithTab"
+      :disabled
+      :indent-with-tab
     />
   </div>
 </template>

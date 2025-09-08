@@ -31,7 +31,7 @@ provide(dropdownContextKey, {
   <VDropdown
     v-bind="$attrs"
     ref="dropdownRef"
-    :show-triggers="showTriggers"
+    :show-triggers
     :class="{ dark: isDark }"
     :placement="placement || 'auto'"
     popper-class="v-dropdown-popper-container"
