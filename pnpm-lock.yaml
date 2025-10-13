@@ -18,7 +18,7 @@ importers:
         specifier: ^6.3.1
         version: 6.3.1
       '@codemirror/lang-html':
-        specifier: ^6.4.10
+        specifier: ^6.4.11
         version: 6.4.11
       '@codemirror/lang-java':
         specifier: ^6.0.2
@@ -33,7 +33,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       '@codemirror/lang-markdown':
-        specifier: ^6.3.4
+        specifier: ^6.4.0
         version: 6.4.0
       '@codemirror/lang-php':
         specifier: ^6.0.2
@@ -54,7 +54,7 @@ importers:
         specifier: ^6.11.3
         version: 6.11.3
       '@codemirror/legacy-modes':
-        specifier: ^6.5.1
+        specifier: ^6.5.2
         version: 6.5.2
       '@codemirror/state':
         specifier: ^6.5.2
@@ -160,10 +160,10 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1(unocss@66.5.2(postcss@8.5.6)(vite@7.1.9(@types/node@24.7.0)(jiti@2.6.1)(yaml@2.8.1)))(wxt@0.20.11(@types/node@24.7.0)(jiti@2.6.1)(rollup@4.52.4)(yaml@2.8.1))
       bumpp:
-        specifier: ^10.2.3
+        specifier: ^10.3.1
         version: 10.3.1(magicast@0.3.5)
       eslint:
-        specifier: ^9.36.0
+        specifier: ^9.37.0
         version: 9.37.0(jiti@2.6.1)
       husky:
         specifier: ^9.1.7
@@ -175,7 +175,7 @@ importers:
         specifier: ^8.0.4
         version: 8.0.4
       typescript:
-        specifier: ^5.9.2
+        specifier: ^5.9.3
         version: 5.9.3
       unocss:
         specifier: ^66.5.2
@@ -184,7 +184,7 @@ importers:
         specifier: ^29.1.0
         version: 29.1.0(@babel/parser@7.28.4)(vue@3.5.22(typescript@5.9.3))
       vite:
-        specifier: ^7.1.7
+        specifier: ^7.1.9
         version: 7.1.9(@types/node@24.7.0)(jiti@2.6.1)(yaml@2.8.1)
       vite-plugin-node-polyfills:
         specifier: ^0.24.0
