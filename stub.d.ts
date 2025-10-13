@@ -17,3 +17,8 @@ declare module 'prettier-plugin-svelte/browser' {
     'svelte-ast': Printer
   }
 }
+
+declare module 'vercel-toast/css' {
+  const css: string
+  export default css
+}

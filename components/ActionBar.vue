@@ -24,7 +24,12 @@ handleFileDialogChange(files => {
   }
 
   const file = files[0]
-  const fileExt = file.name.split('.').pop()?.toLowerCase()
+
+  if (!file) {
+    return
+  }
+
+  const fileExt = file?.name.split('.').pop()?.toLowerCase()
 
   const languageId =
     languageExtensions[fileExt as keyof typeof languageExtensions]
