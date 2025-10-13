@@ -37,6 +37,7 @@
     "lezer",
     "nocheck",
     "ofetch",
+    "oxlint",
     "pinia",
     "sxzz",
     "taplo",
