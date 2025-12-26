@@ -1,7 +1,7 @@
 {
   "name": "prettier-now",
   "type": "module",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "private": true,
   "packageManager": "pnpm@10.26.2",
   "description": "Yet another Prettier browser extension for code formatting.",
