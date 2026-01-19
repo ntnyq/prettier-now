@@ -2,150 +2,47 @@
  * @file cache
  */
 
-import { StreamLanguage } from '@codemirror/language'
 import { interopDefault } from '@ntnyq/utils'
 import { LANGUAGE_ID } from '@/constants/language'
-import type { CodemirrorLanguage, PrettierPlugin } from '@/types/vendor'
+import type { PrettierPlugin } from '@/types/vendor'
 
 /**
- * codemirror language cache
+ * Monaco Editor language ID mapping
+ * Maps our internal language IDs to Monaco's language identifiers
  */
-export const codemirrorLanguageCache = new Map<string, CodemirrorLanguage>()
-
-/**
- * clear codemirror language cache
- */
-export function clearCodemirrorLanguageCache() {
-  codemirrorLanguageCache.clear()
+const monacoLanguageMap: Record<string, string> = {
+  [LANGUAGE_ID.javascript]: 'javascript',
+  [LANGUAGE_ID.jsx]: 'javascript',
+  [LANGUAGE_ID.typescript]: 'typescript',
+  [LANGUAGE_ID.tsx]: 'typescript',
+  [LANGUAGE_ID.html]: 'html',
+  [LANGUAGE_ID.vue]: 'html',
+  [LANGUAGE_ID.svelte]: 'html',
+  [LANGUAGE_ID.angular]: 'html',
+  [LANGUAGE_ID.css]: 'css',
+  [LANGUAGE_ID.less]: 'less',
+  [LANGUAGE_ID.scss]: 'scss',
+  [LANGUAGE_ID.xml]: 'xml',
+  [LANGUAGE_ID.json]: 'json',
+  [LANGUAGE_ID.yaml]: 'yaml',
+  [LANGUAGE_ID.markdown]: 'markdown',
+  [LANGUAGE_ID.php]: 'php',
+  [LANGUAGE_ID.java]: 'java',
+  [LANGUAGE_ID.graphql]: 'graphql',
+  [LANGUAGE_ID.toml]: 'ini',
+  [LANGUAGE_ID.pug]: 'pug',
 }
-/**
- * CodeMirror language loader configuration
- */
-const codemirrorLoaders = {
-  [LANGUAGE_ID.javascript]: async () => {
-    const { javascript } = await interopDefault(
-      import('@codemirror/lang-javascript'),
-    )
-    return javascript()
-  },
-  [LANGUAGE_ID.jsx]: async () => {
-    const { javascript } = await interopDefault(
-      import('@codemirror/lang-javascript'),
-    )
-    return javascript({ jsx: true })
-  },
-  [LANGUAGE_ID.typescript]: async () => {
-    const { javascript } = await interopDefault(
-      import('@codemirror/lang-javascript'),
-    )
-    return javascript({ typescript: true })
-  },
-  [LANGUAGE_ID.tsx]: async () => {
-    const { javascript } = await interopDefault(
-      import('@codemirror/lang-javascript'),
-    )
-    return javascript({ jsx: true, typescript: true })
-  },
-  [LANGUAGE_ID.html]: async () => {
-    const { html } = await interopDefault(import('@codemirror/lang-html'))
-    return html()
-  },
-  [LANGUAGE_ID.vue]: async () => {
-    const { vue } = await interopDefault(import('@codemirror/lang-vue'))
-    return vue()
-  },
-  [LANGUAGE_ID.svelte]: async () => {
-    const { svelte } = await interopDefault(
-      import('@replit/codemirror-lang-svelte'),
-    )
-    return svelte()
-  },
-  [LANGUAGE_ID.angular]: async () => {
-    const { angular } = await interopDefault(import('@codemirror/lang-angular'))
-    return angular()
-  },
-  [LANGUAGE_ID.css]: async () => {
-    const { css } = await interopDefault(import('@codemirror/lang-css'))
-    return css()
-  },
-  [LANGUAGE_ID.less]: async () => {
-    const { less } = await interopDefault(import('@codemirror/lang-less'))
-    return less()
-  },
-  [LANGUAGE_ID.scss]: async () => {
-    const { sass } = await interopDefault(import('@codemirror/lang-sass'))
-    return sass()
-  },
-  [LANGUAGE_ID.xml]: async () => {
-    const { xml } = await interopDefault(import('@codemirror/lang-xml'))
-    return xml()
-  },
-  [LANGUAGE_ID.json]: async () => {
-    const { json } = await interopDefault(import('@codemirror/lang-json'))
-    return json()
-  },
-  [LANGUAGE_ID.yaml]: async () => {
-    const { yaml } = await interopDefault(import('@codemirror/lang-yaml'))
-    return yaml()
-  },
-  [LANGUAGE_ID.markdown]: async () => {
-    const { markdown } = await interopDefault(
-      import('@codemirror/lang-markdown'),
-    )
-    return markdown()
-  },
-  [LANGUAGE_ID.php]: async () => {
-    const { php } = await interopDefault(import('@codemirror/lang-php'))
-    return php()
-  },
-  [LANGUAGE_ID.java]: async () => {
-    const { java } = await interopDefault(import('@codemirror/lang-java'))
-    return java()
-  },
-  [LANGUAGE_ID.graphql]: async () => {
-    const { graphql } = await interopDefault(import('cm6-graphql'))
-    return graphql()
-  },
-  [LANGUAGE_ID.toml]: async () => {
-    const { toml } = await interopDefault(
-      import('@codemirror/legacy-modes/mode/toml'),
-    )
-    return StreamLanguage.define(toml)
-  },
-  [LANGUAGE_ID.pug]: async () => {
-    const { pug } = await interopDefault(
-      import('@codemirror/legacy-modes/mode/pug'),
-    )
-    return StreamLanguage.define(pug)
-  },
-} as const
 
 /**
- * load codemirror language
- *
- * @param languageId - language id
- * @returns codemirror language
+ * Get Monaco Editor language ID
+ * @param languageId - our internal language id
+ * @returns Monaco language id
  */
-export async function loadCodemirrorLanguage(languageId?: string) {
+export function getMonacoLanguage(languageId?: string): string {
   if (!languageId) {
-    return
+    return 'plaintext'
   }
-
-  if (codemirrorLanguageCache.has(languageId)) {
-    return codemirrorLanguageCache.get(languageId)
-  }
-
-  const loader = codemirrorLoaders[languageId as keyof typeof codemirrorLoaders]
-  if (!loader) {
-    return
-  }
-
-  const codemirrorLanguage = await loader()
-  if (codemirrorLanguage) {
-    codemirrorLanguageCache.set(languageId, codemirrorLanguage)
-  }
-
-  return codemirrorLanguage
+  return monacoLanguageMap[languageId] || 'plaintext'
 }
 
 /**

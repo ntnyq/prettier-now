@@ -2,58 +2,34 @@
  * @file Markdown Editor Utility
  */
 
-class CodeMirrorEditor {
+class MonacoEditor {
   public editor: any
-
-  public isCodeMirrorV6 = false
 
   constructor(element: HTMLElement) {
     this.editor = this.resolveEditor(element)
   }
 
   static validate(element: HTMLElement) {
-    const wrapper =
-      element.closest('.cm-editor') || element.closest('.CodeMirror')
+    const wrapper = element.closest('.monaco-editor')
     return !!wrapper
   }
 
-  resolveEditor(elememt: HTMLElement) {
-    const editorWrapperV6 = elememt.closest('.cm-editor')
-    const editorWrapperV5 = elememt.closest('.CodeMirror')
-
-    if (editorWrapperV6) {
-      const editor = (editorWrapperV6.querySelector('.cm-content') as any)
-        ?.cmView?.view
-
-      this.isCodeMirrorV6 = true
-      this.editor = editor
-    } else if (editorWrapperV5) {
-      const editor = (editorWrapperV5 as any).CodeMirror
-
-      this.isCodeMirrorV6 = false
-      this.editor = editor
+  resolveEditor(element: HTMLElement) {
+    const editorWrapper = element.closest('.monaco-editor')
+    if (editorWrapper) {
+      // Monaco editor instance is typically stored on the element
+      // or accessible via a custom property
+      this.editor = (editorWrapper as any).__monaco_editor__
     }
+    return this.editor
   }
 
   getValue() {
-    if (this.isCodeMirrorV6) {
-      return this.editor.state.doc.toString()
-    }
-    return this.editor.getValue()
+    return this.editor?.getValue() || ''
   }
 
   setValue(value: string) {
-    if (this.isCodeMirrorV6) {
-      // https://codemirror.net/examples/change/
-      return this.editor.dispatch({
-        changes: {
-          from: 0,
-          to: this.editor.state.doc.length,
-          insert: value,
-        },
-      })
-    }
-    this.editor.setValue(value)
+    this.editor?.setValue(value)
   }
 }
 
@@ -120,8 +96,8 @@ class ContentEditableEditor {
 }
 
 export function createMarkdownEditor(element: HTMLElement) {
-  if (CodeMirrorEditor.validate(element)) {
-    return new CodeMirrorEditor(element)
+  if (MonacoEditor.validate(element)) {
+    return new MonacoEditor(element)
   }
   if (AceEditor.validate(element)) {
     return new AceEditor(element)

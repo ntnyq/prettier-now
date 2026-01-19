@@ -4,6 +4,7 @@
  */
 
 import VueComponents from 'unplugin-vue-components/vite'
+import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { defineConfig } from 'wxt'
 import { resolve } from './scripts/utils'
@@ -71,6 +72,17 @@ export default defineConfig({
         dirs: [resolve('components')],
         dts: resolve('types/components.d.ts'),
         resolvers: [],
+      }),
+      monacoEditorPlugin({
+        customWorkers: [],
+        // Only include languages that are actually used in the project
+        languageWorkers: [
+          'editorWorkerService',
+          'typescript',
+          'json',
+          'css',
+          'html',
+        ],
       }),
     ],
   }),
