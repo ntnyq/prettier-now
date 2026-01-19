@@ -3,11 +3,10 @@
  */
 
 import { defineStore } from 'pinia'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useStorage } from '@/composables/storage'
 import { languages } from '@/constants/language'
 import { useOptionsStore } from '@/stores/options'
-import { loadCodemirrorLanguage } from '@/utils/cache'
 import { formatViaPrettier } from '@/utils/format'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
@@ -43,9 +42,6 @@ export const useEditorStore = defineStore('editor', () => {
   async function formatCode() {
     const formatStartTime = window.performance.now()
 
-    // ensure codemirror language is loaded
-    await loadCodemirrorLanguage(languageId.value)
-
     try {
       const formattedCode = await formatViaPrettier(sourceCode.value, {
         ...optionsStore.options,
@@ -70,17 +66,6 @@ export const useEditorStore = defineStore('editor', () => {
       Toast.error(message)
     }
   }
-
-  watch(
-    languageId,
-    newLanguageId => {
-      loadCodemirrorLanguage(newLanguageId)
-    },
-    {
-      immediate: true,
-      flush: 'post',
-    },
-  )
 
   return {
     sourceCode,
