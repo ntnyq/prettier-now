@@ -47,3 +47,11 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--c-scrollbar-hover);
 }
+
+.v-select-item-wrapper {
+  --at-apply: "max-h-400px of-y-scroll";
+}
+
+.v-dropdown-popper-container .v-popper__inner > div {
+  --at-apply: "max-h-400px of-y-scroll";
+}

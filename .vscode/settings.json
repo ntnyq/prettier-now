@@ -1,9 +1,9 @@
 {
+  "oxc.enable": true,
   "eslint.enable": true,
-  "prettier.enable": true,
+  "prettier.enable": false,
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.configPath": "./prettier.config.mjs",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never",
@@ -23,6 +23,7 @@
     "javascriptreact",
     "typescriptreact"
   ],
+  "typescript.experimental.useTsgo": true,
   "cSpell.allowCompoundWords": true,
   "cSpell.words": [
     "bumpp",
@@ -38,6 +39,7 @@
     "lucide",
     "nocheck",
     "ofetch",
+    "oxfmt",
     "oxlint",
     "pinia",
     "sxzz",

@@ -15,13 +15,13 @@ import type {
   PrettierCoreOptions,
 } from '@/types/options'
 
-export type FormatOptions = PrettierCoreOptions
-  & Partial<
-    PluginXMLOptions
-      & PluginPHPOptions
-      & PluginJavaOptions
-      & PluginSvelteOptions
-      & PluginTOMLOptions
+export type FormatOptions = PrettierCoreOptions &
+  Partial<
+    PluginXMLOptions &
+      PluginPHPOptions &
+      PluginJavaOptions &
+      PluginSvelteOptions &
+      PluginTOMLOptions
   > & {
     languageId: string
   }

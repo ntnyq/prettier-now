@@ -88,9 +88,3 @@ function handleSelect(value: string) {
     </template>
   </VMenu>
 </template>
-
-<style lang="css">
-.v-select-item-wrapper {
-  --at-apply: 'max-h-400px of-y-scroll';
-}
-</style>

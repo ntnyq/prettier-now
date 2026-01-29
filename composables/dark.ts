@@ -9,9 +9,9 @@ import { nextTick } from 'vue'
 export const isDark = useDark()
 
 const supportViewTransition =
-  !isUndefined(document)
-  && !!document.startViewTransition
-  && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  !isUndefined(document) &&
+  !!document.startViewTransition &&
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 /**
  * Credit to [@hooray](https://github.com/hooray)
