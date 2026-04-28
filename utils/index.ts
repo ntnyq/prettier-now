@@ -7,5 +7,8 @@
  * @param url - URL to open
  */
 export function openExternalURL(url: string) {
-  window.open(url, '_blank')
+  const externalWindow = window.open(url, '_blank', 'noopener,noreferrer')
+  if (externalWindow) {
+    externalWindow.opener = null
+  }
 }

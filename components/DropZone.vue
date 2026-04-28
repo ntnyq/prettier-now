@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useEventListener } from '@vueuse/core'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { i18n } from '#i18n'
 import { useFileHandler } from '@/composables/fileHandler'
 
@@ -28,9 +28,9 @@ function onDragLeave(evt: DragEvent) {
     return
   }
 
-  dragCounter--
+  dragCounter = Math.max(0, dragCounter - 1)
 
-  if (dragCounter <= 0) {
+  if (dragCounter === 0) {
     isDragging.value = false
   }
 }
@@ -49,12 +49,10 @@ function onDrop(evt: DragEvent) {
   loadFileList(evt.dataTransfer?.files)
 }
 
-onMounted(() => {
-  useEventListener('dragenter', onDragEnter)
-  useEventListener('dragleave', onDragLeave)
-  useEventListener('dragover', onDragOver)
-  useEventListener('drop', onDrop)
-})
+useEventListener('dragenter', onDragEnter)
+useEventListener('dragleave', onDragLeave)
+useEventListener('dragover', onDragOver)
+useEventListener('drop', onDrop)
 </script>
 
 <template>

@@ -45,7 +45,12 @@ export const Toast = {
 
     if (opts.isError) {
       const msgNode = document.createElement('div')
-      msgNode.innerHTML = `<span style="font-weight: bold; color: red;">❌ Error</span>: ${msg}`
+      const labelNode = document.createElement('span')
+      labelNode.style.fontWeight = 'bold'
+      labelNode.style.color = 'red'
+      labelNode.textContent = '❌ Error'
+
+      msgNode.append(labelNode, document.createTextNode(`: ${msg}`))
       createToast(msgNode, opts)
     } else {
       createToast(msg, opts)

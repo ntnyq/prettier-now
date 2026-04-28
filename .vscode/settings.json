@@ -37,6 +37,8 @@
     "lezer",
     "lucide",
     "nocheck",
+    "noopener",
+    "noreferrer",
     "ofetch",
     "oxlint",
     "pinia",

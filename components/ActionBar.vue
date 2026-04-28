@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { isString } from '@ntnyq/utils'
 import { useClipboard, useFileDialog } from '@vueuse/core'
 import { i18n } from '#i18n'
-import { languageExtensions } from '@/constants/language'
+import { useFileHandler } from '@/composables/fileHandler'
 import { useEditorStore } from '@/stores/editor'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
 
 const editorStore = useEditorStore()
+const { loadFileList } = useFileHandler()
 const { copy } = useClipboard({ legacy: true })
 
 const {
@@ -18,48 +18,12 @@ const {
   multiple: false,
 })
 
-handleFileDialogChange(files => {
-  if (!files?.length) {
-    return
-  }
-
-  const file = files[0]
-
-  if (!file) {
-    return
-  }
-
-  const fileExt = file?.name.split('.').pop()?.toLowerCase()
-
-  const languageId =
-    languageExtensions[fileExt as keyof typeof languageExtensions]
-
-  if (!languageId) {
-    return Toast.error(i18n.t('unsupportedFileFormat'))
-  }
-
-  const reader = new FileReader()
-
-  reader.addEventListener('load', (event: ProgressEvent<FileReader>) => {
-    const content = event.target?.result ?? ''
-
-    if (!isString(content)) {
-      return
-    }
-
-    if (!content.trim().length) {
-      return Toast.error(i18n.t('emptyFile'))
-    }
-
-    editorStore.setLanguageId(languageId)
-    editorStore.sourceCode = content
-
-    editorStore.formatCode()
-
+handleFileDialogChange(async files => {
+  try {
+    await loadFileList(files)
+  } finally {
     resetSelectedFile()
-  })
-
-  reader.readAsText(file)
+  }
 })
 
 async function formatSource() {
@@ -68,7 +32,7 @@ async function formatSource() {
     return Toast.info('Nothing to format')
   }
 
-  editorStore.formatCode()
+  await editorStore.formatCode()
 }
 async function copyResult() {
   if (!editorStore.resultCode) {

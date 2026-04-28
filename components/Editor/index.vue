@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { useIntervalFn } from '@vueuse/core'
 import { computed, shallowRef, watch } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { isDark } from '@/composables/dark'
-import { codemirrorLanguageCache } from '@/utils/cache'
+import { loadCodemirrorLanguage } from '@/utils/cache'
 import { githubDark, githubLight } from './theme'
 import type { CodemirrorExtension } from '@/types/vendor'
 
@@ -27,17 +26,7 @@ const props = withDefaults(
 const code = defineModel<string>()
 
 const languageExtension = shallowRef<CodemirrorExtension>()
-
-const { pause, resume } = useIntervalFn(() => {
-  if (!props.language) {
-    return
-  }
-
-  if (codemirrorLanguageCache.has(props.language)) {
-    languageExtension.value = codemirrorLanguageCache.get(props.language)!
-    pause()
-  }
-}, 200)
+let languageLoadRequestId = 0
 
 const resolvedExtensions = computed<CodemirrorExtension[]>(() => [
   // External extensions
@@ -50,8 +39,24 @@ const resolvedExtensions = computed<CodemirrorExtension[]>(() => [
 
 watch(
   () => props.language,
-  () => {
-    resume()
+  async language => {
+    const requestId = ++languageLoadRequestId
+
+    if (!language) {
+      languageExtension.value = undefined
+      return
+    }
+
+    const extension = await loadCodemirrorLanguage(language)
+
+    if (requestId !== languageLoadRequestId) {
+      return
+    }
+
+    languageExtension.value = extension
+  },
+  {
+    immediate: true,
   },
 )
 </script>
