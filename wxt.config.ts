@@ -8,9 +8,41 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { defineConfig } from 'wxt'
 import { resolve } from './scripts/utils'
 
+type WxtConfig = Parameters<typeof defineConfig>[0]
+type WxtViteConfigFactory = NonNullable<WxtConfig['vite']>
+
+const viteConfig = (() => ({
+  build: {
+    // Max per file size for Firefox is 4MB.
+    chunkSizeWarningLimit: 4 * 1024,
+  },
+
+  css: {
+    devSourcemap: true,
+  },
+
+  optimizeDeps: {
+    // https://github.com/vitejs/vite/discussions/13306
+    entries: ['**/entrypoints/**/*.html'],
+  },
+
+  plugins: [
+    nodePolyfills({
+      include: ['assert', 'fs', 'path', 'process', 'util'],
+    }),
+    VueComponents({
+      dirs: [resolve('components')],
+      dts: resolve('types/components.d.ts'),
+      resolvers: [],
+    }),
+  ],
+})) as WxtViteConfigFactory
+
 export default defineConfig({
   imports: false,
   outDir: 'dist',
+
+  vite: viteConfig,
 
   autoIcons: {
     baseIconPath: 'assets/images/icon.png',
@@ -47,31 +79,4 @@ export default defineConfig({
       inspector: false,
     },
   },
-
-  vite: () => ({
-    build: {
-      // Max per file size for Firefox is 4MB.
-      chunkSizeWarningLimit: 4 * 1024,
-    },
-
-    css: {
-      devSourcemap: true,
-    },
-
-    optimizeDeps: {
-      // https://github.com/vitejs/vite/discussions/13306
-      entries: ['**/entrypoints/**/*.html'],
-    },
-
-    plugins: [
-      nodePolyfills({
-        include: ['assert', 'fs', 'path', 'process', 'util'],
-      }),
-      VueComponents({
-        dirs: [resolve('components')],
-        dts: resolve('types/components.d.ts'),
-        resolvers: [],
-      }),
-    ],
-  }),
 })
