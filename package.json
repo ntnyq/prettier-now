@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.23",
   "private": true,
-  "packageManager": "pnpm@10.33.2",
+  "packageManager": "pnpm@11.0.7",
   "description": "Yet another Prettier browser extension for code formatting.",
   "keywords": [
     "browser-extension",
