@@ -2,6 +2,7 @@
  * @file Background
  */
 
+import { i18n } from '#i18n'
 import { browser, defineBackground } from '#imports'
 import { COMMANDS } from '@/constants/command'
 import { CONTEXT_MENU_ID } from '@/constants/meta'
@@ -11,7 +12,7 @@ export default defineBackground({
   main() {
     browser.contextMenus.create({
       id: CONTEXT_MENU_ID.openOptionsPage,
-      title: 'Open Options Page',
+      title: i18n.t('openOptionsPage'),
     })
 
     browser.contextMenus.onClicked.addListener(params => {

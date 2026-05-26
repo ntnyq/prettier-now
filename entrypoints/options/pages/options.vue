@@ -14,8 +14,8 @@ const configStore = useConfigStore()
       <!-- Prettier Core Options -->
       <OptionsBlock :title="i18n.t('prettierOptions')">
         <OptionItem
+          :description="i18n.t('optDescPrintWidth')"
           title="printWidth"
-          description="Specify the line length that the printer will wrap on."
         >
           <template #action>
             <InputNumber v-model="optionsStore.printWidth" />
@@ -23,8 +23,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescTabWidth')"
           title="tabWidth"
-          description="Specify the number of spaces per indentation-level."
         >
           <template #action>
             <InputNumber v-model="optionsStore.tabWidth" />
@@ -32,8 +32,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescUseTabs')"
           title="useTabs"
-          description="Indent lines with tabs instead of spaces."
         >
           <template #action>
             <Switch v-model="optionsStore.useTabs" />
@@ -41,8 +41,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescSemi')"
           title="semi"
-          description="Print semicolons at the ends of statements."
         >
           <template #action>
             <Switch v-model="optionsStore.semi" />
@@ -50,8 +50,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescSingleQuote')"
           title="singleQuote"
-          description="Use single quotes instead of double quotes."
         >
           <template #action>
             <Switch v-model="optionsStore.singleQuote" />
@@ -59,8 +59,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescQuoteProps')"
           title="quoteProps"
-          description="Change when properties in objects are quoted."
         >
           <template #action>
             <Select
@@ -71,8 +71,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescObjectWrap')"
           title="objectWrap"
-          description="How to wrap object literals."
         >
           <template #action>
             <Select
@@ -83,8 +83,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescExperimentalOperatorPosition')"
           title="experimentalOperatorPosition"
-          description="Where to print operators when binary expressions wrap lines."
         >
           <template #action>
             <Select
@@ -95,8 +95,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescJsxSingleQuote')"
           title="jsxSingleQuote"
-          description="Use single quotes instead of double quotes in JSX."
         >
           <template #action>
             <Switch v-model="optionsStore.jsxSingleQuote" />
@@ -104,8 +104,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescTrailingComma')"
           title="trailingComma"
-          description="Print trailing commas wherever possible in multi-line comma-separated syntactic structures."
         >
           <template #action>
             <Select
@@ -116,8 +116,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescBracketSpacing')"
           title="bracketSpacing"
-          description="Print spaces between brackets in object literals."
         >
           <template #action>
             <Switch v-model="optionsStore.bracketSpacing" />
@@ -125,8 +125,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescBracketSameLine')"
           title="bracketSameLine"
-          description="Put the > of a multi-line HTML (HTML, JSX, Vue, Angular) element at the end of the last line instead of being alone on the next line (does not apply to self closing elements)."
         >
           <template #action>
             <Switch v-model="optionsStore.bracketSameLine" />
@@ -134,8 +134,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescArrowParens')"
           title="arrowParens"
-          description="Include parentheses around a sole arrow function parameter."
         >
           <template #action>
             <Select
@@ -146,8 +146,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescHtmlWhitespaceSensitivity')"
           title="htmlWhitespaceSensitivity"
-          description="Specify the global whitespace sensitivity for HTML, Vue, Angular, and Handlebars."
         >
           <template #action>
             <Select
@@ -158,8 +158,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescVueIndentScriptAndStyle')"
           title="vueIndentScriptAndStyle"
-          description="Whether or not to indent the code inside <script> and <style> tags in Vue files."
         >
           <template #action>
             <Switch v-model="optionsStore.vueIndentScriptAndStyle" />
@@ -167,8 +167,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescEndOfLine')"
           title="endOfLine"
-          description="Specify the end of line style."
         >
           <template #action>
             <Select
@@ -179,8 +179,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescSingleAttributePerLine')"
           title="singleAttributePerLine"
-          description="Enforce single attribute per line in HTML, Vue and JSX."
         >
           <template #action>
             <Switch v-model="optionsStore.singleAttributePerLine" />
@@ -188,8 +188,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescExperimentalTernaries')"
           title="experimentalTernaries"
-          description="Specify the ternaries style."
         >
           <template #action>
             <Switch v-model="optionsStore.experimentalTernaries" />
@@ -200,24 +200,24 @@ const configStore = useConfigStore()
       <!-- Plugin XML Options -->
       <OptionsBlock :title="i18n.t('pluginXMLOptions')">
         <OptionItem
+          :description="i18n.t('optDescXmlSelfClosingSpace')"
           title="xmlSelfClosingSpace"
-          description="Adds a space before self-closing tags."
         >
           <template #action>
             <Switch v-model="optionsStore.xmlSelfClosingSpace" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescXmlSortAttributesByKey')"
           title="xmlSortAttributesByKey"
-          description="Orders XML attributes by key alphabetically while prioritizing xmlns attributes."
         >
           <template #action>
             <Switch v-model="optionsStore.xmlSortAttributesByKey" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescXmlQuoteAttributes')"
           title="xmlQuoteAttributes"
-          description="How to quoted attributes in XML."
         >
           <template #action>
             <Select
@@ -227,8 +227,8 @@ const configStore = useConfigStore()
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescXmlWhitespaceSensitivity')"
           title="xmlWhitespaceSensitivity"
-          description="How to handle whitespaces in XML."
         >
           <template #action>
             <Select
@@ -242,8 +242,8 @@ const configStore = useConfigStore()
       <!-- Plugin PHP Options -->
       <OptionsBlock :title="i18n.t('pluginPHPOptions')">
         <OptionItem
+          :description="i18n.t('optDescPhpVersion')"
           title="phpVersion"
-          description="Specifying the minimum target PHP version."
         >
           <template #action>
             <Select
@@ -269,16 +269,16 @@ const configStore = useConfigStore()
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescTrailingCommaPHP')"
           title="trailingCommaPHP"
-          description="Print trailing commas wherever possible when multi-line."
         >
           <template #action>
             <Switch v-model="optionsStore.trailingCommaPHP" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescBraceStyle')"
           title="braceStyle"
-          description="Print one space or newline for code blocks (classes and functions)."
         >
           <template #action>
             <Select
@@ -292,8 +292,8 @@ const configStore = useConfigStore()
       <!-- Plugin Java Options -->
       <OptionsBlock :title="i18n.t('pluginJavaOptions')">
         <OptionItem
+          :description="i18n.t('optDescEntrypoint')"
           title="entrypoint"
-          description="Prettify from the entrypoint, allowing to use prettier on snippet."
         >
           <template #action>
             <Select
@@ -307,8 +307,8 @@ const configStore = useConfigStore()
       <!-- Plugin Svelte Options -->
       <OptionsBlock :title="i18n.t('pluginSvelteOptions')">
         <OptionItem
+          :description="i18n.t('optDescSvelteSortOrder')"
           title="svelteSortOrder"
-          description="Sort order for scripts, markup, and styles."
         >
           <template #action>
             <Select
@@ -344,16 +344,16 @@ const configStore = useConfigStore()
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescSvelteAllowShorthand')"
           title="svelteAllowShorthand"
-          description="Enable/disable component attribute shorthand if attribute name and expressions are same."
         >
           <template #action>
             <Switch v-model="optionsStore.svelteAllowShorthand" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescSvelteIndentScriptAndStyle')"
           title="svelteIndentScriptAndStyle"
-          description="Whether or not to indent the code inside <script> and <style> tags in Svelte files."
         >
           <template #action>
             <Switch v-model="optionsStore.svelteIndentScriptAndStyle" />
@@ -364,88 +364,88 @@ const configStore = useConfigStore()
       <!-- Plugin TOML Options -->
       <OptionsBlock :title="i18n.t('pluginTOMLOptions')">
         <OptionItem
+          :description="i18n.t('optDescAlignComments')"
           title="alignComments"
-          description="Align consecutive comments after entries and items vertically. This applies to comments that are after entries or array items."
         >
           <template #action>
             <Switch v-model="optionsStore.alignComments" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescAlignEntries')"
           title="alignEntries"
-          description="Align consecutive entries vertically."
         >
           <template #action>
             <Switch v-model="optionsStore.alignEntries" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescAllowedBlankLines')"
           title="allowedBlankLines"
-          description="The maximum number of allowed blank lines between entries and tables."
         >
           <template #action>
             <InputNumber v-model="optionsStore.allowedBlankLines" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescArrayAutoCollapse')"
           title="arrayAutoCollapse"
-          description="Collapse arrays that don't exceed the maximum column width and don't contain comments."
         >
           <template #action>
             <Switch v-model="optionsStore.arrayAutoCollapse" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescArrayAutoExpand')"
           title="arrayAutoExpand"
-          description="Expand arrays to multiple lines that exceed the maximum column width."
         >
           <template #action>
             <Switch v-model="optionsStore.arrayAutoExpand" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescCompactArrays')"
           title="compactArrays"
-          description="Omit white space padding from single-line arrays."
         >
           <template #action>
             <Switch v-model="optionsStore.compactArrays" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescCompactEntries')"
           title="compactEntries"
-          description="Omit white space around `=`."
         >
           <template #action>
             <Switch v-model="optionsStore.compactEntries" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescCompactInlineTables')"
           title="compactInlineTables"
-          description="Omit white space padding from the start and end of inline tables."
         >
           <template #action>
             <Switch v-model="optionsStore.compactInlineTables" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescIndentEntries')"
           title="indentEntries"
-          description="Indent entries under tables."
         >
           <template #action>
             <Switch v-model="optionsStore.indentEntries" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescIndentTables')"
           title="indentTables"
-          description="Indent based on tables and arrays of tables and their subtables, subtables out of order are not indented."
         >
           <template #action>
             <Switch v-model="optionsStore.indentTables" />
           </template>
         </OptionItem>
         <OptionItem
+          :description="i18n.t('optDescReorderKeys')"
           title="reorderKeys"
-          description="Alphabetically reorder keys that are not separated by empty lines."
         >
           <template #action>
             <Switch v-model="optionsStore.reorderKeys" />
@@ -457,8 +457,8 @@ const configStore = useConfigStore()
 
       <OptionsBlock :title="i18n.t('userConfigs')">
         <OptionItem
+          :description="i18n.t('optDescSilent')"
           title="silent"
-          description="Whether toast message after user action."
         >
           <template #action>
             <Switch v-model="configStore.silent" />
@@ -466,8 +466,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescDebug')"
           title="debug"
-          description="Whether log runtime information in console."
         >
           <template #action>
             <Switch v-model="configStore.debug" />
@@ -475,8 +475,8 @@ const configStore = useConfigStore()
         </OptionItem>
 
         <OptionItem
+          :description="i18n.t('optDescAutoFormat')"
           title="autoFormat"
-          description="Auto format source code after pasting."
         >
           <template #action>
             <Switch v-model="configStore.autoFormat" />

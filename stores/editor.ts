@@ -4,6 +4,7 @@
 
 import { defineStore } from 'pinia'
 import { computed, ref, watch } from 'vue'
+import { i18n } from '#i18n'
 import { useStorage } from '@/composables/storage'
 import { languages } from '@/constants/language'
 import { useOptionsStore } from '@/stores/options'
@@ -77,8 +78,8 @@ export const useEditorStore = defineStore('editor', () => {
       resultCode.value = formattedCode
       formatCost.value = window.performance.now() - formatStartTime
 
-      Logger.success('Format successfully')
-      Toast.info('Format successfully')
+      Logger.success(i18n.t('formatSuccess'))
+      Toast.info(i18n.t('formatSuccess'))
     } catch (err: unknown) {
       if (requestId !== formatRequestId) {
         return

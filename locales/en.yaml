@@ -1,23 +1,85 @@
 about: About
 aboutApp: About $1
+aboutMadeWithBy: made with ❤️ by
+aboutSource: source
+appDescription: Yet another Prettier browser extension for code formatting.
+appName: Prettier Now
+brandAlt: Prettier Now logo
 changelog: ChangeLog
 clearAll: Clear All
+clearSuccess: Clear Success
+copiedToClipboard: Copied to clipboard
 copyResult: Copy Result
 dragFileHere: Drag File Here
 emptyFile: Empty File
 en: English
+failedToCopyToClipboard: Failed to copy to clipboard
 feedback: Feedback
+fileReadError: Failed to read file
 formatCostTime: Format Cost Time
 formatSource: Format Source
+formatSuccess: Format successfully
 home: Home
+ja: Japanese
+ko: Korean
 log: Log
+logoAlt: App Logo
 ms: $1ms
+nothingToClear: Nothing to clear
+nothingToCopy: Nothing to copy
+nothingToFormat: Nothing to format
+openOptionsPage: Open Options Page
+optDescAlignComments: Align consecutive comments after entries and items vertically. This applies to comments that are after entries or array items.
+optDescAlignEntries: Align consecutive entries vertically.
+optDescAllowedBlankLines: The maximum number of allowed blank lines between entries and tables.
+optDescArrayAutoCollapse: Collapse arrays that do not exceed the maximum column width and do not contain comments.
+optDescArrayAutoExpand: Expand arrays to multiple lines that exceed the maximum column width.
+optDescArrowParens: Include parentheses around a sole arrow function parameter.
+optDescAutoFormat: Auto format source code after pasting.
+optDescBraceStyle: Print one space or newline for code blocks (classes and functions).
+optDescBracketSameLine: Put the > of a multi-line HTML (HTML, JSX, Vue, Angular) element at the end of the last line instead of being alone on the next line (does not apply to self-closing elements).
+optDescBracketSpacing: Print spaces between brackets in object literals.
+optDescCompactArrays: Omit white space padding from single-line arrays.
+optDescCompactEntries: Omit white space around =.
+optDescCompactInlineTables: Omit white space padding from the start and end of inline tables.
+optDescDebug: Whether to log runtime information in console.
+optDescEndOfLine: Specify the end of line style.
+optDescEntrypoint: Prettify from the entrypoint, allowing prettier to format snippets.
+optDescExperimentalOperatorPosition: Where to print operators when binary expressions wrap lines.
+optDescExperimentalTernaries: Specify the ternaries style.
+optDescHtmlWhitespaceSensitivity: Specify the global whitespace sensitivity for HTML, Vue, Angular, and Handlebars.
+optDescIndentEntries: Indent entries under tables.
+optDescIndentTables: Indent based on tables and arrays of tables and their subtables; subtables out of order are not indented.
+optDescJsxSingleQuote: Use single quotes instead of double quotes in JSX.
+optDescObjectWrap: How to wrap object literals.
+optDescPhpVersion: Specify the minimum target PHP version.
+optDescPrintWidth: Specify the line length that the printer will wrap on.
+optDescQuoteProps: Change when properties in objects are quoted.
+optDescReorderKeys: Alphabetically reorder keys that are not separated by empty lines.
+optDescSemi: Print semicolons at the ends of statements.
+optDescSilent: Whether to show toast message after user action.
+optDescSingleAttributePerLine: Enforce single attribute per line in HTML, Vue and JSX.
+optDescSingleQuote: Use single quotes instead of double quotes.
+optDescSvelteAllowShorthand: Enable or disable component attribute shorthand if attribute name and expression are the same.
+optDescSvelteIndentScriptAndStyle: Whether or not to indent the code inside <script> and <style> tags in Svelte files.
+optDescSvelteSortOrder: Sort order for scripts, markup, and styles.
+optDescTabWidth: Specify the number of spaces per indentation level.
+optDescTrailingComma: Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
+optDescTrailingCommaPHP: Print trailing commas wherever possible when multi-line.
+optDescUseTabs: Indent lines with tabs instead of spaces.
+optDescVueIndentScriptAndStyle: Whether or not to indent the code inside <script> and <style> tags in Vue files.
+optDescXmlQuoteAttributes: How to quote attributes in XML.
+optDescXmlSelfClosingSpace: Add a space before self-closing tags.
+optDescXmlSortAttributesByKey: Order XML attributes by key alphabetically while prioritizing xmlns attributes.
+optDescXmlWhitespaceSensitivity: How to handle whitespaces in XML.
 pluginJavaOptions: Java Plugin Options
 pluginPHPOptions: PHP Plugin Options
 pluginSvelteOptions: Svelte Plugin Options
 pluginTOMLOptions: TOML Plugin Options
 pluginXMLOptions: XML Plugin Options
+popupOrUse: or use
 prettierOptions: Prettier Options
+searchItems: Search items...
 selectFile: Select File
 settings: Settings
 sourceCode: Source Code
@@ -27,3 +89,4 @@ toggleRightLayout: Toggle Right Layout
 unsupportedFileFormat: Unsupported File Format
 userConfigs: User Configs
 zhCN: 中文
+zhTW: 繁體中文

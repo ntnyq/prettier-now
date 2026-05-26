@@ -28,37 +28,37 @@ handleFileDialogChange(async files => {
 
 async function formatSource() {
   if (!editorStore.sourceCode) {
-    Logger.warn('Nothing to format')
-    return Toast.info('Nothing to format')
+    Logger.warn(i18n.t('nothingToFormat'))
+    return Toast.info(i18n.t('nothingToFormat'))
   }
 
   await editorStore.formatCode()
 }
 async function copyResult() {
   if (!editorStore.resultCode) {
-    Logger.warn('Nothing to copy')
-    return Toast.info('Nothing to copy')
+    Logger.warn(i18n.t('nothingToCopy'))
+    return Toast.info(i18n.t('nothingToCopy'))
   }
 
   try {
     await copy(editorStore.resultCode)
-    Logger.success('Copied to clipboard')
-    Toast.info('Copied to clipboard')
+    Logger.success(i18n.t('copiedToClipboard'))
+    Toast.info(i18n.t('copiedToClipboard'))
   } catch {
-    Logger.error('Failed to copy to clipboard')
-    Toast.error('Failed to copy to clipboard')
+    Logger.error(i18n.t('failedToCopyToClipboard'))
+    Toast.error(i18n.t('failedToCopyToClipboard'))
   }
 }
 function clearAll() {
   if (!editorStore.sourceCode && !editorStore.resultCode) {
-    Logger.warn('Nothing to clear')
-    return Toast.info('Nothing to clear')
+    Logger.warn(i18n.t('nothingToClear'))
+    return Toast.info(i18n.t('nothingToClear'))
   }
 
   editorStore.clearWorkspace()
 
-  Logger.success('Clear Success')
-  Toast.info('Clear Success')
+  Logger.success(i18n.t('clearSuccess'))
+  Toast.info(i18n.t('clearSuccess'))
 }
 function selectFile() {
   openFileDialog()

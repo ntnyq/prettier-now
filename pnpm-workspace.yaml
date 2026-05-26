@@ -6,3 +6,5 @@ allowBuilds:
   sharp: true
   spawn-sync: true
   unrs-resolver: true
+
+minimumReleaseAge: 0

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { i18n } from '#i18n'
 import { browser } from '#imports'
 
 const isMac = navigator.userAgent.includes('Mac OS X')
@@ -15,10 +16,10 @@ function openOptionsPage() {
       class="btn-action !text-sm"
       type="button"
     >
-      Open Options Page
+      {{ i18n.t('openOptionsPage') }}
     </button>
     <p class="inline-flex items-center text-lg">
-      <span class="mr-2">or use</span>
+      <span class="mr-2">{{ i18n.t('popupOrUse') }}</span>
       <kbd class="kbd-key">
         {{ `${isMac ? 'Option' : 'Alt'}+O` }}
       </kbd>

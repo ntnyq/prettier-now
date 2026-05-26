@@ -4,7 +4,6 @@
  */
 
 import VueComponents from 'unplugin-vue-components/vite'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { defineConfig } from 'wxt'
 import { resolve } from './scripts/utils'
 
@@ -15,6 +14,9 @@ const viteConfig = (() => ({
   build: {
     // Max per file size for Firefox is 4MB.
     chunkSizeWarningLimit: 4 * 1024,
+    rolldownOptions: {
+      logLevel: 'silent',
+    },
   },
 
   css: {
@@ -27,9 +29,6 @@ const viteConfig = (() => ({
   },
 
   plugins: [
-    nodePolyfills({
-      include: ['assert', 'fs', 'path', 'process', 'util'],
-    }),
     VueComponents({
       dirs: [resolve('components')],
       dts: resolve('types/components.d.ts'),
@@ -50,12 +49,13 @@ export default defineConfig({
 
   manifest: {
     default_locale: 'en',
+    description: '__MSG_appDescription__',
     homepage_url: 'https://github.com/ntnyq/prettier-now',
-    name: 'Prettier Now',
+    name: '__MSG_appName__',
     permissions: ['storage', 'contextMenus'],
     commands: {
       openOptionsPage: {
-        description: 'Open the Options page',
+        description: '__MSG_openOptionsPage__',
         suggested_key: {
           default: 'Alt+O',
         },

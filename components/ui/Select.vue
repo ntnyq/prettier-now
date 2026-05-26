@@ -2,6 +2,7 @@
 import { isString, waitFor } from '@ntnyq/utils'
 import { Menu as VMenu } from 'floating-vue'
 import { computed, ref, useTemplateRef } from 'vue'
+import { i18n } from '#i18n'
 import { isDark } from '@/composables/dark'
 
 type SelectItem = string | { label: string; value: string }
@@ -72,8 +73,8 @@ function handleSelect(value: string) {
       <input
         v-model.trim="keyword"
         v-if="formatedItems.length > 20"
+        :placeholder="i18n.t('searchItems')"
         type="text"
-        placeholder="Search items..."
         class="h-10 w-full border border-base rounded-t-md px-2"
       />
       <div class="v-select-item-wrapper min-w-100px">

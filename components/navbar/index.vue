@@ -27,10 +27,10 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
     >
       <img
         :src="logoUrl"
+        :alt="i18n.t('logoAlt')"
         class="h-6 w-6"
-        alt="Logo"
       />
-      <h1 class="text-lg font-bold">Prettier Now</h1>
+      <h1 class="text-lg font-bold">{{ i18n.t('appName') }}</h1>
       <small>v{{ version }}</small>
     </RouterLink>
 

@@ -1,23 +1,85 @@
 about: 关于
 aboutApp: 关于 $1
+aboutMadeWithBy: 用 ❤️ 制作 by
+aboutSource: 源代码
+appDescription: 又一个用于代码格式化的 Prettier 浏览器扩展。
+appName: Prettier Now
+brandAlt: Prettier Now 标志
 changelog: 更新日志
 clearAll: 清除所有
+clearSuccess: 清除成功
+copiedToClipboard: 已复制到剪贴板
 copyResult: 复制结果
 dragFileHere: 拖拽文件到这里
 emptyFile: 空文件
 en: English
+failedToCopyToClipboard: 复制到剪贴板失败
 feedback: 意见反馈
+fileReadError: 读取文件失败
 formatCostTime: 格式化耗时
 formatSource: 格式化代码
+formatSuccess: 格式化成功
 home: 首页
+ja: 日本語
+ko: 한국어
 log: 日志
+logoAlt: 应用标志
 ms: $1毫秒
+nothingToClear: 无内容可清除
+nothingToCopy: 无内容可复制
+nothingToFormat: 无内容可格式化
+openOptionsPage: 打开选项页
+optDescAlignComments: 将条目和数组项后的连续注释进行纵向对齐。仅对位于条目或数组项之后的注释生效。
+optDescAlignEntries: 将连续条目纵向对齐。
+optDescAllowedBlankLines: 条目与表之间允许的最大空行数。
+optDescArrayAutoCollapse: 自动折叠未超过最大列宽且不含注释的数组。
+optDescArrayAutoExpand: 自动展开超过最大列宽的数组为多行。
+optDescArrowParens: 为只有一个参数的箭头函数参数加上括号。
+optDescAutoFormat: 粘贴后自动格式化源代码。
+optDescBraceStyle: 为代码块（类和函数）使用空格或换行样式。
+optDescBracketSameLine: 多行 HTML（HTML、JSX、Vue、Angular）元素的 > 放在最后一行末尾，而不是单独换到下一行（不适用于自闭合元素）。
+optDescBracketSpacing: 在对象字面量的大括号内添加空格。
+optDescCompactArrays: 去除单行数组中的空白填充。
+optDescCompactEntries: 去除 = 两侧空白。
+optDescCompactInlineTables: 去除内联表首尾的空白填充。
+optDescDebug: 是否在控制台输出运行时信息。
+optDescEndOfLine: 指定换行符样式。
+optDescEntrypoint: 从入口点开始格式化，使 prettier 可以用于代码片段。
+optDescExperimentalOperatorPosition: 当二元表达式换行时，指定运算符位置。
+optDescExperimentalTernaries: 指定三元表达式样式。
+optDescHtmlWhitespaceSensitivity: 指定 HTML、Vue、Angular 和 Handlebars 的全局空白敏感度。
+optDescIndentEntries: 对表中的条目进行缩进。
+optDescIndentTables: 按照表和表数组及其子表进行缩进；乱序子表不缩进。
+optDescJsxSingleQuote: 在 JSX 中使用单引号而非双引号。
+optDescObjectWrap: 指定对象字面量换行方式。
+optDescPhpVersion: 指定最低目标 PHP 版本。
+optDescPrintWidth: 指定代码格式化时的换行宽度。
+optDescQuoteProps: 控制对象属性何时加引号。
+optDescReorderKeys: 按字母顺序重排未被空行分隔的键。
+optDescSemi: 在语句末尾打印分号。
+optDescSilent: 用户操作后是否显示 Toast 提示。
+optDescSingleAttributePerLine: 在 HTML、Vue、JSX 中强制每行仅一个属性。
+optDescSingleQuote: 使用单引号而非双引号。
+optDescSvelteAllowShorthand: 当属性名与表达式相同时，启用或禁用组件属性简写。
+optDescSvelteIndentScriptAndStyle: 是否缩进 Svelte 文件中 <script> 与 <style> 标签内代码。
+optDescSvelteSortOrder: 指定 scripts、markup、styles 的排序顺序。
+optDescTabWidth: 指定每级缩进的空格数。
+optDescTrailingComma: 在多行逗号分隔的语法结构中尽可能添加尾随逗号。
+optDescTrailingCommaPHP: 在多行场景中尽可能添加尾随逗号。
+optDescUseTabs: 使用制表符缩进而非空格。
+optDescVueIndentScriptAndStyle: 是否缩进 Vue 文件中 <script> 与 <style> 标签内代码。
+optDescXmlQuoteAttributes: 指定 XML 属性引号样式。
+optDescXmlSelfClosingSpace: 在自闭合标签前添加空格。
+optDescXmlSortAttributesByKey: 按键名字母顺序排序 XML 属性，并优先 xmlns 属性。
+optDescXmlWhitespaceSensitivity: 指定 XML 空白处理方式。
 pluginJavaOptions: Java 插件配置
 pluginPHPOptions: PHP 插件配置
 pluginSvelteOptions: Svelte 插件配置
 pluginTOMLOptions: TOML 插件配置
 pluginXMLOptions: XML 插件配置
+popupOrUse: 或使用
 prettierOptions: Prettier 配置
+searchItems: 搜索条目...
 selectFile: 选择文件
 settings: 设置
 sourceCode: 源代码
@@ -27,3 +89,4 @@ toggleRightLayout: 切换右侧布局
 unsupportedFileFormat: 不支持的文件格式
 userConfigs: 用户配置
 zhCN: 中文
+zhTW: 繁體中文

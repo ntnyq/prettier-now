@@ -10,7 +10,7 @@ import { Toast } from '@/utils/toast'
 
 export function useFileHandler() {
   const editorStore = useEditorStore()
-  const fileReadErrorMessage = 'Failed to read file'
+  const fileReadErrorMessage = i18n.t('fileReadError')
 
   async function loadFile(file?: File | null) {
     if (!file) {

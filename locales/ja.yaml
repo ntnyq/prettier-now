@@ -1,0 +1,92 @@
+about: 詳細
+aboutApp: $1 について
+aboutMadeWithBy: ❤️ で作成 by
+aboutSource: ソース
+appDescription: コード整形のためのもう一つの Prettier ブラウザー拡張です。
+appName: Prettier Now
+brandAlt: Prettier Now ロゴ
+changelog: 変更履歴
+clearAll: すべてクリア
+clearSuccess: クリアしました
+copiedToClipboard: クリップボードにコピーしました
+copyResult: 結果をコピー
+dragFileHere: ここにファイルをドラッグ
+emptyFile: 空のファイル
+en: English
+failedToCopyToClipboard: クリップボードへのコピーに失敗しました
+feedback: フィードバック
+fileReadError: ファイルの読み込みに失敗しました
+formatCostTime: 整形時間
+formatSource: コードを整形
+formatSuccess: 整形に成功しました
+home: ホーム
+ja: 日本語
+ko: 한국어
+log: ログ
+logoAlt: アプリロゴ
+ms: $1ms
+nothingToClear: クリアする内容がありません
+nothingToCopy: コピーする内容がありません
+nothingToFormat: 整形する内容がありません
+openOptionsPage: オプションページを開く
+optDescAlignComments: エントリと配列項目の後ろにある連続コメントを縦方向に揃えます。エントリまたは配列項目の後ろにあるコメントにのみ適用されます。
+optDescAlignEntries: 連続するエントリを縦方向に揃えます。
+optDescAllowedBlankLines: エントリとテーブルの間で許可する空行の最大数を指定します。
+optDescArrayAutoCollapse: 最大列幅を超えず、コメントを含まない配列を自動的に折りたたみます。
+optDescArrayAutoExpand: 最大列幅を超える配列を複数行に自動展開します。
+optDescArrowParens: 単一引数のアロー関数で引数を括弧で囲みます。
+optDescAutoFormat: 貼り付け後に自動でソースコードを整形します。
+optDescBraceStyle: コードブロック（クラスと関数）のスタイルをスペースまたは改行で指定します。
+optDescBracketSameLine: 複数行の HTML（HTML、JSX、Vue、Angular）要素の > を次行単独ではなく最終行末に配置します（自己終了要素は対象外）。
+optDescBracketSpacing: オブジェクトリテラルの括弧内に空白を入れます。
+optDescCompactArrays: 単一行配列の空白パディングを省略します。
+optDescCompactEntries: = の前後の空白を省略します。
+optDescCompactInlineTables: インラインテーブルの先頭と末尾の空白パディングを省略します。
+optDescDebug: 実行時情報をコンソールに出力するかどうか。
+optDescEndOfLine: 改行コードのスタイルを指定します。
+optDescEntrypoint: エントリポイントから整形し、prettier をスニペットにも適用できるようにします。
+optDescExperimentalOperatorPosition: 二項式が改行されるときの演算子位置を指定します。
+optDescExperimentalTernaries: 三項演算子のスタイルを指定します。
+optDescHtmlWhitespaceSensitivity: HTML、Vue、Angular、Handlebars の空白感度をグローバルに指定します。
+optDescIndentEntries: テーブル配下のエントリをインデントします。
+optDescIndentTables: テーブルとテーブル配列およびそのサブテーブルに基づいてインデントします。順序外サブテーブルはインデントしません。
+optDescJsxSingleQuote: JSX でダブルクオートではなくシングルクオートを使用します。
+optDescObjectWrap: オブジェクトリテラルの折り返し方法を指定します。
+optDescPhpVersion: 対象とする最小 PHP バージョンを指定します。
+optDescPrintWidth: プリンタが折り返す行長を指定します。
+optDescQuoteProps: オブジェクトプロパティを引用符で囲むタイミングを変更します。
+optDescReorderKeys: 空行で区切られていないキーをアルファベット順に並べ替えます。
+optDescSemi: 文末にセミコロンを出力します。
+optDescSilent: ユーザー操作後にトーストを表示するかどうか。
+optDescSingleAttributePerLine: HTML、Vue、JSX で 1 行 1 属性を強制します。
+optDescSingleQuote: ダブルクオートではなくシングルクオートを使用します。
+optDescSvelteAllowShorthand: 属性名と式が同じ場合にコンポーネント属性の省略記法を有効または無効にします。
+optDescSvelteIndentScriptAndStyle: Svelte ファイル内の <script> と <style> タグ内コードをインデントするかどうか。
+optDescSvelteSortOrder: scripts、markup、styles の並び順を指定します。
+optDescTabWidth: インデントレベルごとのスペース数を指定します。
+optDescTrailingComma: 複数行のカンマ区切り構文で可能な限り末尾カンマを出力します。
+optDescTrailingCommaPHP: 複数行の場合に可能な限り末尾カンマを出力します。
+optDescUseTabs: スペースの代わりにタブでインデントします。
+optDescVueIndentScriptAndStyle: Vue ファイル内の <script> と <style> タグ内コードをインデントするかどうか。
+optDescXmlQuoteAttributes: XML の属性をどのように引用符で囲むかを指定します。
+optDescXmlSelfClosingSpace: 自己終了タグの前にスペースを追加します。
+optDescXmlSortAttributesByKey: xmlns 属性を優先しつつ XML 属性をキーのアルファベット順に並べます。
+optDescXmlWhitespaceSensitivity: XML の空白処理方法を指定します。
+pluginJavaOptions: Java プラグインオプション
+pluginPHPOptions: PHP プラグインオプション
+pluginSvelteOptions: Svelte プラグインオプション
+pluginTOMLOptions: TOML プラグインオプション
+pluginXMLOptions: XML プラグインオプション
+popupOrUse: または
+prettierOptions: Prettier オプション
+searchItems: 項目を検索...
+selectFile: ファイルを選択
+settings: 設定
+sourceCode: ソースコード
+toggleColorMode: カラーモード切替
+toggleLeftLayout: 左レイアウト切替
+toggleRightLayout: 右レイアウト切替
+unsupportedFileFormat: 未対応のファイル形式
+userConfigs: ユーザー設定
+zhCN: 中文
+zhTW: 繁體中文

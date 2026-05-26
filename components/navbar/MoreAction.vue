@@ -67,13 +67,13 @@ function handleShowDialog() {
 
   <Dialog
     ref="dialogRef"
-    :title="i18n.t('aboutApp', ['Prettier Now'])"
+    :title="i18n.t('aboutApp', [i18n.t('appName')])"
   >
     <div class="h-full flex flex-col items-center justify-center gap-2">
       <img
         :src="logoUrl"
+        :alt="i18n.t('brandAlt')"
         class="mx-auto mt-10 block w-80px"
-        alt="PrettierNow"
       />
       <p class="op-70">v{{ version }}</p>
       <div class="mt-auto p-2 text-center text-sm op-75 hover:op-100">
@@ -81,9 +81,9 @@ function handleShowDialog() {
           class="hover:underline"
           href="https://github.com/ntnyq/prettier-now"
         >
-          source
+          {{ i18n.t('aboutSource') }}
         </a>
-        &middot; made with ❤️ by
+        &middot; {{ i18n.t('aboutMadeWithBy') }}
         <a
           class="font-semibold hover:underline"
           href="https://twitter.com/ntnyq"
