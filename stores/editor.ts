@@ -56,10 +56,10 @@ export const useEditorStore = defineStore('editor', () => {
     const currentLanguageId = languageId.value
     const currentLanguageParser = languageParser.value
 
-    // ensure codemirror language is loaded
-    await loadCodemirrorLanguage(currentLanguageId)
-
     try {
+      // ensure codemirror language is loaded
+      await loadCodemirrorLanguage(currentLanguageId)
+
       const formattedCode = await formatViaPrettier(currentSourceCode, {
         ...optionsStore.options,
         ...optionsStore.xmlPluginOptions,

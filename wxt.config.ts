@@ -63,6 +63,8 @@ export default defineConfig({
     },
     // Browser.Manifest.WebExtensionManifestCommandsType
     content_security_policy: {
+      // Required by wasm-based parser/runtime chunks used by formatter plugins.
+      // This applies only to extension pages (not web pages) under MV3.
       extension_pages: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`,
     },
   },
