@@ -187,7 +187,7 @@ importers:
         specifier: ^8.0.16
         version: 8.0.16(@types/node@25.9.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)
       vue-tsc:
-        specifier: ^3.3.3
+        specifier: ^3.3.4
         version: 3.3.4(typescript@6.0.3)
       wxt:
         specifier: ^0.20.26
