@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { computed, useSlots } from 'vue'
+import { computed, useId, useSlots } from 'vue'
 
-defineProps<{
+const props = defineProps<{
+  id?: string
   title: string
   description?: string
 }>()
@@ -9,6 +10,14 @@ defineProps<{
 const slots = useSlots()
 const typedSlots = slots as { description?: unknown }
 const hasDescriptionSlot = computed(() => Boolean(typedSlots.description))
+const fallbackId = useId()
+const baseId = computed(() => props.id ?? `setting-${fallbackId}`)
+const titleId = computed(() => `${baseId.value}-title`)
+const descriptionId = computed(() =>
+  hasDescriptionSlot.value || props.description
+    ? `${baseId.value}-description`
+    : undefined,
+)
 </script>
 
 <template>
@@ -16,13 +25,17 @@ const hasDescriptionSlot = computed(() => Boolean(typedSlots.description))
     class="flex flex-col gap-4 rounded-lg border bg-card p-4 text-card-foreground sm:flex-row sm:items-center sm:justify-between"
   >
     <div class="min-w-0 space-y-1">
-      <div class="text-sm font-medium">
+      <div
+        :id="titleId"
+        class="text-sm font-medium"
+      >
         <slot name="title">
           {{ title }}
         </slot>
       </div>
       <p
         v-if="hasDescriptionSlot || description"
+        :id="descriptionId"
         class="text-sm text-muted-foreground"
       >
         <slot name="description">
@@ -32,7 +45,11 @@ const hasDescriptionSlot = computed(() => Boolean(typedSlots.description))
     </div>
 
     <div class="flex shrink-0 items-center justify-end">
-      <slot name="action" />
+      <slot
+        :description-id
+        :title-id
+        name="action"
+      />
     </div>
   </div>
 </template>

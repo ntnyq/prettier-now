@@ -9,6 +9,8 @@ import {
 
 withDefaults(
   defineProps<{
+    ariaDescribedby?: string
+    ariaLabelledby?: string
     min?: number
     max?: number
     step?: number
@@ -25,6 +27,8 @@ const model = defineModel<number>({ required: true })
 <template>
   <NumberField
     v-model="model"
+    :aria-describedby
+    :aria-labelledby
     :max
     :min
     :step

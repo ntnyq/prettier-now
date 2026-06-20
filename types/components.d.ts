@@ -91,6 +91,7 @@ declare module 'vue' {
     SettingSelect: typeof import('./../components/settings/SettingSelect.vue')['default']
     SettingsSection: typeof import('./../components/settings/SettingsSection.vue')['default']
     SettingsSheet: typeof import('./../components/settings/SettingsSheet.vue')['default']
+    SettingSwitch: typeof import('./../components/settings/SettingSwitch.vue')['default']
     Sheet: typeof import('./../components/ui/sheet/Sheet.vue')['default']
     SheetClose: typeof import('./../components/ui/sheet/SheetClose.vue')['default']
     SheetContent: typeof import('./../components/ui/sheet/SheetContent.vue')['default']

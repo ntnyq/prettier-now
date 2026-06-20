@@ -46,6 +46,7 @@ log: 日誌
 logoAlt: 應用程式標誌
 managePresets: 管理預設
 ms: $1毫秒
+noItemsFound: 沒有相符項目
 nothingToClear: 沒有可清除的內容
 nothingToCopy: 沒有可複製的內容
 nothingToDownload: 沒有可下載的內容

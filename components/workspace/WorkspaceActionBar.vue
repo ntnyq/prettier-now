@@ -20,7 +20,6 @@ import {
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useFileHandler } from '@/composables/fileHandler'
@@ -86,93 +85,91 @@ function selectFile() {
 </script>
 
 <template>
-  <TooltipProvider>
-    <div
-      class="flex flex-wrap items-center justify-center gap-2 border-t border-border bg-background/95 px-4 py-3 shadow-[0_-1px_12px_rgba(15,23,42,0.06)] backdrop-blur supports-[backdrop-filter]:bg-background/80"
-    >
-      <Tooltip>
-        <TooltipTrigger as-child>
-          <Button
-            @click="selectFile"
-            :aria-label="i18n.t('selectFile')"
-            variant="outline"
-            size="icon-lg"
-            type="button"
-          >
-            <FilePlus class="size-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>{{ i18n.t('selectFile') }}</TooltipContent>
-      </Tooltip>
-
-      <Tooltip>
-        <TooltipTrigger as-child>
-          <Button
-            @click="copyResult"
-            :aria-label="i18n.t('copyResult')"
-            variant="outline"
-            size="icon-lg"
-            type="button"
-          >
-            <Copy class="size-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>{{ i18n.t('copyResult') }}</TooltipContent>
-      </Tooltip>
-
-      <Tooltip>
-        <TooltipTrigger as-child>
-          <Button
-            @click="workspaceStore.downloadActiveJob"
-            :aria-label="i18n.t('downloadResult')"
-            variant="outline"
-            size="icon-lg"
-            type="button"
-          >
-            <Download class="size-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>{{ i18n.t('downloadResult') }}</TooltipContent>
-      </Tooltip>
-
-      <Button
-        @click="formatSource"
-        size="lg"
-        type="button"
-        class="min-w-[10.5rem] shadow-sm"
-      >
-        <Sparkles class="size-4" />
-        {{ i18n.t('formatSource') }}
-      </Button>
-
-      <DropdownMenu>
-        <DropdownMenuTrigger as-child>
-          <Button
-            :aria-label="`${i18n.t('downloadAll')} / ${i18n.t('clearAll')}`"
-            variant="outline"
-            size="icon-lg"
-            type="button"
-          >
-            <EllipsisVertical class="size-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          align="end"
-          class="w-48"
+  <div
+    class="flex flex-wrap items-center justify-center gap-2 border-t border-border bg-background/95 px-4 py-3 shadow-[0_-1px_12px_rgba(15,23,42,0.06)] backdrop-blur supports-[backdrop-filter]:bg-background/80"
+  >
+    <Tooltip>
+      <TooltipTrigger as-child>
+        <Button
+          @click="selectFile"
+          :aria-label="i18n.t('selectFile')"
+          variant="outline"
+          size="icon-lg"
+          type="button"
         >
-          <DropdownMenuItem @click="workspaceStore.downloadAllJobs">
-            <FileDown class="size-4" />
-            {{ i18n.t('downloadAll') }}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            @click="clearAll"
-            variant="destructive"
-          >
-            <Trash2 class="size-4" />
-            {{ i18n.t('clearAll') }}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
-  </TooltipProvider>
+          <FilePlus class="size-4" />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{{ i18n.t('selectFile') }}</TooltipContent>
+    </Tooltip>
+
+    <Tooltip>
+      <TooltipTrigger as-child>
+        <Button
+          @click="copyResult"
+          :aria-label="i18n.t('copyResult')"
+          variant="outline"
+          size="icon-lg"
+          type="button"
+        >
+          <Copy class="size-4" />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{{ i18n.t('copyResult') }}</TooltipContent>
+    </Tooltip>
+
+    <Tooltip>
+      <TooltipTrigger as-child>
+        <Button
+          @click="workspaceStore.downloadActiveJob"
+          :aria-label="i18n.t('downloadResult')"
+          variant="outline"
+          size="icon-lg"
+          type="button"
+        >
+          <Download class="size-4" />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{{ i18n.t('downloadResult') }}</TooltipContent>
+    </Tooltip>
+
+    <Button
+      @click="formatSource"
+      size="lg"
+      type="button"
+      class="min-w-[10.5rem] shadow-sm"
+    >
+      <Sparkles class="size-4" />
+      {{ i18n.t('formatSource') }}
+    </Button>
+
+    <DropdownMenu>
+      <DropdownMenuTrigger as-child>
+        <Button
+          :aria-label="`${i18n.t('downloadAll')} / ${i18n.t('clearAll')}`"
+          variant="outline"
+          size="icon-lg"
+          type="button"
+        >
+          <EllipsisVertical class="size-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        class="w-48"
+      >
+        <DropdownMenuItem @click="workspaceStore.downloadAllJobs">
+          <FileDown class="size-4" />
+          {{ i18n.t('downloadAll') }}
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          @click="clearAll"
+          variant="destructive"
+        >
+          <Trash2 class="size-4" />
+          {{ i18n.t('clearAll') }}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </div>
 </template>

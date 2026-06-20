@@ -46,6 +46,7 @@ log: 日志
 logoAlt: 应用标志
 managePresets: 管理预设
 ms: $1毫秒
+noItemsFound: 没有匹配的条目
 nothingToClear: 无内容可清除
 nothingToCopy: 无内容可复制
 nothingToDownload: 无内容可下载

@@ -28,6 +28,8 @@ import { cn } from '@/lib/utils'
 type SettingSelectItem = string | { label: string; value: string }
 
 const props = defineProps<{
+  ariaDescribedby?: string
+  ariaLabelledby?: string
   items: SettingSelectItem[]
 }>()
 
@@ -57,7 +59,11 @@ function selectItem(value: string) {
     v-model="model"
     v-if="isNativeSelect"
   >
-    <SelectTrigger class="w-56">
+    <SelectTrigger
+      :aria-describedby
+      :aria-labelledby
+      class="w-56"
+    >
       <SelectValue />
     </SelectTrigger>
     <SelectContent>
@@ -77,6 +83,9 @@ function selectItem(value: string) {
   >
     <PopoverTrigger as-child>
       <Button
+        :aria-describedby
+        :aria-expanded="open"
+        :aria-labelledby
         class="w-56 justify-between"
         role="combobox"
         variant="outline"
@@ -94,7 +103,7 @@ function selectItem(value: string) {
       <Command>
         <CommandInput :placeholder="searchLabel" />
         <CommandList>
-          <CommandEmpty>{{ searchLabel }}</CommandEmpty>
+          <CommandEmpty>{{ i18n.t('noItemsFound') }}</CommandEmpty>
           <CommandGroup>
             <CommandItem
               @select="selectItem(item.value)"

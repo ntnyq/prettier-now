@@ -17,7 +17,6 @@ import { Button } from '@/components/ui/button'
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { toggleDark } from '@/composables/dark'
@@ -52,156 +51,154 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
       <small>v{{ version }}</small>
     </RouterLink>
 
-    <TooltipProvider>
-      <div class="flex items-center gap-2">
-        <template v-if="route.name === 'Home'">
-          <LanguageSelect />
+    <div class="flex items-center gap-2">
+      <template v-if="route.name === 'Home'">
+        <LanguageSelect />
 
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <div class="p-1 text-sm opacity-80">
-                {{ i18n.t('ms', [+workspaceStore.formatCost.toFixed(1)]) }}
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>{{ i18n.t('formatCostTime') }}</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <Button
-                @click="appStore.setIsSettingsSheetVisible(true)"
-                :aria-label="i18n.t('settings')"
-                variant="ghost"
-                size="icon-sm"
-                type="button"
-              >
-                <Settings class="size-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>{{ i18n.t('settings') }}</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <Button
-                @click="appStore.setIsDiffPanelVisible(true)"
-                :aria-label="i18n.t('diff')"
-                variant="ghost"
-                size="icon-sm"
-                type="button"
-              >
-                <GitMerge class="size-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>{{ i18n.t('diff') }}</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <Button
-                @click="appStore.setIsHistoryPanelVisible(true)"
-                :aria-label="i18n.t('history')"
-                variant="ghost"
-                size="icon-sm"
-                type="button"
-              >
-                <History class="size-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>{{ i18n.t('history') }}</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <Button
-                @click="appStore.toggleLeftLayout"
-                :aria-label="i18n.t('toggleLeftLayout')"
-                variant="ghost"
-                size="icon-sm"
-                type="button"
-              >
-                <Columns2
-                  v-if="appStore.showLeftLayout"
-                  class="size-4"
-                />
-                <PanelLeft
-                  v-else
-                  class="size-4"
-                />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>{{ i18n.t('toggleLeftLayout') }}</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <Button
-                @click="appStore.toggleRightLayout"
-                :aria-label="i18n.t('toggleRightLayout')"
-                variant="ghost"
-                size="icon-sm"
-                type="button"
-              >
-                <Columns2
-                  v-if="appStore.showRightLayout"
-                  class="size-4"
-                />
-                <PanelLeft
-                  v-else
-                  class="size-4 rotate-180"
-                />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>{{ i18n.t('toggleRightLayout') }}</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <Button
-                @click="logStore.setIsLogPanelVisible(true)"
-                :aria-label="i18n.t('log')"
-                variant="ghost"
-                size="icon-sm"
-                type="button"
-              >
-                <FileText class="size-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>{{ i18n.t('log') }}</TooltipContent>
-          </Tooltip>
-        </template>
-        <Tooltip v-else>
+        <Tooltip>
           <TooltipTrigger as-child>
-            <Button
-              @click="router.push({ name: 'Home' })"
-              :aria-label="i18n.t('home')"
-              variant="ghost"
-              size="icon-sm"
-              type="button"
-            >
-              <Home class="size-4" />
-            </Button>
+            <div class="p-1 text-sm opacity-80">
+              {{ i18n.t('ms', [+workspaceStore.formatCost.toFixed(1)]) }}
+            </div>
           </TooltipTrigger>
-          <TooltipContent>{{ i18n.t('home') }}</TooltipContent>
+          <TooltipContent>{{ i18n.t('formatCostTime') }}</TooltipContent>
         </Tooltip>
 
         <Tooltip>
           <TooltipTrigger as-child>
             <Button
-              @click="toggleDark"
-              :aria-label="i18n.t('toggleColorMode')"
+              @click="appStore.setIsSettingsSheetVisible(true)"
+              :aria-label="i18n.t('settings')"
               variant="ghost"
               size="icon-sm"
               type="button"
             >
-              <Sun class="size-4 dark:hidden" />
-              <Moon class="hidden size-4 dark:block" />
+              <Settings class="size-4" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>{{ i18n.t('toggleColorMode') }}</TooltipContent>
+          <TooltipContent>{{ i18n.t('settings') }}</TooltipContent>
         </Tooltip>
-        <MoreAction />
-      </div>
-    </TooltipProvider>
+
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <Button
+              @click="appStore.setIsDiffPanelVisible(true)"
+              :aria-label="i18n.t('diff')"
+              variant="ghost"
+              size="icon-sm"
+              type="button"
+            >
+              <GitMerge class="size-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{{ i18n.t('diff') }}</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <Button
+              @click="appStore.setIsHistoryPanelVisible(true)"
+              :aria-label="i18n.t('history')"
+              variant="ghost"
+              size="icon-sm"
+              type="button"
+            >
+              <History class="size-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{{ i18n.t('history') }}</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <Button
+              @click="appStore.toggleLeftLayout"
+              :aria-label="i18n.t('toggleLeftLayout')"
+              variant="ghost"
+              size="icon-sm"
+              type="button"
+            >
+              <Columns2
+                v-if="appStore.showLeftLayout"
+                class="size-4"
+              />
+              <PanelLeft
+                v-else
+                class="size-4"
+              />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{{ i18n.t('toggleLeftLayout') }}</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <Button
+              @click="appStore.toggleRightLayout"
+              :aria-label="i18n.t('toggleRightLayout')"
+              variant="ghost"
+              size="icon-sm"
+              type="button"
+            >
+              <Columns2
+                v-if="appStore.showRightLayout"
+                class="size-4"
+              />
+              <PanelLeft
+                v-else
+                class="size-4 rotate-180"
+              />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{{ i18n.t('toggleRightLayout') }}</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <Button
+              @click="logStore.setIsLogPanelVisible(true)"
+              :aria-label="i18n.t('log')"
+              variant="ghost"
+              size="icon-sm"
+              type="button"
+            >
+              <FileText class="size-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{{ i18n.t('log') }}</TooltipContent>
+        </Tooltip>
+      </template>
+      <Tooltip v-else>
+        <TooltipTrigger as-child>
+          <Button
+            @click="router.push({ name: 'Home' })"
+            :aria-label="i18n.t('home')"
+            variant="ghost"
+            size="icon-sm"
+            type="button"
+          >
+            <Home class="size-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{{ i18n.t('home') }}</TooltipContent>
+      </Tooltip>
+
+      <Tooltip>
+        <TooltipTrigger as-child>
+          <Button
+            @click="toggleDark"
+            :aria-label="i18n.t('toggleColorMode')"
+            variant="ghost"
+            size="icon-sm"
+            type="button"
+          >
+            <Sun class="size-4 dark:hidden" />
+            <Moon class="hidden size-4 dark:block" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{{ i18n.t('toggleColorMode') }}</TooltipContent>
+      </Tooltip>
+      <MoreAction />
+    </div>
   </div>
 </template>

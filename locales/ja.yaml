@@ -46,6 +46,7 @@ log: ログ
 logoAlt: アプリロゴ
 managePresets: プリセット管理
 ms: $1ms
+noItemsFound: 一致する項目はありません
 nothingToClear: クリアする内容がありません
 nothingToCopy: コピーする内容がありません
 nothingToDownload: ダウンロードする内容がありません

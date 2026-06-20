@@ -46,6 +46,7 @@ log: Log
 logoAlt: App Logo
 managePresets: Manage Presets
 ms: $1ms
+noItemsFound: No matching items
 nothingToClear: Nothing to clear
 nothingToCopy: Nothing to copy
 nothingToDownload: Nothing to download

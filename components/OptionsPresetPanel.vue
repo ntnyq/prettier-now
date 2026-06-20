@@ -11,7 +11,6 @@ import { Input } from '@/components/ui/input'
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useOptionsStore } from '@/stores/options'
@@ -116,29 +115,29 @@ function resetOptions() {
       :description="i18n.t('optDescSavePreset')"
       :title="i18n.t('savePreset')"
     >
-      <template #action>
+      <template #action="{ descriptionId, titleId }">
         <div class="flex items-center gap-2">
           <Input
             v-model.trim="presetName"
+            :aria-describedby="descriptionId"
+            :aria-labelledby="titleId"
             :placeholder="i18n.t('presetName')"
             class="w-40"
             type="text"
           />
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger as-child>
-                <Button
-                  @click="savePreset"
-                  :aria-label="i18n.t('savePreset')"
-                  size="icon"
-                  variant="outline"
-                >
-                  <Save class="size-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{{ i18n.t('savePreset') }}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="savePreset"
+                :aria-label="i18n.t('savePreset')"
+                size="icon"
+                variant="outline"
+              >
+                <Save class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('savePreset') }}</TooltipContent>
+          </Tooltip>
         </div>
       </template>
     </SettingItem>
@@ -148,42 +147,40 @@ function resetOptions() {
       :description="i18n.t('optDescManagePresets')"
       :title="i18n.t('managePresets')"
     >
-      <template #action>
+      <template #action="{ descriptionId, titleId }">
         <div class="flex items-center gap-2">
           <SettingSelect
             v-model="selectedPresetId"
+            :aria-describedby="descriptionId"
+            :aria-labelledby="titleId"
             :items="presetItems"
           />
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger as-child>
-                <Button
-                  @click="applySelectedPreset"
-                  :aria-label="i18n.t('applyPreset')"
-                  size="icon"
-                  variant="outline"
-                >
-                  <Check class="size-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{{ i18n.t('applyPreset') }}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger as-child>
-                <Button
-                  @click="deleteSelectedPreset"
-                  :aria-label="i18n.t('deletePreset')"
-                  size="icon"
-                  variant="outline"
-                >
-                  <Trash2 class="size-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{{ i18n.t('deletePreset') }}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="applySelectedPreset"
+                :aria-label="i18n.t('applyPreset')"
+                size="icon"
+                variant="outline"
+              >
+                <Check class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('applyPreset') }}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="deleteSelectedPreset"
+                :aria-label="i18n.t('deletePreset')"
+                size="icon"
+                variant="outline"
+              >
+                <Trash2 class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('deletePreset') }}</TooltipContent>
+          </Tooltip>
         </div>
       </template>
     </SettingItem>
@@ -194,51 +191,45 @@ function resetOptions() {
     >
       <template #action>
         <div class="flex items-center gap-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger as-child>
-                <Button
-                  @click="openImportDialog()"
-                  :aria-label="i18n.t('importOptions')"
-                  size="icon"
-                  variant="outline"
-                >
-                  <Upload class="size-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{{ i18n.t('importOptions') }}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger as-child>
-                <Button
-                  @click="exportOptions"
-                  :aria-label="i18n.t('exportOptions')"
-                  size="icon"
-                  variant="outline"
-                >
-                  <Download class="size-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{{ i18n.t('exportOptions') }}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger as-child>
-                <Button
-                  @click="resetOptions"
-                  :aria-label="i18n.t('resetOptions')"
-                  size="icon"
-                  variant="outline"
-                >
-                  <RotateCcw class="size-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{{ i18n.t('resetOptions') }}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="openImportDialog()"
+                :aria-label="i18n.t('importOptions')"
+                size="icon"
+                variant="outline"
+              >
+                <Upload class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('importOptions') }}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="exportOptions"
+                :aria-label="i18n.t('exportOptions')"
+                size="icon"
+                variant="outline"
+              >
+                <Download class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('exportOptions') }}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="resetOptions"
+                :aria-label="i18n.t('resetOptions')"
+                size="icon"
+                variant="outline"
+              >
+                <RotateCcw class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('resetOptions') }}</TooltipContent>
+          </Tooltip>
         </div>
       </template>
     </SettingItem>

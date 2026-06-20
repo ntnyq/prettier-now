@@ -46,6 +46,7 @@ log: 로그
 logoAlt: 앱 로고
 managePresets: 프리셋 관리
 ms: $1ms
+noItemsFound: 일치하는 항목이 없습니다
 nothingToClear: 지울 내용이 없습니다
 nothingToCopy: 복사할 내용이 없습니다
 nothingToDownload: 다운로드할 내용이 없습니다
