@@ -115,6 +115,7 @@ declare module 'vue' {
     TooltipContent: typeof import('./../components/ui/tooltip/TooltipContent.vue')['default']
     TooltipProvider: typeof import('./../components/ui/tooltip/TooltipProvider.vue')['default']
     TooltipTrigger: typeof import('./../components/ui/tooltip/TooltipTrigger.vue')['default']
+    WorkspaceActionBar: typeof import('./../components/workspace/WorkspaceActionBar.vue')['default']
     WorkspaceFileList: typeof import('./../components/WorkspaceFileList.vue')['default']
   }
 }
