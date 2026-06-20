@@ -82,7 +82,7 @@ const logStore = useLogStore()
 
       <div
         v-else
-        class="flex-center flex-1 text-sm opacity-60"
+        class="flex flex-1 items-center justify-center text-sm opacity-60"
       >
         {{ i18n.t('emptyLog') }}
       </div>

@@ -74,7 +74,7 @@ const hasDiff = computed(() => diffLines.value.length > 0)
 
       <div
         v-else
-        class="flex-center flex-1 px-6 text-center text-sm opacity-60"
+        class="flex flex-1 items-center justify-center px-6 text-center text-sm opacity-60"
       >
         {{ i18n.t('emptyDiff') }}
       </div>

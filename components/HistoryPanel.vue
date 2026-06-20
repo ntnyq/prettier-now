@@ -118,7 +118,7 @@ onUnmounted(() => {
 
       <div
         v-else
-        class="flex-center flex-1 px-6 text-center text-sm opacity-60"
+        class="flex flex-1 items-center justify-center px-6 text-center text-sm opacity-60"
       >
         {{ i18n.t('emptyHistory') }}
       </div>
