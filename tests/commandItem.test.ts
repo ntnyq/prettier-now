@@ -14,4 +14,11 @@ describe('command item', () => {
     expect(source).toContain('allItems.value.delete(id)')
     expect(source).toContain('allGroups.value.get(groupId)?.delete(id)')
   })
+
+  it('keeps filtered items mounted so the search registry stays complete', () => {
+    const source = readComponent('components/ui/command/CommandItem.vue')
+
+    expect(source).not.toContain('v-if="isRender"')
+    expect(source).toContain(':hidden="isRender ? undefined : true"')
+  })
 })

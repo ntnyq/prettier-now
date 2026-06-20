@@ -1,7 +1,9 @@
+import * as v from 'valibot'
 import { describe, expect, it } from 'vitest'
 import {
   addFormatHistoryEntry,
   createFormatHistoryEntry,
+  FormatHistoryEntryListSchema,
   MAX_FORMAT_HISTORY_ENTRY_BYTES,
   removeFormatHistoryEntry,
 } from '@/utils/history'
@@ -81,5 +83,21 @@ describe('format history utilities', () => {
     const entries = [createEntry('a', 1), createEntry('b', 2)]
 
     expect(removeFormatHistoryEntry(entries, 'a')).toEqual([entries[1]])
+  })
+
+  it('validates persisted history entries', () => {
+    const entry = createEntry('a', 1)
+
+    expect(v.safeParse(FormatHistoryEntryListSchema, [entry]).success).toBe(
+      true,
+    )
+    expect(
+      v.safeParse(FormatHistoryEntryListSchema, [
+        {
+          ...entry,
+          formatCost: 'fast',
+        },
+      ]).success,
+    ).toBe(false)
   })
 })

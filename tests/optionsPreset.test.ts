@@ -1,5 +1,3 @@
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
 import * as v from 'valibot'
 import { describe, expect, it } from 'vitest'
 import {
@@ -13,21 +11,7 @@ import {
   upsertOptionsPreset,
 } from '@/utils/optionsPreset'
 
-function readSource(path: string) {
-  return readFileSync(resolve(import.meta.dirname, `../${path}`), 'utf8')
-}
-
 describe('options preset utilities', () => {
-  it('validates imported snapshots through valibot schemas', () => {
-    const source = readSource('utils/optionsPreset.ts')
-
-    expect(source).toContain("from 'valibot'")
-    expect(source).toContain('OptionsSnapshotSchema')
-    expect(source).toContain('OptionsPresetSchema')
-    expect(source).toContain('OptionsPresetListSchema')
-    expect(source).not.toContain('snapshotValidators')
-  })
-
   it('reuses snapshot schemas for persisted option presets', () => {
     const preset = createOptionsPreset({
       name: 'Team',

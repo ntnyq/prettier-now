@@ -64,4 +64,24 @@ describe('useStorage', () => {
 
     expect(value.value).toEqual([preset])
   })
+
+  it('does not write hydrated storage values back unchanged', async () => {
+    const { OptionsPresetListSchema } = await import('@/utils/optionsPreset')
+    const { useStorage } = await import('@/composables/storage')
+    const preset = createOptionsPreset({
+      name: 'Team',
+      now: 1,
+      snapshot: createDefaultOptionsSnapshot(),
+    })
+
+    storageMock.getItem.mockResolvedValue([preset])
+
+    useStorage('optionsPresets', [], OptionsPresetListSchema)
+
+    await nextTick()
+    await Promise.resolve()
+    await nextTick()
+
+    expect(storageMock.setItem).not.toHaveBeenCalled()
+  })
 })

@@ -10,7 +10,11 @@ import type { Ref } from 'vue'
 import type { StorageItemKey } from '#imports'
 import type { JsonValue } from '@/types/json'
 
-type StorageSchema = v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>
+type StorageSchema<V extends JsonValue> = v.BaseSchema<
+  unknown,
+  V,
+  v.BaseIssue<unknown>
+>
 
 export function useStorage<V extends JsonValue>(key: string): Ref<V | null>
 export function useStorage<V extends JsonValue>(
@@ -20,19 +24,19 @@ export function useStorage<V extends JsonValue>(
 export function useStorage<V extends JsonValue>(
   key: string,
   defaultValue: V,
-  schema: StorageSchema,
+  schema: StorageSchema<V>,
 ): Ref<V>
 export function useStorage<V extends JsonValue>(
   key: string,
   defaultValue?: V,
-  schema?: StorageSchema,
+  schema?: StorageSchema<V>,
 ): Ref<V | null> {
   const syncKey: StorageItemKey = `local:${key}`
   const value = ref(
     defaultValue === undefined ? null : defaultValue,
   ) as Ref<V | null>
   let isHydrated = false
-  let isApplyingHydratedValue = false
+  let shouldSkipNextWrite = false
   let hasLocalMutationBeforeHydration = false
 
   function parseStorageValue(storageValue: unknown) {
@@ -41,7 +45,7 @@ export function useStorage<V extends JsonValue>(
     }
 
     const result = v.safeParse(schema, storageValue)
-    return result.success ? (result.output as V) : undefined
+    return result.success ? result.output : undefined
   }
 
   async function syncStorage() {
@@ -49,10 +53,9 @@ export function useStorage<V extends JsonValue>(
     if (storageValue !== null && !hasLocalMutationBeforeHydration) {
       const parsedValue = parseStorageValue(storageValue)
 
-      if (parsedValue !== undefined) {
-        isApplyingHydratedValue = true
+      if (parsedValue !== undefined && value.value !== parsedValue) {
+        shouldSkipNextWrite = true
         value.value = parsedValue
-        isApplyingHydratedValue = false
       }
     }
 
@@ -69,7 +72,8 @@ export function useStorage<V extends JsonValue>(
   })
 
   watch(value, async () => {
-    if (isApplyingHydratedValue) {
+    if (shouldSkipNextWrite) {
+      shouldSkipNextWrite = false
       return
     }
 
