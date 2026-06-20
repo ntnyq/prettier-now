@@ -1,0 +1,21 @@
+diff --git a/History.md b/History.md
+deleted file mode 100644
+index f27a44a13ef2ebef8270b93bee1aa68bbfd47dd4..0000000000000000000000000000000000000000
+diff --git a/index.js b/index.js
+index d2d1e11d66d763f27c375601c432fd8192edc908..a17a5ad0a567653c86b1131b23bb1d59503bab15 100644
+--- a/index.js
++++ b/index.js
+@@ -1,6 +1,12 @@
+ 'use strict';
+ 
+-var assert = require('assert');
++function assert(value, message) {
++  if (!value) {
++    var error = new Error(message);
++    error.name = 'AssertionError';
++    throw error;
++  }
++}
+ var isExpression = require('is-expression');
+ var characterParser = require('character-parser');
+ var error = require('pug-error');

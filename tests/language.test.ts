@@ -12,6 +12,15 @@ describe('language metadata', () => {
     expect(languages.every(language => Boolean(language.icon))).toBe(true)
   })
 
+  it('exposes pug as a selectable language', () => {
+    expect(languages).toContainEqual(
+      expect.objectContaining({
+        id: LANGUAGE_ID.pug,
+        name: 'Pug',
+      }),
+    )
+  })
+
   it('keeps theme-aware icons for languages that need light variants', () => {
     expect(
       languages.find(language => language.id === LANGUAGE_ID.json)?.icon,

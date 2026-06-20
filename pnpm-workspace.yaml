@@ -1,6 +1,10 @@
 overrides:
   esbuild: ^0.28.1
 
+patchedDependencies:
+  '@prettier/plugin-pug@3.4.2': patches/@prettier__plugin-pug@3.4.2.patch
+  pug-lexer@5.0.1: patches/pug-lexer@5.0.1.patch
+
 allowBuilds:
   esbuild: true
   sharp: true

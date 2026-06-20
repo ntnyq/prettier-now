@@ -27,5 +27,7 @@ describe('navbar actions', () => {
       'appStore.setIsHistoryPanelVisible(true)',
     )
     expect(moreActionSource).toContain('logStore.setIsLogPanelVisible(true)')
+    expect(moreActionSource).toContain('openOverlayAfterMenuClose')
+    expect(moreActionSource).toContain('releaseActiveFocus')
   })
 })

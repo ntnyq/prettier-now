@@ -7,6 +7,10 @@ settings:
 overrides:
   esbuild: ^0.28.1
 
+patchedDependencies:
+  '@prettier/plugin-pug@3.4.2': 7dc2344365fe72c9f1286a2484d9d51b340ca2f5537279610ea3d206521feb82
+  pug-lexer@5.0.1: a139e97144cde4f023fd3adb5fc1041bf7a195a53b4569e9bc602dad1e26782f
+
 importers:
 
   .:
@@ -79,7 +83,7 @@ importers:
         version: 0.25.0(prettier@3.8.4)
       '@prettier/plugin-pug':
         specifier: ^3.4.2
-        version: 3.4.2(prettier@3.8.4)
+        version: 3.4.2(patch_hash=7dc2344365fe72c9f1286a2484d9d51b340ca2f5537279610ea3d206521feb82)(prettier@3.8.4)
       '@prettier/plugin-xml':
         specifier: ^3.4.2
         version: 3.4.2(prettier@3.8.4)
@@ -5593,10 +5597,10 @@ snapshots:
       php-parser: 3.7.0
       prettier: 3.8.4
 
-  '@prettier/plugin-pug@3.4.2(prettier@3.8.4)':
+  '@prettier/plugin-pug@3.4.2(patch_hash=7dc2344365fe72c9f1286a2484d9d51b340ca2f5537279610ea3d206521feb82)(prettier@3.8.4)':
     dependencies:
       prettier: 3.8.4
-      pug-lexer: 5.0.1
+      pug-lexer: 5.0.1(patch_hash=a139e97144cde4f023fd3adb5fc1041bf7a195a53b4569e9bc602dad1e26782f)
 
   '@prettier/plugin-xml@3.4.2(prettier@3.8.4)':
     dependencies:
@@ -8426,7 +8430,7 @@ snapshots:
 
   pug-error@2.1.0: {}
 
-  pug-lexer@5.0.1:
+  pug-lexer@5.0.1(patch_hash=a139e97144cde4f023fd3adb5fc1041bf7a195a53b4569e9bc602dad1e26782f):
     dependencies:
       character-parser: 2.2.0
       is-expression: 4.0.0

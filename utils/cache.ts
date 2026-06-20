@@ -3,6 +3,7 @@
  */
 
 import { StreamLanguage } from '@codemirror/language'
+import { tags as t } from '@lezer/highlight'
 import { interopDefault } from '@ntnyq/utils'
 import { LANGUAGE_ID } from '@/constants/language'
 import type { CodemirrorLanguage, PrettierPlugin } from '@/types/vendor'
@@ -116,7 +117,14 @@ const codemirrorLoaders = {
     const { pug } = await interopDefault(
       import('@codemirror/legacy-modes/mode/pug'),
     )
-    return StreamLanguage.define(pug)
+    return StreamLanguage.define({
+      ...pug,
+      tokenTable: {
+        indent: t.meta,
+        colon: t.punctuation,
+        dot: t.punctuation,
+      },
+    })
   },
 } as const
 
@@ -159,6 +167,15 @@ export const prettierPluginCache = new Map<string, PrettierPlugin>()
 export function clearPrettierPluginCache() {
   prettierPluginCache.clear()
 }
+
+type PrettierPluginImport = PrettierPlugin & {
+  plugin?: PrettierPlugin
+}
+
+function resolvePrettierPlugin(plugin: PrettierPluginImport): PrettierPlugin {
+  return 'plugin' in plugin && plugin.plugin ? plugin.plugin : plugin
+}
+
 export const CACHE_KEY = {
   typescript: 'typescript',
   html: 'html',
@@ -242,7 +259,7 @@ export async function loadPrettierPlugin(languageId?: string) {
     return
   }
 
-  const prettierPlugin = await loader()
+  const prettierPlugin = resolvePrettierPlugin(await loader())
   if (prettierPlugin) {
     prettierPluginCache.set(cacheKey, prettierPlugin)
   }

@@ -127,6 +127,11 @@ export const languages: Language[] = [
     name: 'PHP',
   },
   {
+    icon: 'vscode-icons:file-type-pug',
+    id: LANGUAGE_ID.pug,
+    name: 'Pug',
+  },
+  {
     icon: 'vscode-icons:file-type-java',
     id: LANGUAGE_ID.java,
     name: 'Java',
@@ -144,10 +149,6 @@ export const languages: Language[] = [
       light: 'vscode-icons:file-type-light-toml',
     },
   },
-  // {
-  //   id: LANGUAGE_ID.pug,
-  //   name: 'Pug',
-  // },
 ]
 
 /**

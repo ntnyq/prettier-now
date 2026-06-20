@@ -45,16 +45,29 @@ const logStore = useLogStore()
 const logoUrl = browser.runtime.getURL('/icons/48.png')
 const isAboutDialogOpen = shallowRef(false)
 
+function releaseActiveFocus() {
+  if (document.activeElement instanceof HTMLElement) {
+    document.activeElement.blur()
+  }
+}
+
+function openOverlayAfterMenuClose(openOverlay: () => void) {
+  releaseActiveFocus()
+  window.requestAnimationFrame(openOverlay)
+}
+
 function openHistoryPanel() {
-  appStore.setIsHistoryPanelVisible(true)
+  openOverlayAfterMenuClose(() => appStore.setIsHistoryPanelVisible(true))
 }
 
 function openLogPanel() {
-  logStore.setIsLogPanelVisible(true)
+  openOverlayAfterMenuClose(() => logStore.setIsLogPanelVisible(true))
 }
 
 function openAboutDialog() {
-  isAboutDialogOpen.value = true
+  openOverlayAfterMenuClose(() => {
+    isAboutDialogOpen.value = true
+  })
 }
 </script>
 
