@@ -5,7 +5,9 @@
 import pluginAngular from 'prettier/plugins/angular'
 import pluginBabel from 'prettier/plugins/babel'
 import pluginEstree from 'prettier/plugins/estree'
-import { getAllPrettierPlugins, loadPrettierPlugin } from '@/utils/cache'
+import pluginPostcss from 'prettier/plugins/postcss'
+import { LANGUAGE_ID } from '@/constants/language'
+import { loadPrettierPlugin } from '@/utils/cache'
 import type {
   PluginJavaOptions,
   PluginPHPOptions,
@@ -14,6 +16,18 @@ import type {
   PluginXMLOptions,
   PrettierCoreOptions,
 } from '@/types/options'
+import type { PrettierPlugin } from '@/types/vendor'
+
+const PUG_DEFAULT_FORMAT_OPTIONS = {
+  pugEmptyAttributesForceQuotes: [],
+  pugSortAttributesBeginning: [],
+  pugSortAttributesEnd: [],
+} as const
+const PRELOADED_PLUGIN_LANGUAGE_IDS = new Set([
+  LANGUAGE_ID.css,
+  LANGUAGE_ID.less,
+  LANGUAGE_ID.scss,
+])
 
 export type FormatOptions = PrettierCoreOptions
   & Partial<
@@ -48,18 +62,25 @@ export async function formatViaPrettier(
 
   const { languageId, ...formatOptions } = options
 
-  await loadPrettierPlugin(options.languageId)
+  const loadedPlugin = PRELOADED_PLUGIN_LANGUAGE_IDS.has(languageId)
+    ? undefined
+    : await loadPrettierPlugin(languageId)
+  const languagePlugins: PrettierPlugin[] = loadedPlugin ? [loadedPlugin] : []
+  const languageOptions =
+    languageId === LANGUAGE_ID.pug ? PUG_DEFAULT_FORMAT_OPTIONS : {}
 
   const formatted = await prettier.format(source, {
+    ...languageOptions,
     ...formatOptions,
     plugins: [
       // preload plugins javascript, json and sharable parsers
       pluginBabel,
       pluginEstree,
       pluginAngular,
+      pluginPostcss,
 
-      // get cached plugins
-      ...getAllPrettierPlugins(),
+      // current language plugin
+      ...languagePlugins,
     ],
   })
 

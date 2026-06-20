@@ -7,8 +7,10 @@ appName: Prettier Now
 applyPreset: 套用預設
 applyPresetSuccess: 已套用預設
 brandAlt: Prettier Now 標誌
+cancel: 取消
 changelog: 更新日誌
 clearAll: 清除全部
+clearAllConfirmDescription: 此操作無法復原。
 clearSuccess: 清除成功
 close: 關閉
 copiedToClipboard: 已複製到剪貼簿
@@ -46,6 +48,7 @@ log: 日誌
 logoAlt: 應用程式標誌
 managePresets: 管理預設
 ms: $1毫秒
+noItemsFound: 沒有相符項目
 nothingToClear: 沒有可清除的內容
 nothingToCopy: 沒有可複製的內容
 nothingToDownload: 沒有可下載的內容

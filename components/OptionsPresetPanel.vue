@@ -1,7 +1,18 @@
 <script lang="ts" setup>
+import { Check, Download, RotateCcw, Save, Trash2, Upload } from '@lucide/vue'
 import { useFileDialog } from '@vueuse/core'
 import { computed, shallowRef } from 'vue'
 import { i18n } from '#i18n'
+import SettingItem from '@/components/settings/SettingItem.vue'
+import SettingSelect from '@/components/settings/SettingSelect.vue'
+import SettingsSection from '@/components/settings/SettingsSection.vue'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { useOptionsStore } from '@/stores/options'
 import {
   parseOptionsSnapshot,
@@ -99,76 +110,128 @@ function resetOptions() {
 </script>
 
 <template>
-  <OptionsBlock :title="i18n.t('optionsPresets')">
-    <OptionItem
+  <SettingsSection :title="i18n.t('optionsPresets')">
+    <SettingItem
       :description="i18n.t('optDescSavePreset')"
       :title="i18n.t('savePreset')"
     >
-      <template #action>
+      <template #action="{ descriptionId, titleId }">
         <div class="flex items-center gap-2">
-          <input
+          <Input
             v-model.trim="presetName"
+            :aria-describedby="descriptionId"
+            :aria-labelledby="titleId"
             :placeholder="i18n.t('presetName')"
+            class="w-40"
             type="text"
-            class="h-10 min-w-0 w-38 border border-base rounded-md px-2"
           />
-          <IconButton
-            @click="savePreset"
-            :tooltip="i18n.t('savePreset')"
-            icon="i-ri:save-line"
-          />
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="savePreset"
+                :aria-label="i18n.t('savePreset')"
+                size="icon"
+                variant="outline"
+              >
+                <Save class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('savePreset') }}</TooltipContent>
+          </Tooltip>
         </div>
       </template>
-    </OptionItem>
+    </SettingItem>
 
-    <OptionItem
+    <SettingItem
       v-if="hasPresets"
       :description="i18n.t('optDescManagePresets')"
       :title="i18n.t('managePresets')"
     >
-      <template #action>
+      <template #action="{ descriptionId, titleId }">
         <div class="flex items-center gap-2">
-          <Select
+          <SettingSelect
             v-model="selectedPresetId"
+            :aria-describedby="descriptionId"
+            :aria-labelledby="titleId"
             :items="presetItems"
           />
-          <IconButton
-            @click="applySelectedPreset"
-            :tooltip="i18n.t('applyPreset')"
-            icon="i-ri:check-line"
-          />
-          <IconButton
-            @click="deleteSelectedPreset"
-            :tooltip="i18n.t('deletePreset')"
-            icon="i-ri:delete-bin-line"
-          />
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="applySelectedPreset"
+                :aria-label="i18n.t('applyPreset')"
+                size="icon"
+                variant="outline"
+              >
+                <Check class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('applyPreset') }}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="deleteSelectedPreset"
+                :aria-label="i18n.t('deletePreset')"
+                size="icon"
+                variant="outline"
+              >
+                <Trash2 class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('deletePreset') }}</TooltipContent>
+          </Tooltip>
         </div>
       </template>
-    </OptionItem>
+    </SettingItem>
 
-    <OptionItem
+    <SettingItem
       :description="i18n.t('optDescImportExportOptions')"
       :title="i18n.t('importExportOptions')"
     >
       <template #action>
         <div class="flex items-center gap-2">
-          <IconButton
-            @click="openImportDialog()"
-            :tooltip="i18n.t('importOptions')"
-            icon="i-ri:upload-line"
-          />
-          <IconButton
-            @click="exportOptions"
-            :tooltip="i18n.t('exportOptions')"
-            icon="i-ri:download-line"
-          />
-          <IconButton
-            @click="resetOptions"
-            :tooltip="i18n.t('resetOptions')"
-            icon="i-ri:reset-left-line"
-          />
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="openImportDialog()"
+                :aria-label="i18n.t('importOptions')"
+                size="icon"
+                variant="outline"
+              >
+                <Upload class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('importOptions') }}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="exportOptions"
+                :aria-label="i18n.t('exportOptions')"
+                size="icon"
+                variant="outline"
+              >
+                <Download class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('exportOptions') }}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                @click="resetOptions"
+                :aria-label="i18n.t('resetOptions')"
+                size="icon"
+                variant="outline"
+              >
+                <RotateCcw class="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{{ i18n.t('resetOptions') }}</TooltipContent>
+          </Tooltip>
         </div>
       </template>
-    </OptionItem>
-  </OptionsBlock>
+    </SettingItem>
+  </SettingsSection>
 </template>

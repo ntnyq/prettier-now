@@ -5,7 +5,7 @@ import type { ThemeableValue } from '@/types'
  */
 export interface Language {
   /**
-   * langauge icon
+   * language icon
    */
   icon: ThemeableValue<string>
 

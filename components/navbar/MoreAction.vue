@@ -1,96 +1,156 @@
 <script lang="ts" setup>
-import { computed, useTemplateRef } from 'vue'
+import {
+  FileText,
+  History,
+  Info,
+  Menu,
+  MessageSquareText,
+  SquareCode,
+  Tag,
+} from '@lucide/vue'
+import { shallowRef } from 'vue'
 import { i18n } from '#i18n'
 import { browser } from '#imports'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { LINKS } from '@/constants/meta'
 import { version } from '@/package.json'
+import { useAppStore } from '@/stores/app'
+import { useLogStore } from '@/stores/log'
 import { openExternalURL } from '@/utils'
 
+const props = withDefaults(
+  defineProps<{
+    showWorkspaceActions?: boolean
+  }>(),
+  {
+    showWorkspaceActions: false,
+  },
+)
+
+const appStore = useAppStore()
+const logStore = useLogStore()
 const logoUrl = browser.runtime.getURL('/icons/48.png')
+const isAboutDialogOpen = shallowRef(false)
 
-const dialogRef = useTemplateRef('dialogRef')
+function releaseActiveFocus() {
+  if (document.activeElement instanceof HTMLElement) {
+    document.activeElement.blur()
+  }
+}
 
-const actions = computed(() => [
-  {
-    name: i18n.t('feedback'),
-    icon: 'i-ri:feedback-line',
-    action() {
-      openExternalURL(LINKS.feedback)
-    },
-  },
-  {
-    name: i18n.t('changelog'),
-    icon: 'i-ri:price-tag-3-line',
-    action() {
-      openExternalURL(LINKS.changelog)
-    },
-  },
-  {
-    name: i18n.t('sourceCode'),
-    icon: 'i-ri:github-fill',
-    action() {
-      openExternalURL(LINKS.github)
-    },
-  },
-  {
-    name: i18n.t('about'),
-    icon: 'i-ri:file-info-line',
-    action() {
-      handleShowDialog()
-    },
-  },
-])
+function openOverlayAfterMenuClose(openOverlay: () => void) {
+  releaseActiveFocus()
+  window.requestAnimationFrame(openOverlay)
+}
 
-function handleShowDialog() {
-  dialogRef.value?.show()
+function openHistoryPanel() {
+  openOverlayAfterMenuClose(() => appStore.setIsHistoryPanelVisible(true))
+}
+
+function openLogPanel() {
+  openOverlayAfterMenuClose(() => logStore.setIsLogPanelVisible(true))
+}
+
+function openAboutDialog() {
+  openOverlayAfterMenuClose(() => {
+    isAboutDialogOpen.value = true
+  })
 }
 </script>
 
 <template>
-  <Dropdown
-    :show-triggers="['click', 'hover']"
-    placement="bottom"
-    class="flex"
-  >
-    <IconButton icon="i-ri:menu-fill" />
+  <DropdownMenu>
+    <DropdownMenuTrigger as-child>
+      <Button
+        :aria-label="`${i18n.t('feedback')} / ${i18n.t('about')}`"
+        variant="ghost"
+        size="icon-sm"
+        type="button"
+      >
+        <Menu class="size-4" />
+      </Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent
+      align="end"
+      class="w-44"
+    >
+      <template v-if="props.showWorkspaceActions">
+        <DropdownMenuItem @click="openHistoryPanel">
+          <History class="size-4" />
+          {{ i18n.t('history') }}
+        </DropdownMenuItem>
+        <DropdownMenuItem @click="openLogPanel">
+          <FileText class="size-4" />
+          {{ i18n.t('log') }}
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+      </template>
 
-    <template #popper>
-      <DropdownItem
-        @click="item.action?.()"
-        v-for="item in actions"
-        :key="item.icon"
-        :icon="item.icon"
-        :text="item.name"
-      />
-    </template>
-  </Dropdown>
+      <DropdownMenuItem @click="openExternalURL(LINKS.feedback)">
+        <MessageSquareText class="size-4" />
+        {{ i18n.t('feedback') }}
+      </DropdownMenuItem>
+      <DropdownMenuItem @click="openExternalURL(LINKS.changelog)">
+        <Tag class="size-4" />
+        {{ i18n.t('changelog') }}
+      </DropdownMenuItem>
+      <DropdownMenuItem @click="openExternalURL(LINKS.github)">
+        <SquareCode class="size-4" />
+        {{ i18n.t('sourceCode') }}
+      </DropdownMenuItem>
+      <DropdownMenuItem @click="openAboutDialog">
+        <Info class="size-4" />
+        {{ i18n.t('about') }}
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
 
-  <Dialog
-    ref="dialogRef"
-    :title="i18n.t('aboutApp', [i18n.t('appName')])"
-  >
-    <div class="h-full flex flex-col items-center justify-center gap-2">
-      <img
-        :src="logoUrl"
-        :alt="i18n.t('brandAlt')"
-        class="mx-auto mt-10 block w-80px"
-      />
-      <p class="op-70">v{{ version }}</p>
-      <div class="mt-auto p-2 text-center text-sm op-75 hover:op-100">
-        <a
-          class="hover:underline"
-          href="https://github.com/ntnyq/prettier-now"
+  <Dialog v-model:open="isAboutDialogOpen">
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>
+          {{ i18n.t('aboutApp', [i18n.t('appName')]) }}
+        </DialogTitle>
+      </DialogHeader>
+
+      <div class="flex min-h-56 flex-col items-center justify-center gap-2">
+        <img
+          :src="logoUrl"
+          :alt="i18n.t('brandAlt')"
+          class="mx-auto mt-6 block w-20"
+        />
+        <p class="opacity-70">v{{ version }}</p>
+        <div
+          class="mt-auto p-2 text-center text-sm opacity-75 hover:opacity-100"
         >
-          {{ i18n.t('aboutSource') }}
-        </a>
-        &middot; {{ i18n.t('aboutMadeWithBy') }}
-        <a
-          class="font-semibold hover:underline"
-          href="https://twitter.com/ntnyq"
-        >
-          @ntnyq
-        </a>
+          <a
+            class="hover:underline"
+            href="https://github.com/ntnyq/prettier-now"
+          >
+            {{ i18n.t('aboutSource') }}
+          </a>
+          &middot; {{ i18n.t('aboutMadeWithBy') }}
+          <a
+            class="font-semibold hover:underline"
+            href="https://twitter.com/ntnyq"
+          >
+            @ntnyq
+          </a>
+        </div>
       </div>
-    </div>
+    </DialogContent>
   </Dialog>
 </template>

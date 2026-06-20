@@ -9,6 +9,9 @@
     "source.organizeImports": "never",
     "source.sortImports": "never"
   },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
   "eslint.validate": [
     "vue",
     "xml",
@@ -40,13 +43,16 @@
     "noopener",
     "noreferrer",
     "ofetch",
+    "oklch",
     "oxlint",
     "pinia",
+    "reka",
     "sxzz",
     "taplo",
     "unann",
     "unplugin",
     "unrs",
+    "unstub",
     "upserts",
     "valibot",
     "vercel",

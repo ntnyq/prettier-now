@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { useEventListener } from '@vueuse/core'
-import { ref } from 'vue'
+import { shallowRef } from 'vue'
 import { i18n } from '#i18n'
 import { useFileHandler } from '@/composables/fileHandler'
 
 const { loadFileList } = useFileHandler()
 
-const isDragging = ref(false)
+const isDragging = shallowRef(false)
 
 let dragCounter = 0
 
@@ -58,10 +58,10 @@ useEventListener('drop', onDrop)
 <template>
   <div
     v-if="isDragging"
-    class="pointer-events-auto fixed inset-0 z-dropzone p-10 backdrop-blur-5"
+    class="pointer-events-auto fixed inset-0 z-[1000] p-10 backdrop-blur-sm"
   >
     <div
-      class="border-dashed- h-full w-full flex-center flex-col border-3 border-base rounded-2xl bg-white/50 dark:bg-black:50"
+      class="flex h-full w-full flex-col items-center justify-center rounded-2xl border-[3px] border-dashed border-border bg-white/50 dark:bg-black/50"
     >
       <p class="text-xl">
         {{ i18n.t('dragFileHere') }}

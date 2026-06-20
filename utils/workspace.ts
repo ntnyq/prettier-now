@@ -40,10 +40,12 @@ export async function createFormatJobFromFile(file: File, index: number) {
   } satisfies FormatJob
 }
 
-export async function createFormatJobsFromFiles(files: Iterable<File>) {
+export async function createFormatJobsFromFiles(
+  files: Iterable<File> | ArrayLike<File>,
+) {
   const jobs: FormatJob[] = []
 
-  for (const [index, file] of [...files].entries()) {
+  for (const [index, file] of Array.from(files).entries()) {
     const job = await createFormatJobFromFile(file, index)
 
     if (job) {

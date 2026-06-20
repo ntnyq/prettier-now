@@ -1,27 +1,36 @@
 <script lang="ts" setup>
+import { addCollection, Icon } from '@iconify/vue'
+import { Check, ChevronDown } from '@lucide/vue'
 import { isString } from '@ntnyq/utils'
 import { computed } from 'vue'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { isDark } from '@/composables/dark'
 import { languages } from '@/constants/language'
+import { languageIconCollection } from '@/constants/languageIconCollection'
 import { useWorkspaceStore } from '@/stores/workspace'
+import type { ThemeableValue } from '@/types'
 import type { Language } from '@/types/language'
 
 const workspaceStore = useWorkspaceStore()
 
+addCollection(languageIconCollection)
+
 const currentLanguage = computed(() =>
   languages.find(language => language.id === workspaceStore.languageId),
 )
-const currentLanguageIcon = computed(() => {
-  if (!currentLanguage.value?.icon) {
-    return
-  }
-  if (isString(currentLanguage.value.icon)) {
-    return currentLanguage.value.icon
-  }
-  return isDark.value
-    ? currentLanguage.value.icon.dark
-    : currentLanguage.value.icon.light
-})
+const currentLanguageIcon = computed(() =>
+  currentLanguage.value ? getLanguageIcon(currentLanguage.value.icon) : '',
+)
+
+function getLanguageIcon(icon: ThemeableValue<string>) {
+  return isString(icon) ? icon : isDark.value ? icon.dark : icon.light
+}
 
 function handSelectLanguage(language: Language) {
   workspaceStore.setLanguageId(language.id)
@@ -29,26 +38,46 @@ function handSelectLanguage(language: Language) {
 </script>
 
 <template>
-  <Dropdown class="flex">
-    <button
-      type="button"
-      role="button"
-      class="flex items-center gap-1 px-2 hover:bg-zinc-100 dark:hover:bg-zinc-700"
+  <DropdownMenu>
+    <DropdownMenuTrigger as-child>
+      <Button
+        :aria-label="currentLanguage?.name"
+        variant="ghost"
+        size="sm"
+        type="button"
+        class="h-8 gap-1 px-2"
+      >
+        <Icon
+          :icon="currentLanguageIcon"
+          class="size-5 shrink-0"
+        />
+        <span>{{ currentLanguage?.name }}</span>
+        <ChevronDown class="size-4 opacity-50" />
+      </Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent
+      align="end"
+      class="w-44"
     >
-      <div :class="currentLanguageIcon" />
-      <span>{{ currentLanguage?.name }}</span>
-      <div class="i-ri:arrow-down-s-line op-50" />
-    </button>
-    <template #popper>
-      <DropdownItem
+      <DropdownMenuItem
         @click="handSelectLanguage(language)"
         v-for="language in languages"
         :key="language.id"
-        :icon="language.icon"
-        :text="language.name"
-        :checked="workspaceStore.languageId === language.id"
-        checkable
-      />
-    </template>
-  </Dropdown>
+      >
+        <Icon
+          :icon="getLanguageIcon(language.icon)"
+          class="size-5 shrink-0"
+        />
+        <span class="min-w-0 flex-1">{{ language.name }}</span>
+        <Check
+          :class="[
+            workspaceStore.languageId === language.id
+              ? 'opacity-100'
+              : 'opacity-0',
+          ]"
+          class="ml-auto size-4 shrink-0"
+        />
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </template>

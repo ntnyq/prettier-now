@@ -1,6 +1,14 @@
 <script lang="ts" setup>
+import { X } from '@lucide/vue'
 import { computed } from 'vue'
 import { i18n } from '#i18n'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { useAppStore } from '@/stores/app'
 import { useWorkspaceStore } from '@/stores/workspace'
 import { createLineDiff } from '@/utils/diff'
@@ -15,25 +23,30 @@ const hasDiff = computed(() => diffLines.value.length > 0)
 </script>
 
 <template>
-  <Modal
-    v-model:visible="appStore.isDiffPanelVisible"
-    direction="right"
-  >
-    <div class="relative h-full w-160 flex flex-col">
-      <div
-        class="flex items-center justify-between border-b border-base px-4 py-2"
+  <Dialog v-model:open="appStore.isDiffPanelVisible">
+    <DialogContent
+      :show-close-button="false"
+      class="min-h-[min(520px,72vh)] max-h-[min(860px,92vh)] !w-[min(960px,96vw)] !max-w-[min(960px,96vw)] grid-rows-[auto_minmax(0,1fr)] gap-0 p-0"
+    >
+      <DialogHeader
+        class="flex-row items-center justify-between gap-3 border-b border-border px-4 py-2 text-left"
       >
-        <h2 class="text-lg font-semibold">{{ i18n.t('diff') }}</h2>
-        <IconButton
+        <DialogTitle class="text-lg">{{ i18n.t('diff') }}</DialogTitle>
+        <Button
           @click="appStore.setIsDiffPanelVisible(false)"
-          :tooltip="i18n.t('close')"
-          icon="i-ri:close-line"
-        />
-      </div>
+          :aria-label="i18n.t('close')"
+          :title="i18n.t('close')"
+          variant="ghost"
+          size="icon-sm"
+          type="button"
+        >
+          <X />
+        </Button>
+      </DialogHeader>
 
       <div
         v-if="hasDiff"
-        class="min-h-0 flex-1 overflow-auto text-sm font-mono"
+        class="min-h-0 flex-1 overflow-auto font-mono text-sm"
       >
         <div
           v-for="line in diffLines"
@@ -44,7 +57,7 @@ const hasDiff = computed(() => diffLines.value.length > 0)
             'bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-100':
               line.kind === 'removed',
           }"
-          class="border-base/50 grid grid-cols-[64px_32px_1fr] min-w-max border-b"
+          class="grid min-w-max grid-cols-[64px_32px_1fr] border-b border-border/50"
         >
           <span class="select-none px-3 py-1 text-right opacity-50">
             {{ line.lineNumber }}
@@ -62,10 +75,10 @@ const hasDiff = computed(() => diffLines.value.length > 0)
 
       <div
         v-else
-        class="flex-center flex-1 px-6 text-center text-sm opacity-60"
+        class="flex flex-1 items-center justify-center px-6 text-center text-sm opacity-60"
       >
         {{ i18n.t('emptyDiff') }}
       </div>
-    </div>
-  </Modal>
+    </DialogContent>
+  </Dialog>
 </template>

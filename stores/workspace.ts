@@ -10,6 +10,7 @@ import { formatViaPrettier } from '@/utils/format'
 import {
   addFormatHistoryEntry,
   createFormatHistoryEntry,
+  FormatHistoryEntryListSchema,
   removeFormatHistoryEntry,
 } from '@/utils/history'
 import { Logger } from '@/utils/logger'
@@ -41,7 +42,11 @@ function createManualJob(languageId = 'javascript'): FormatJob {
 export const useWorkspaceStore = defineStore('workspace', () => {
   const jobs = shallowRef<FormatJob[]>([createManualJob()])
   const activeJobId = shallowRef(MANUAL_JOB_ID)
-  const formatHistory = useStorage<FormatHistoryEntry[]>('formatHistory', [])
+  const formatHistory = useStorage<FormatHistoryEntry[]>(
+    'formatHistory',
+    [],
+    FormatHistoryEntryListSchema,
+  )
   let formatRequestId = 0
 
   const optionsStore = useOptionsStore()
@@ -116,7 +121,6 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     }
 
     activeJobId.value = id
-    invalidateFormatRequest()
   }
 
   function removeJob(id: string) {

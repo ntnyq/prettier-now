@@ -1,7 +1,20 @@
+import * as v from 'valibot'
 import type { FormatHistoryEntry } from '@/types/history'
 
 export const MAX_FORMAT_HISTORY_ENTRIES = 50
 export const MAX_FORMAT_HISTORY_ENTRY_BYTES = 128 * 1024
+
+export const FormatHistoryEntrySchema = v.object({
+  fileName: v.string(),
+  formatCost: v.number(),
+  formattedAt: v.number(),
+  id: v.string(),
+  languageId: v.string(),
+  resultCode: v.string(),
+  sourceCode: v.string(),
+})
+
+export const FormatHistoryEntryListSchema = v.array(FormatHistoryEntrySchema)
 
 function getTextByteLength(value: string) {
   return new Blob([value]).size

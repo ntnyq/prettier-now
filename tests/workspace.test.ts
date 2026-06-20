@@ -47,6 +47,18 @@ describe('workspace utilities', () => {
     ])
   })
 
+  it('creates format jobs from non-iterable file lists', async () => {
+    const files = {
+      0: new File(['const a=1'], 'index.ts'),
+      1: new File(['{"a":1}'], 'data.json'),
+      length: 2,
+    } as unknown as FileList
+
+    const jobs = await createFormatJobsFromFiles(files)
+
+    expect(jobs.map(job => job.fileName)).toEqual(['index.ts', 'data.json'])
+  })
+
   it('adds formatted before the original file extension', () => {
     expect(getFormattedFileName('index.ts')).toBe('index.formatted.ts')
     expect(getFormattedFileName('Makefile')).toBe('Makefile.formatted')

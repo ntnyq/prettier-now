@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { useEventListener } from '@vueuse/core'
+import SettingsDialog from '@/components/settings/SettingsDialog.vue'
+import WorkspaceActionBar from '@/components/workspace/WorkspaceActionBar.vue'
 import { useFileHandler } from '@/composables/fileHandler'
 import { useAppStore } from '@/stores/app'
 
@@ -20,7 +22,7 @@ useEventListener('paste', (evt: ClipboardEvent) => {
         v-show="appStore.showLeftLayout"
         :class="[
           appStore.showRightLayout
-            ? 'max-w-1/2 min-w-1/2'
+            ? 'max-w-[50%] min-w-[50%]'
             : 'max-w-full min-w-full',
         ]"
         class="flex-1"
@@ -28,11 +30,12 @@ useEventListener('paste', (evt: ClipboardEvent) => {
       <EditorResult v-show="appStore.showRightLayout" />
     </div>
 
-    <ActionBar />
+    <WorkspaceActionBar />
 
     <DropZone />
     <DiffPanel />
     <HistoryPanel />
     <LogPanel />
+    <SettingsDialog v-model:open="appStore.isSettingsSheetVisible" />
   </div>
 </template>

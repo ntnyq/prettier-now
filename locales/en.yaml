@@ -7,8 +7,10 @@ appName: Prettier Now
 applyPreset: Apply Preset
 applyPresetSuccess: Preset applied
 brandAlt: Prettier Now logo
+cancel: Cancel
 changelog: ChangeLog
 clearAll: Clear All
+clearAllConfirmDescription: This action cannot be undone.
 clearSuccess: Clear Success
 close: Close
 copiedToClipboard: Copied to clipboard
@@ -46,6 +48,7 @@ log: Log
 logoAlt: App Logo
 managePresets: Manage Presets
 ms: $1ms
+noItemsFound: No matching items
 nothingToClear: Nothing to clear
 nothingToCopy: Nothing to copy
 nothingToDownload: Nothing to download

@@ -7,8 +7,10 @@ appName: Prettier Now
 applyPreset: 프리셋 적용
 applyPresetSuccess: 프리셋이 적용되었습니다
 brandAlt: Prettier Now 로고
+cancel: 취소
 changelog: 변경 로그
 clearAll: 모두 지우기
+clearAllConfirmDescription: 이 작업은 되돌릴 수 없습니다.
 clearSuccess: 지우기 성공
 close: 닫기
 copiedToClipboard: 클립보드에 복사되었습니다
@@ -46,6 +48,7 @@ log: 로그
 logoAlt: 앱 로고
 managePresets: 프리셋 관리
 ms: $1ms
+noItemsFound: 일치하는 항목이 없습니다
 nothingToClear: 지울 내용이 없습니다
 nothingToCopy: 복사할 내용이 없습니다
 nothingToDownload: 다운로드할 내용이 없습니다

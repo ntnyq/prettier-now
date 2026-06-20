@@ -2,34 +2,33 @@
 
 ## Project Structure & Module Organization
 
-This is a WXT-powered Vue browser extension. Extension entry points live in `entrypoints/`: `background.ts` handles background work, while `popup/` and `options/` contain their own HTML, Vue apps, router, pages, and styles. Shared UI belongs in `components/`, reusable composition logic in `composables/`, Pinia stores in `stores/`, constants in `constants/`, utility functions in `utils/`, and shared types in `types/`. Static source assets are in `assets/`; generated extension output goes to `dist/` and should not be edited by hand. Screenshots used by the README are in `screenshots/`, and localized messages are in `locales/*.yaml`.
+This is a WXT-powered Vue browser extension. Extension entry points live in `entrypoints/`: `background.ts` handles background behavior, while `popup/` and `options/` contain their own Vue apps, pages, styles, and routing. Shared UI belongs in `components/`, reusable logic in `composables/`, Pinia stores in `stores/`, constants in `constants/`, utilities in `utils/`, shared types in `types/`, and global styles in `styles/`. Static assets live in `assets/` and `public/`; localized messages are in `locales/*.yaml`. Tests are in `tests/`. Generated output in `dist/` must not be edited by hand.
 
 ## Build, Test, and Development Commands
 
-Use pnpm 11 (`packageManager` is pinned in `package.json`).
+Use pnpm 11 as pinned in `package.json`.
 
 - `pnpm install --frozen-lockfile`: install dependencies reproducibly.
 - `pnpm run dev`: start WXT development for Chromium.
 - `pnpm run dev:firefox`: start WXT development for Firefox.
-- `pnpm run build`: build the Chromium extension into `dist/`.
-- `pnpm run build:firefox`: build the Firefox variant.
-- `pnpm run lint`: run ESLint across the project.
+- `pnpm run test`: run Vitest.
+- `pnpm run lint`: run ESLint.
 - `pnpm run typecheck`: run `vue-tsc --build`.
-- `pnpm run zip` / `pnpm run zip:firefox`: package release zips.
-
-CI runs install, build, lint, and typecheck on pushes and pull requests to `main`.
+- `pnpm run build`: build the Chromium extension.
+- `pnpm run build:firefox`: build the Firefox extension.
+- `pnpm run zip` / `pnpm run zip:firefox`: package release archives.
 
 ## Coding Style & Naming Conventions
 
-Write TypeScript and Vue 3 SFCs using existing Composition API patterns. Keep components PascalCase (`EditorResult.vue`, `IconButton.vue`), composables camelCase (`fileHandler.ts`, `storage.ts`), and stores/constants named by domain. Formatting is governed by `@ntnyq/prettier-config`; linting uses `@ntnyq/eslint-config` with SVGO enabled. Let `eslint --fix` or the pre-commit `nano-staged` hook handle mechanical formatting.
+Write TypeScript and Vue 3 SFCs with Composition API and `<script setup>`. Keep components PascalCase, such as `EditorResult.vue`, composables camelCase, such as `fileHandler.ts`, and stores/constants named by domain. UI primitives under `components/ui/` follow shadcn-vue patterns. Formatting uses `@ntnyq/prettier-config`; linting uses `@ntnyq/eslint-config`. Let ESLint and the pre-commit `nano-staged` hook handle mechanical formatting.
 
 ## Testing Guidelines
 
-There is currently no dedicated test script or test directory. For changes, at minimum run `pnpm run lint`, `pnpm run typecheck`, and the relevant build command. For UI or extension behavior changes, manually verify the affected popup/options flow in the WXT dev browser and include what you checked in the PR.
+Use Vitest for unit tests. Place tests in `tests/` with `*.test.ts` names, and prefer behavior-focused cases such as `workspaceStore.test.ts` or `optionsPreset.test.ts`. For code changes, run `pnpm run test`, `pnpm run lint`, and `pnpm run typecheck`; for extension or UI changes, also run the relevant build command and manually verify the affected popup/options flow.
 
 ## Commit & Pull Request Guidelines
 
-History uses Conventional Commit-style messages such as `feat: add fully i18n support`, `fix: ...`, and `chore(deps): ...`. Keep commits scoped and imperative. Pull requests should describe the change, link related issues when available, note validation commands, and include screenshots or recordings for visible UI changes.
+Git history uses Conventional Commit-style messages, for example `fix: address workspace review findings` or `refactor: migrate panels to shadcn sheets`. Keep commits scoped and imperative. Pull requests should explain the change, link related issues when available, list validation commands, and include screenshots or recordings for visible UI updates.
 
 ## Agent-Specific Instructions
 
