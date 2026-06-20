@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useEventListener } from '@vueuse/core'
-import SettingsSheet from '@/components/settings/SettingsSheet.vue'
+import SettingsDialog from '@/components/settings/SettingsDialog.vue'
 import WorkspaceActionBar from '@/components/workspace/WorkspaceActionBar.vue'
 import { useFileHandler } from '@/composables/fileHandler'
 import { useAppStore } from '@/stores/app'
@@ -36,6 +36,6 @@ useEventListener('paste', (evt: ClipboardEvent) => {
     <DiffPanel />
     <HistoryPanel />
     <LogPanel />
-    <SettingsSheet v-model:open="appStore.isSettingsSheetVisible" />
+    <SettingsDialog v-model:open="appStore.isSettingsSheetVisible" />
   </div>
 </template>

@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { Check, ChevronDown, FileCode2 } from '@lucide/vue'
+import { addCollection, Icon } from '@iconify/vue'
+import { Check, ChevronDown } from '@lucide/vue'
+import { isString } from '@ntnyq/utils'
 import { computed } from 'vue'
 import { Button } from '@/components/ui/button'
 import {
@@ -8,15 +10,27 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { isDark } from '@/composables/dark'
 import { languages } from '@/constants/language'
+import { languageIconCollection } from '@/constants/languageIconCollection'
 import { useWorkspaceStore } from '@/stores/workspace'
+import type { ThemeableValue } from '@/types'
 import type { Language } from '@/types/language'
 
 const workspaceStore = useWorkspaceStore()
 
+addCollection(languageIconCollection)
+
 const currentLanguage = computed(() =>
   languages.find(language => language.id === workspaceStore.languageId),
 )
+const currentLanguageIcon = computed(() =>
+  currentLanguage.value ? getLanguageIcon(currentLanguage.value.icon) : '',
+)
+
+function getLanguageIcon(icon: ThemeableValue<string>) {
+  return isString(icon) ? icon : isDark.value ? icon.dark : icon.light
+}
 
 function handSelectLanguage(language: Language) {
   workspaceStore.setLanguageId(language.id)
@@ -33,7 +47,10 @@ function handSelectLanguage(language: Language) {
         type="button"
         class="h-8 gap-1 px-2"
       >
-        <FileCode2 class="size-4 text-muted-foreground" />
+        <Icon
+          :icon="currentLanguageIcon"
+          class="size-4"
+        />
         <span>{{ currentLanguage?.name }}</span>
         <ChevronDown class="size-4 opacity-50" />
       </Button>
@@ -55,7 +72,10 @@ function handSelectLanguage(language: Language) {
           ]"
           class="size-4"
         />
-        <FileCode2 class="size-4 text-muted-foreground" />
+        <Icon
+          :icon="getLanguageIcon(language.icon)"
+          class="size-4"
+        />
         <span>{{ language.name }}</span>
       </DropdownMenuItem>
     </DropdownMenuContent>
