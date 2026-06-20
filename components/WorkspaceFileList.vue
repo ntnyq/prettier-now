@@ -1,17 +1,17 @@
 <script lang="ts" setup>
+import {
+  CheckCircle2,
+  Clock3,
+  LoaderCircle,
+  TriangleAlert,
+  X,
+} from '@lucide/vue'
 import { computed } from 'vue'
 import { i18n } from '#i18n'
+import { Button } from '@/components/ui/button'
 import { useWorkspaceStore } from '@/stores/workspace'
-import type { FormatJobStatus } from '@/types/workspace'
 
 const workspaceStore = useWorkspaceStore()
-
-const statusIconMap: Record<FormatJobStatus, string> = {
-  error: 'i-ri:error-warning-line text-red-500',
-  formatted: 'i-ri:checkbox-circle-line text-green-600',
-  formatting: 'i-ri:loader-4-line animate-spin text-sky-600',
-  pending: 'i-ri:time-line text-zinc-500',
-}
 
 const hasVisibleJobs = computed(() => workspaceStore.jobs.length > 1)
 </script>
@@ -19,10 +19,10 @@ const hasVisibleJobs = computed(() => workspaceStore.jobs.length > 1)
 <template>
   <aside
     v-if="hasVisibleJobs"
-    class="max-w-64 min-w-56 border-r border-base bg-zinc-50 dark:bg-zinc-900"
+    class="max-w-64 min-w-56 border-r border-border bg-zinc-50 dark:bg-zinc-900"
   >
     <div
-      class="flex items-center justify-between border-b border-base px-3 py-2"
+      class="flex items-center justify-between border-b border-border px-3 py-2"
     >
       <h2 class="text-sm font-semibold">{{ i18n.t('files') }}</h2>
       <span class="text-xs opacity-70">{{ workspaceStore.jobs.length }}</span>
@@ -39,9 +39,21 @@ const hasVisibleJobs = computed(() => workspaceStore.jobs.length > 1)
         type="button"
         class="w-full flex items-start gap-2 px-3 py-2 text-left hover:bg-zinc-100 dark:hover:bg-zinc-800"
       >
-        <span
-          :class="statusIconMap[job.status]"
-          class="mt-0.5 shrink-0"
+        <TriangleAlert
+          v-if="job.status === 'error'"
+          class="mt-0.5 size-4 shrink-0 text-red-500"
+        />
+        <CheckCircle2
+          v-else-if="job.status === 'formatted'"
+          class="mt-0.5 size-4 shrink-0 text-green-600"
+        />
+        <LoaderCircle
+          v-else-if="job.status === 'formatting'"
+          class="mt-0.5 size-4 shrink-0 animate-spin text-sky-600"
+        />
+        <Clock3
+          v-else
+          class="mt-0.5 size-4 shrink-0 text-zinc-500"
         />
         <span class="min-w-0 flex-1">
           <span class="block truncate text-sm">{{ job.fileName }}</span>
@@ -58,12 +70,16 @@ const hasVisibleJobs = computed(() => workspaceStore.jobs.length > 1)
             {{ job.errorMessage }}
           </span>
         </span>
-        <span
+        <Button
           @click.stop="workspaceStore.removeJob(job.id)"
           :aria-label="i18n.t('removeFile')"
-          class="i-ri:close-line mt-0.5 shrink-0 opacity-60 hover:opacity-100"
-          role="button"
-        />
+          variant="ghost"
+          size="icon-sm"
+          type="button"
+          class="-mr-2 -mt-1 shrink-0 opacity-60 hover:opacity-100"
+        >
+          <X class="size-4" />
+        </Button>
       </button>
     </div>
   </aside>

@@ -1,14 +1,7 @@
-import type { ThemeableValue } from '@/types'
-
 /**
  * Define a Language
  */
 export interface Language {
-  /**
-   * langauge icon
-   */
-  icon: ThemeableValue<string>
-
   /**
    * language id, unique
    */

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { Check, ChevronDown } from '@lucide/vue'
-import { isString } from '@ntnyq/utils'
+import { Check, ChevronDown, FileCode2 } from '@lucide/vue'
 import { computed } from 'vue'
 import { Button } from '@/components/ui/button'
 import {
@@ -9,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { isDark } from '@/composables/dark'
 import { languages } from '@/constants/language'
 import { useWorkspaceStore } from '@/stores/workspace'
 import type { Language } from '@/types/language'
@@ -19,22 +17,6 @@ const workspaceStore = useWorkspaceStore()
 const currentLanguage = computed(() =>
   languages.find(language => language.id === workspaceStore.languageId),
 )
-const currentLanguageIcon = computed(() => {
-  if (!currentLanguage.value?.icon) {
-    return
-  }
-  return getLanguageIcon(currentLanguage.value)
-})
-
-function getLanguageIcon(language: Language) {
-  if (!language.icon) {
-    return
-  }
-  if (isString(language.icon)) {
-    return language.icon
-  }
-  return isDark.value ? language.icon.dark : language.icon.light
-}
 
 function handSelectLanguage(language: Language) {
   workspaceStore.setLanguageId(language.id)
@@ -51,7 +33,7 @@ function handSelectLanguage(language: Language) {
         type="button"
         class="h-8 gap-1 px-2"
       >
-        <div :class="currentLanguageIcon" />
+        <FileCode2 class="size-4 text-muted-foreground" />
         <span>{{ currentLanguage?.name }}</span>
         <ChevronDown class="size-4 opacity-50" />
       </Button>
@@ -73,7 +55,7 @@ function handSelectLanguage(language: Language) {
           ]"
           class="size-4"
         />
-        <div :class="getLanguageIcon(language)" />
+        <FileCode2 class="size-4 text-muted-foreground" />
         <span>{{ language.name }}</span>
       </DropdownMenuItem>
     </DropdownMenuContent>
