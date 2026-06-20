@@ -7,6 +7,7 @@ import {
   PanelLeft,
   Settings,
   Sun,
+  Zap,
 } from '@lucide/vue'
 import { useRoute, useRouter } from 'vue-router'
 import { i18n } from '#i18n'
@@ -53,7 +54,11 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
 
         <Tooltip>
           <TooltipTrigger as-child>
-            <div class="p-1 text-sm opacity-80">
+            <div
+              class="inline-flex h-7 items-center gap-1 rounded-full bg-emerald-50 px-2.5 text-xs font-medium text-emerald-700 ring-1 ring-emerald-200/70 dark:bg-emerald-400/10 dark:text-emerald-300 dark:ring-emerald-400/20"
+              data-testid="format-cost"
+            >
+              <Zap class="size-3.5" />
               {{ i18n.t('ms', [+workspaceStore.formatCost.toFixed(1)]) }}
             </div>
           </TooltipTrigger>

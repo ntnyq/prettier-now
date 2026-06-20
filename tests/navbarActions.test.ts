@@ -151,6 +151,7 @@ describe('navbar actions', () => {
           Tooltip: PassthroughStub,
           TooltipContent: PassthroughStub,
           TooltipTrigger: PassthroughStub,
+          Zap: PassthroughStub,
         },
       },
     })
@@ -160,5 +161,35 @@ describe('navbar actions', () => {
     ).toMatchObject({
       'data-workspace': 'true',
     })
+  })
+
+  it('renders format cost as a green status badge', () => {
+    const wrapper = mount(Navbar, {
+      global: {
+        stubs: {
+          Button: ButtonStub,
+          Columns2: PassthroughStub,
+          GitMerge: PassthroughStub,
+          LanguageSelect: PassthroughStub,
+          Moon: PassthroughStub,
+          MoreAction: PassthroughStub,
+          PanelLeft: PassthroughStub,
+          RouterLink: PassthroughStub,
+          Settings: PassthroughStub,
+          Sun: PassthroughStub,
+          Tooltip: PassthroughStub,
+          TooltipContent: PassthroughStub,
+          TooltipTrigger: PassthroughStub,
+          Zap: PassthroughStub,
+        },
+      },
+    })
+
+    const badge = wrapper.find('[data-testid="format-cost"]')
+
+    expect(badge.text()).toContain('ms:0')
+    expect(badge.attributes('class')).toContain('rounded-full')
+    expect(badge.attributes('class')).toContain('bg-emerald-50')
+    expect(badge.attributes('class')).toContain('dark:bg-emerald-400/10')
   })
 })
