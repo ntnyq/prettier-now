@@ -1,25 +1,37 @@
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
-import { describe, expect, it } from 'vitest'
+import { mount } from '@vue/test-utils'
+import { describe, expect, it, vi } from 'vitest'
+import SettingsDialog from '@/components/settings/SettingsDialog.vue'
+import { PassthroughStub } from './helpers/vue'
+
+vi.mock('#i18n', () => ({
+  i18n: {
+    t: (key: string) => key,
+  },
+}))
 
 describe('settings overlay', () => {
-  it('uses shadcn dialog primitives instead of sheet primitives', () => {
-    const source = readFileSync(
-      resolve(import.meta.dirname, '../components/settings/SettingsDialog.vue'),
-      'utf8',
-    )
+  it('renders settings in a wide dialog', () => {
+    const wrapper = mount(SettingsDialog, {
+      props: {
+        open: true,
+      },
+      global: {
+        stubs: {
+          Dialog: PassthroughStub,
+          DialogContent: PassthroughStub,
+          DialogDescription: PassthroughStub,
+          DialogHeader: PassthroughStub,
+          DialogTitle: PassthroughStub,
+          SettingsContent: PassthroughStub,
+        },
+      },
+    })
 
-    expect(source).toContain('@/components/ui/dialog')
-    expect(source).not.toContain('@/components/ui/sheet')
-  })
-
-  it('uses a wide dialog content size for settings', () => {
-    const source = readFileSync(
-      resolve(import.meta.dirname, '../components/settings/SettingsDialog.vue'),
-      'utf8',
-    )
-
-    expect(source).toContain('!w-[min(960px,96vw)]')
-    expect(source).toContain('!max-w-[min(960px,96vw)]')
+    const content = wrapper.find('[class*="min(960px,96vw)"]')
+    expect(content.exists()).toBe(true)
+    expect(content.attributes('class')).toContain('!w-[min(960px,96vw)]')
+    expect(content.attributes('class')).toContain('!max-w-[min(960px,96vw)]')
+    expect(wrapper.text()).toContain('settings')
+    expect(wrapper.text()).toContain('prettierOptions')
   })
 })

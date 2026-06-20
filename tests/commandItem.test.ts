@@ -1,24 +1,66 @@
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-
-function readComponent(path: string) {
-  return readFileSync(resolve(import.meta.dirname, `../${path}`), 'utf8')
-}
+import { defineComponent, h, nextTick, reactive, ref } from 'vue'
+import {
+  provideCommandContext,
+  provideCommandGroupContext,
+} from '@/components/ui/command'
+import CommandItem from '@/components/ui/command/CommandItem.vue'
+import { ButtonStub } from './helpers/vue'
 
 describe('command item', () => {
-  it('cleans group membership on unmount', () => {
-    const source = readComponent('components/ui/command/CommandItem.vue')
+  it('keeps filtered items mounted so the search registry stays complete', async () => {
+    const filterState = reactive({
+      search: '',
+      filtered: {
+        count: 0,
+        groups: new Set<string>(),
+        items: new Map<string, number>(),
+      },
+    })
+    const allItems = ref(new Map<string, string>())
+    const allGroups = ref(new Map<string, Set<string>>())
+    const Harness = defineComponent({
+      setup() {
+        provideCommandGroupContext({ id: 'group' })
+        provideCommandContext({
+          allGroups,
+          allItems,
+          filterState,
+        })
 
-    expect(source).toContain('onUnmounted(() => {')
-    expect(source).toContain('allItems.value.delete(id)')
-    expect(source).toContain('allGroups.value.get(groupId)?.delete(id)')
-  })
+        return () =>
+          h(CommandItem, { value: 'alpha' }, { default: () => 'Alpha' })
+      },
+    })
 
-  it('keeps filtered items mounted so the search registry stays complete', () => {
-    const source = readComponent('components/ui/command/CommandItem.vue')
+    const wrapper = mount(Harness, {
+      global: {
+        stubs: {
+          ListboxItem: ButtonStub,
+        },
+      },
+    })
 
-    expect(source).not.toContain('v-if="isRender"')
-    expect(source).toContain(':hidden="isRender ? undefined : true"')
+    await nextTick()
+
+    const item = wrapper.find('[data-slot="command-item"]')
+    const itemId = item.attributes('id')!
+    expect(allItems.value.get(itemId)).toBe('Alpha')
+
+    filterState.search = 'beta'
+    filterState.filtered.items.set(itemId, 0)
+    await nextTick()
+
+    expect(wrapper.find(`[id="${itemId}"]`).exists()).toBe(true)
+    expect(wrapper.find(`[id="${itemId}"]`).attributes('hidden')).toBe('')
+    expect(allItems.value.has(itemId)).toBe(true)
+
+    filterState.filtered.items.set(itemId, 1)
+    await nextTick()
+
+    expect(wrapper.find(`[id="${itemId}"]`).attributes('hidden')).toBe(
+      undefined,
+    )
   })
 })

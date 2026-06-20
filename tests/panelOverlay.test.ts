@@ -1,48 +1,147 @@
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
-import { describe, expect, it } from 'vitest'
+import { mount } from '@vue/test-utils'
+import { createPinia, setActivePinia } from 'pinia'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import DiffPanel from '@/components/DiffPanel.vue'
+import HistoryPanel from '@/components/HistoryPanel.vue'
+import LogPanel from '@/components/LogPanel.vue'
+import { useAppStore } from '@/stores/app'
+import { useLogStore } from '@/stores/log'
+import { useWorkspaceStore } from '@/stores/workspace'
+import { ButtonStub, PassthroughStub } from './helpers/vue'
 
-function readComponent(path: string) {
-  return readFileSync(resolve(import.meta.dirname, `../${path}`), 'utf8')
+const storageMock = vi.hoisted(() => ({
+  getItem: vi.fn(async () => null),
+  setItem: vi.fn(async () => {}),
+}))
+
+vi.mock('#imports', () => ({
+  storage: storageMock,
+}))
+
+vi.mock('#i18n', () => ({
+  i18n: {
+    t: (key: string, params?: unknown[]) =>
+      params?.length ? `${key}:${params.join(',')}` : key,
+  },
+}))
+
+vi.mock('@/utils/toast', () => ({
+  Toast: {
+    info: vi.fn(),
+  },
+}))
+
+vi.stubGlobal('localStorage', {
+  clear: vi.fn(),
+})
+
+const overlayStubs = {
+  AlertDialog: PassthroughStub,
+  AlertDialogAction: ButtonStub,
+  AlertDialogCancel: ButtonStub,
+  AlertDialogContent: PassthroughStub,
+  AlertDialogDescription: PassthroughStub,
+  AlertDialogFooter: PassthroughStub,
+  AlertDialogHeader: PassthroughStub,
+  AlertDialogTitle: PassthroughStub,
+  AlertDialogTrigger: PassthroughStub,
+  Button: ButtonStub,
+  Dialog: PassthroughStub,
+  DialogContent: PassthroughStub,
+  DialogHeader: PassthroughStub,
+  DialogTitle: PassthroughStub,
+  Sheet: PassthroughStub,
+  SheetContent: PassthroughStub,
+  SheetHeader: PassthroughStub,
+  SheetTitle: PassthroughStub,
+  Trash2: PassthroughStub,
+  X: PassthroughStub,
 }
 
 describe('panel overlays', () => {
-  it('confirms before clearing history entries', () => {
-    const source = readComponent('components/HistoryPanel.vue')
-
-    expect(source).toContain('@/components/ui/alert-dialog')
-    expect(source).not.toContain('window.confirm')
-    expect(source).toContain('function clearHistory()')
-    expect(source).toContain('workspaceStore.clearFormatHistory()')
-    expect(source).toContain('appStore.setIsHistoryPanelVisible(false)')
-    expect(source).toContain('@click="clearHistory"')
+  beforeEach(() => {
+    localStorage.clear()
+    setActivePinia(createPinia())
   })
 
-  it('confirms before clearing logs', () => {
-    const source = readComponent('components/LogPanel.vue')
+  it('confirms before clearing history entries', async () => {
+    const appStore = useAppStore()
+    const workspaceStore = useWorkspaceStore()
+    appStore.setIsHistoryPanelVisible(true)
+    workspaceStore.formatHistory = [
+      {
+        id: 'entry',
+        fileName: 'index.ts',
+        languageId: 'typescript',
+        sourceCode: 'const a=1',
+        resultCode: 'const a = 1\n',
+        formatCost: 1,
+        formattedAt: 1,
+      },
+    ]
 
-    expect(source).toContain('@/components/ui/alert-dialog')
-    expect(source).not.toContain('window.confirm')
-    expect(source).toContain('[&_[data-slot=sheet-close]]:hidden')
-    expect(source).not.toContain('**:data-[slot=sheet-close]:hidden')
-    expect(source).toContain('function clearLog()')
-    expect(source).toContain('logStore.clearAll()')
-    expect(source).toContain('logStore.setIsLogPanelVisible(false)')
-    expect(source).toContain('@click="clearLog"')
+    const wrapper = mount(HistoryPanel, {
+      global: {
+        stubs: overlayStubs,
+      },
+    })
+
+    expect(wrapper.text()).toContain('index.ts')
+    expect(
+      wrapper.find('[class*="sheet-close"]').attributes('class'),
+    ).toContain('[&_[data-slot=sheet-close]]:hidden')
+
+    await wrapper
+      .findAll('button')
+      .find(button => button.text() === 'clearAll')
+      ?.trigger('click')
+
+    expect(workspaceStore.formatHistory).toEqual([])
+    expect(appStore.isHistoryPanelVisible).toBe(false)
   })
 
-  it('uses a wide dialog for diff instead of a sheet', () => {
-    const source = readComponent('components/DiffPanel.vue')
+  it('confirms before clearing logs', async () => {
+    const logStore = useLogStore()
+    logStore.setIsLogPanelVisible(true)
+    logStore.addLog({
+      message: 'Formatted',
+      type: 'success',
+    })
 
-    expect(source).toContain('@/components/ui/dialog')
-    expect(source).not.toContain('@/components/ui/sheet')
-    expect(source).toContain('!max-w-[min(960px,96vw)]')
+    const wrapper = mount(LogPanel, {
+      global: {
+        stubs: overlayStubs,
+      },
+    })
+
+    expect(wrapper.text()).toContain('Formatted')
+    expect(
+      wrapper.find('[class*="sheet-close"]').attributes('class'),
+    ).toContain('[&_[data-slot=sheet-close]]:hidden')
+
+    await wrapper
+      .findAll('button')
+      .find(button => button.text() === 'clearAll')
+      ?.trigger('click')
+
+    expect(logStore.logList).toEqual([])
+    expect(logStore.isLogPanelVisible).toBe(false)
   })
 
-  it('keeps the empty diff dialog spacious and informative', () => {
-    const source = readComponent('components/DiffPanel.vue')
+  it('uses a wide dialog for diff and shows the empty state', () => {
+    const appStore = useAppStore()
+    appStore.setIsDiffPanelVisible(true)
 
-    expect(source).toContain('min-h-[min(520px,72vh)]')
-    expect(source).toContain("i18n.t('emptyDiff')")
+    const wrapper = mount(DiffPanel, {
+      global: {
+        stubs: overlayStubs,
+      },
+    })
+
+    const content = wrapper.find('[class*="min(520px,72vh)"]')
+    expect(content.exists()).toBe(true)
+    expect(content.attributes('class')).toContain('!w-[min(960px,96vw)]')
+    expect(content.attributes('class')).toContain('!max-w-[min(960px,96vw)]')
+    expect(wrapper.text()).toContain('emptyDiff')
   })
 })
