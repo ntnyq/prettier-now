@@ -1,5 +1,13 @@
 <script lang="ts" setup>
-import { Info, Menu, MessageSquareText, SquareCode, Tag } from '@lucide/vue'
+import {
+  FileText,
+  History,
+  Info,
+  Menu,
+  MessageSquareText,
+  SquareCode,
+  Tag,
+} from '@lucide/vue'
 import { shallowRef } from 'vue'
 import { i18n } from '#i18n'
 import { browser } from '#imports'
@@ -14,14 +22,36 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { LINKS } from '@/constants/meta'
 import { version } from '@/package.json'
+import { useAppStore } from '@/stores/app'
+import { useLogStore } from '@/stores/log'
 import { openExternalURL } from '@/utils'
 
+const props = withDefaults(
+  defineProps<{
+    showWorkspaceActions?: boolean
+  }>(),
+  {
+    showWorkspaceActions: false,
+  },
+)
+
+const appStore = useAppStore()
+const logStore = useLogStore()
 const logoUrl = browser.runtime.getURL('/icons/48.png')
 const isAboutDialogOpen = shallowRef(false)
+
+function openHistoryPanel() {
+  appStore.setIsHistoryPanelVisible(true)
+}
+
+function openLogPanel() {
+  logStore.setIsLogPanelVisible(true)
+}
 
 function openAboutDialog() {
   isAboutDialogOpen.value = true
@@ -44,6 +74,18 @@ function openAboutDialog() {
       align="end"
       class="w-44"
     >
+      <template v-if="props.showWorkspaceActions">
+        <DropdownMenuItem @click="openHistoryPanel">
+          <History class="size-4" />
+          {{ i18n.t('history') }}
+        </DropdownMenuItem>
+        <DropdownMenuItem @click="openLogPanel">
+          <FileText class="size-4" />
+          {{ i18n.t('log') }}
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+      </template>
+
       <DropdownMenuItem @click="openExternalURL(LINKS.feedback)">
         <MessageSquareText class="size-4" />
         {{ i18n.t('feedback') }}

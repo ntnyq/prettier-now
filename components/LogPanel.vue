@@ -2,6 +2,17 @@
 import { Trash2, X } from '@lucide/vue'
 import dayjs from 'dayjs'
 import { i18n } from '#i18n'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -12,28 +23,50 @@ import {
 import { useLogStore } from '@/stores/log'
 
 const logStore = useLogStore()
+
+function clearLog() {
+  logStore.clearAll()
+  logStore.setIsLogPanelVisible(false)
+}
 </script>
 
 <template>
   <Sheet v-model:open="logStore.isLogPanelVisible">
     <SheetContent
-      class="w-[min(30rem,100vw)] max-w-none gap-0 p-0 [&_[data-slot=sheet-close]]:hidden"
+      class="w-[min(30rem,100vw)] max-w-none gap-0 p-0 **:data-[slot=sheet-close]:hidden"
     >
       <SheetHeader
         class="flex-row items-center justify-between gap-3 border-b border-border px-4 py-2 text-left"
       >
         <SheetTitle class="text-lg">{{ i18n.t('log') }}</SheetTitle>
         <div class="flex items-center gap-2">
-          <Button
-            @click="logStore.clearAll"
-            :aria-label="i18n.t('clearAll')"
-            :title="i18n.t('clearAll')"
-            variant="ghost"
-            size="icon-sm"
-            type="button"
-          >
-            <Trash2 />
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger as-child>
+              <Button
+                :aria-label="i18n.t('clearAll')"
+                :title="i18n.t('clearAll')"
+                variant="ghost"
+                size="icon-sm"
+                type="button"
+              >
+                <Trash2 />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>{{ i18n.t('clearAll') }}</AlertDialogTitle>
+                <AlertDialogDescription>
+                  {{ i18n.t('clearAllConfirmDescription') }}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>{{ i18n.t('cancel') }}</AlertDialogCancel>
+                <AlertDialogAction @click="clearLog">
+                  {{ i18n.t('clearAll') }}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <Button
             @click="logStore.setIsLogPanelVisible(false)"
             :aria-label="i18n.t('close')"
@@ -70,7 +103,7 @@ const logStore = useLogStore()
               {{ dayjs(log.createdAt).format('HH:mm:ss') }}
             </span>
           </div>
-          <p class="mt-1 break-words text-sm">{{ log.message }}</p>
+          <p class="mt-1 wrap-break-word text-sm">{{ log.message }}</p>
           <p
             v-if="log.fileName || log.languageId"
             class="mt-1 truncate text-xs opacity-60"

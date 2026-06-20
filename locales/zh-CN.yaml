@@ -7,8 +7,10 @@ appName: Prettier Now
 applyPreset: 应用预设
 applyPresetSuccess: 已应用预设
 brandAlt: Prettier Now 标志
+cancel: 取消
 changelog: 更新日志
 clearAll: 清除所有
+clearAllConfirmDescription: 此操作无法撤销。
 clearSuccess: 清除成功
 close: 关闭
 copiedToClipboard: 已复制到剪贴板

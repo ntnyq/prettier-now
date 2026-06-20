@@ -4,11 +4,11 @@ import { computed } from 'vue'
 import { i18n } from '#i18n'
 import { Button } from '@/components/ui/button'
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet'
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { useAppStore } from '@/stores/app'
 import { useWorkspaceStore } from '@/stores/workspace'
 import { createLineDiff } from '@/utils/diff'
@@ -23,14 +23,15 @@ const hasDiff = computed(() => diffLines.value.length > 0)
 </script>
 
 <template>
-  <Sheet v-model:open="appStore.isDiffPanelVisible">
-    <SheetContent
-      class="w-[min(40rem,100vw)] max-w-none gap-0 p-0 [&_[data-slot=sheet-close]]:hidden"
+  <Dialog v-model:open="appStore.isDiffPanelVisible">
+    <DialogContent
+      :show-close-button="false"
+      class="min-h-[min(520px,72vh)] max-h-[min(860px,92vh)] w-[min(960px,96vw)]! max-w-[min(960px,96vw)]! grid-rows-[auto_minmax(0,1fr)] gap-0 p-0"
     >
-      <SheetHeader
+      <DialogHeader
         class="flex-row items-center justify-between gap-3 border-b border-border px-4 py-2 text-left"
       >
-        <SheetTitle class="text-lg">{{ i18n.t('diff') }}</SheetTitle>
+        <DialogTitle class="text-lg">{{ i18n.t('diff') }}</DialogTitle>
         <Button
           @click="appStore.setIsDiffPanelVisible(false)"
           :aria-label="i18n.t('close')"
@@ -41,7 +42,7 @@ const hasDiff = computed(() => diffLines.value.length > 0)
         >
           <X />
         </Button>
-      </SheetHeader>
+      </DialogHeader>
 
       <div
         v-if="hasDiff"
@@ -78,6 +79,6 @@ const hasDiff = computed(() => diffLines.value.length > 0)
       >
         {{ i18n.t('emptyDiff') }}
       </div>
-    </SheetContent>
-  </Sheet>
+    </DialogContent>
+  </Dialog>
 </template>

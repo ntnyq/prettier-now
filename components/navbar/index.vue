@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import {
   Columns2,
-  FileText,
   GitMerge,
-  History,
   Home,
   Moon,
   PanelLeft,
@@ -22,12 +20,10 @@ import {
 import { toggleDark } from '@/composables/dark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
-import { useLogStore } from '@/stores/log'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const route = useRoute()
 const router = useRouter()
-const logStore = useLogStore()
 const appStore = useAppStore()
 const workspaceStore = useWorkspaceStore()
 
@@ -97,21 +93,6 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
         <Tooltip>
           <TooltipTrigger as-child>
             <Button
-              @click="appStore.setIsHistoryPanelVisible(true)"
-              :aria-label="i18n.t('history')"
-              variant="ghost"
-              size="icon-sm"
-              type="button"
-            >
-              <History class="size-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>{{ i18n.t('history') }}</TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger as-child>
-            <Button
               @click="appStore.toggleLeftLayout"
               :aria-label="i18n.t('toggleLeftLayout')"
               variant="ghost"
@@ -152,21 +133,6 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
           </TooltipTrigger>
           <TooltipContent>{{ i18n.t('toggleRightLayout') }}</TooltipContent>
         </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger as-child>
-            <Button
-              @click="logStore.setIsLogPanelVisible(true)"
-              :aria-label="i18n.t('log')"
-              variant="ghost"
-              size="icon-sm"
-              type="button"
-            >
-              <FileText class="size-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>{{ i18n.t('log') }}</TooltipContent>
-        </Tooltip>
       </template>
       <Tooltip v-else>
         <TooltipTrigger as-child>
@@ -198,7 +164,7 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
         </TooltipTrigger>
         <TooltipContent>{{ i18n.t('toggleColorMode') }}</TooltipContent>
       </Tooltip>
-      <MoreAction />
+      <MoreAction :show-workspace-actions="route.name === 'Home'" />
     </div>
   </div>
 </template>

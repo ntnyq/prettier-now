@@ -7,8 +7,10 @@ appName: Prettier Now
 applyPreset: プリセットを適用
 applyPresetSuccess: プリセットを適用しました
 brandAlt: Prettier Now ロゴ
+cancel: キャンセル
 changelog: 変更履歴
 clearAll: すべてクリア
+clearAllConfirmDescription: この操作は元に戻せません。
 clearSuccess: クリアしました
 close: 閉じる
 copiedToClipboard: クリップボードにコピーしました

@@ -1,8 +1,18 @@
 <script lang="ts" setup>
-import { Check, Trash2, X } from '@lucide/vue'
+import { Trash2, X } from '@lucide/vue'
 import dayjs from 'dayjs'
-import { onUnmounted, shallowRef } from 'vue'
 import { i18n } from '#i18n'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -15,8 +25,6 @@ import { useWorkspaceStore } from '@/stores/workspace'
 
 const appStore = useAppStore()
 const workspaceStore = useWorkspaceStore()
-const isConfirmingClear = shallowRef(false)
-let clearConfirmTimer: number | undefined
 
 function restoreEntry(id: string) {
   if (workspaceStore.restoreHistoryEntry(id)) {
@@ -25,23 +33,9 @@ function restoreEntry(id: string) {
 }
 
 function clearHistory() {
-  if (isConfirmingClear.value) {
-    workspaceStore.clearFormatHistory()
-    isConfirmingClear.value = false
-    return
-  }
-
-  isConfirmingClear.value = true
-  clearConfirmTimer = window.setTimeout(() => {
-    isConfirmingClear.value = false
-  }, 3000)
+  workspaceStore.clearFormatHistory()
+  appStore.setIsHistoryPanelVisible(false)
 }
-
-onUnmounted(() => {
-  if (clearConfirmTimer) {
-    window.clearTimeout(clearConfirmTimer)
-  }
-})
 </script>
 
 <template>
@@ -54,17 +48,33 @@ onUnmounted(() => {
       >
         <SheetTitle class="text-lg">{{ i18n.t('history') }}</SheetTitle>
         <div class="flex items-center gap-2">
-          <Button
-            @click="clearHistory"
-            :aria-label="i18n.t('clearAll')"
-            :title="i18n.t('clearAll')"
-            variant="ghost"
-            size="icon-sm"
-            type="button"
-          >
-            <Check v-if="isConfirmingClear" />
-            <Trash2 v-else />
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger as-child>
+              <Button
+                :aria-label="i18n.t('clearAll')"
+                :title="i18n.t('clearAll')"
+                variant="ghost"
+                size="icon-sm"
+                type="button"
+              >
+                <Trash2 />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>{{ i18n.t('clearAll') }}</AlertDialogTitle>
+                <AlertDialogDescription>
+                  {{ i18n.t('clearAllConfirmDescription') }}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>{{ i18n.t('cancel') }}</AlertDialogCancel>
+                <AlertDialogAction @click="clearHistory">
+                  {{ i18n.t('clearAll') }}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <Button
             @click="appStore.setIsHistoryPanelVisible(false)"
             :aria-label="i18n.t('close')"
