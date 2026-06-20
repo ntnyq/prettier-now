@@ -49,7 +49,7 @@ function handSelectLanguage(language: Language) {
       >
         <Icon
           :icon="currentLanguageIcon"
-          class="size-4"
+          class="size-5 shrink-0"
         />
         <span>{{ currentLanguage?.name }}</span>
         <ChevronDown class="size-4 opacity-50" />
@@ -64,19 +64,19 @@ function handSelectLanguage(language: Language) {
         v-for="language in languages"
         :key="language.id"
       >
+        <Icon
+          :icon="getLanguageIcon(language.icon)"
+          class="size-5 shrink-0"
+        />
+        <span class="min-w-0 flex-1">{{ language.name }}</span>
         <Check
           :class="[
             workspaceStore.languageId === language.id
               ? 'opacity-100'
               : 'opacity-0',
           ]"
-          class="size-4"
+          class="ml-auto size-4 shrink-0"
         />
-        <Icon
-          :icon="getLanguageIcon(language.icon)"
-          class="size-4"
-        />
-        <span>{{ language.name }}</span>
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>

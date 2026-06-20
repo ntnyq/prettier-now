@@ -12,4 +12,13 @@ describe('settings overlay', () => {
     expect(source).toContain('@/components/ui/dialog')
     expect(source).not.toContain('@/components/ui/sheet')
   })
+
+  it('uses a wide dialog content size for settings', () => {
+    const source = readFileSync(
+      resolve(import.meta.dirname, '../components/settings/SettingsDialog.vue'),
+      'utf8',
+    )
+
+    expect(source).toContain('w-[min(960px,94vw)]')
+  })
 })

@@ -46,4 +46,9 @@ describe('language metadata', () => {
         .every(icon => registeredIcons.has(icon)),
     ).toBe(true)
   })
+
+  it('keeps the original vscode icon viewport size', () => {
+    expect(languageIconCollection.width).toBe(32)
+    expect(languageIconCollection.height).toBe(32)
+  })
 })
