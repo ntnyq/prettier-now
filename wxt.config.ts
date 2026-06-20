@@ -3,6 +3,7 @@
  * @see {@link https://wxt.dev/api/config.html}
  */
 
+import tailwindcss from '@tailwindcss/vite'
 import VueComponents from 'unplugin-vue-components/vite'
 import { defineConfig } from 'wxt'
 import { resolve } from './scripts/utils'
@@ -29,6 +30,7 @@ const viteConfig = (() => ({
   },
 
   plugins: [
+    tailwindcss(),
     VueComponents({
       dirs: [resolve('components')],
       dts: resolve('types/components.d.ts'),
@@ -70,15 +72,8 @@ export default defineConfig({
   },
 
   modules: [
-    '@wxt-dev/unocss',
     '@wxt-dev/auto-icons',
     '@wxt-dev/module-vue',
     '@wxt-dev/i18n/module',
   ],
-
-  unocss: {
-    configOrPath: {
-      inspector: false,
-    },
-  },
 })

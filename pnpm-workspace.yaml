@@ -6,6 +6,7 @@ allowBuilds:
   sharp: true
   spawn-sync: true
   unrs-resolver: true
+  vue-demi: true
 
 minimumReleaseAge: 0
 packageManagerStrict: false
