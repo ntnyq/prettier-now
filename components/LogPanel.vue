@@ -1,27 +1,51 @@
 <script lang="ts" setup>
+import { Trash2, X } from '@lucide/vue'
 import dayjs from 'dayjs'
 import { i18n } from '#i18n'
+import { Button } from '@/components/ui/button'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet'
 import { useLogStore } from '@/stores/log'
 
 const logStore = useLogStore()
 </script>
 
 <template>
-  <Modal
-    v-model:visible="logStore.isLogPanelVisible"
-    direction="right"
-  >
-    <div class="relative h-full w-120 flex flex-col">
-      <div
-        class="flex items-center justify-between border-b border-base px-4 py-2"
+  <Sheet v-model:open="logStore.isLogPanelVisible">
+    <SheetContent
+      class="w-[min(30rem,100vw)] max-w-none gap-0 p-0 [&_[data-slot=sheet-close]]:hidden"
+    >
+      <SheetHeader
+        class="flex-row items-center justify-between gap-3 border-b border-border px-4 py-2 text-left"
       >
-        <h2 class="text-lg font-semibold">{{ i18n.t('log') }}</h2>
-        <IconButton
-          @click="logStore.clearAll"
-          :tooltip="i18n.t('clearAll')"
-          icon="i-ri:delete-bin-line"
-        />
-      </div>
+        <SheetTitle class="text-lg">{{ i18n.t('log') }}</SheetTitle>
+        <div class="flex items-center gap-2">
+          <Button
+            @click="logStore.clearAll"
+            :aria-label="i18n.t('clearAll')"
+            :title="i18n.t('clearAll')"
+            variant="ghost"
+            size="icon-sm"
+            type="button"
+          >
+            <Trash2 />
+          </Button>
+          <Button
+            @click="logStore.setIsLogPanelVisible(false)"
+            :aria-label="i18n.t('close')"
+            :title="i18n.t('close')"
+            variant="ghost"
+            size="icon-sm"
+            type="button"
+          >
+            <X />
+          </Button>
+        </div>
+      </SheetHeader>
 
       <div
         v-if="logStore.logList.length"
@@ -30,7 +54,7 @@ const logStore = useLogStore()
         <div
           v-for="log in logStore.logList"
           :key="log.id"
-          class="border-b border-base px-4 py-3"
+          class="border-b border-border px-4 py-3"
         >
           <div class="flex items-center justify-between gap-3">
             <span
@@ -62,6 +86,6 @@ const logStore = useLogStore()
       >
         {{ i18n.t('emptyLog') }}
       </div>
-    </div>
-  </Modal>
+    </SheetContent>
+  </Sheet>
 </template>

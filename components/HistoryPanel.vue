@@ -1,7 +1,15 @@
 <script lang="ts" setup>
+import { Check, Trash2, X } from '@lucide/vue'
 import dayjs from 'dayjs'
 import { onUnmounted, shallowRef } from 'vue'
 import { i18n } from '#i18n'
+import { Button } from '@/components/ui/button'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet'
 import { useAppStore } from '@/stores/app'
 import { useWorkspaceStore } from '@/stores/workspace'
 
@@ -37,30 +45,38 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Modal
-    v-model:visible="appStore.isHistoryPanelVisible"
-    direction="right"
-  >
-    <div class="relative h-full w-120 flex flex-col">
-      <div
-        class="flex items-center justify-between border-b border-base px-4 py-2"
+  <Sheet v-model:open="appStore.isHistoryPanelVisible">
+    <SheetContent
+      class="w-[min(30rem,100vw)] max-w-none gap-0 p-0 [&_[data-slot=sheet-close]]:hidden"
+    >
+      <SheetHeader
+        class="flex-row items-center justify-between gap-3 border-b border-border px-4 py-2 text-left"
       >
-        <h2 class="text-lg font-semibold">{{ i18n.t('history') }}</h2>
+        <SheetTitle class="text-lg">{{ i18n.t('history') }}</SheetTitle>
         <div class="flex items-center gap-2">
-          <IconButton
+          <Button
             @click="clearHistory"
-            :tooltip="i18n.t('clearAll')"
-            :icon="
-              isConfirmingClear ? 'i-ri:check-line' : 'i-ri:delete-bin-line'
-            "
-          />
-          <IconButton
+            :aria-label="i18n.t('clearAll')"
+            :title="i18n.t('clearAll')"
+            variant="ghost"
+            size="icon-sm"
+            type="button"
+          >
+            <Check v-if="isConfirmingClear" />
+            <Trash2 v-else />
+          </Button>
+          <Button
             @click="appStore.setIsHistoryPanelVisible(false)"
-            :tooltip="i18n.t('close')"
-            icon="i-ri:close-line"
-          />
+            :aria-label="i18n.t('close')"
+            :title="i18n.t('close')"
+            variant="ghost"
+            size="icon-sm"
+            type="button"
+          >
+            <X />
+          </Button>
         </div>
-      </div>
+      </SheetHeader>
 
       <div
         v-if="workspaceStore.formatHistory.length"
@@ -69,7 +85,7 @@ onUnmounted(() => {
         <div
           v-for="entry in workspaceStore.formatHistory"
           :key="entry.id"
-          class="border-b border-base px-4 py-3"
+          class="border-b border-border px-4 py-3"
         >
           <div class="flex items-start justify-between gap-3">
             <button
@@ -86,11 +102,16 @@ onUnmounted(() => {
                 {{ dayjs(entry.formattedAt).format('HH:mm:ss') }}
               </span>
             </button>
-            <IconButton
+            <Button
               @click="workspaceStore.removeHistoryEntry(entry.id)"
-              :tooltip="i18n.t('deleteHistoryEntry')"
-              icon="i-ri:close-line"
-            />
+              :aria-label="i18n.t('deleteHistoryEntry')"
+              :title="i18n.t('deleteHistoryEntry')"
+              variant="ghost"
+              size="icon-sm"
+              type="button"
+            >
+              <X />
+            </Button>
           </div>
         </div>
       </div>
@@ -101,6 +122,6 @@ onUnmounted(() => {
       >
         {{ i18n.t('emptyHistory') }}
       </div>
-    </div>
-  </Modal>
+    </SheetContent>
+  </Sheet>
 </template>
