@@ -56,4 +56,13 @@ style.
     expect(formatSource).toContain('pugSortAttributesEnd: []')
     expect(formatSource).not.toContain('getAllPrettierPlugins')
   })
+
+  it('preloads postcss for embedded css parsers', () => {
+    const formatSource = readSource('utils/format.ts')
+
+    expect(formatSource).toContain(
+      "import pluginPostcss from 'prettier/plugins/postcss'",
+    )
+    expect(formatSource).toContain('pluginPostcss,')
+  })
 })

@@ -5,6 +5,7 @@
 import pluginAngular from 'prettier/plugins/angular'
 import pluginBabel from 'prettier/plugins/babel'
 import pluginEstree from 'prettier/plugins/estree'
+import pluginPostcss from 'prettier/plugins/postcss'
 import { LANGUAGE_ID } from '@/constants/language'
 import { loadPrettierPlugin } from '@/utils/cache'
 import type {
@@ -69,6 +70,7 @@ export async function formatViaPrettier(
       pluginBabel,
       pluginEstree,
       pluginAngular,
+      pluginPostcss,
 
       // current language plugin
       ...languagePlugins,

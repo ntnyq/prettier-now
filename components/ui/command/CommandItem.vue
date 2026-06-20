@@ -58,6 +58,11 @@ onMounted(() => {
 })
 onUnmounted(() => {
   allItems.value.delete(id)
+
+  const groupId = groupContext?.id
+  if (groupId) {
+    allGroups.value.get(groupId)?.delete(id)
+  }
 })
 </script>
 
