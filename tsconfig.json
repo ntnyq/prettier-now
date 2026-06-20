@@ -4,7 +4,16 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@": ["."],
+      "@/*": ["./*"],
+      "~": ["."],
+      "~/*": ["./*"],
+      "@@": ["."],
+      "@@/*": ["./*"],
+      "~~": ["."],
+      "~~/*": ["./*"],
+      "#i18n": ["./.wxt/i18n/index.ts"],
+      "#i18n/*": ["./.wxt/i18n/index.ts/*"]
     },
     "erasableSyntaxOnly": true,
     "libReplacement": false,
