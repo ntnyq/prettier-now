@@ -13,6 +13,10 @@ export const useAppStore = defineStore('app', () => {
     'isHistoryPanelVisible',
     false,
   )
+  const isSettingsSheetVisible = useStorage<boolean>(
+    'isSettingsSheetVisible',
+    false,
+  )
 
   const toggleLeftLayout = () => {
     showLeftLayout.value = !showLeftLayout.value
@@ -26,14 +30,19 @@ export const useAppStore = defineStore('app', () => {
   const setIsHistoryPanelVisible = (visible: boolean) => {
     isHistoryPanelVisible.value = visible
   }
+  const setIsSettingsSheetVisible = (visible: boolean) => {
+    isSettingsSheetVisible.value = visible
+  }
 
   return {
     isDiffPanelVisible,
     isHistoryPanelVisible,
+    isSettingsSheetVisible,
     showLeftLayout,
     showRightLayout,
     setIsDiffPanelVisible,
     setIsHistoryPanelVisible,
+    setIsSettingsSheetVisible,
     toggleLeftLayout,
     toggleRightLayout,
   }
