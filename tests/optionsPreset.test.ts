@@ -1,12 +1,61 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+import * as v from 'valibot'
 import { describe, expect, it } from 'vitest'
 import {
   createDefaultOptionsSnapshot,
+  createOptionsPreset,
+  OptionsPresetListSchema,
+  OptionsPresetSchema,
+  OptionsSnapshotSchema,
   parseOptionsSnapshot,
   removeOptionsPreset,
   upsertOptionsPreset,
 } from '@/utils/optionsPreset'
 
+function readSource(path: string) {
+  return readFileSync(resolve(import.meta.dirname, `../${path}`), 'utf8')
+}
+
 describe('options preset utilities', () => {
+  it('validates imported snapshots through valibot schemas', () => {
+    const source = readSource('utils/optionsPreset.ts')
+
+    expect(source).toContain("from 'valibot'")
+    expect(source).toContain('OptionsSnapshotSchema')
+    expect(source).toContain('OptionsPresetSchema')
+    expect(source).toContain('OptionsPresetListSchema')
+    expect(source).not.toContain('snapshotValidators')
+  })
+
+  it('reuses snapshot schemas for persisted option presets', () => {
+    const preset = createOptionsPreset({
+      name: 'Team',
+      now: 1,
+      snapshot: createDefaultOptionsSnapshot(),
+    })
+    const invalidPreset = {
+      ...preset,
+      snapshot: {
+        ...preset.snapshot,
+        options: {
+          ...preset.snapshot.options,
+          printWidth: 0,
+        },
+      },
+    }
+
+    expect(v.safeParse(OptionsSnapshotSchema, preset.snapshot).success).toBe(
+      true,
+    )
+    expect(v.safeParse(OptionsPresetSchema, preset).success).toBe(true)
+    expect(v.safeParse(OptionsPresetListSchema, [preset]).success).toBe(true)
+    expect(v.safeParse(OptionsPresetSchema, invalidPreset).success).toBe(false)
+    expect(v.safeParse(OptionsPresetListSchema, [invalidPreset]).success).toBe(
+      false,
+    )
+  })
+
   it('creates a versioned default options snapshot', () => {
     expect(createDefaultOptionsSnapshot()).toMatchObject({
       version: 1,

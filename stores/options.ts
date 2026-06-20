@@ -16,6 +16,7 @@ import {
 import {
   createDefaultOptionsSnapshot,
   createOptionsPreset,
+  OptionsPresetListSchema,
   removeOptionsPreset,
   upsertOptionsPreset,
 } from '@/utils/optionsPreset'
@@ -30,7 +31,11 @@ import type {
 import type { OptionsPreset, OptionsSnapshot } from '@/types/optionsPreset'
 
 export const useOptionsStore = defineStore('options', () => {
-  const presets = useStorage<OptionsPreset[]>('optionsPresets', [])
+  const presets = useStorage<OptionsPreset[]>(
+    'optionsPresets',
+    [],
+    OptionsPresetListSchema,
+  )
 
   const useTabs = useStorage<boolean>('useTabs', DEFAULT_OPTIONS.useTabs)
   const semi = useStorage<boolean>('semi', DEFAULT_OPTIONS.semi)
