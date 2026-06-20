@@ -6,8 +6,8 @@ import { TooltipProvider } from '@/components/ui/tooltip'
 
 <template>
   <TooltipProvider>
-    <main class="h-screen min-w-720px flex flex-col">
-      <Navbar class="h-$h-header" />
+    <main class="h-screen min-w-[720px] flex flex-col">
+      <Navbar class="h-[var(--h-header)]" />
       <RouterView class="h-[calc(100vh-var(--h-header))]" />
     </main>
     <Toaster class="pointer-events-auto" />
