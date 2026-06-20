@@ -52,7 +52,7 @@ export const Toast = {
 
     const sonnerOptions = {
       ...toastOptions,
-      duration: timeout,
+      duration: toastOptions.duration ?? timeout,
     }
 
     if (isError) {

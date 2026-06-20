@@ -65,4 +65,15 @@ describe('Toast', () => {
       duration: 2000,
     })
   })
+
+  it('honors sonner duration when provided', () => {
+    Toast.info('Saved', {
+      duration: 5000,
+      timeout: 1000,
+    })
+
+    expect(toastMock.info).toHaveBeenCalledWith('Saved', {
+      duration: 5000,
+    })
+  })
 })

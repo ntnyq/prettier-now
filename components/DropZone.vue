@@ -61,7 +61,7 @@ useEventListener('drop', onDrop)
     class="pointer-events-auto fixed inset-0 z-[1000] p-10 backdrop-blur-sm"
   >
     <div
-      class="flex h-full w-full flex-col items-center justify-center rounded-2xl border-3 border-dashed border-border bg-white/50 dark:bg-black/50"
+      class="flex h-full w-full flex-col items-center justify-center rounded-2xl border-[3px] border-dashed border-border bg-white/50 dark:bg-black/50"
     >
       <p class="text-xl">
         {{ i18n.t('dragFileHere') }}

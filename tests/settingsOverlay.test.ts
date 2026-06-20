@@ -19,7 +19,7 @@ describe('settings overlay', () => {
       'utf8',
     )
 
-    expect(source).toContain('w-[min(960px,96vw)]!')
-    expect(source).toContain('max-w-[min(960px,96vw)]!')
+    expect(source).toContain('!w-[min(960px,96vw)]')
+    expect(source).toContain('!max-w-[min(960px,96vw)]')
   })
 })

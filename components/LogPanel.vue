@@ -103,7 +103,7 @@ function clearLog() {
               {{ dayjs(log.createdAt).format('HH:mm:ss') }}
             </span>
           </div>
-          <p class="mt-1 wrap-break-word text-sm">{{ log.message }}</p>
+          <p class="mt-1 break-words text-sm">{{ log.message }}</p>
           <p
             v-if="log.fileName || log.languageId"
             class="mt-1 truncate text-xs opacity-60"

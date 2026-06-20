@@ -34,7 +34,7 @@ describe('panel overlays', () => {
 
     expect(source).toContain('@/components/ui/dialog')
     expect(source).not.toContain('@/components/ui/sheet')
-    expect(source).toContain('max-w-[min(960px,96vw)]!')
+    expect(source).toContain('!max-w-[min(960px,96vw)]')
   })
 
   it('keeps the empty diff dialog spacious and informative', () => {
