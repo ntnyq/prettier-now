@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   addFormatHistoryEntry,
   createFormatHistoryEntry,
+  MAX_FORMAT_HISTORY_ENTRY_BYTES,
   removeFormatHistoryEntry,
 } from '@/utils/history'
 import type { FormatHistoryEntry } from '@/types/history'
@@ -60,6 +61,20 @@ describe('format history utilities', () => {
     expect(nextEntries).toHaveLength(50)
     expect(nextEntries[0]?.id).toBe('new')
     expect(nextEntries.at(-1)?.id).toBe('entry-48')
+  })
+
+  it('drops oversized source and result content before adding entries', () => {
+    const entry = createEntry('large', 1)
+    entry.sourceCode = 'x'.repeat(MAX_FORMAT_HISTORY_ENTRY_BYTES)
+    entry.resultCode = 'y'
+
+    expect(addFormatHistoryEntry([], entry)).toEqual([
+      {
+        ...entry,
+        resultCode: '',
+        sourceCode: '',
+      },
+    ])
   })
 
   it('removes entries by id', () => {

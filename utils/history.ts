@@ -1,6 +1,26 @@
 import type { FormatHistoryEntry } from '@/types/history'
 
 export const MAX_FORMAT_HISTORY_ENTRIES = 50
+export const MAX_FORMAT_HISTORY_ENTRY_BYTES = 128 * 1024
+
+function getTextByteLength(value: string) {
+  return new Blob([value]).size
+}
+
+function normalizeHistoryEntry(entry: FormatHistoryEntry) {
+  if (
+    getTextByteLength(entry.sourceCode) + getTextByteLength(entry.resultCode)
+    <= MAX_FORMAT_HISTORY_ENTRY_BYTES
+  ) {
+    return entry
+  }
+
+  return {
+    ...entry,
+    resultCode: '',
+    sourceCode: '',
+  } satisfies FormatHistoryEntry
+}
 
 export function createFormatHistoryEntry(params: {
   fileName: string
@@ -27,10 +47,12 @@ export function addFormatHistoryEntry(
   entries: FormatHistoryEntry[],
   entry: FormatHistoryEntry,
 ) {
-  return [entry, ...entries.filter(item => item.id !== entry.id)].slice(
-    0,
-    MAX_FORMAT_HISTORY_ENTRIES,
-  )
+  const normalizedEntry = normalizeHistoryEntry(entry)
+
+  return [
+    normalizedEntry,
+    ...entries.filter(item => item.id !== normalizedEntry.id),
+  ].slice(0, MAX_FORMAT_HISTORY_ENTRIES)
 }
 
 export function removeFormatHistoryEntry(

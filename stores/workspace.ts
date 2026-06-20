@@ -226,7 +226,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         languageId: job.languageId,
       })
 
-      if (requestId !== formatRequestId && id === activeJobId.value) {
+      if (requestId !== formatRequestId) {
         return false
       }
 

@@ -50,6 +50,34 @@ describe('options preset utilities', () => {
     ).toThrow('Invalid options file')
   })
 
+  it('rejects snapshots with invalid option value types', () => {
+    const snapshot = createDefaultOptionsSnapshot()
+
+    expect(() =>
+      parseOptionsSnapshot(
+        JSON.stringify({
+          ...snapshot,
+          options: {
+            ...snapshot.options,
+            printWidth: 'wide',
+          },
+        }),
+      ),
+    ).toThrow('Invalid options file')
+
+    expect(() =>
+      parseOptionsSnapshot(
+        JSON.stringify({
+          ...snapshot,
+          options: {
+            ...snapshot.options,
+            trailingComma: 'sometimes',
+          },
+        }),
+      ),
+    ).toThrow('Invalid options file')
+  })
+
   it('upserts presets by id and keeps newest first', () => {
     const snapshot = createDefaultOptionsSnapshot()
     const firstPreset = {

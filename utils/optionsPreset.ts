@@ -5,6 +5,7 @@ import {
   DEFAULT_SVELTE_OPTIONS,
   DEFAULT_TOML_OPTIONS,
   DEFAULT_XML_OPTIONS,
+  JAVA_ENTRYPOINTS,
 } from '@/constants/options'
 import type { OptionsPreset, OptionsSnapshot } from '@/types/optionsPreset'
 
@@ -28,6 +29,135 @@ function hasKeys(value: unknown, keys: string[]) {
   }
 
   return keys.every(key => key in value)
+}
+
+function isBoolean(value: unknown) {
+  return typeof value === 'boolean'
+}
+
+function isNumber(value: unknown) {
+  return typeof value === 'number' && Number.isFinite(value)
+}
+
+function isOneOf<V extends string>(value: unknown, values: readonly V[]) {
+  return typeof value === 'string' && values.includes(value as V)
+}
+
+function hasValidValues(
+  value: Record<string, unknown>,
+  validators: Record<string, (value: unknown) => boolean>,
+) {
+  return Object.entries(validators).every(([key, validator]) =>
+    validator(value[key]),
+  )
+}
+
+const snapshotValidators: Record<
+  (typeof OPTIONS_SNAPSHOT_KEYS)[number],
+  Record<string, (value: unknown) => boolean>
+> = {
+  options: {
+    arrowParens: value => isOneOf(value, ['always', 'avoid']),
+    bracketSameLine: isBoolean,
+    bracketSpacing: isBoolean,
+    embeddedLanguageFormatting: value => isOneOf(value, ['auto', 'off']),
+    endOfLine: value => isOneOf(value, ['auto', 'cr', 'crlf', 'lf']),
+    experimentalOperatorPosition: value => isOneOf(value, ['end', 'start']),
+    experimentalTernaries: isBoolean,
+    htmlWhitespaceSensitivity: value =>
+      isOneOf(value, ['css', 'ignore', 'strict']),
+    jsxSingleQuote: isBoolean,
+    objectWrap: value => isOneOf(value, ['collapse', 'preserve']),
+    printWidth: isNumber,
+    proseWrap: value => isOneOf(value, ['always', 'never', 'preserve']),
+    quoteProps: value =>
+      isOneOf(value, ['as-needed', 'consistent', 'preserve']),
+    semi: isBoolean,
+    singleAttributePerLine: isBoolean,
+    singleQuote: isBoolean,
+    tabWidth: isNumber,
+    trailingComma: value => isOneOf(value, ['all', 'es5', 'none']),
+    useTabs: isBoolean,
+    vueIndentScriptAndStyle: isBoolean,
+  },
+  xmlPluginOptions: {
+    xmlQuoteAttributes: value =>
+      isOneOf(value, ['double', 'preserve', 'single']),
+    xmlSelfClosingSpace: isBoolean,
+    xmlSortAttributesByKey: isBoolean,
+    xmlWhitespaceSensitivity: value =>
+      isOneOf(value, ['ignore', 'preserve', 'strict']),
+  },
+  phpPluginOptions: {
+    braceStyle: value => isOneOf(value, ['1tbs', 'per-cs']),
+    phpVersion: value =>
+      isOneOf(value, [
+        '5.0',
+        '5.1',
+        '5.2',
+        '5.3',
+        '5.4',
+        '5.5',
+        '5.6',
+        '7.0',
+        '7.1',
+        '7.2',
+        '7.3',
+        '7.4',
+        '8.0',
+        '8.1',
+        '8.2',
+      ]),
+    trailingCommaPHP: isBoolean,
+  },
+  javaPluginOptions: {
+    entrypoint: value => isOneOf(value, JAVA_ENTRYPOINTS),
+  },
+  sveltePluginOptions: {
+    svelteAllowShorthand: isBoolean,
+    svelteIndentScriptAndStyle: isBoolean,
+    svelteSortOrder: value =>
+      isOneOf(value, [
+        'markup-options-scripts-styles',
+        'markup-options-styles-scripts',
+        'markup-scripts-options-styles',
+        'markup-scripts-styles-options',
+        'markup-styles-options-scripts',
+        'markup-styles-scripts-options',
+        'none',
+        'options-markup-scripts-styles',
+        'options-markup-styles-scripts',
+        'options-scripts-markup-styles',
+        'options-scripts-styles-markup',
+        'options-styles-markup-scripts',
+        'options-styles-scripts-markup',
+        'scripts-markup-options-styles',
+        'scripts-markup-styles-options',
+        'scripts-options-markup-styles',
+        'scripts-options-styles-markup',
+        'scripts-styles-markup-options',
+        'scripts-styles-options-markup',
+        'styles-markup-options-scripts',
+        'styles-markup-scripts-options',
+        'styles-options-markup-scripts',
+        'styles-options-scripts-markup',
+        'styles-scripts-markup-options',
+        'styles-scripts-options-markup',
+      ]),
+  },
+  tomlPluginOptions: {
+    alignComments: isBoolean,
+    alignEntries: isBoolean,
+    allowedBlankLines: isNumber,
+    arrayAutoCollapse: isBoolean,
+    arrayAutoExpand: isBoolean,
+    compactArrays: isBoolean,
+    compactEntries: isBoolean,
+    compactInlineTables: isBoolean,
+    indentEntries: isBoolean,
+    indentTables: isBoolean,
+    reorderKeys: isBoolean,
+  },
 }
 
 export function createDefaultOptionsSnapshot() {
@@ -74,6 +204,7 @@ export function parseOptionsSnapshot(source: string) {
     if (
       !isRecord(value)
       || !Object.keys(defaultValue).every(defaultKey => defaultKey in value)
+      || !hasValidValues(value, snapshotValidators[key])
     ) {
       throw new Error('Invalid options file')
     }

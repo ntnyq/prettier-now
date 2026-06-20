@@ -1,6 +1,10 @@
 import { languageExtensions } from '@/constants/language'
 import type { FormatJob } from '@/types/workspace'
 
+function createJobId(fileName: string, index: number) {
+  return `${fileName}-${index}-${crypto.randomUUID()}`
+}
+
 export function getLanguageIdForFileName(fileName: string) {
   const fileExt = fileName.split('.').pop()?.toLowerCase()
 
@@ -25,7 +29,7 @@ export async function createFormatJobFromFile(file: File, index: number) {
   }
 
   return {
-    id: `${file.name}-${index}`,
+    id: createJobId(file.name, index),
     fileName: file.name,
     languageId,
     sourceCode,
@@ -79,5 +83,5 @@ export function downloadTextFile(fileName: string, content: string) {
   anchor.href = url
   anchor.download = fileName
   anchor.click()
-  URL.revokeObjectURL(url)
+  window.setTimeout(() => URL.revokeObjectURL(url))
 }

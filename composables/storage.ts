@@ -56,7 +56,12 @@ export function useStorage<V extends JsonValue>(
       return
     }
 
-    await storage.setItem(syncKey, value.value)
+    try {
+      await storage.setItem(syncKey, value.value)
+    } catch (err: unknown) {
+      const message = (err as Error)?.message || 'Failed to write storage'
+      Logger.error(message)
+    }
   })
 
   return value

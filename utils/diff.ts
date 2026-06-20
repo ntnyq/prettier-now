@@ -7,6 +7,8 @@ export interface DiffLine {
   text: string
 }
 
+const MAX_DIFF_MATRIX_CELLS = 60_000
+
 function splitLines(source: string) {
   if (!source.length) {
     return []
@@ -18,6 +20,18 @@ function splitLines(source: string) {
 export function createLineDiff(before: string, after: string) {
   const beforeLines = splitLines(before)
   const afterLines = splitLines(after)
+
+  if (beforeLines.length * afterLines.length > MAX_DIFF_MATRIX_CELLS) {
+    return [
+      {
+        id: 'truncated',
+        kind: 'unchanged',
+        lineNumber: 1,
+        text: 'Diff is too large to display.',
+      },
+    ] satisfies DiffLine[]
+  }
+
   const table = Array.from({ length: beforeLines.length + 1 }, () =>
     Array.from({ length: afterLines.length + 1 }, () => 0),
   )

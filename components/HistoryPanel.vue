@@ -1,17 +1,39 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
+import { onUnmounted, shallowRef } from 'vue'
 import { i18n } from '#i18n'
 import { useAppStore } from '@/stores/app'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const appStore = useAppStore()
 const workspaceStore = useWorkspaceStore()
+const isConfirmingClear = shallowRef(false)
+let clearConfirmTimer: number | undefined
 
 function restoreEntry(id: string) {
   if (workspaceStore.restoreHistoryEntry(id)) {
     appStore.setIsHistoryPanelVisible(false)
   }
 }
+
+function clearHistory() {
+  if (isConfirmingClear.value) {
+    workspaceStore.clearFormatHistory()
+    isConfirmingClear.value = false
+    return
+  }
+
+  isConfirmingClear.value = true
+  clearConfirmTimer = window.setTimeout(() => {
+    isConfirmingClear.value = false
+  }, 3000)
+}
+
+onUnmounted(() => {
+  if (clearConfirmTimer) {
+    window.clearTimeout(clearConfirmTimer)
+  }
+})
 </script>
 
 <template>
@@ -26,9 +48,11 @@ function restoreEntry(id: string) {
         <h2 class="text-lg font-semibold">{{ i18n.t('history') }}</h2>
         <div class="flex items-center gap-2">
           <IconButton
-            @click="workspaceStore.clearFormatHistory"
+            @click="clearHistory"
             :tooltip="i18n.t('clearAll')"
-            icon="i-ri:delete-bin-line"
+            :icon="
+              isConfirmingClear ? 'i-ri:check-line' : 'i-ri:delete-bin-line'
+            "
           />
           <IconButton
             @click="appStore.setIsHistoryPanelVisible(false)"
