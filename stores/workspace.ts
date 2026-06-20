@@ -116,7 +116,6 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     }
 
     activeJobId.value = id
-    invalidateFormatRequest()
   }
 
   function removeJob(id: string) {

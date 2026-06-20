@@ -35,8 +35,12 @@ function isBoolean(value: unknown) {
   return typeof value === 'boolean'
 }
 
-function isNumber(value: unknown) {
+function isNumber(value: unknown): value is number {
   return typeof value === 'number' && Number.isFinite(value)
+}
+
+function isNonNegativeInteger(value: unknown) {
+  return isNumber(value) && Number.isInteger(value) && value >= 0
 }
 
 function isOneOf<V extends string>(value: unknown, values: readonly V[]) {
@@ -68,14 +72,14 @@ const snapshotValidators: Record<
       isOneOf(value, ['css', 'ignore', 'strict']),
     jsxSingleQuote: isBoolean,
     objectWrap: value => isOneOf(value, ['collapse', 'preserve']),
-    printWidth: isNumber,
+    printWidth: isNonNegativeInteger,
     proseWrap: value => isOneOf(value, ['always', 'never', 'preserve']),
     quoteProps: value =>
       isOneOf(value, ['as-needed', 'consistent', 'preserve']),
     semi: isBoolean,
     singleAttributePerLine: isBoolean,
     singleQuote: isBoolean,
-    tabWidth: isNumber,
+    tabWidth: isNonNegativeInteger,
     trailingComma: value => isOneOf(value, ['all', 'es5', 'none']),
     useTabs: isBoolean,
     vueIndentScriptAndStyle: isBoolean,
@@ -148,7 +152,7 @@ const snapshotValidators: Record<
   tomlPluginOptions: {
     alignComments: isBoolean,
     alignEntries: isBoolean,
-    allowedBlankLines: isNumber,
+    allowedBlankLines: isNonNegativeInteger,
     arrayAutoCollapse: isBoolean,
     arrayAutoExpand: isBoolean,
     compactArrays: isBoolean,

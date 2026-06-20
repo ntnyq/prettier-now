@@ -78,6 +78,46 @@ describe('options preset utilities', () => {
     ).toThrow('Invalid options file')
   })
 
+  it('rejects snapshots with numeric options outside supported ranges', () => {
+    const snapshot = createDefaultOptionsSnapshot()
+
+    expect(() =>
+      parseOptionsSnapshot(
+        JSON.stringify({
+          ...snapshot,
+          options: {
+            ...snapshot.options,
+            printWidth: -1,
+          },
+        }),
+      ),
+    ).toThrow('Invalid options file')
+
+    expect(() =>
+      parseOptionsSnapshot(
+        JSON.stringify({
+          ...snapshot,
+          options: {
+            ...snapshot.options,
+            tabWidth: -1,
+          },
+        }),
+      ),
+    ).toThrow('Invalid options file')
+
+    expect(() =>
+      parseOptionsSnapshot(
+        JSON.stringify({
+          ...snapshot,
+          tomlPluginOptions: {
+            ...snapshot.tomlPluginOptions,
+            allowedBlankLines: -1,
+          },
+        }),
+      ),
+    ).toThrow('Invalid options file')
+  })
+
   it('upserts presets by id and keeps newest first', () => {
     const snapshot = createDefaultOptionsSnapshot()
     const firstPreset = {
