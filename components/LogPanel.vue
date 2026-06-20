@@ -33,7 +33,7 @@ function clearLog() {
 <template>
   <Sheet v-model:open="logStore.isLogPanelVisible">
     <SheetContent
-      class="w-[min(30rem,100vw)] max-w-none gap-0 p-0 **:data-[slot=sheet-close]:hidden"
+      class="w-[min(30rem,100vw)] max-w-none gap-0 p-0 [&_[data-slot=sheet-close]]:hidden"
     >
       <SheetHeader
         class="flex-row items-center justify-between gap-3 border-b border-border px-4 py-2 text-left"

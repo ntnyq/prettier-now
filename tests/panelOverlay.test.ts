@@ -23,6 +23,8 @@ describe('panel overlays', () => {
 
     expect(source).toContain('@/components/ui/alert-dialog')
     expect(source).not.toContain('window.confirm')
+    expect(source).toContain('[&_[data-slot=sheet-close]]:hidden')
+    expect(source).not.toContain('**:data-[slot=sheet-close]:hidden')
     expect(source).toContain('function clearLog()')
     expect(source).toContain('logStore.clearAll()')
     expect(source).toContain('logStore.setIsLogPanelVisible(false)')

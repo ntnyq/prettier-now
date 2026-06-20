@@ -7,7 +7,7 @@ import {
   NumberFieldInput,
 } from '@/components/ui/number-field'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     ariaDescribedby?: string
     ariaLabelledby?: string
@@ -27,11 +27,11 @@ const model = defineModel<number>({ required: true })
 <template>
   <NumberField
     v-model="model"
-    :aria-describedby
-    :aria-labelledby
-    :max
-    :min
-    :step
+    :aria-describedby="props.ariaDescribedby"
+    :aria-labelledby="props.ariaLabelledby"
+    :max="props.max"
+    :min="props.min"
+    :step="props.step"
     class="w-28"
   >
     <NumberFieldContent>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Switch } from '@/components/ui/switch'
 
-defineProps<{
+const props = defineProps<{
   ariaDescribedby?: string
   ariaLabelledby?: string
 }>()
@@ -12,7 +12,7 @@ const model = defineModel<boolean>({ required: true })
 <template>
   <Switch
     v-model="model"
-    :aria-describedby
-    :aria-labelledby
+    :aria-describedby="props.ariaDescribedby"
+    :aria-labelledby="props.ariaLabelledby"
   />
 </template>

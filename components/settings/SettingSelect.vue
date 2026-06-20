@@ -60,8 +60,8 @@ function selectItem(value: string) {
     v-if="isNativeSelect"
   >
     <SelectTrigger
-      :aria-describedby
-      :aria-labelledby
+      :aria-describedby="props.ariaDescribedby"
+      :aria-labelledby="props.ariaLabelledby"
       class="w-56"
     >
       <SelectValue />
@@ -83,9 +83,9 @@ function selectItem(value: string) {
   >
     <PopoverTrigger as-child>
       <Button
-        :aria-describedby
+        :aria-describedby="props.ariaDescribedby"
         :aria-expanded="open"
-        :aria-labelledby
+        :aria-labelledby="props.ariaLabelledby"
         class="w-56 justify-between"
         role="combobox"
         variant="outline"
