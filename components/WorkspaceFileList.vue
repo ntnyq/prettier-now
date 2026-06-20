@@ -29,58 +29,63 @@ const hasVisibleJobs = computed(() => workspaceStore.jobs.length > 1)
     </div>
 
     <div class="max-h-full overflow-y-auto py-1">
-      <button
-        @click="workspaceStore.selectJob(job.id)"
+      <div
         v-for="job in workspaceStore.jobs"
         :key="job.id"
         :class="{
           'bg-zinc-200 dark:bg-zinc-800': workspaceStore.activeJobId === job.id,
         }"
-        type="button"
-        class="w-full flex items-start gap-2 px-3 py-2 text-left hover:bg-zinc-100 dark:hover:bg-zinc-800"
+        class="flex items-start hover:bg-zinc-100 dark:hover:bg-zinc-800"
       >
-        <TriangleAlert
-          v-if="job.status === 'error'"
-          class="mt-0.5 size-4 shrink-0 text-red-500"
-        />
-        <CheckCircle2
-          v-else-if="job.status === 'formatted'"
-          class="mt-0.5 size-4 shrink-0 text-green-600"
-        />
-        <LoaderCircle
-          v-else-if="job.status === 'formatting'"
-          class="mt-0.5 size-4 shrink-0 animate-spin text-sky-600"
-        />
-        <Clock3
-          v-else
-          class="mt-0.5 size-4 shrink-0 text-zinc-500"
-        />
-        <span class="min-w-0 flex-1">
-          <span class="block truncate text-sm">{{ job.fileName }}</span>
-          <span class="block truncate text-xs opacity-65">
-            {{ job.languageId }}
-            <template v-if="job.formatCost">
-              · {{ i18n.t('ms', [+job.formatCost.toFixed(1)]) }}
-            </template>
+        <button
+          @click="workspaceStore.selectJob(job.id)"
+          :aria-current="workspaceStore.activeJobId === job.id"
+          type="button"
+          class="flex min-w-0 flex-1 items-start gap-2 px-3 py-2 text-left"
+        >
+          <TriangleAlert
+            v-if="job.status === 'error'"
+            class="mt-0.5 size-4 shrink-0 text-red-500"
+          />
+          <CheckCircle2
+            v-else-if="job.status === 'formatted'"
+            class="mt-0.5 size-4 shrink-0 text-green-600"
+          />
+          <LoaderCircle
+            v-else-if="job.status === 'formatting'"
+            class="mt-0.5 size-4 shrink-0 animate-spin text-sky-600"
+          />
+          <Clock3
+            v-else
+            class="mt-0.5 size-4 shrink-0 text-zinc-500"
+          />
+          <span class="min-w-0 flex-1">
+            <span class="block truncate text-sm">{{ job.fileName }}</span>
+            <span class="block truncate text-xs opacity-65">
+              {{ job.languageId }}
+              <template v-if="job.formatCost">
+                · {{ i18n.t('ms', [+job.formatCost.toFixed(1)]) }}
+              </template>
+            </span>
+            <span
+              v-if="job.errorMessage"
+              class="mt-1 block truncate text-xs text-red-500"
+            >
+              {{ job.errorMessage }}
+            </span>
           </span>
-          <span
-            v-if="job.errorMessage"
-            class="mt-1 block truncate text-xs text-red-500"
-          >
-            {{ job.errorMessage }}
-          </span>
-        </span>
+        </button>
         <Button
-          @click.stop="workspaceStore.removeJob(job.id)"
+          @click="workspaceStore.removeJob(job.id)"
           :aria-label="i18n.t('removeFile')"
           variant="ghost"
           size="icon-sm"
           type="button"
-          class="-mr-2 -mt-1 shrink-0 opacity-60 hover:opacity-100"
+          class="mr-1 mt-1 shrink-0 opacity-60 hover:opacity-100"
         >
           <X class="size-4" />
         </Button>
-      </button>
+      </div>
     </div>
   </aside>
 </template>
