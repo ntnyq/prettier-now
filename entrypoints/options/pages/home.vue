@@ -15,6 +15,7 @@ useEventListener('paste', (evt: ClipboardEvent) => {
 <template>
   <div class="flex flex-1 flex-col">
     <div class="min-h-0 flex flex-1 gap-3 overflow-y-auto">
+      <WorkspaceFileList />
       <EditorSource
         v-show="appStore.showLeftLayout"
         :class="[
@@ -30,6 +31,8 @@ useEventListener('paste', (evt: ClipboardEvent) => {
     <ActionBar />
 
     <DropZone />
+    <DiffPanel />
+    <HistoryPanel />
     <LogPanel />
   </div>
 </template>

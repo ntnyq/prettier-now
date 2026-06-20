@@ -4,29 +4,51 @@ aboutMadeWithBy: ❤️ 로 제작 by
 aboutSource: 소스
 appDescription: 코드 포맷팅을 위한 또 하나의 Prettier 브라우저 확장입니다.
 appName: Prettier Now
+applyPreset: 프리셋 적용
+applyPresetSuccess: 프리셋이 적용되었습니다
 brandAlt: Prettier Now 로고
 changelog: 변경 로그
 clearAll: 모두 지우기
 clearSuccess: 지우기 성공
+close: 닫기
 copiedToClipboard: 클립보드에 복사되었습니다
 copyResult: 결과 복사
+deleteHistoryEntry: 기록 삭제
+deletePreset: 프리셋 삭제
+deletePresetSuccess: 프리셋이 삭제되었습니다
+diff: Diff
+downloadAll: 모두 다운로드
+downloadResult: 결과 다운로드
 dragFileHere: 여기에 파일을 드래그하세요
+emptyDiff: Diff를 보려면 먼저 코드를 포맷하세요.
 emptyFile: 빈 파일
+emptyHistory: 아직 포맷 기록이 없습니다.
+emptyLog: 아직 로그가 없습니다
 en: English
+exportOptions: 옵션 내보내기
 failedToCopyToClipboard: 클립보드 복사 실패
 feedback: 피드백
 fileReadError: 파일 읽기 실패
+files: 파일
+formatBatchSuccess: $2개 중 $1개 파일 포맷 완료
 formatCostTime: 포맷 소요 시간
 formatSource: 코드 포맷
 formatSuccess: 포맷 성공
+history: 기록
 home: 홈
+importExportOptions: 가져오기 / 내보내기
+importOptions: 옵션 가져오기
+importOptionsFailed: 옵션 가져오기 실패
+importOptionsSuccess: 옵션을 가져왔습니다
 ja: 日本語
 ko: 한국어
 log: 로그
 logoAlt: 앱 로고
+managePresets: 프리셋 관리
 ms: $1ms
 nothingToClear: 지울 내용이 없습니다
 nothingToCopy: 복사할 내용이 없습니다
+nothingToDownload: 다운로드할 내용이 없습니다
 nothingToFormat: 포맷할 내용이 없습니다
 openOptionsPage: 옵션 페이지 열기
 optDescAlignComments: 항목과 배열 항목 뒤의 연속된 주석을 세로로 정렬합니다. 항목 또는 배열 항목 뒤에 있는 주석에만 적용됩니다.
@@ -48,14 +70,17 @@ optDescEntrypoint: 엔트리포인트부터 포맷하여 스니펫에도 prettie
 optDescExperimentalOperatorPosition: 이항 표현식이 줄바꿈될 때 연산자 위치를 지정합니다.
 optDescExperimentalTernaries: 삼항 연산자 스타일을 지정합니다.
 optDescHtmlWhitespaceSensitivity: HTML, Vue, Angular, Handlebars 의 전역 공백 민감도를 지정합니다.
+optDescImportExportOptions: JSON 옵션 파일을 가져오거나 현재 옵션을 내보내거나 기본값으로 복원합니다.
 optDescIndentEntries: 테이블 아래 항목을 들여쓰기합니다.
 optDescIndentTables: 테이블과 테이블 배열 및 그 하위 테이블을 기준으로 들여쓰기합니다. 순서가 맞지 않는 하위 테이블은 들여쓰지 않습니다.
 optDescJsxSingleQuote: JSX 에서 큰따옴표 대신 작은따옴표를 사용합니다.
+optDescManagePresets: 저장된 포맷 프리셋을 적용하거나 삭제합니다.
 optDescObjectWrap: 객체 리터럴 줄바꿈 방식을 지정합니다.
 optDescPhpVersion: 최소 대상 PHP 버전을 지정합니다.
 optDescPrintWidth: 프린터가 줄바꿈할 줄 길이를 지정합니다.
 optDescQuoteProps: 객체 속성에 따옴표를 언제 붙일지 변경합니다.
 optDescReorderKeys: 빈 줄로 구분되지 않은 키를 알파벳 순으로 재정렬합니다.
+optDescSavePreset: 현재 포맷 옵션을 이름 있는 프리셋으로 저장합니다.
 optDescSemi: 문장 끝에 세미콜론을 출력합니다.
 optDescSilent: 사용자 작업 후 토스트 메시지를 표시할지 여부입니다.
 optDescSingleAttributePerLine: HTML, Vue, JSX 에서 한 줄당 하나의 속성을 강제합니다.
@@ -72,15 +97,25 @@ optDescXmlQuoteAttributes: XML 속성 따옴표 스타일을 지정합니다.
 optDescXmlSelfClosingSpace: 셀프 클로징 태그 앞에 공백을 추가합니다.
 optDescXmlSortAttributesByKey: xmlns 속성을 우선하면서 XML 속성을 키 기준 알파벳 순으로 정렬합니다.
 optDescXmlWhitespaceSensitivity: XML 공백 처리 방식을 지정합니다.
+optionsPresets: 옵션 프리셋
 pluginJavaOptions: Java 플러그인 옵션
 pluginPHPOptions: PHP 플러그인 옵션
 pluginSvelteOptions: Svelte 플러그인 옵션
 pluginTOMLOptions: TOML 플러그인 옵션
 pluginXMLOptions: XML 플러그인 옵션
 popupOrUse: 또는
+presetName: 프리셋 이름
+presetNameRequired: 프리셋 이름을 입력하세요
 prettierOptions: Prettier 옵션
+removeFile: 파일 제거
+resetOptions: 옵션 초기화
+resetOptionsSuccess: 옵션이 초기화되었습니다
+restoreHistorySuccess: 기록이 복원되었습니다
+savePreset: 프리셋 저장
+savePresetSuccess: 프리셋이 저장되었습니다
 searchItems: 항목 검색...
 selectFile: 파일 선택
+selectPresetFirst: 먼저 프리셋을 선택하세요
 settings: 설정
 sourceCode: 소스 코드
 toggleColorMode: 색상 모드 전환

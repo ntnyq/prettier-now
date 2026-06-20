@@ -3,13 +3,13 @@ import { isString } from '@ntnyq/utils'
 import { computed } from 'vue'
 import { isDark } from '@/composables/dark'
 import { languages } from '@/constants/language'
-import { useEditorStore } from '@/stores/editor'
+import { useWorkspaceStore } from '@/stores/workspace'
 import type { Language } from '@/types/language'
 
-const editorStore = useEditorStore()
+const workspaceStore = useWorkspaceStore()
 
 const currentLanguage = computed(() =>
-  languages.find(language => language.id === editorStore.languageId),
+  languages.find(language => language.id === workspaceStore.languageId),
 )
 const currentLanguageIcon = computed(() => {
   if (!currentLanguage.value?.icon) {
@@ -24,10 +24,7 @@ const currentLanguageIcon = computed(() => {
 })
 
 function handSelectLanguage(language: Language) {
-  editorStore.setLanguageId(language.id)
-
-  // clear workspace after language change
-  editorStore.clearWorkspace()
+  workspaceStore.setLanguageId(language.id)
 }
 </script>
 
@@ -49,7 +46,7 @@ function handSelectLanguage(language: Language) {
         :key="language.id"
         :icon="language.icon"
         :text="language.name"
-        :checked="editorStore.languageId === language.id"
+        :checked="workspaceStore.languageId === language.id"
         checkable
       />
     </template>

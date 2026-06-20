@@ -11,6 +11,8 @@ const configStore = useConfigStore()
 <template>
   <div class="relative overflow-y-auto">
     <div class="mx-auto max-w-720px p-8">
+      <OptionsPresetPanel />
+
       <!-- Prettier Core Options -->
       <OptionsBlock :title="i18n.t('prettierOptions')">
         <OptionItem

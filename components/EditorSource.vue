@@ -1,28 +1,26 @@
 <script lang="ts" setup>
 import { watch } from 'vue'
 import { useConfigStore } from '@/stores/config'
-import { useEditorStore } from '@/stores/editor'
+import { useWorkspaceStore } from '@/stores/workspace'
 
 const configStore = useConfigStore()
-const editorStore = useEditorStore()
+const workspaceStore = useWorkspaceStore()
 
 let timer: ReturnType<typeof setTimeout> | undefined
 
 watch(
-  () => editorStore.sourceCode,
+  () => workspaceStore.sourceCode,
   () => {
     if (timer) {
       clearTimeout(timer)
     }
-    if (editorStore.sourceCode.length > 0) {
+    if (workspaceStore.sourceCode.length > 0) {
       if (!configStore.autoFormat) {
         return
       }
       timer = setTimeout(() => {
-        editorStore.formatCode()
+        workspaceStore.formatActiveJob()
       }, 300)
-    } else {
-      editorStore.clearWorkspace()
     }
   },
 )
@@ -30,7 +28,7 @@ watch(
 
 <template>
   <Editor
-    v-model="editorStore.sourceCode"
-    :language="editorStore.languageId"
+    v-model="workspaceStore.sourceCode"
+    :language="workspaceStore.languageId"
   />
 </template>

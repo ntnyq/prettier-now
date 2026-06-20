@@ -13,6 +13,12 @@ import {
   DEFAULT_TOML_OPTIONS,
   DEFAULT_XML_OPTIONS,
 } from '@/constants/options'
+import {
+  createDefaultOptionsSnapshot,
+  createOptionsPreset,
+  removeOptionsPreset,
+  upsertOptionsPreset,
+} from '@/utils/optionsPreset'
 import type {
   PluginJavaOptions,
   PluginPHPOptions,
@@ -21,8 +27,11 @@ import type {
   PluginXMLOptions,
   PrettierOptions,
 } from '@/types/options'
+import type { OptionsPreset, OptionsSnapshot } from '@/types/optionsPreset'
 
 export const useOptionsStore = defineStore('options', () => {
+  const presets = useStorage<OptionsPreset[]>('optionsPresets', [])
+
   const useTabs = useStorage<boolean>('useTabs', DEFAULT_OPTIONS.useTabs)
   const semi = useStorage<boolean>('semi', DEFAULT_OPTIONS.semi)
   const singleQuote = useStorage<boolean>(
@@ -244,7 +253,104 @@ export const useOptionsStore = defineStore('options', () => {
     reorderKeys: reorderKeys.value,
   }))
 
+  function createSnapshot() {
+    return {
+      version: 1,
+      options: { ...options.value },
+      xmlPluginOptions: { ...xmlPluginOptions.value },
+      phpPluginOptions: { ...phpPluginOptions.value },
+      javaPluginOptions: { ...javaPluginOptions.value },
+      sveltePluginOptions: { ...sveltePluginOptions.value },
+      tomlPluginOptions: { ...tomlPluginOptions.value },
+    } satisfies OptionsSnapshot
+  }
+
+  function applySnapshot(snapshot: OptionsSnapshot) {
+    useTabs.value = snapshot.options.useTabs
+    semi.value = snapshot.options.semi
+    singleQuote.value = snapshot.options.singleQuote
+    bracketSpacing.value = snapshot.options.bracketSpacing
+    bracketSameLine.value = snapshot.options.bracketSameLine
+    jsxSingleQuote.value = snapshot.options.jsxSingleQuote
+    singleAttributePerLine.value = snapshot.options.singleAttributePerLine
+    vueIndentScriptAndStyle.value = snapshot.options.vueIndentScriptAndStyle
+    experimentalTernaries.value = snapshot.options.experimentalTernaries
+    quoteProps.value = snapshot.options.quoteProps
+    trailingComma.value = snapshot.options.trailingComma
+    arrowParens.value = snapshot.options.arrowParens
+    proseWrap.value = snapshot.options.proseWrap
+    objectWrap.value = snapshot.options.objectWrap
+    experimentalOperatorPosition.value =
+      snapshot.options.experimentalOperatorPosition
+    htmlWhitespaceSensitivity.value = snapshot.options.htmlWhitespaceSensitivity
+    endOfLine.value = snapshot.options.endOfLine
+    embeddedLanguageFormatting.value =
+      snapshot.options.embeddedLanguageFormatting
+    printWidth.value = snapshot.options.printWidth
+    tabWidth.value = snapshot.options.tabWidth
+
+    xmlSelfClosingSpace.value = snapshot.xmlPluginOptions.xmlSelfClosingSpace
+    xmlSortAttributesByKey.value =
+      snapshot.xmlPluginOptions.xmlSortAttributesByKey
+    xmlQuoteAttributes.value = snapshot.xmlPluginOptions.xmlQuoteAttributes
+    xmlWhitespaceSensitivity.value =
+      snapshot.xmlPluginOptions.xmlWhitespaceSensitivity
+
+    phpVersion.value = snapshot.phpPluginOptions.phpVersion
+    trailingCommaPHP.value = snapshot.phpPluginOptions.trailingCommaPHP
+    braceStyle.value = snapshot.phpPluginOptions.braceStyle
+
+    entrypoint.value = snapshot.javaPluginOptions.entrypoint
+
+    svelteSortOrder.value = snapshot.sveltePluginOptions.svelteSortOrder
+    svelteAllowShorthand.value =
+      snapshot.sveltePluginOptions.svelteAllowShorthand
+    svelteIndentScriptAndStyle.value =
+      snapshot.sveltePluginOptions.svelteIndentScriptAndStyle
+
+    alignComments.value = snapshot.tomlPluginOptions.alignComments
+    alignEntries.value = snapshot.tomlPluginOptions.alignEntries
+    allowedBlankLines.value = snapshot.tomlPluginOptions.allowedBlankLines
+    arrayAutoCollapse.value = snapshot.tomlPluginOptions.arrayAutoCollapse
+    arrayAutoExpand.value = snapshot.tomlPluginOptions.arrayAutoExpand
+    compactArrays.value = snapshot.tomlPluginOptions.compactArrays
+    compactEntries.value = snapshot.tomlPluginOptions.compactEntries
+    compactInlineTables.value = snapshot.tomlPluginOptions.compactInlineTables
+    indentEntries.value = snapshot.tomlPluginOptions.indentEntries
+    indentTables.value = snapshot.tomlPluginOptions.indentTables
+    reorderKeys.value = snapshot.tomlPluginOptions.reorderKeys
+  }
+
+  function resetOptions() {
+    applySnapshot(createDefaultOptionsSnapshot())
+  }
+
+  function savePreset(name: string) {
+    const preset = createOptionsPreset({
+      name,
+      snapshot: createSnapshot(),
+    })
+
+    presets.value = upsertOptionsPreset(presets.value, preset)
+  }
+
+  function applyPreset(id: string) {
+    const preset = presets.value.find(item => item.id === id)
+
+    if (!preset) {
+      return false
+    }
+
+    applySnapshot(preset.snapshot)
+    return true
+  }
+
+  function deletePreset(id: string) {
+    presets.value = removeOptionsPreset(presets.value, id)
+  }
+
   return {
+    presets,
     options,
 
     // Boolean
@@ -319,5 +425,12 @@ export const useOptionsStore = defineStore('options', () => {
     indentTables,
     reorderKeys,
     tomlPluginOptions,
+
+    createSnapshot,
+    applySnapshot,
+    resetOptions,
+    savePreset,
+    applyPreset,
+    deletePreset,
   }
 })

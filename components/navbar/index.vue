@@ -5,14 +5,14 @@ import { browser } from '#imports'
 import { toggleDark } from '@/composables/dark'
 import { version } from '@/package.json'
 import { useAppStore } from '@/stores/app'
-import { useEditorStore } from '@/stores/editor'
-// import { useLogStore } from '@/stores/log'
+import { useLogStore } from '@/stores/log'
+import { useWorkspaceStore } from '@/stores/workspace'
 
 const route = useRoute()
 const router = useRouter()
-// const logStore = useLogStore()
+const logStore = useLogStore()
 const appStore = useAppStore()
-const editorStore = useEditorStore()
+const workspaceStore = useWorkspaceStore()
 
 const logoUrl = browser.runtime.getURL('/icons/48.png')
 </script>
@@ -41,12 +41,22 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
           v-tooltip="{ content: i18n.t('formatCostTime') }"
           class="p-1 opacity-80"
         >
-          {{ i18n.t('ms', [+editorStore.formatCost.toFixed(1)]) }}
+          {{ i18n.t('ms', [+workspaceStore.formatCost.toFixed(1)]) }}
         </div>
         <IconButton
           @click="router.push({ name: 'Options' })"
           :tooltip="i18n.t('settings')"
           icon="i-ri:settings-line"
+        />
+        <IconButton
+          @click="appStore.setIsDiffPanelVisible(true)"
+          :tooltip="i18n.t('diff')"
+          icon="i-ri:git-merge-line"
+        />
+        <IconButton
+          @click="appStore.setIsHistoryPanelVisible(true)"
+          :tooltip="i18n.t('history')"
+          icon="i-ri:history-line"
         />
         <IconButton
           @click="appStore.toggleLeftLayout"
@@ -67,13 +77,11 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
           :tooltip="i18n.t('toggleRightLayout')"
           icon-class="rotate-180"
         />
-        <!--
-          <IconButton
+        <IconButton
           @click="logStore.setIsLogPanelVisible(true)"
-          :tooltip="t('log')"
-          icon="i-lucide:logs"
-          /> 
-        -->
+          :tooltip="i18n.t('log')"
+          icon="i-ri:file-list-3-line"
+        />
       </template>
       <IconButton
         @click="router.push({ name: 'Home' })"

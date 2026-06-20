@@ -4,29 +4,51 @@ aboutMadeWithBy: made with ❤️ by
 aboutSource: source
 appDescription: Yet another Prettier browser extension for code formatting.
 appName: Prettier Now
+applyPreset: Apply Preset
+applyPresetSuccess: Preset applied
 brandAlt: Prettier Now logo
 changelog: ChangeLog
 clearAll: Clear All
 clearSuccess: Clear Success
+close: Close
 copiedToClipboard: Copied to clipboard
 copyResult: Copy Result
+deleteHistoryEntry: Delete History Entry
+deletePreset: Delete Preset
+deletePresetSuccess: Preset deleted
+diff: Diff
+downloadAll: Download All
+downloadResult: Download Result
 dragFileHere: Drag File Here
+emptyDiff: Format code first to view the diff.
 emptyFile: Empty File
+emptyHistory: No format history yet.
+emptyLog: No logs yet
 en: English
+exportOptions: Export Options
 failedToCopyToClipboard: Failed to copy to clipboard
 feedback: Feedback
 fileReadError: Failed to read file
+files: Files
+formatBatchSuccess: Formatted $1 of $2 files
 formatCostTime: Format Cost Time
 formatSource: Format Source
 formatSuccess: Format successfully
+history: History
 home: Home
+importExportOptions: Import / Export
+importOptions: Import Options
+importOptionsFailed: Failed to import options
+importOptionsSuccess: Options imported
 ja: Japanese
 ko: Korean
 log: Log
 logoAlt: App Logo
+managePresets: Manage Presets
 ms: $1ms
 nothingToClear: Nothing to clear
 nothingToCopy: Nothing to copy
+nothingToDownload: Nothing to download
 nothingToFormat: Nothing to format
 openOptionsPage: Open Options Page
 optDescAlignComments: Align consecutive comments after entries and items vertically. This applies to comments that are after entries or array items.
@@ -48,14 +70,17 @@ optDescEntrypoint: Prettify from the entrypoint, allowing prettier to format sni
 optDescExperimentalOperatorPosition: Where to print operators when binary expressions wrap lines.
 optDescExperimentalTernaries: Specify the ternaries style.
 optDescHtmlWhitespaceSensitivity: Specify the global whitespace sensitivity for HTML, Vue, Angular, and Handlebars.
+optDescImportExportOptions: Import a JSON options file, export the current options, or restore defaults.
 optDescIndentEntries: Indent entries under tables.
 optDescIndentTables: Indent based on tables and arrays of tables and their subtables; subtables out of order are not indented.
 optDescJsxSingleQuote: Use single quotes instead of double quotes in JSX.
+optDescManagePresets: Apply or remove a saved formatting preset.
 optDescObjectWrap: How to wrap object literals.
 optDescPhpVersion: Specify the minimum target PHP version.
 optDescPrintWidth: Specify the line length that the printer will wrap on.
 optDescQuoteProps: Change when properties in objects are quoted.
 optDescReorderKeys: Alphabetically reorder keys that are not separated by empty lines.
+optDescSavePreset: Save the current formatting options as a named preset.
 optDescSemi: Print semicolons at the ends of statements.
 optDescSilent: Whether to show toast message after user action.
 optDescSingleAttributePerLine: Enforce single attribute per line in HTML, Vue and JSX.
@@ -72,15 +97,25 @@ optDescXmlQuoteAttributes: How to quote attributes in XML.
 optDescXmlSelfClosingSpace: Add a space before self-closing tags.
 optDescXmlSortAttributesByKey: Order XML attributes by key alphabetically while prioritizing xmlns attributes.
 optDescXmlWhitespaceSensitivity: How to handle whitespaces in XML.
+optionsPresets: Options Presets
 pluginJavaOptions: Java Plugin Options
 pluginPHPOptions: PHP Plugin Options
 pluginSvelteOptions: Svelte Plugin Options
 pluginTOMLOptions: TOML Plugin Options
 pluginXMLOptions: XML Plugin Options
 popupOrUse: or use
+presetName: Preset name
+presetNameRequired: Preset name is required
 prettierOptions: Prettier Options
+removeFile: Remove File
+resetOptions: Reset Options
+resetOptionsSuccess: Options reset
+restoreHistorySuccess: History entry restored
+savePreset: Save Preset
+savePresetSuccess: Preset saved
 searchItems: Search items...
 selectFile: Select File
+selectPresetFirst: Select a preset first
 settings: Settings
 sourceCode: Source Code
 toggleColorMode: Toggle Color Mode

@@ -2,11 +2,11 @@
 import { useClipboard, useFileDialog } from '@vueuse/core'
 import { i18n } from '#i18n'
 import { useFileHandler } from '@/composables/fileHandler'
-import { useEditorStore } from '@/stores/editor'
+import { useWorkspaceStore } from '@/stores/workspace'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
 
-const editorStore = useEditorStore()
+const workspaceStore = useWorkspaceStore()
 const { loadFileList } = useFileHandler()
 const { copy } = useClipboard({ legacy: true })
 
@@ -15,7 +15,7 @@ const {
   reset: resetSelectedFile,
   onChange: handleFileDialogChange,
 } = useFileDialog({
-  multiple: false,
+  multiple: true,
 })
 
 handleFileDialogChange(async files => {
@@ -27,21 +27,16 @@ handleFileDialogChange(async files => {
 })
 
 async function formatSource() {
-  if (!editorStore.sourceCode) {
-    Logger.warn(i18n.t('nothingToFormat'))
-    return Toast.info(i18n.t('nothingToFormat'))
-  }
-
-  await editorStore.formatCode()
+  await workspaceStore.formatActiveJob()
 }
 async function copyResult() {
-  if (!editorStore.resultCode) {
+  if (!workspaceStore.resultCode) {
     Logger.warn(i18n.t('nothingToCopy'))
     return Toast.info(i18n.t('nothingToCopy'))
   }
 
   try {
-    await copy(editorStore.resultCode)
+    await copy(workspaceStore.resultCode)
     Logger.success(i18n.t('copiedToClipboard'))
     Toast.info(i18n.t('copiedToClipboard'))
   } catch {
@@ -50,12 +45,12 @@ async function copyResult() {
   }
 }
 function clearAll() {
-  if (!editorStore.sourceCode && !editorStore.resultCode) {
+  if (!workspaceStore.sourceCode && !workspaceStore.resultCode) {
     Logger.warn(i18n.t('nothingToClear'))
     return Toast.info(i18n.t('nothingToClear'))
   }
 
-  editorStore.clearWorkspace()
+  workspaceStore.clearWorkspace()
 
   Logger.success(i18n.t('clearSuccess'))
   Toast.info(i18n.t('clearSuccess'))
@@ -80,6 +75,14 @@ function selectFile() {
     <ActionButton
       @click="copyResult"
       :label="i18n.t('copyResult')"
+    />
+    <ActionButton
+      @click="workspaceStore.downloadActiveJob"
+      :label="i18n.t('downloadResult')"
+    />
+    <ActionButton
+      @click="workspaceStore.downloadAllJobs"
+      :label="i18n.t('downloadAll')"
     />
     <ActionButton
       @click="formatSource"

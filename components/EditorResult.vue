@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { useEditorStore } from '@/stores/editor'
+import { useWorkspaceStore } from '@/stores/workspace'
 
-const editorStore = useEditorStore()
+const workspaceStore = useWorkspaceStore()
 </script>
 
 <template>
   <div class="min-w-0 flex flex-1">
     <Editor
-      v-model="editorStore.resultCode"
-      :language="editorStore.languageId"
+      v-model="workspaceStore.resultCode"
+      :language="workspaceStore.languageId"
       class="h-full min-w-0 flex-1"
       disabled
     />

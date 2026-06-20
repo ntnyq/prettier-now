@@ -28,6 +28,7 @@
     "postinstall": "wxt prepare",
     "prepare": "husky",
     "release": "bumpp",
+    "test": "vitest",
     "typecheck": "vue-tsc --build",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox"
@@ -93,6 +94,7 @@
     "unocss": "^66.7.2",
     "unplugin-vue-components": "^32.1.0",
     "vite": "^8.0.16",
+    "vitest": "^4.1.9",
     "vue-tsc": "^3.3.5",
     "wxt": "^0.20.26"
   },

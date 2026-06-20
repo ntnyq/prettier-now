@@ -4,29 +4,51 @@ aboutMadeWithBy: 用 ❤️ 製作 by
 aboutSource: 原始碼
 appDescription: 另一個用於程式碼格式化的 Prettier 瀏覽器擴充套件。
 appName: Prettier Now
+applyPreset: 套用預設
+applyPresetSuccess: 已套用預設
 brandAlt: Prettier Now 標誌
 changelog: 更新日誌
 clearAll: 清除全部
 clearSuccess: 清除成功
+close: 關閉
 copiedToClipboard: 已複製到剪貼簿
 copyResult: 複製結果
+deleteHistoryEntry: 刪除歷史記錄
+deletePreset: 刪除預設
+deletePresetSuccess: 已刪除預設
+diff: 差異
+downloadAll: 下載全部
+downloadResult: 下載結果
 dragFileHere: 拖曳檔案到此
+emptyDiff: 請先格式化程式碼以查看差異。
 emptyFile: 空檔案
+emptyHistory: 暫無格式化歷史。
+emptyLog: 暫無日誌
 en: English
+exportOptions: 匯出選項
 failedToCopyToClipboard: 複製到剪貼簿失敗
 feedback: 意見回饋
 fileReadError: 讀取檔案失敗
+files: 檔案
+formatBatchSuccess: 已格式化 $1 / $2 個檔案
 formatCostTime: 格式化耗時
 formatSource: 格式化程式碼
 formatSuccess: 格式化成功
+history: 歷史記錄
 home: 首頁
+importExportOptions: 匯入 / 匯出
+importOptions: 匯入選項
+importOptionsFailed: 匯入選項失敗
+importOptionsSuccess: 已匯入選項
 ja: 日本語
 ko: 한국어
 log: 日誌
 logoAlt: 應用程式標誌
+managePresets: 管理預設
 ms: $1毫秒
 nothingToClear: 沒有可清除的內容
 nothingToCopy: 沒有可複製的內容
+nothingToDownload: 沒有可下載的內容
 nothingToFormat: 沒有可格式化的內容
 openOptionsPage: 開啟選項頁
 optDescAlignComments: 將項目與陣列項目後方的連續註解垂直對齊。僅對位於項目或陣列項目後方的註解生效。
@@ -48,14 +70,17 @@ optDescEntrypoint: 從入口點開始格式化，讓 prettier 可用於程式碼
 optDescExperimentalOperatorPosition: 二元表達式換行時，指定運算子位置。
 optDescExperimentalTernaries: 指定三元運算式樣式。
 optDescHtmlWhitespaceSensitivity: 指定 HTML、Vue、Angular 與 Handlebars 的全域空白敏感度。
+optDescImportExportOptions: 匯入 JSON 選項檔、匯出目前選項，或還原預設值。
 optDescIndentEntries: 對資料表中的項目進行縮排。
 optDescIndentTables: 依資料表、資料表陣列及其子表進行縮排；亂序子表不縮排。
 optDescJsxSingleQuote: 在 JSX 中使用單引號而非雙引號。
+optDescManagePresets: 套用或移除已儲存的格式化預設。
 optDescObjectWrap: 指定物件常值的換行方式。
 optDescPhpVersion: 指定最低目標 PHP 版本。
 optDescPrintWidth: 指定程式碼格式化時的換行寬度。
 optDescQuoteProps: 控制物件屬性何時加上引號。
 optDescReorderKeys: 依字母順序重排未被空白行分隔的鍵。
+optDescSavePreset: 將目前格式化選項儲存為命名預設。
 optDescSemi: 在敘述句結尾輸出分號。
 optDescSilent: 使用者操作後是否顯示 Toast 提示。
 optDescSingleAttributePerLine: 在 HTML、Vue、JSX 中強制每行僅一個屬性。
@@ -72,15 +97,25 @@ optDescXmlQuoteAttributes: 指定 XML 屬性引號樣式。
 optDescXmlSelfClosingSpace: 在自閉合標籤前加入空格。
 optDescXmlSortAttributesByKey: 依鍵名字母順序排序 XML 屬性，並優先 xmlns 屬性。
 optDescXmlWhitespaceSensitivity: 指定 XML 空白處理方式。
+optionsPresets: 選項預設
 pluginJavaOptions: Java 外掛選項
 pluginPHPOptions: PHP 外掛選項
 pluginSvelteOptions: Svelte 外掛選項
 pluginTOMLOptions: TOML 外掛選項
 pluginXMLOptions: XML 外掛選項
 popupOrUse: 或使用
+presetName: 預設名稱
+presetNameRequired: 請輸入預設名稱
 prettierOptions: Prettier 選項
+removeFile: 移除檔案
+resetOptions: 還原預設選項
+resetOptionsSuccess: 已還原預設選項
+restoreHistorySuccess: 已還原歷史記錄
+savePreset: 儲存預設
+savePresetSuccess: 已儲存預設
 searchItems: 搜尋項目...
 selectFile: 選擇檔案
+selectPresetFirst: 請先選擇預設
 settings: 設定
 sourceCode: 原始碼
 toggleColorMode: 切換色彩模式
