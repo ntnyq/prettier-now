@@ -65,4 +65,16 @@ style.
     )
     expect(formatSource).toContain('pluginPostcss,')
   })
+
+  it('does not dynamically load css-family plugins already preloaded by postcss', () => {
+    const formatSource = readSource('utils/format.ts')
+
+    expect(formatSource).toContain('PRELOADED_PLUGIN_LANGUAGE_IDS')
+    expect(formatSource).toContain('LANGUAGE_ID.css')
+    expect(formatSource).toContain('LANGUAGE_ID.less')
+    expect(formatSource).toContain('LANGUAGE_ID.scss')
+    expect(formatSource).toContain(
+      'PRELOADED_PLUGIN_LANGUAGE_IDS.has(languageId)',
+    )
+  })
 })

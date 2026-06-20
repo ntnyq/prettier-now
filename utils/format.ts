@@ -23,6 +23,11 @@ const PUG_DEFAULT_FORMAT_OPTIONS = {
   pugSortAttributesBeginning: [],
   pugSortAttributesEnd: [],
 } as const
+const PRELOADED_PLUGIN_LANGUAGE_IDS = new Set([
+  LANGUAGE_ID.css,
+  LANGUAGE_ID.less,
+  LANGUAGE_ID.scss,
+])
 
 export type FormatOptions = PrettierCoreOptions
   & Partial<
@@ -57,7 +62,9 @@ export async function formatViaPrettier(
 
   const { languageId, ...formatOptions } = options
 
-  const loadedPlugin = await loadPrettierPlugin(languageId)
+  const loadedPlugin = PRELOADED_PLUGIN_LANGUAGE_IDS.has(languageId)
+    ? undefined
+    : await loadPrettierPlugin(languageId)
   const languagePlugins: PrettierPlugin[] = loadedPlugin ? [loadedPlugin] : []
   const languageOptions =
     languageId === LANGUAGE_ID.pug ? PUG_DEFAULT_FORMAT_OPTIONS : {}

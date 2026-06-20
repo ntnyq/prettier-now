@@ -43,6 +43,10 @@ function isNonNegativeInteger(value: unknown) {
   return isNumber(value) && Number.isInteger(value) && value >= 0
 }
 
+function isPositiveInteger(value: unknown) {
+  return isNumber(value) && Number.isInteger(value) && value > 0
+}
+
 function isOneOf<V extends string>(value: unknown, values: readonly V[]) {
   return typeof value === 'string' && values.includes(value as V)
 }
@@ -72,14 +76,14 @@ const snapshotValidators: Record<
       isOneOf(value, ['css', 'ignore', 'strict']),
     jsxSingleQuote: isBoolean,
     objectWrap: value => isOneOf(value, ['collapse', 'preserve']),
-    printWidth: isNonNegativeInteger,
+    printWidth: isPositiveInteger,
     proseWrap: value => isOneOf(value, ['always', 'never', 'preserve']),
     quoteProps: value =>
       isOneOf(value, ['as-needed', 'consistent', 'preserve']),
     semi: isBoolean,
     singleAttributePerLine: isBoolean,
     singleQuote: isBoolean,
-    tabWidth: isNonNegativeInteger,
+    tabWidth: isPositiveInteger,
     trailingComma: value => isOneOf(value, ['all', 'es5', 'none']),
     useTabs: isBoolean,
     vueIndentScriptAndStyle: isBoolean,

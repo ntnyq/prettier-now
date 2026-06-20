@@ -99,7 +99,31 @@ describe('options preset utilities', () => {
           ...snapshot,
           options: {
             ...snapshot.options,
+            printWidth: 0,
+          },
+        }),
+      ),
+    ).toThrow('Invalid options file')
+
+    expect(() =>
+      parseOptionsSnapshot(
+        JSON.stringify({
+          ...snapshot,
+          options: {
+            ...snapshot.options,
             tabWidth: -1,
+          },
+        }),
+      ),
+    ).toThrow('Invalid options file')
+
+    expect(() =>
+      parseOptionsSnapshot(
+        JSON.stringify({
+          ...snapshot,
+          options: {
+            ...snapshot.options,
+            tabWidth: 0,
           },
         }),
       ),
