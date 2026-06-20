@@ -2,12 +2,12 @@
  * @file Toast
  */
 
-import { createToast, destroyAllToasts } from 'vercel-toast'
-import { useConfigStoreWithout } from '@/stores/config'
-import 'vercel-toast/css'
-import type { ToastOptions as Options } from 'vercel-toast'
+import { getActivePinia } from 'pinia'
+import { toast } from 'vue-sonner'
+import { useConfigStore, useConfigStoreWithout } from '@/stores/config'
+import type { ExternalToast } from 'vue-sonner'
 
-export interface ToastOptions extends Options {
+export interface ToastOptions extends ExternalToast {
   /**
    * Show as error toast
    *
@@ -21,40 +21,46 @@ export interface ToastOptions extends Options {
    * @default true
    */
   clearAll?: boolean
+
+  /**
+   * Time before dismissing the toast.
+   *
+   * @default 2000
+   */
+  timeout?: number
 }
 
 export const Toast = {
   show(msg: string, options: ToastOptions = {}) {
-    const opts = {
-      // Default options
+    const { clearAll, isError, timeout, ...toastOptions } = {
       clearAll: true,
       isError: false,
       timeout: 2e3,
-
-      // Custom options
       ...options,
     }
-    const configStore = useConfigStoreWithout()
+    const configStore = getActivePinia()
+      ? useConfigStore()
+      : useConfigStoreWithout()
+
     if (configStore.silent) {
       return
     }
 
-    if (opts.clearAll) {
+    if (clearAll) {
       Toast.clearAll()
     }
 
-    if (opts.isError) {
-      const msgNode = document.createElement('div')
-      const labelNode = document.createElement('span')
-      labelNode.style.fontWeight = 'bold'
-      labelNode.style.color = 'red'
-      labelNode.textContent = '❌ Error'
-
-      msgNode.append(labelNode, document.createTextNode(`: ${msg}`))
-      createToast(msgNode, opts)
-    } else {
-      createToast(msg, opts)
+    const sonnerOptions = {
+      ...toastOptions,
+      duration: timeout,
     }
+
+    if (isError) {
+      toast.error(msg, sonnerOptions)
+      return
+    }
+
+    toast.info(msg, sonnerOptions)
   },
 
   info(msg: string, options: Omit<ToastOptions, 'isError'> = {}) {
@@ -66,6 +72,6 @@ export const Toast = {
   },
 
   clearAll() {
-    destroyAllToasts()
+    toast.dismiss()
   },
 }
