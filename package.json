@@ -55,6 +55,7 @@
     "@iconify-json/ri": "^1.2.10",
     "@iconify-json/vscode-icons": "^1.2.58",
     "@lezer/highlight": "^1.2.3",
+    "@lucide/vue": "^1.21.0",
     "@ntnyq/utils": "^0.15.0",
     "@prettier/plugin-php": "^0.25.0",
     "@prettier/plugin-pug": "^3.4.2",
