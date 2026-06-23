@@ -92,6 +92,7 @@ optDescSvelteAllowShorthand: Enable or disable component attribute shorthand if 
 optDescSvelteIndentScriptAndStyle: Whether or not to indent the code inside <script> and <style> tags in Svelte files.
 optDescSvelteSortOrder: Sort order for scripts, markup, and styles.
 optDescTabWidth: Specify the number of spaces per indentation level.
+optDescThemeColor: Pick the primary app theme color using RGB values.
 optDescTrailingComma: Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
 optDescTrailingCommaPHP: Print trailing commas wherever possible when multi-line.
 optDescUseTabs: Indent lines with tabs instead of spaces.

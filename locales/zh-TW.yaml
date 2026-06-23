@@ -92,6 +92,7 @@ optDescSvelteAllowShorthand: 當屬性名稱與表達式相同時，啟用或停
 optDescSvelteIndentScriptAndStyle: 是否縮排 Svelte 檔案中 <script> 與 <style> 標籤內的程式碼。
 optDescSvelteSortOrder: 指定 scripts、markup、styles 的排序順序。
 optDescTabWidth: 指定每層縮排的空格數。
+optDescThemeColor: 使用 RGB 值選擇應用主題色。
 optDescTrailingComma: 在多行逗號分隔語法結構中盡可能加上尾隨逗號。
 optDescTrailingCommaPHP: 在多行情境中盡可能加上尾隨逗號。
 optDescUseTabs: 使用 Tab 縮排而非空格。

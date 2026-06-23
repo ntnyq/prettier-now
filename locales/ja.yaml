@@ -92,6 +92,7 @@ optDescSvelteAllowShorthand: 属性名と式が同じ場合にコンポーネン
 optDescSvelteIndentScriptAndStyle: Svelte ファイル内の <script> と <style> タグ内コードをインデントするかどうか。
 optDescSvelteSortOrder: scripts、markup、styles の並び順を指定します。
 optDescTabWidth: インデントレベルごとのスペース数を指定します。
+optDescThemeColor: RGB 値でアプリのテーマカラーを選択します。
 optDescTrailingComma: 複数行のカンマ区切り構文で可能な限り末尾カンマを出力します。
 optDescTrailingCommaPHP: 複数行の場合に可能な限り末尾カンマを出力します。
 optDescUseTabs: スペースの代わりにタブでインデントします。

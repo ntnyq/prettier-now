@@ -2,6 +2,9 @@
 import 'vue-sonner/style.css'
 import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { useThemeColor } from '@/composables/themeColor'
+
+useThemeColor()
 </script>
 
 <template>

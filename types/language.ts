@@ -1,26 +1,26 @@
 import type { ThemeableValue } from '@/types'
 
 /**
- * Define a Language
+ * Supported formatting language definition.
  */
 export interface Language {
   /**
-   * language icon
+   * Icon name or theme-aware icon names for the language.
    */
   icon: ThemeableValue<string>
 
   /**
-   * language id, unique
+   * Unique language identifier used by options and stores.
    */
   id: string
 
   /**
-   * language name
+   * Human-readable language name.
    */
   name: string
 
   /**
-   * language parser, provided by prettier plugin, mostly same as language id
+   * Prettier parser name when it differs from the language id.
    */
   parser?: string
 }

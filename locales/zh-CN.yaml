@@ -92,6 +92,7 @@ optDescSvelteAllowShorthand: 当属性名与表达式相同时，启用或禁用
 optDescSvelteIndentScriptAndStyle: 是否缩进 Svelte 文件中 <script> 与 <style> 标签内代码。
 optDescSvelteSortOrder: 指定 scripts、markup、styles 的排序顺序。
 optDescTabWidth: 指定每级缩进的空格数。
+optDescThemeColor: 使用 RGB 值选择应用主题色。
 optDescTrailingComma: 在多行逗号分隔的语法结构中尽可能添加尾随逗号。
 optDescTrailingCommaPHP: 在多行场景中尽可能添加尾随逗号。
 optDescUseTabs: 使用制表符缩进而非空格。

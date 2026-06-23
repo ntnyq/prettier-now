@@ -1,14 +1,41 @@
+/**
+ * Display category for one rendered diff line.
+ */
 export type DiffLineKind = 'added' | 'removed' | 'unchanged'
 
+/**
+ * One line in a rendered line-by-line diff.
+ */
 export interface DiffLine {
+  /**
+   * Stable line identifier for Vue rendering.
+   */
   id: string
+
+  /**
+   * Diff category for the line.
+   */
   kind: DiffLineKind
+
+  /**
+   * One-based source line number.
+   */
   lineNumber: number
+
+  /**
+   * Line text content.
+   */
   text: string
 }
 
 const MAX_DIFF_MATRIX_CELLS = 60_000
 
+/**
+ * Split source code into lines while preserving empty-line semantics.
+ *
+ * @param source - Source text to split.
+ * @returns Source lines.
+ */
 function splitLines(source: string) {
   if (!source.length) {
     return []
@@ -17,6 +44,13 @@ function splitLines(source: string) {
   return source.split('\n')
 }
 
+/**
+ * Create a line-oriented diff between two text snapshots.
+ *
+ * @param before - Original text.
+ * @param after - Updated text.
+ * @returns Diff lines suitable for rendering.
+ */
 export function createLineDiff(before: string, after: string) {
   const beforeLines = splitLines(before)
   const afterLines = splitLines(after)

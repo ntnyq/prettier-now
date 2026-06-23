@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { i18n } from '#i18n'
 import { useConfigStore } from '@/stores/config'
+import SettingColorPicker from './SettingColorPicker.vue'
 import SettingItem from './SettingItem.vue'
 import SettingsSection from './SettingsSection.vue'
 import SettingSwitch from './SettingSwitch.vue'
@@ -43,6 +44,19 @@ const configStore = useConfigStore()
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
           v-model="configStore.autoFormat"
+          :aria-describedby="descriptionId"
+          :aria-labelledby="titleId"
+        />
+      </template>
+    </SettingItem>
+
+    <SettingItem
+      :description="i18n.t('optDescThemeColor')"
+      title="ThemeColor"
+    >
+      <template #action="{ descriptionId, titleId }">
+        <SettingColorPicker
+          v-model="configStore.themeColor"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
         />

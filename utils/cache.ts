@@ -9,16 +9,17 @@ import { LANGUAGE_ID } from '@/constants/language'
 import type { CodemirrorLanguage, PrettierPlugin } from '@/types/vendor'
 
 /**
- * codemirror language cache
+ * CodeMirror language cache keyed by language id.
  */
 export const codemirrorLanguageCache = new Map<string, CodemirrorLanguage>()
 
 /**
- * clear codemirror language cache
+ * Clear all cached CodeMirror language loaders.
  */
 export function clearCodemirrorLanguageCache() {
   codemirrorLanguageCache.clear()
 }
+
 /**
  * CodeMirror language loader configuration
  */
@@ -129,10 +130,10 @@ const codemirrorLoaders = {
 } as const
 
 /**
- * load codemirror language
+ * Load a CodeMirror language extension for a language id.
  *
- * @param languageId - language id
- * @returns codemirror language
+ * @param languageId - Language id to load.
+ * @returns CodeMirror language support when available.
  */
 export async function loadCodemirrorLanguage(languageId?: string) {
   if (!languageId) {
@@ -157,25 +158,40 @@ export async function loadCodemirrorLanguage(languageId?: string) {
 }
 
 /**
- * prettier plugin cache
+ * Prettier plugin cache keyed by shared plugin id.
  */
 export const prettierPluginCache = new Map<string, PrettierPlugin>()
 
 /**
- * clear prettier plugin cache
+ * Clear all cached Prettier plugins.
  */
 export function clearPrettierPluginCache() {
   prettierPluginCache.clear()
 }
 
+/**
+ * Prettier plugin import shape for packages that nest the plugin export.
+ */
 type PrettierPluginImport = PrettierPlugin & {
+  /**
+   * Nested plugin export used by some plugin packages.
+   */
   plugin?: PrettierPlugin
 }
 
+/**
+ * Resolve the plugin instance from a direct or nested plugin import.
+ *
+ * @param plugin - Plugin import value.
+ * @returns Resolved Prettier plugin.
+ */
 function resolvePrettierPlugin(plugin: PrettierPluginImport): PrettierPlugin {
   return 'plugin' in plugin && plugin.plugin ? plugin.plugin : plugin
 }
 
+/**
+ * Shared cache keys for Prettier plugins.
+ */
 export const CACHE_KEY = {
   typescript: 'typescript',
   html: 'html',
@@ -190,6 +206,10 @@ export const CACHE_KEY = {
   graphql: 'graphql',
   markdown: 'markdown',
 }
+
+/**
+ * Map language ids to their shared Prettier plugin cache key.
+ */
 export const prettierPluginCachekeyMap = {
   [LANGUAGE_ID.typescript]: CACHE_KEY.typescript,
   [LANGUAGE_ID.html]: CACHE_KEY.html,
@@ -232,9 +252,10 @@ const prettierLoaders = {
 } as const
 
 /**
- * load prettier plugin
- * @param languageId - language id
- * @returns prettier plugin
+ * Load the Prettier plugin for a language id.
+ *
+ * @param languageId - Language id to load.
+ * @returns Prettier plugin when available.
  */
 export async function loadPrettierPlugin(languageId?: string) {
   if (!languageId) {
@@ -266,6 +287,12 @@ export async function loadPrettierPlugin(languageId?: string) {
 
   return prettierPlugin
 }
+
+/**
+ * Read all cached Prettier plugins.
+ *
+ * @returns Cached Prettier plugins.
+ */
 export function getAllPrettierPlugins() {
   return [...prettierPluginCache.values()]
 }

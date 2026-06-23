@@ -7,12 +7,12 @@ import type { Extension } from '@codemirror/state'
 import type { Plugin } from 'prettier'
 
 /**
- * Codemirror extension
+ * CodeMirror extension value accepted by the editor.
  */
 export type CodemirrorExtension = Extension
 
 /**
- * Codemirror language
+ * CodeMirror language support returned by dynamic language loaders.
  */
 export type CodemirrorLanguage =
   | Extension[]
@@ -20,6 +20,6 @@ export type CodemirrorLanguage =
   | StreamLanguage<unknown>
 
 /**
- * Prettier plugin
+ * Prettier plugin module used by the standalone formatter.
  */
 export type PrettierPlugin = Plugin

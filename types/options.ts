@@ -5,6 +5,8 @@
 import type { Options, RequiredOptions } from 'prettier'
 
 /**
+ * Java plugin-specific Prettier options.
+ *
  * @see {@link https://github.com/jhipster/prettier-java/tree/main/packages/prettier-plugin-java}
  */
 export type PluginJavaOptions = {
@@ -17,6 +19,8 @@ export type PluginJavaOptions = {
 }
 
 /**
+ * PHP plugin-specific Prettier options.
+ *
  * @see {@link https://github.com/prettier/plugin-php}
  */
 export type PluginPHPOptions = {
@@ -57,6 +61,9 @@ export type PluginPHPOptions = {
     | '8.2'
 }
 
+/**
+ * Svelte plugin-specific Prettier options.
+ */
 export type PluginSvelteOptions = {
   /**
    * Enable/disable component attribute shorthand if attribute name and expressions are same
@@ -105,6 +112,9 @@ export type PluginSvelteOptions = {
     | 'styles-scripts-options-markup'
 }
 
+/**
+ * XML plugin-specific Prettier options.
+ */
 export type PluginXMLOptions = {
   /**
    * How to quoted attributes in XML
@@ -135,6 +145,9 @@ export type PluginXMLOptions = {
   xmlWhitespaceSensitivity: 'ignore' | 'preserve' | 'strict'
 }
 
+/**
+ * TOML plugin-specific Prettier options.
+ */
 export type PluginTOMLOptions = {
   /**
    * Align consecutive comments after entries and items vertically. This applies to comments that are after entries or array items
@@ -214,8 +227,14 @@ export type PluginTOMLOptions = {
   reorderKeys: boolean
 }
 
+/**
+ * Base Prettier options accepted by the standalone formatter.
+ */
 export type PrettierCoreOptions = Options
 
+/**
+ * Required Prettier options persisted by the extension.
+ */
 export type PrettierOptions = Required<
   Pick<
     RequiredOptions,

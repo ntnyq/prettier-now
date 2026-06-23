@@ -3,8 +3,12 @@
  */
 
 import { defineStore } from 'pinia'
+import * as v from 'valibot'
 import { useStorage } from '@/composables/storage'
 import pinia from '@/stores'
+import { DEFAULT_THEME_COLOR } from '@/utils/themeColor'
+
+const ThemeColorSchema = v.pipe(v.string(), v.regex(/^#[\da-f]{6}$/i))
 
 export const useConfigStore = defineStore('config', () => {
   /**
@@ -22,10 +26,20 @@ export const useConfigStore = defineStore('config', () => {
    */
   const autoFormat = useStorage<boolean>('autoFormat', false)
 
+  /**
+   * Primary app theme color
+   */
+  const themeColor = useStorage<string>(
+    'themeColor',
+    DEFAULT_THEME_COLOR,
+    ThemeColorSchema,
+  )
+
   return {
     debug,
     silent,
     autoFormat,
+    themeColor,
   }
 })
 

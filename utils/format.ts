@@ -29,6 +29,9 @@ const PRELOADED_PLUGIN_LANGUAGE_IDS = new Set([
   LANGUAGE_ID.scss,
 ])
 
+/**
+ * Formatting options passed to the standalone Prettier runner.
+ */
 export type FormatOptions = PrettierCoreOptions
   & Partial<
     PluginXMLOptions
@@ -37,20 +40,23 @@ export type FormatOptions = PrettierCoreOptions
       & PluginSvelteOptions
       & PluginTOMLOptions
   > & {
+    /**
+     * Language identifier used to resolve the parser and plugin.
+     */
     languageId: string
   }
 
 /**
- * prettier instance
+ * Lazily loaded Prettier standalone instance.
  */
 let prettier: typeof import('prettier/standalone') | undefined
 
 /**
- * format source code via prettier
+ * Format source code via Prettier.
  *
- * @param source - source code
- * @param options - format options
- * @returns formatted source code
+ * @param source - Source code to format.
+ * @param options - Format options.
+ * @returns Formatted source code.
  */
 export async function formatViaPrettier(
   source: string,

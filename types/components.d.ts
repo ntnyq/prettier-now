@@ -95,6 +95,7 @@ declare module 'vue' {
     SelectTrigger: typeof import('./../components/ui/select/SelectTrigger.vue')['default']
     SelectValue: typeof import('./../components/ui/select/SelectValue.vue')['default']
     Separator: typeof import('./../components/ui/separator/Separator.vue')['default']
+    SettingColorPicker: typeof import('./../components/settings/SettingColorPicker.vue')['default']
     SettingItem: typeof import('./../components/settings/SettingItem.vue')['default']
     SettingNumberField: typeof import('./../components/settings/SettingNumberField.vue')['default']
     SettingsContent: typeof import('./../components/settings/SettingsContent.vue')['default']

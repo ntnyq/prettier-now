@@ -2,8 +2,11 @@
 import { i18n } from '#i18n'
 import { browser } from '#imports'
 import { Button } from '@/components/ui/button'
+import { useThemeColor } from '@/composables/themeColor'
 
 const isMac = navigator.userAgent.includes('Mac OS X')
+
+useThemeColor()
 
 function openOptionsPage() {
   browser.runtime.openOptionsPage()

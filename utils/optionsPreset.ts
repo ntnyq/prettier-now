@@ -18,6 +18,9 @@ const OptionsSnapshotVersionSchema = v.object({
   version: v.literal(OPTIONS_SNAPSHOT_VERSION),
 })
 
+/**
+ * Schema for validating imported options snapshots.
+ */
 export const OptionsSnapshotSchema = v.object({
   version: v.literal(OPTIONS_SNAPSHOT_VERSION),
   options: v.object({
@@ -118,6 +121,9 @@ export const OptionsSnapshotSchema = v.object({
   }),
 })
 
+/**
+ * Schema for validating one options preset.
+ */
 export const OptionsPresetSchema = v.object({
   createdAt: v.number(),
   id: v.string(),
@@ -126,20 +132,48 @@ export const OptionsPresetSchema = v.object({
   updatedAt: v.number(),
 })
 
+/**
+ * Schema for validating the persisted options preset list.
+ */
 export const OptionsPresetListSchema = v.array(OptionsPresetSchema)
 
+/**
+ * Create a snapshot from the default option values.
+ *
+ * @returns Default options snapshot.
+ */
 export function createDefaultOptionsSnapshot() {
   return {
     version: OPTIONS_SNAPSHOT_VERSION,
-    options: { ...DEFAULT_OPTIONS },
-    xmlPluginOptions: { ...DEFAULT_XML_OPTIONS },
-    phpPluginOptions: { ...DEFAULT_PHP_OPTIONS },
-    javaPluginOptions: { ...DEFAULT_JAVA_OPTIONS },
-    sveltePluginOptions: { ...DEFAULT_SVELTE_OPTIONS },
-    tomlPluginOptions: { ...DEFAULT_TOML_OPTIONS },
+    options: {
+      ...DEFAULT_OPTIONS,
+    },
+    xmlPluginOptions: {
+      ...DEFAULT_XML_OPTIONS,
+    },
+    phpPluginOptions: {
+      ...DEFAULT_PHP_OPTIONS,
+    },
+    javaPluginOptions: {
+      ...DEFAULT_JAVA_OPTIONS,
+    },
+    sveltePluginOptions: {
+      ...DEFAULT_SVELTE_OPTIONS,
+    },
+    tomlPluginOptions: {
+      ...DEFAULT_TOML_OPTIONS,
+    },
   } satisfies OptionsSnapshot
 }
 
+/**
+ * Parse and validate an options snapshot JSON string.
+ *
+ * @param source - JSON string to parse.
+ * @returns Parsed options snapshot.
+ *
+ * @throws {Error} When JSON is invalid, unsupported, or fails schema validation.
+ */
 export function parseOptionsSnapshot(source: string) {
   let parsed: unknown
 
@@ -160,10 +194,23 @@ export function parseOptionsSnapshot(source: string) {
   return parsed as unknown as OptionsSnapshot
 }
 
+/**
+ * Serialize an options snapshot as pretty JSON.
+ *
+ * @param snapshot - Options snapshot to serialize.
+ * @returns JSON string with a trailing newline.
+ */
 export function stringifyOptionsSnapshot(snapshot: OptionsSnapshot) {
   return `${JSON.stringify(snapshot, null, 2)}\n`
 }
 
+/**
+ * Insert or replace an options preset and sort by update time.
+ *
+ * @param presets - Existing presets.
+ * @param preset - Preset to insert or replace.
+ * @returns Updated preset list.
+ */
 export function upsertOptionsPreset(
   presets: OptionsPreset[],
   preset: OptionsPreset,
@@ -173,13 +220,40 @@ export function upsertOptionsPreset(
   )
 }
 
+/**
+ * Remove an options preset by id.
+ *
+ * @param presets - Existing presets.
+ * @param id - Preset id to remove.
+ * @returns Updated preset list.
+ */
 export function removeOptionsPreset(presets: OptionsPreset[], id: string) {
   return presets.filter(preset => preset.id !== id)
 }
 
+/**
+ * Create a named options preset.
+ *
+ * @param params - Options preset creation parameters.
+ * @param params.name - User-facing preset name.
+ * @param params.snapshot - Options snapshot stored by the preset.
+ * @param params.now - Optional timestamp used for deterministic ids and tests.
+ * @returns New options preset.
+ */
 export function createOptionsPreset(params: {
+  /**
+   * User-facing preset name.
+   */
   name: string
+
+  /**
+   * Options snapshot stored by the preset.
+   */
   snapshot: OptionsSnapshot
+
+  /**
+   * Optional timestamp used for deterministic ids and tests.
+   */
   now?: number
 }) {
   const now = params.now ?? Date.now()
