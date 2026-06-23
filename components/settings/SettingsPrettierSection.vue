@@ -14,7 +14,7 @@ const optionsStore = useOptionsStore()
   <SettingsSection :title="i18n.t('prettierOptions')">
     <SettingItem
       :description="i18n.t('optDescPrintWidth')"
-      title="printWidth"
+      title="PrintWidth"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingNumberField
@@ -27,7 +27,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescTabWidth')"
-      title="tabWidth"
+      title="TabWidth"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingNumberField
@@ -40,7 +40,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescUseTabs')"
-      title="useTabs"
+      title="UseTabs"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -53,7 +53,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescSemi')"
-      title="semi"
+      title="Semi"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -66,7 +66,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescSingleQuote')"
-      title="singleQuote"
+      title="SingleQuote"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -79,7 +79,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescQuoteProps')"
-      title="quoteProps"
+      title="QuoteProps"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect
@@ -93,7 +93,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescObjectWrap')"
-      title="objectWrap"
+      title="ObjectWrap"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect
@@ -107,7 +107,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescExperimentalOperatorPosition')"
-      title="experimentalOperatorPosition"
+      title="ExperimentalOperatorPosition"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect
@@ -121,7 +121,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescJsxSingleQuote')"
-      title="jsxSingleQuote"
+      title="JsxSingleQuote"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -134,7 +134,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescTrailingComma')"
-      title="trailingComma"
+      title="TrailingComma"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect
@@ -148,7 +148,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescBracketSpacing')"
-      title="bracketSpacing"
+      title="BracketSpacing"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -161,7 +161,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescBracketSameLine')"
-      title="bracketSameLine"
+      title="BracketSameLine"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -174,7 +174,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescArrowParens')"
-      title="arrowParens"
+      title="ArrowParens"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect
@@ -188,7 +188,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescHtmlWhitespaceSensitivity')"
-      title="htmlWhitespaceSensitivity"
+      title="HtmlWhitespaceSensitivity"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect
@@ -202,7 +202,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescVueIndentScriptAndStyle')"
-      title="vueIndentScriptAndStyle"
+      title="VueIndentScriptAndStyle"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -215,7 +215,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescEndOfLine')"
-      title="endOfLine"
+      title="EndOfLine"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect
@@ -229,7 +229,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescSingleAttributePerLine')"
-      title="singleAttributePerLine"
+      title="SingleAttributePerLine"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -242,7 +242,7 @@ const optionsStore = useOptionsStore()
 
     <SettingItem
       :description="i18n.t('optDescExperimentalTernaries')"
-      title="experimentalTernaries"
+      title="ExperimentalTernaries"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch

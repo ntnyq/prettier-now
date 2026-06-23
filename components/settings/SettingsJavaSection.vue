@@ -13,7 +13,7 @@ const optionsStore = useOptionsStore()
   <SettingsSection :title="i18n.t('pluginJavaOptions')">
     <SettingItem
       :description="i18n.t('optDescEntrypoint')"
-      title="entrypoint"
+      title="Entrypoint"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect

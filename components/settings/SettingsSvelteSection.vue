@@ -13,7 +13,7 @@ const optionsStore = useOptionsStore()
   <SettingsSection :title="i18n.t('pluginSvelteOptions')">
     <SettingItem
       :description="i18n.t('optDescSvelteSortOrder')"
-      title="svelteSortOrder"
+      title="SvelteSortOrder"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect
@@ -52,7 +52,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescSvelteAllowShorthand')"
-      title="svelteAllowShorthand"
+      title="SvelteAllowShorthand"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -64,7 +64,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescSvelteIndentScriptAndStyle')"
-      title="svelteIndentScriptAndStyle"
+      title="SvelteIndentScriptAndStyle"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch

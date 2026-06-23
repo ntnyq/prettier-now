@@ -13,7 +13,7 @@ const optionsStore = useOptionsStore()
   <SettingsSection :title="i18n.t('pluginPHPOptions')">
     <SettingItem
       :description="i18n.t('optDescPhpVersion')"
-      title="phpVersion"
+      title="PHPVersion"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect
@@ -42,7 +42,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescTrailingCommaPHP')"
-      title="trailingCommaPHP"
+      title="TrailingCommaPHP"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -54,7 +54,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescBraceStyle')"
-      title="braceStyle"
+      title="BraceStyle"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect

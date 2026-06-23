@@ -13,7 +13,7 @@ const optionsStore = useOptionsStore()
   <SettingsSection :title="i18n.t('pluginTOMLOptions')">
     <SettingItem
       :description="i18n.t('optDescAlignComments')"
-      title="alignComments"
+      title="AlignComments"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -25,7 +25,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescAlignEntries')"
-      title="alignEntries"
+      title="AlignEntries"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -37,7 +37,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescAllowedBlankLines')"
-      title="allowedBlankLines"
+      title="AllowedBlankLines"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingNumberField
@@ -49,7 +49,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescArrayAutoCollapse')"
-      title="arrayAutoCollapse"
+      title="ArrayAutoCollapse"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -61,7 +61,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescArrayAutoExpand')"
-      title="arrayAutoExpand"
+      title="ArrayAutoExpand"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -73,7 +73,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescCompactArrays')"
-      title="compactArrays"
+      title="CompactArrays"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -85,7 +85,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescCompactEntries')"
-      title="compactEntries"
+      title="CompactEntries"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -97,7 +97,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescCompactInlineTables')"
-      title="compactInlineTables"
+      title="CompactInlineTables"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -109,7 +109,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescIndentEntries')"
-      title="indentEntries"
+      title="IndentEntries"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -121,7 +121,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescIndentTables')"
-      title="indentTables"
+      title="IndentTables"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -133,7 +133,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescReorderKeys')"
-      title="reorderKeys"
+      title="ReorderKeys"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch

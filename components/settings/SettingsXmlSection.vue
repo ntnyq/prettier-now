@@ -13,7 +13,7 @@ const optionsStore = useOptionsStore()
   <SettingsSection :title="i18n.t('pluginXMLOptions')">
     <SettingItem
       :description="i18n.t('optDescXmlSelfClosingSpace')"
-      title="xmlSelfClosingSpace"
+      title="XMLSelfClosingSpace"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -25,7 +25,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescXmlSortAttributesByKey')"
-      title="xmlSortAttributesByKey"
+      title="XMLSortAttributesByKey"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -37,7 +37,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescXmlQuoteAttributes')"
-      title="xmlQuoteAttributes"
+      title="XMLQuoteAttributes"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect
@@ -50,7 +50,7 @@ const optionsStore = useOptionsStore()
     </SettingItem>
     <SettingItem
       :description="i18n.t('optDescXmlWhitespaceSensitivity')"
-      title="xmlWhitespaceSensitivity"
+      title="XMLWhitespaceSensitivity"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSelect

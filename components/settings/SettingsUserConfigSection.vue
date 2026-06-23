@@ -12,7 +12,7 @@ const configStore = useConfigStore()
   <SettingsSection :title="i18n.t('userConfigs')">
     <SettingItem
       :description="i18n.t('optDescSilent')"
-      title="silent"
+      title="Silent"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -25,7 +25,7 @@ const configStore = useConfigStore()
 
     <SettingItem
       :description="i18n.t('optDescDebug')"
-      title="debug"
+      title="Debug"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
@@ -38,7 +38,7 @@ const configStore = useConfigStore()
 
     <SettingItem
       :description="i18n.t('optDescAutoFormat')"
-      title="autoFormat"
+      title="AutoFormat"
     >
       <template #action="{ descriptionId, titleId }">
         <SettingSwitch
