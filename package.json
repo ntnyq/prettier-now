@@ -68,7 +68,7 @@
     "dayjs": "^1.11.21",
     "pinia": "^3.0.4",
     "prettier": "^3.8.4",
-    "prettier-plugin-java": "^2.9.7",
+    "prettier-plugin-java": "^2.10.0",
     "prettier-plugin-svelte": "^4.1.1",
     "prettier-plugin-toml": "2.0.2",
     "reka-ui": "^2.10.0",
