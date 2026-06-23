@@ -8,12 +8,12 @@ import { ContentEditableEditor } from '@/utils/editors/contentEditable'
 import { TextareaEditor } from '@/utils/editors/textarea'
 
 /**
- * Create a markdown editor adapter for a supported editor element.
+ * Create an editor adapter for a supported editor element.
  *
  * @param element - Element to inspect.
  * @returns Editor adapter when the element is supported.
  */
-export function createMarkdownEditor(element: HTMLElement) {
+export function createEditorAdapter(element: HTMLElement) {
   if (CodeMirrorEditor.validate(element)) {
     return new CodeMirrorEditor(element)
   }
@@ -32,6 +32,11 @@ export function createMarkdownEditor(element: HTMLElement) {
 
   return null
 }
+
+/**
+ * Backward-compatible alias for creating markdown-capable editor adapters.
+ */
+export const createMarkdownEditor = createEditorAdapter
 
 export { AceEditor } from './ace'
 export { TextareaEditor } from './textarea'

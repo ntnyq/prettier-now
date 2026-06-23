@@ -22,6 +22,8 @@ Use pnpm 11 as pinned in `package.json`.
 
 Write TypeScript and Vue 3 SFCs with Composition API and `<script setup>`. Keep components PascalCase, such as `EditorResult.vue`, composables camelCase, such as `fileHandler.ts`, and stores/constants named by domain. UI primitives under `components/ui/` follow shadcn-vue patterns. Formatting uses `@ntnyq/prettier-config`; linting uses `@ntnyq/eslint-config`. Let ESLint and the pre-commit `nano-staged` hook handle mechanical formatting.
 
+Use multiline TSDoc blocks (`/** ... */`) for TypeScript methods, functions, classes, interfaces, object-shaped type aliases, and exported constants in `types/` and `utils/`. Every property inside an interface or object-shaped type must have its own TSDoc block, including nested parameter object properties.
+
 ## Testing Guidelines
 
 Use Vitest for unit tests. Place tests in `tests/` with `*.test.ts` names, and prefer behavior-focused cases such as `workspaceStore.test.ts` or `optionsPreset.test.ts`. For code changes, run `pnpm run test`, `pnpm run lint`, and `pnpm run typecheck`; for extension or UI changes, also run the relevant build command and manually verify the affected popup/options flow.

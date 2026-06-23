@@ -31,7 +31,15 @@ export class CodeMirrorEditor {
     const wrapper =
       element.closest('.cm-editor') || element.closest('.CodeMirror')
 
-    return Boolean(wrapper)
+    if (!wrapper) {
+      return false
+    }
+
+    const editor = wrapper.classList.contains('cm-editor')
+      ? (wrapper.querySelector('.cm-content') as any)?.cmView?.view
+      : (wrapper as any).CodeMirror
+
+    return Boolean(editor)
   }
 
   /**

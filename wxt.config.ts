@@ -54,8 +54,11 @@ export default defineConfig({
     description: '__MSG_appDescription__',
     homepage_url: 'https://github.com/ntnyq/prettier-now',
     name: '__MSG_appName__',
-    permissions: ['storage', 'contextMenus'],
+    permissions: ['storage', 'contextMenus', 'activeTab'],
     commands: {
+      formatFocusedEditor: {
+        description: '__MSG_formatFocusedEditor__',
+      },
       openOptionsPage: {
         description: '__MSG_openOptionsPage__',
         suggested_key: {

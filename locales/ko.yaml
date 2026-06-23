@@ -34,6 +34,7 @@ fileReadError: 파일 읽기 실패
 files: 파일
 formatBatchSuccess: $2개 중 $1개 파일 포맷 완료
 formatCostTime: 포맷 소요 시간
+formatFocusedEditor: 문서 포맷
 formatSource: 코드 포맷
 formatSuccess: 포맷 성공
 history: 기록

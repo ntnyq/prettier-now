@@ -34,6 +34,7 @@ fileReadError: 讀取檔案失敗
 files: 檔案
 formatBatchSuccess: 已格式化 $1 / $2 個檔案
 formatCostTime: 格式化耗時
+formatFocusedEditor: 格式化文件
 formatSource: 格式化程式碼
 formatSuccess: 格式化成功
 history: 歷史記錄

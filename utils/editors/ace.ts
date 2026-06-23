@@ -10,10 +10,10 @@ export class AceEditor {
   /**
    * Create an Ace editor adapter.
    *
-   * @param editor - Ace editor instance.
+   * @param element - Element inside or equal to an Ace editor.
    */
-  constructor(editor: any) {
-    this.editor = editor
+  constructor(element: HTMLElement) {
+    this.editor = this.resolveEditor(element)
   }
 
   /**
@@ -23,7 +23,19 @@ export class AceEditor {
    * @returns Ace editor wrapper when found.
    */
   public static validate(element: HTMLElement) {
-    return element.closest('.ace_editor')
+    const wrapper = element.closest('.ace_editor')
+
+    return Boolean(wrapper && (wrapper as any).env?.editor)
+  }
+
+  /**
+   * Resolve the underlying Ace editor instance.
+   *
+   * @param element - Element inside or equal to an Ace editor.
+   * @returns Ace editor instance.
+   */
+  public resolveEditor(element: HTMLElement) {
+    return (element.closest('.ace_editor') as any)?.env?.editor
   }
 
   /**

@@ -13,5 +13,6 @@ export const LINKS = Object.freeze({
 })
 
 export const CONTEXT_MENU_ID = Object.freeze({
+  formatFocusedEditor: 'format-focused-editor',
   openOptionsPage: 'open-options-page',
 })

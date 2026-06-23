@@ -34,6 +34,7 @@ fileReadError: Failed to read file
 files: Files
 formatBatchSuccess: Formatted $1 of $2 files
 formatCostTime: Format Cost Time
+formatFocusedEditor: Format Document
 formatSource: Format Source
 formatSuccess: Format successfully
 history: History

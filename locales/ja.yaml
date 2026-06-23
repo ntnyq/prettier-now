@@ -34,6 +34,7 @@ fileReadError: ファイルの読み込みに失敗しました
 files: ファイル
 formatBatchSuccess: $2 件中 $1 件を整形しました
 formatCostTime: 整形時間
+formatFocusedEditor: ドキュメントを整形
 formatSource: コードを整形
 formatSuccess: 整形に成功しました
 history: 履歴

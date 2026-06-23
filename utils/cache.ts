@@ -21,7 +21,7 @@ export function clearCodemirrorLanguageCache() {
 }
 
 /**
- * CodeMirror language loader configuration
+ * CodeMirror language loader configuration.
  */
 const codemirrorLoaders = {
   [LANGUAGE_ID.javascript]: async () => {
@@ -193,17 +193,64 @@ function resolvePrettierPlugin(plugin: PrettierPluginImport): PrettierPlugin {
  * Shared cache keys for Prettier plugins.
  */
 export const CACHE_KEY = {
+  /**
+   * Cache key for the bundled TypeScript parser plugin.
+   */
   typescript: 'typescript',
+
+  /**
+   * Cache key for the bundled HTML parser plugin.
+   */
   html: 'html',
+
+  /**
+   * Cache key for the bundled PostCSS parser plugin.
+   */
   postcss: 'postcss',
+
+  /**
+   * Cache key for the XML parser plugin.
+   */
   xml: 'xml',
+
+  /**
+   * Cache key for the bundled YAML parser plugin.
+   */
   yaml: 'yaml',
+
+  /**
+   * Cache key for the TOML parser plugin.
+   */
   toml: 'toml',
+
+  /**
+   * Cache key for the PHP parser plugin.
+   */
   php: 'php',
+
+  /**
+   * Cache key for the Java parser plugin.
+   */
   java: 'java',
+
+  /**
+   * Cache key for the Pug parser plugin.
+   */
   pug: 'pug',
+
+  /**
+   * Cache key for the Svelte parser plugin.
+   */
   svelte: 'svelte',
+
+  /**
+   * Cache key for the bundled GraphQL parser plugin.
+   */
   graphql: 'graphql',
+
+  /**
+   * Cache key for the bundled Markdown parser plugin.
+   */
   markdown: 'markdown',
 }
 
@@ -230,7 +277,7 @@ export const prettierPluginCachekeyMap = {
 }
 
 /**
- * Prettier plugin loader configuration
+ * Prettier plugin loader configuration.
  */
 const prettierLoaders = {
   [CACHE_KEY.typescript]: () =>
