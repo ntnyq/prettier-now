@@ -77,6 +77,7 @@ declare module 'vue' {
     NumberFieldIncrement: typeof import('./../components/ui/number-field/NumberFieldIncrement.vue')['default']
     NumberFieldInput: typeof import('./../components/ui/number-field/NumberFieldInput.vue')['default']
     OptionsPresetPanel: typeof import('./../components/OptionsPresetPanel.vue')['default']
+    OverflowTooltip: typeof import('./../components/OverflowTooltip.vue')['default']
     Popover: typeof import('./../components/ui/popover/Popover.vue')['default']
     PopoverAnchor: typeof import('./../components/ui/popover/PopoverAnchor.vue')['default']
     PopoverContent: typeof import('./../components/ui/popover/PopoverContent.vue')['default']

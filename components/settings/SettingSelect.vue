@@ -2,6 +2,7 @@
 import { Check, ChevronsUpDown } from '@lucide/vue'
 import { computed, shallowRef } from 'vue'
 import { i18n } from '#i18n'
+import OverflowTooltip from '@/components/OverflowTooltip.vue'
 import { Button } from '@/components/ui/button'
 import {
   Command,
@@ -90,9 +91,10 @@ function selectItem(value: string) {
         role="combobox"
         variant="outline"
       >
-        <span class="truncate">
-          {{ selectedItem?.label ?? model }}
-        </span>
+        <OverflowTooltip
+          :text="selectedItem?.label ?? model"
+          class="min-w-0 flex-1 text-left"
+        />
         <ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
       </Button>
     </PopoverTrigger>
@@ -111,15 +113,18 @@ function selectItem(value: string) {
               :key="item.value"
               :value="item.value"
             >
+              <OverflowTooltip
+                :text="item.label"
+                class="min-w-0 flex-1"
+              />
               <Check
                 :class="
                   cn(
-                    'mr-2 size-4',
+                    'ml-auto size-4',
                     model === item.value ? 'opacity-100' : 'opacity-0',
                   )
                 "
               />
-              <span class="truncate">{{ item.label }}</span>
             </CommandItem>
           </CommandGroup>
         </CommandList>
