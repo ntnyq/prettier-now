@@ -18,6 +18,24 @@ import type {
   FormatSourceResponse,
 } from '@/types/focusedEditor'
 
+/**
+ * Register extension context menus from a clean slate.
+ */
+export async function registerContextMenus(): Promise<void> {
+  await browser.contextMenus.removeAll()
+
+  browser.contextMenus.create({
+    id: CONTEXT_MENU_ID.openOptionsPage,
+    title: i18n.t('openOptionsPage'),
+  })
+
+  browser.contextMenus.create({
+    contexts: ['editable'],
+    id: CONTEXT_MENU_ID.formatFocusedEditor,
+    title: i18n.t('formatFocusedEditor'),
+  })
+}
+
 export default defineBackground({
   type: 'module',
   main() {
@@ -40,15 +58,9 @@ export default defineBackground({
       await formatFocusedTab(tab?.id)
     }
 
-    browser.contextMenus.create({
-      id: CONTEXT_MENU_ID.openOptionsPage,
-      title: i18n.t('openOptionsPage'),
-    })
-
-    browser.contextMenus.create({
-      contexts: ['editable'],
-      id: CONTEXT_MENU_ID.formatFocusedEditor,
-      title: i18n.t('formatFocusedEditor'),
+    registerContextMenus().catch((err: unknown) => {
+      const message = (err as Error)?.message || 'Failed to register menus'
+      console.error(message)
     })
 
     browser.contextMenus.onClicked.addListener(async (params, tab) => {
