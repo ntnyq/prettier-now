@@ -68,18 +68,23 @@ export interface FocusedEditorSetValueResponseDetail {
 }
 
 /**
- * Request sent to the background formatter for focused editor source.
+ * Request sent from the content script to the extension formatter page.
  */
-export interface FormatSourceRequest {
+export interface FocusedEditorFormatterRequest {
+  /**
+   * Correlation id used to match the response to the request.
+   */
+  requestId: string
+
   /**
    * Source text to format.
    */
   source: string
 
   /**
-   * Focused editor message type for formatting source.
+   * Formatter request message type.
    */
-  type: typeof import('@/constants/focusedEditor').FOCUSED_EDITOR_MESSAGE.formatSource
+  type: typeof import('@/constants/focusedEditor').FOCUSED_EDITOR_MESSAGE.formatterFormatRequest
 
   /**
    * Language id used when the source language cannot be inferred.
@@ -98,9 +103,9 @@ export interface FormatSourceRequest {
 }
 
 /**
- * Successful response from focused editor source formatting.
+ * Successful response from the extension formatter page.
  */
-export interface FormatSourceSuccessResponse {
+export interface FocusedEditorFormatterSuccessResponse {
   /**
    * Formatted source text.
    */
@@ -115,12 +120,22 @@ export interface FormatSourceSuccessResponse {
    * Discriminant indicating successful formatting.
    */
   ok: true
+
+  /**
+   * Correlation id copied from the matching request.
+   */
+  requestId: string
+
+  /**
+   * Formatter response message type.
+   */
+  type: typeof import('@/constants/focusedEditor').FOCUSED_EDITOR_MESSAGE.formatterFormatResponse
 }
 
 /**
- * Failed response from focused editor source formatting.
+ * Failed response from the extension formatter page.
  */
-export interface FormatSourceErrorResponse {
+export interface FocusedEditorFormatterErrorResponse {
   /**
    * Error message captured while formatting.
    */
@@ -130,11 +145,21 @@ export interface FormatSourceErrorResponse {
    * Discriminant indicating failed formatting.
    */
   ok: false
+
+  /**
+   * Correlation id copied from the matching request.
+   */
+  requestId: string
+
+  /**
+   * Formatter response message type.
+   */
+  type: typeof import('@/constants/focusedEditor').FOCUSED_EDITOR_MESSAGE.formatterFormatResponse
 }
 
 /**
- * Formatter response for focused editor source.
+ * Formatter response returned from the extension formatter page.
  */
-export type FormatSourceResponse =
-  | FormatSourceErrorResponse
-  | FormatSourceSuccessResponse
+export type FocusedEditorFormatterResponse =
+  | FocusedEditorFormatterErrorResponse
+  | FocusedEditorFormatterSuccessResponse

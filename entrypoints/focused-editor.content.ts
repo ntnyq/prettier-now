@@ -5,21 +5,68 @@
 import { browser, defineContentScript } from '#imports'
 import {
   FOCUSED_EDITOR_EVENT,
+  FOCUSED_EDITOR_FORMAT_TIMEOUT,
+  FOCUSED_EDITOR_FORMATTER_PAGE,
   FOCUSED_EDITOR_MESSAGE,
   FOCUSED_EDITOR_REQUEST_TIMEOUT,
 } from '@/constants/focusedEditor'
 import { LANGUAGE_ID } from '@/constants/language'
 import type {
+  FocusedEditorFormatterResponse,
   FocusedEditorGetValueResponseDetail,
   FocusedEditorSetValueResponseDetail,
-  FormatSourceResponse,
 } from '@/types/focusedEditor'
 
 const MATCHES = ['http://*/*', 'https://*/*', 'file:///*']
 const ERROR_TOAST_ID = 'prettier-now-focused-editor-error'
+const FORMATTER_FRAME_ID = 'prettier-now-focused-editor-formatter'
+
+let formatterFramePromise: Promise<HTMLIFrameElement> | undefined
 
 function createRequestId() {
   return crypto.randomUUID()
+}
+
+function getExtensionOrigin() {
+  return new URL(browser.runtime.getURL('/')).origin
+}
+
+function getFormatterFrame() {
+  if (formatterFramePromise) {
+    return formatterFramePromise
+  }
+
+  formatterFramePromise = new Promise((resolve, reject) => {
+    const existingFrame = document.querySelector<HTMLIFrameElement>(
+      `#${FORMATTER_FRAME_ID}`,
+    )
+
+    if (existingFrame?.contentWindow) {
+      resolve(existingFrame)
+      return
+    }
+
+    const frame = document.createElement('iframe')
+
+    frame.id = FORMATTER_FRAME_ID
+    frame.src = browser.runtime.getURL(`/${FOCUSED_EDITOR_FORMATTER_PAGE}`)
+    frame.style.display = 'none'
+    frame.setAttribute('aria-hidden', 'true')
+
+    frame.addEventListener('load', () => resolve(frame), { once: true })
+    frame.addEventListener(
+      'error',
+      () => {
+        formatterFramePromise = undefined
+        reject(new Error('Failed to load formatter runtime'))
+      },
+      { once: true },
+    )
+
+    document.documentElement.append(frame)
+  })
+
+  return formatterFramePromise
 }
 
 function waitForEditorValue(requestId: string) {
@@ -98,6 +145,59 @@ function waitForEditorWrite(requestId: string, value: string) {
   })
 }
 
+async function formatViaFormatterFrame(
+  editorValue: FocusedEditorGetValueResponseDetail,
+) {
+  const frame = await getFormatterFrame()
+  const targetWindow = frame.contentWindow
+
+  if (!targetWindow) {
+    throw new Error('Formatter runtime is not available')
+  }
+
+  const requestId = createRequestId()
+
+  return new Promise<string>((resolve, reject) => {
+    const timeoutId = window.setTimeout(() => {
+      window.removeEventListener('message', handleResponse)
+      reject(new Error('Formatter runtime timed out'))
+    }, FOCUSED_EDITOR_FORMAT_TIMEOUT)
+
+    function handleResponse(evt: MessageEvent<FocusedEditorFormatterResponse>) {
+      if (
+        evt.origin !== getExtensionOrigin()
+        || evt.data?.type !== FOCUSED_EDITOR_MESSAGE.formatterFormatResponse
+        || evt.data.requestId !== requestId
+      ) {
+        return
+      }
+
+      window.clearTimeout(timeoutId)
+      window.removeEventListener('message', handleResponse)
+
+      if (!evt.data.ok) {
+        reject(new Error(evt.data.errorMessage))
+        return
+      }
+
+      resolve(evt.data.formatted)
+    }
+
+    window.addEventListener('message', handleResponse)
+    targetWindow.postMessage(
+      {
+        fallbackLanguageId: LANGUAGE_ID.markdown,
+        hints: editorValue.hints,
+        requestId,
+        source: editorValue.source,
+        type: FOCUSED_EDITOR_MESSAGE.formatterFormatRequest,
+        url: window.location.href,
+      },
+      getExtensionOrigin(),
+    )
+  })
+}
+
 async function formatFocusedEditor() {
   const requestId = createRequestId()
   const editorValue = await waitForEditorValue(requestId)
@@ -110,22 +210,9 @@ async function formatFocusedEditor() {
     throw new Error('Nothing to format')
   }
 
-  const formatResponse = (await browser.runtime.sendMessage({
-    fallbackLanguageId: LANGUAGE_ID.markdown,
-    hints: editorValue.hints,
-    source: editorValue.source,
-    type: FOCUSED_EDITOR_MESSAGE.formatSource,
-    url: window.location.href,
-  })) as FormatSourceResponse
+  const formatted = await formatViaFormatterFrame(editorValue)
 
-  if (!formatResponse.ok) {
-    throw new Error(formatResponse.errorMessage)
-  }
-
-  const writeResponse = await waitForEditorWrite(
-    createRequestId(),
-    formatResponse.formatted,
-  )
+  const writeResponse = await waitForEditorWrite(createRequestId(), formatted)
 
   if (writeResponse.errorMessage) {
     throw new Error(writeResponse.errorMessage)

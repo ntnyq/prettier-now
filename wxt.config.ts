@@ -72,6 +72,12 @@ export default defineConfig({
       // This applies only to extension pages (not web pages) under MV3.
       extension_pages: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`,
     },
+    web_accessible_resources: [
+      {
+        matches: ['<all_urls>'],
+        resources: ['focused-editor-formatter.html', 'chunks/*'],
+      },
+    ],
   },
 
   modules: [

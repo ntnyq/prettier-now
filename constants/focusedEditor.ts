@@ -11,7 +11,12 @@ export const FOCUSED_EDITOR_EVENT = Object.freeze({
 
 export const FOCUSED_EDITOR_MESSAGE = Object.freeze({
   formatFocusedEditor: 'prettier-now:format-focused-editor',
-  formatSource: 'prettier-now:format-source',
+  formatterFormatRequest: 'prettier-now:formatter-format-request',
+  formatterFormatResponse: 'prettier-now:formatter-format-response',
 })
 
+export const FOCUSED_EDITOR_FORMATTER_PAGE = 'focused-editor-formatter.html'
+
 export const FOCUSED_EDITOR_REQUEST_TIMEOUT = 1000
+
+export const FOCUSED_EDITOR_FORMAT_TIMEOUT = 15000
