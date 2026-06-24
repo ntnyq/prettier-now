@@ -16,6 +16,7 @@ import type {
 } from '@/types/focusedEditor'
 
 const MATCHES = ['http://*/*', 'https://*/*', 'file:///*']
+const ERROR_TOAST_ID = 'prettier-now-focused-editor-error'
 
 function createRequestId() {
   return crypto.randomUUID()
@@ -131,6 +132,31 @@ async function formatFocusedEditor() {
   }
 }
 
+function showErrorMessage(message: string) {
+  document.querySelector(`#${ERROR_TOAST_ID}`)?.remove()
+
+  const toast = document.createElement('div')
+
+  toast.id = ERROR_TOAST_ID
+  toast.textContent = message
+  toast.style.position = 'fixed'
+  toast.style.right = '16px'
+  toast.style.bottom = '16px'
+  toast.style.zIndex = '2147483647'
+  toast.style.maxWidth = '360px'
+  toast.style.padding = '10px 12px'
+  toast.style.borderRadius = '8px'
+  toast.style.background = '#b42318'
+  toast.style.color = '#fff'
+  toast.style.font = '13px/1.4 system-ui, sans-serif'
+  toast.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.18)'
+
+  document.documentElement.append(toast)
+  window.setTimeout(() => {
+    toast.remove()
+  }, 4000)
+}
+
 export default defineContentScript({
   matches: MATCHES,
   main() {
@@ -139,7 +165,11 @@ export default defineContentScript({
         return
       }
 
-      await formatFocusedEditor()
+      try {
+        await formatFocusedEditor()
+      } catch (err: unknown) {
+        showErrorMessage((err as Error)?.message || 'Failed to format editor')
+      }
     })
   },
 })

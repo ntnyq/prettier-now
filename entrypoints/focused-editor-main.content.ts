@@ -5,22 +5,16 @@
 import { defineContentScript } from '#imports'
 import { FOCUSED_EDITOR_EVENT } from '@/constants/focusedEditor'
 import { createEditorAdapter } from '@/utils/editors'
+import {
+  rememberFocusedEditorElement,
+  resolveFocusedEditorElement,
+} from '@/utils/focusedEditorElement'
 import type {
   FocusedEditorGetValueRequestDetail,
   FocusedEditorSetValueRequestDetail,
 } from '@/types/focusedEditor'
 
 const MATCHES = ['http://*/*', 'https://*/*', 'file:///*']
-
-function getDeepActiveElement(root: Document | ShadowRoot = document) {
-  let activeElement = root.activeElement
-
-  while (activeElement?.shadowRoot?.activeElement) {
-    activeElement = activeElement.shadowRoot.activeElement
-  }
-
-  return activeElement instanceof HTMLElement ? activeElement : null
-}
 
 function getAttributeHints(element: HTMLElement) {
   const hints = new Set<string>()
@@ -69,7 +63,7 @@ function dispatchInputEvents(element: HTMLElement) {
 }
 
 function readFocusedEditor(requestId: string) {
-  const element = getDeepActiveElement()
+  const element = resolveFocusedEditorElement()
   const editor = element ? createEditorAdapter(element) : null
   const source = editor?.getValue()
 
@@ -97,7 +91,7 @@ function readFocusedEditor(requestId: string) {
 }
 
 function writeFocusedEditor(requestId: string, value: string) {
-  const element = getDeepActiveElement()
+  const element = resolveFocusedEditorElement()
   const editor = element ? createEditorAdapter(element) : null
 
   if (!element || !editor) {
@@ -126,6 +120,18 @@ export default defineContentScript({
   matches: MATCHES,
   world: 'MAIN',
   main() {
+    for (const eventName of ['contextmenu', 'focusin', 'pointerdown']) {
+      window.addEventListener(
+        eventName,
+        evt => {
+          rememberFocusedEditorElement(evt.target)
+        },
+        {
+          capture: true,
+        },
+      )
+    }
+
     window.addEventListener(FOCUSED_EDITOR_EVENT.getValueRequest, evt => {
       const { requestId } = (
         evt as CustomEvent<FocusedEditorGetValueRequestDetail>
