@@ -16,11 +16,24 @@
 
 ## Features
 
-- Format source code with customable options
-- Drag and drop file to format
-- Select file to format
-- Copy and Paste file to format
-- Open format page in contextMenu
+- ✨ Format source code with customizable Prettier options
+- 📥 Drag and drop files into the formatter
+- 📁 Select one or more files to format
+- 📋 Paste files directly into the workspace
+- 🖱️ Open Prettier Now actions from browser context menus
+- 🎯 Format the focused editor directly from the context menu or extension command
+- ⚡ Open the options page from the popup, context menu, or `Alt+O`
+- 🧩 Edit source and formatted output side by side with CodeMirror-powered editors
+- 🧠 Select languages manually or infer them from file names and focused editor context
+- 📦 Batch format multiple selected, dropped, or pasted files with a file job list
+- 📤 Copy formatted output, download the current result, or download all formatted files
+- 🔍 View line-by-line diffs between source and formatted result
+- 🕘 Keep format history that can restore previous results
+- 🧾 Inspect runtime logs for successful formats and formatter errors
+- 💾 Save, apply, delete, import, export, and reset formatting option presets
+- 🔧 Configure core Prettier options plus XML, PHP, Java, Svelte, and TOML plugin options
+- 🎛️ Toggle source/result layouts, color mode, toast verbosity, debug logging, auto-format, and theme color
+- 🌐 Localized UI for English, Simplified Chinese, Traditional Chinese, Japanese, and Korean
 
 ## Supported languages
 
@@ -43,7 +56,7 @@
 
 - XML (via [@prettier/plugin-xml](https://github.com/prettier/plugin-xml))
 - PHP (via [@prettier/plugin-php](https://github.com/prettier/plugin-php))
-- Pug (via [@prettier/plugin-pug](https://github.com/prettier/plugin-pug)) 😭
+- Pug (via [@prettier/plugin-pug](https://github.com/prettier/plugin-pug))
 
 ### Community language plugins
 
