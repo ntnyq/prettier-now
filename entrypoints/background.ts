@@ -8,21 +8,28 @@ import { COMMANDS } from '@/constants/command'
 import { FOCUSED_EDITOR_MESSAGE } from '@/constants/focusedEditor'
 import { CONTEXT_MENU_ID } from '@/constants/meta'
 
+type BackgroundMessageKey = 'formatFocusedEditor' | 'openOptionsPage'
+type BackgroundMessageTranslator = (key: BackgroundMessageKey) => string
+
 /**
  * Register extension context menus from a clean slate.
+ *
+ * @param t - Message translator.
  */
-export async function registerContextMenus(): Promise<void> {
+export async function registerContextMenus(
+  t: BackgroundMessageTranslator,
+): Promise<void> {
   await browser.contextMenus.removeAll()
 
   browser.contextMenus.create({
     id: CONTEXT_MENU_ID.openOptionsPage,
-    title: i18n.t('openOptionsPage'),
+    title: t('openOptionsPage'),
   })
 
   browser.contextMenus.create({
     contexts: ['editable'],
     id: CONTEXT_MENU_ID.formatFocusedEditor,
-    title: i18n.t('formatFocusedEditor'),
+    title: t('formatFocusedEditor'),
   })
 }
 
@@ -48,7 +55,7 @@ export default defineBackground({
       await formatFocusedTab(tab?.id)
     }
 
-    registerContextMenus().catch((err: unknown) => {
+    registerContextMenus(key => i18n.t(key)).catch((err: unknown) => {
       const message = (err as Error)?.message || 'Failed to register menus'
       console.error(message)
     })

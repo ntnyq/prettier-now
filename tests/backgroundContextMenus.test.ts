@@ -37,7 +37,7 @@ const { registerContextMenus } = await import('@/entrypoints/background')
 
 describe('background context menus', () => {
   it('clears existing menus before registering fixed menu ids', async () => {
-    await registerContextMenus()
+    await registerContextMenus(key => key)
 
     expect(browserMock.contextMenus.removeAll).toHaveBeenCalledTimes(1)
     expect(browserMock.contextMenus.create).toHaveBeenCalledTimes(2)
