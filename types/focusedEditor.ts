@@ -161,5 +161,4 @@ export interface FocusedEditorFormatterErrorResponse {
  * Formatter response returned from the extension formatter page.
  */
 export type FocusedEditorFormatterResponse =
-  | FocusedEditorFormatterErrorResponse
-  | FocusedEditorFormatterSuccessResponse
+  FocusedEditorFormatterErrorResponse | FocusedEditorFormatterSuccessResponse

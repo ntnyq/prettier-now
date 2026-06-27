@@ -15,9 +15,7 @@ export type CodemirrorExtension = Extension
  * CodeMirror language support returned by dynamic language loaders.
  */
 export type CodemirrorLanguage =
-  | Extension[]
-  | LanguageSupport
-  | StreamLanguage<unknown>
+  Extension[] | LanguageSupport | StreamLanguage<unknown>
 
 /**
  * Prettier plugin module used by the standalone formatter.

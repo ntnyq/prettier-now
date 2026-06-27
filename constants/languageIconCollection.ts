@@ -5,6 +5,8 @@
  * extension does not bundle the whole vscode-icons collection.
  */
 
+// cSpell: disable
+
 export const languageIconCollection = {
   height: 32,
   prefix: 'vscode-icons',
