@@ -2,5 +2,5 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>ntnyq/configs//packages/renovate-config/default.json"],
   "automerge": true,
-  "ignoreDeps": ["prettier-plugin-toml"]
+  "ignoreDeps": ["prettier-plugin-toml", "typescript"]
 }

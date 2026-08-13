@@ -9,6 +9,7 @@ import {
   Sun,
   Zap,
 } from '@lucide/vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { i18n } from '#i18n'
 import { browser } from '#imports'
@@ -29,6 +30,8 @@ const appStore = useAppStore()
 const workspaceStore = useWorkspaceStore()
 
 const logoUrl = browser.runtime.getURL('/icons/48.png')
+
+const isDevMode = computed(() => import.meta.env.DEV)
 </script>
 
 <template>
@@ -49,6 +52,14 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
     </RouterLink>
 
     <div class="flex items-center gap-2">
+      <div
+        v-if="isDevMode"
+        class="inline-flex h-7 items-center gap-1 rounded-full bg-orange-50 px-2.5 text-xs font-medium text-orange-700 ring-1 ring-orange-200/70 dark:bg-orange-400/10 dark:text-orange-300 dark:ring-orange-400/20"
+        data-testid="dev-mode"
+      >
+        Dev
+      </div>
+
       <template v-if="route.name === 'Home'">
         <LanguageSelect />
 

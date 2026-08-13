@@ -1,5 +1,5 @@
 overrides:
-  esbuild: ^0.28.1
+  esbuild: ^0.28.2
 
 patchedDependencies:
   '@prettier/plugin-pug@3.4.2': patches/@prettier__plugin-pug@3.4.2.patch
