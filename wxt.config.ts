@@ -37,7 +37,7 @@ const viteConfig = (() => ({
       resolvers: [],
     }),
   ],
-})) as WxtViteConfigFactory
+})) satisfies WxtViteConfigFactory
 
 export default defineConfig({
   imports: false,
