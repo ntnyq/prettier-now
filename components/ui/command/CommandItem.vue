@@ -10,11 +10,11 @@ import type { HTMLAttributes } from 'vue'
 const props = defineProps<
   ListboxItemProps & { class?: HTMLAttributes['class'] }
 >()
-const emits = defineEmits<ListboxItemEmits>()
+const emit = defineEmits<ListboxItemEmits>()
 
 const delegatedProps = reactiveOmit(props, 'class')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 
 const id = useId()
 const { filterState, allItems, allGroups } = useCommand()

@@ -8,11 +8,11 @@ import type { HTMLAttributes } from 'vue'
 const props = defineProps<
   NumberFieldRootProps & { class?: HTMLAttributes['class'] }
 >()
-const emits = defineEmits<NumberFieldRootEmits>()
+const emit = defineEmits<NumberFieldRootEmits>()
 
 const delegatedProps = reactiveOmit(props, 'class')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 </script>
 
 <template>

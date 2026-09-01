@@ -67,9 +67,9 @@ window.addEventListener('message', async evt => {
       requestId: request.requestId,
       type: FOCUSED_EDITOR_MESSAGE.formatterFormatResponse,
     })
-  } catch (err: unknown) {
+  } catch (error: unknown) {
     postFormatterResponse(evt.source, evt.origin, {
-      errorMessage: (err as Error)?.message || 'Failed to format editor',
+      errorMessage: (error as Error)?.message || 'Failed to format editor',
       ok: false,
       requestId: request.requestId,
       type: FOCUSED_EDITOR_MESSAGE.formatterFormatResponse,

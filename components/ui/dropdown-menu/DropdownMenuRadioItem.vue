@@ -17,11 +17,11 @@ const props = defineProps<
   DropdownMenuRadioItemProps & { class?: HTMLAttributes['class'] }
 >()
 
-const emits = defineEmits<DropdownMenuRadioItemEmits>()
+const emit = defineEmits<DropdownMenuRadioItemEmits>()
 
 const delegatedProps = reactiveOmit(props, 'class')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 </script>
 
 <template>

@@ -1,4 +1,5 @@
 export const i18n = {
-  t: (key: string, params?: unknown[]) =>
-    params?.length ? `${key}:${params.join(',')}` : key,
+  t(key: string, params?: unknown[]) {
+    return params?.length ? `${key}:${params.join(',')}` : key
+  },
 }

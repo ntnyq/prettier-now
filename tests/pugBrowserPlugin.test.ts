@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import process from 'node:process'
 import { pathToFileURL } from 'node:url'
@@ -8,9 +8,9 @@ import { afterEach, describe, expect, it } from 'vitest'
 const outputDirs: string[] = []
 
 async function createBrowserBundle() {
-  const root = await mkdtemp(
-    join(process.cwd(), 'node_modules/.tmp/prettier-now-pug-'),
-  )
+  const tempDir = join(process.cwd(), 'node_modules/.tmp')
+  await mkdir(tempDir, { recursive: true })
+  const root = await mkdtemp(join(tempDir, 'prettier-now-pug-'))
   const outDir = join(root, 'dist')
   const entry = join(root, 'entry.mjs')
 

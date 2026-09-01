@@ -9,7 +9,7 @@ function getIconNames(icon: Language['icon']) {
 
 describe('language metadata', () => {
   it('keeps language icons for every selectable language', () => {
-    expect(languages.every(language => Boolean(language.icon))).toBe(true)
+    expect(languages.every(language => language.icon)).toBe(true)
   })
 
   it('exposes pug as a selectable language', () => {

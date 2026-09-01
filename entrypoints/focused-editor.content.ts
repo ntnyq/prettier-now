@@ -254,8 +254,8 @@ export default defineContentScript({
 
       try {
         await formatFocusedEditor()
-      } catch (err: unknown) {
-        showErrorMessage((err as Error)?.message || 'Failed to format editor')
+      } catch (error: unknown) {
+        showErrorMessage((error as Error)?.message || 'Failed to format editor')
       }
     })
   },

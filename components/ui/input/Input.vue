@@ -9,11 +9,11 @@ const props = defineProps<{
   class?: HTMLAttributes['class']
 }>()
 
-const emits = defineEmits<{
+const emit = defineEmits<{
   (e: 'update:modelValue', payload: string | number): void
 }>()
 
-const modelValue = useVModel(props, 'modelValue', emits, {
+const modelValue = useVModel(props, 'modelValue', emit, {
   passive: true,
   defaultValue: props.defaultValue,
 })

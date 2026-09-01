@@ -19,7 +19,7 @@ const props = withDefaults(
   },
 )
 
-const emits = defineEmits<DropdownMenuContentEmits>()
+const emit = defineEmits<DropdownMenuContentEmits>()
 
 defineOptions({
   inheritAttrs: false,
@@ -27,7 +27,7 @@ defineOptions({
 
 const delegatedProps = reactiveOmit(props, 'class')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 </script>
 
 <template>

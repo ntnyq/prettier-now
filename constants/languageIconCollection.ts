@@ -1,7 +1,7 @@
 /**
  * @file Iconify subset for supported language icons
  *
- * Icons are sourced from @iconify-json/vscode-icons and kept local so the
+ * Icons are sourced from `@iconify-json/vscode-icons` and kept local so the
  * extension does not bundle the whole vscode-icons collection.
  */
 

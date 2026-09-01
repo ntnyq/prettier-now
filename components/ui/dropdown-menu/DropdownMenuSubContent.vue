@@ -11,11 +11,11 @@ import type { HTMLAttributes } from 'vue'
 const props = defineProps<
   DropdownMenuSubContentProps & { class?: HTMLAttributes['class'] }
 >()
-const emits = defineEmits<DropdownMenuSubContentEmits>()
+const emit = defineEmits<DropdownMenuSubContentEmits>()
 
 const delegatedProps = reactiveOmit(props, 'class')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 </script>
 
 <template>

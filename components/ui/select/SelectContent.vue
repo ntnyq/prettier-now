@@ -18,7 +18,7 @@ const props = withDefaults(
   },
 )
 
-const emits = defineEmits<SelectContentEmits>()
+const emit = defineEmits<SelectContentEmits>()
 
 defineOptions({
   inheritAttrs: false,
@@ -26,7 +26,7 @@ defineOptions({
 
 const delegatedProps = reactiveOmit(props, 'class')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 </script>
 
 <template>

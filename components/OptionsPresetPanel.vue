@@ -52,9 +52,9 @@ handleImportChange(async files => {
     const snapshot = parseOptionsSnapshot(await file.text())
     optionsStore.applySnapshot(snapshot)
     Toast.info(i18n.t('importOptionsSuccess'))
-  } catch (err: unknown) {
+  } catch (error: unknown) {
     const message =
-      err instanceof Error ? err.message : i18n.t('importOptionsFailed')
+      error instanceof Error ? error.message : i18n.t('importOptionsFailed')
     Toast.error(message)
   } finally {
     resetImportDialog()

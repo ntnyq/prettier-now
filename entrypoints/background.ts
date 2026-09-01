@@ -55,8 +55,8 @@ export default defineBackground({
       await formatFocusedTab(tab?.id)
     }
 
-    registerContextMenus(key => i18n.t(key)).catch((err: unknown) => {
-      const message = (err as Error)?.message || 'Failed to register menus'
+    registerContextMenus(key => i18n.t(key)).catch((error: unknown) => {
+      const message = (error as Error)?.message || 'Failed to register menus'
       console.error(message)
     })
 

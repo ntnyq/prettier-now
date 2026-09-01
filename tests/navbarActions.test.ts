@@ -27,8 +27,9 @@ vi.mock('#imports', () => ({
 
 vi.mock('#i18n', () => ({
   i18n: {
-    t: (key: string, params?: unknown[]) =>
-      params?.length ? `${key}:${params.join(',')}` : key,
+    t(key: string, params?: unknown[]) {
+      return params?.length ? `${key}:${params.join(',')}` : key
+    },
   },
 }))
 
@@ -38,9 +39,11 @@ vi.mock('vue-router', () => ({
     template: '<a><slot /></a>',
   },
   useRoute: () => routeMock,
-  useRouter: () => ({
-    push: vi.fn(),
-  }),
+  useRouter() {
+    return {
+      push: vi.fn(),
+    }
+  },
 }))
 
 vi.mock('@/utils', () => ({

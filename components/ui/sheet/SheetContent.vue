@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<SheetContentProps>(), {
   side: 'right',
 })
 
-const emits = defineEmits<DialogContentEmits>()
+const emit = defineEmits<DialogContentEmits>()
 
 defineOptions({
   inheritAttrs: false,
@@ -29,7 +29,7 @@ defineOptions({
 
 const delegatedProps = reactiveOmit(props, 'class', 'side')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 </script>
 
 <template>

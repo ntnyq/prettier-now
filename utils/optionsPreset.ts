@@ -179,8 +179,8 @@ export function parseOptionsSnapshot(source: string) {
 
   try {
     parsed = JSON.parse(source)
-  } catch (err) {
-    throw new Error('Invalid options file', { cause: err })
+  } catch (error) {
+    throw new Error('Invalid options file', { cause: error })
   }
 
   if (!v.safeParse(OptionsSnapshotVersionSchema, parsed).success) {

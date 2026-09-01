@@ -17,14 +17,14 @@ const props = withDefaults(
   },
 )
 
-const emits = defineEmits<TooltipContentEmits>()
+const emit = defineEmits<TooltipContentEmits>()
 
 defineOptions({
   inheritAttrs: false,
 })
 
 const delegatedProps = reactiveOmit(props, 'class')
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 </script>
 
 <template>

@@ -16,7 +16,7 @@ describe('workspace utilities', () => {
   it('creates format jobs for supported non-empty files only', async () => {
     const files = [
       new File(['const a=1'], 'index.ts'),
-      new File(['   '], 'empty.js'),
+      new File([' '.repeat(3)], 'empty.js'),
       new File(['hello'], 'notes.txt'),
       new File(['{"a":1}'], 'data.json'),
     ]

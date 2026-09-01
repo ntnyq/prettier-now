@@ -15,11 +15,11 @@ const props = withDefaults(
   },
 )
 
-const emits = defineEmits<ListboxRootEmits>()
+const emit = defineEmits<ListboxRootEmits>()
 
 const delegatedProps = reactiveOmit(props, 'class')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 
 const allItems = ref<Map<string, string>>(new Map())
 const allGroups = ref<Map<string, Set<string>>>(new Map())

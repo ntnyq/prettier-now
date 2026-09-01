@@ -68,7 +68,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   )
   const sourceCode = computed({
     get: () => activeJob.value?.sourceCode ?? '',
-    set: value => {
+    set(value) {
       const job = ensureActiveJob()
       patchJob(job.id, {
         sourceCode: value,
@@ -82,7 +82,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   })
   const resultCode = computed({
     get: () => activeJob.value?.resultCode ?? '',
-    set: value => {
+    set(value) {
       const job = ensureActiveJob()
       patchJob(job.id, { resultCode: value })
     },
@@ -264,8 +264,8 @@ export const useWorkspaceStore = defineStore('workspace', () => {
       }
 
       return true
-    } catch (err: unknown) {
-      const message = (err as Error)?.message || 'Unknown error'
+    } catch (error: unknown) {
+      const message = (error as Error)?.message || 'Unknown error'
 
       patchJob(id, {
         status: 'error',

@@ -66,8 +66,8 @@ export function useStorage<V extends JsonValue>(
     }
   }
 
-  syncStorage().catch((err: unknown) => {
-    const message = (err as Error)?.message || 'Failed to sync storage'
+  syncStorage().catch((error: unknown) => {
+    const message = (error as Error)?.message || 'Failed to sync storage'
     Logger.error(message)
   })
 
@@ -84,8 +84,8 @@ export function useStorage<V extends JsonValue>(
 
     try {
       await storage.setItem(syncKey, value.value)
-    } catch (err: unknown) {
-      const message = (err as Error)?.message || 'Failed to write storage'
+    } catch (error: unknown) {
+      const message = (error as Error)?.message || 'Failed to write storage'
       Logger.error(message)
     }
   })

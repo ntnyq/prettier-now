@@ -21,7 +21,7 @@ const CommandProbe = defineComponent({
           'button',
           {
             type: 'button',
-            onClick: () => {
+            onClick() {
               filterState.search = 'alpha'
             },
           },
@@ -31,7 +31,7 @@ const CommandProbe = defineComponent({
           'button',
           {
             type: 'button',
-            onClick: () => {
+            onClick() {
               filterState.search = ''
             },
           },

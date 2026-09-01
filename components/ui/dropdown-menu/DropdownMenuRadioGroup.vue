@@ -6,9 +6,9 @@ import type {
 } from 'reka-ui'
 
 const props = defineProps<DropdownMenuRadioGroupProps>()
-const emits = defineEmits<DropdownMenuRadioGroupEmits>()
+const emit = defineEmits<DropdownMenuRadioGroupEmits>()
 
-const forwarded = useForwardPropsEmits(props, emits)
+const forwarded = useForwardPropsEmits(props, emit)
 </script>
 
 <template>

@@ -22,9 +22,9 @@ const props = withDefaults(
     description: 'Search for a command to run...',
   },
 )
-const emits = defineEmits<DialogRootEmits>()
+const emit = defineEmits<DialogRootEmits>()
 
-const forwarded = useForwardPropsEmits(props, emits)
+const forwarded = useForwardPropsEmits(props, emit)
 </script>
 
 <template>

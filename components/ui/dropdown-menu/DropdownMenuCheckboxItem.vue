@@ -16,11 +16,11 @@ import type { HTMLAttributes } from 'vue'
 const props = defineProps<
   DropdownMenuCheckboxItemProps & { class?: HTMLAttributes['class'] }
 >()
-const emits = defineEmits<DropdownMenuCheckboxItemEmits>()
+const emit = defineEmits<DropdownMenuCheckboxItemEmits>()
 
 const delegatedProps = reactiveOmit(props, 'class')
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 </script>
 
 <template>
