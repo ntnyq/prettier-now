@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { defineComponent, h, nextTick, onMounted } from 'vue'
 import { useCommand } from '@/components/ui/command'
 import Command from '@/components/ui/command/Command.vue'
-import { PassthroughStub } from './helpers/vue'
+import { PassthroughStub } from '../helpers/vue'
 
 const CommandProbe = defineComponent({
   setup() {

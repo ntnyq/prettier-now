@@ -25,6 +25,21 @@ defineOptions({
 const delegatedProps = reactiveOmit(props, 'class')
 
 const forwarded = useForwardPropsEmits(delegatedProps, emit)
+/**
+ * Keeps scrollbar interactions from dismissing the dialog.
+ */
+function handlePointerDownOutside(
+  event: DialogContentEmits['pointerDownOutside'][0],
+) {
+  const originalEvent = event.detail.originalEvent
+  const target = originalEvent.target as HTMLElement
+  if (
+    originalEvent.offsetX > target.clientWidth
+    || originalEvent.offsetY > target.clientHeight
+  ) {
+    event.preventDefault()
+  }
+}
 </script>
 
 <template>
@@ -33,18 +48,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emit)
       class="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
     >
       <DialogContent
-        @pointer-down-outside="
-          event => {
-            const originalEvent = event.detail.originalEvent
-            const target = originalEvent.target as HTMLElement
-            if (
-              originalEvent.offsetX > target.clientWidth
-              || originalEvent.offsetY > target.clientHeight
-            ) {
-              event.preventDefault()
-            }
-          }
-        "
+        @pointer-down-outside="handlePointerDownOutside"
         :class="
           cn(
             'relative z-50 grid w-full max-w-lg my-8 gap-4 border border-border bg-background p-6 shadow-lg duration-200 sm:rounded-lg md:w-full',

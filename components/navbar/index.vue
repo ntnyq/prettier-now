@@ -29,9 +29,9 @@ const router = useRouter()
 const appStore = useAppStore()
 const workspaceStore = useWorkspaceStore()
 
-const logoUrl = browser.runtime.getURL('/icons/48.png')
-
 const isDevMode = computed(() => import.meta.env.DEV)
+
+const logoUrl = browser.runtime.getURL('/icons/48.png')
 </script>
 
 <template>

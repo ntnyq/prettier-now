@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed, useId, useSlots } from 'vue'
+import { computed, useId } from 'vue'
+import type { VNode } from 'vue'
 
 const props = defineProps<{
   id?: string
@@ -7,10 +8,33 @@ const props = defineProps<{
   description?: string
 }>()
 
-const slots = useSlots()
-const typedSlots = slots as { description?: unknown }
-const hasDescriptionSlot = computed(() => Boolean(typedSlots.description))
+const slots = defineSlots<{
+  /**
+   * Replaces the setting title.
+   */
+  title?: () => VNode[]
+  /**
+   * Replaces the setting description.
+   */
+  description?: () => VNode[]
+  /**
+   * Renders controls with their accessible label and description IDs.
+   */
+  action?: (props: {
+    /**
+     * ID of the description, when one is present.
+     */
+    descriptionId: string | undefined
+    /**
+     * ID of the setting title.
+     */
+    titleId: string
+  }) => VNode[]
+}>()
+
 const fallbackId = useId()
+
+const hasDescriptionSlot = computed(() => Boolean(slots.description))
 const baseId = computed(() => props.id ?? `setting-${fallbackId}`)
 const titleId = computed(() => `${baseId.value}-title`)
 const descriptionId = computed(() =>

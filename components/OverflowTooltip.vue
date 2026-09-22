@@ -20,8 +20,10 @@ const props = defineProps<{
   text: string
 }>()
 
-const textRef = useTemplateRef<HTMLElement>('text')
+const textRef = useTemplateRef<HTMLElement>('textRef')
+
 const isOverflowing = shallowRef(false)
+
 let resizeObserver: ResizeObserver | undefined
 
 function updateOverflowState() {
@@ -62,7 +64,7 @@ onBeforeUnmount(() => {
   <Tooltip :disabled="!isOverflowing">
     <TooltipTrigger as-child>
       <span
-        ref="text"
+        ref="textRef"
         :class="cn('truncate', props.class)"
       >
         {{ text }}

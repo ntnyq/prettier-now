@@ -42,8 +42,9 @@ const props = withDefaults(
 
 const appStore = useAppStore()
 const logStore = useLogStore()
-const logoUrl = browser.runtime.getURL('/icons/48.png')
+
 const isAboutDialogOpen = shallowRef(false)
+const logoUrl = browser.runtime.getURL('/icons/48.png')
 
 function releaseActiveFocus() {
   if (document.activeElement instanceof HTMLElement) {

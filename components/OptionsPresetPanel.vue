@@ -22,6 +22,15 @@ import { Toast } from '@/utils/toast'
 import { downloadTextFile } from '@/utils/workspace'
 
 const optionsStore = useOptionsStore()
+const {
+  open: openImportDialog,
+  reset: resetImportDialog,
+  onChange: handleImportChange,
+} = useFileDialog({
+  accept: 'application/json,.json',
+  multiple: false,
+})
+
 const presetName = shallowRef('')
 const selectedPresetId = shallowRef('')
 const presetItems = computed(() =>
@@ -31,15 +40,6 @@ const presetItems = computed(() =>
   })),
 )
 const hasPresets = computed(() => presetItems.value.length > 0)
-
-const {
-  open: openImportDialog,
-  reset: resetImportDialog,
-  onChange: handleImportChange,
-} = useFileDialog({
-  accept: 'application/json,.json',
-  multiple: false,
-})
 
 handleImportChange(async files => {
   const file = files?.[0]

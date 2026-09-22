@@ -26,7 +26,6 @@ const props = withDefaults(
 const code = defineModel<string>()
 
 const languageExtension = shallowRef<CodemirrorExtension>()
-let languageLoadRequestId = 0
 
 const resolvedExtensions = computed<CodemirrorExtension[]>(() => [
   // External extensions
@@ -36,6 +35,8 @@ const resolvedExtensions = computed<CodemirrorExtension[]>(() => [
   // Theme extension
   isDark.value ? githubDark : githubLight,
 ])
+
+let languageLoadRequestId = 0
 
 watch(
   () => props.language,

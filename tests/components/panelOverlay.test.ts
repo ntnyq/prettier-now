@@ -7,7 +7,7 @@ import LogPanel from '@/components/LogPanel.vue'
 import { useAppStore } from '@/stores/app'
 import { useLogStore } from '@/stores/log'
 import { useWorkspaceStore } from '@/stores/workspace'
-import { ButtonStub, PassthroughStub } from './helpers/vue'
+import { ButtonStub, PassthroughStub } from '../helpers/vue'
 
 const storageMock = vi.hoisted(() => ({
   getItem: vi.fn(async () => null),

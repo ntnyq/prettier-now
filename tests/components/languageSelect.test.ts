@@ -3,7 +3,7 @@ import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import LanguageSelect from '@/components/navbar/LanguageSelect.vue'
 import { useWorkspaceStore } from '@/stores/workspace'
-import { ButtonStub, PassthroughStub } from './helpers/vue'
+import { ButtonStub, PassthroughStub } from '../helpers/vue'
 
 const storageMock = vi.hoisted(() => ({
   getItem: vi.fn(async () => null),

@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 function readSource(path: string) {
-  return readFileSync(resolve(import.meta.dirname, `../${path}`), 'utf8')
+  return readFileSync(resolve(import.meta.dirname, `../../${path}`), 'utf8')
 }
 
 describe('focused editor formatting runtime', () => {

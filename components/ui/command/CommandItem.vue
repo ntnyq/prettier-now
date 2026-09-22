@@ -12,14 +12,12 @@ const props = defineProps<
 >()
 const emit = defineEmits<ListboxItemEmits>()
 
-const delegatedProps = reactiveOmit(props, 'class')
-
-const forwarded = useForwardPropsEmits(delegatedProps, emit)
-
 const id = useId()
 const { filterState, allItems, allGroups } = useCommand()
 const groupContext = useCommandGroup()
 
+const itemRef = ref()
+const currentElement = useCurrentElement(itemRef)
 const isRender = computed(() => {
   if (filterState.search) {
     const filteredCurrentItem = filterState.filtered.items.get(id)
@@ -36,8 +34,17 @@ const isRender = computed(() => {
   return true
 })
 
-const itemRef = ref()
-const currentElement = useCurrentElement(itemRef)
+const delegatedProps = reactiveOmit(props, 'class')
+
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
+
+/**
+ * Clears the search after selecting a command item.
+ */
+function handleSelect() {
+  filterState.search = ''
+}
+
 onMounted(() => {
   if (currentElement.value instanceof HTMLElement) {
     // textValue to perform filter
@@ -68,17 +75,13 @@ onUnmounted(() => {
 
 <template>
   <ListboxItem
-    @select="
-      () => {
-        filterState.search = ''
-      }
-    "
+    @select="handleSelect"
     v-bind="forwarded"
     ref="itemRef"
     :hidden="isRender ? undefined : true"
     :class="
       cn(
-        `data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4`,
+        `data-highlighted:bg-accent data-highlighted:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4`,
         props.class,
       )
     "

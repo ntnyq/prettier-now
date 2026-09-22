@@ -4,9 +4,9 @@ import { browser } from '#imports'
 import { Button } from '@/components/ui/button'
 import { useThemeColor } from '@/composables/themeColor'
 
-const isMac = navigator.userAgent.includes('Mac OS X')
-
 useThemeColor()
+
+const isMac = navigator.userAgent.includes('Mac OS X')
 
 function openOptionsPage() {
   browser.runtime.openOptionsPage()

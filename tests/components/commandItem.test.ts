@@ -6,7 +6,7 @@ import {
   provideCommandGroupContext,
 } from '@/components/ui/command'
 import CommandItem from '@/components/ui/command/CommandItem.vue'
-import { ButtonStub } from './helpers/vue'
+import { ButtonStub } from '../helpers/vue'
 
 describe('command item', () => {
   it('keeps filtered items mounted so the search registry stays complete', async () => {

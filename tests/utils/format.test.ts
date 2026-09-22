@@ -5,7 +5,7 @@ import { LANGUAGE_ID } from '@/constants/language'
 import { formatViaPrettier } from '@/utils/format'
 
 function readSource(path: string) {
-  return readFileSync(resolve(import.meta.dirname, `../${path}`), 'utf8')
+  return readFileSync(resolve(import.meta.dirname, `../../${path}`), 'utf8')
 }
 
 describe('format via prettier', () => {

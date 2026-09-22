@@ -5,7 +5,7 @@ import Navbar from '@/components/navbar/index.vue'
 import MoreAction from '@/components/navbar/MoreAction.vue'
 import { useAppStore } from '@/stores/app'
 import { useLogStore } from '@/stores/log'
-import { ButtonStub, PassthroughStub } from './helpers/vue'
+import { ButtonStub, PassthroughStub } from '../helpers/vue'
 
 const routeMock = vi.hoisted(() => ({
   name: 'Home',

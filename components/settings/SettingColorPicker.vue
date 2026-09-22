@@ -23,6 +23,11 @@ const props = defineProps<{
 
 const model = defineModel<string>({ required: true })
 
+const textValue = shallowRef('')
+
+const colorValue = computed(() => normalizeHexColor(model.value))
+const rgbValue = computed(() => hexToRgb(colorValue.value))
+
 const presetColors = [
   '#242424',
   '#0f75bc',
@@ -31,18 +36,6 @@ const presetColors = [
   '#9333ea',
   '#ea580c',
 ]
-
-const textValue = shallowRef('')
-const colorValue = computed(() => normalizeHexColor(model.value))
-const rgbValue = computed(() => hexToRgb(colorValue.value))
-
-watch(
-  colorValue,
-  value => {
-    textValue.value = value
-  },
-  { immediate: true },
-)
 
 function setColor(value: string) {
   model.value = normalizeHexColor(value, model.value)
@@ -77,6 +70,14 @@ function updateRgbChannel(channel: keyof RgbColor, event: Event) {
     [channel]: value,
   })
 }
+
+watch(
+  colorValue,
+  value => {
+    textValue.value = value
+  },
+  { immediate: true },
+)
 </script>
 
 <template>

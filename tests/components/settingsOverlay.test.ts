@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import SettingsDialog from '@/components/settings/SettingsDialog.vue'
-import { PassthroughStub } from './helpers/vue'
+import { PassthroughStub } from '../helpers/vue'
 
 vi.mock('#i18n', () => ({
   i18n: {

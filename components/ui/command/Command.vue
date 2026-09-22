@@ -17,14 +17,10 @@ const props = withDefaults(
 
 const emit = defineEmits<ListboxRootEmits>()
 
-const delegatedProps = reactiveOmit(props, 'class')
-
-const forwarded = useForwardPropsEmits(delegatedProps, emit)
-
+const { contains } = useFilter({ sensitivity: 'base' })
 const allItems = ref<Map<string, string>>(new Map())
 const allGroups = ref<Map<string, Set<string>>>(new Map())
 
-const { contains } = useFilter({ sensitivity: 'base' })
 const filterState = reactive({
   search: '',
   filtered: {
@@ -36,6 +32,10 @@ const filterState = reactive({
     groups: new Set() as Set<string>,
   },
 })
+
+const delegatedProps = reactiveOmit(props, 'class')
+
+const forwarded = useForwardPropsEmits(delegatedProps, emit)
 
 function filterItems() {
   if (!filterState.search) {

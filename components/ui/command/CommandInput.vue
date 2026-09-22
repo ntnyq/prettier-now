@@ -17,11 +17,10 @@ defineOptions({
   inheritAttrs: false,
 })
 
+const { filterState } = useCommand()
 const delegatedProps = reactiveOmit(props, 'class')
 
 const forwardedProps = useForwardProps(delegatedProps)
-
-const { filterState } = useCommand()
 </script>
 
 <template>
