@@ -4,7 +4,7 @@ import SettingNumberField from '@/components/settings/SettingNumberField.vue'
 import SettingSelect from '@/components/settings/SettingSelect.vue'
 import SettingSwitch from '@/components/settings/SettingSwitch.vue'
 import Button from '@/components/ui/button/Button.vue'
-import { ButtonStub, PassthroughStub } from './helpers/vue'
+import { ButtonStub, PassthroughStub } from '../helpers/vue'
 
 describe('vue template bindings', () => {
   it('passes primitive bindings to shadcn buttons', () => {

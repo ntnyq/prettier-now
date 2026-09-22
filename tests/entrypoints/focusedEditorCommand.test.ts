@@ -5,7 +5,7 @@ import { COMMANDS } from '@/constants/command'
 import { CONTEXT_MENU_ID } from '@/constants/meta'
 
 function readSource(path: string) {
-  return readFileSync(resolve(import.meta.dirname, `../${path}`), 'utf8')
+  return readFileSync(resolve(import.meta.dirname, `../../${path}`), 'utf8')
 }
 
 describe('focused editor format command', () => {
