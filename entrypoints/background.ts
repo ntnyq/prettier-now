@@ -18,7 +18,7 @@ type BackgroundMessageTranslator = (key: BackgroundMessageKey) => string
  */
 export async function registerContextMenus(
   t: BackgroundMessageTranslator,
-): Promise<void> {
+) {
   await browser.contextMenus.removeAll()
 
   browser.contextMenus.create({
