@@ -13,6 +13,57 @@ clearAll: 清除所有
 clearAllConfirmDescription: 此操作无法撤销。
 clearSuccess: 清除成功
 close: 关闭
+codeBlocksChooseLanguage: 选择语言
+codeBlocksCopy: 复制原文
+codeBlocksDiscard: 丢弃
+codeBlocksDownload: 下载原文
+codeBlocksEnable: 显示网页代码块按钮
+codeBlocksErrors:
+  BLOCK_STALE: 页面内容已变化，请重新扫描。
+  BLOCK_TOO_LARGE: 此代码块超过 256 KiB 或节点复杂度限制，未截断导入。
+  EMPTY_BLOCK: 此代码块没有可提取内容。
+  INVALID_MESSAGE: 请求校验失败，请重新扫描。
+  NO_CODE_BLOCKS: 未找到代码块，可复制粘贴到工作台。
+  PAGE_UNAVAILABLE: 当前页面无法提取，请刷新旧标签页或检查页面权限。
+  PRIVATE_WINDOW_UNSUPPORTED: 代码块提取暂不支持隐私窗口。
+  QUEUE_FULL: 暂存队列已满，请先处理待导入项后重试。
+  REQUEST_EXPIRED: 请求已过期，请回到网页重新提取。
+  STORAGE_UNAVAILABLE: 会话传递或设置存储不可用，请重试或检查浏览器支持。
+  STRUCTURE_UNCERTAIN: 此代码结构无法可靠提取，请手动复制。
+  WORKSPACE_OPEN_FAILED: 已暂存，但工作台打开失败，请重试打开。
+codeBlocksEvidence:
+  attribute: 语言属性
+  class: 语言类名
+  content: 内容建议
+  filename: 文件名
+  label: 语言标签
+  none: 没有语言依据
+codeBlocksFrom: 导入自 $1
+codeBlocksHideHost: 在此网站隐藏按钮
+codeBlocksHistoryNotice: 提取内容暂存于本次浏览器会话；后续格式化会将原文和结果写入本地历史。暂不支持隐私窗口。
+codeBlocksHosts: 在这些网站隐藏按钮（每行一个完整主机名）
+codeBlocksImport: 导入
+codeBlocksImported: 已导入
+codeBlocksInvalidHosts: 请输入不含路径或通配符的主机名，最多 200 个。
+codeBlocksLimit: 仅列出前 200 个代码块。
+codeBlocksPending: 确认语言 · 待导入 $1 项
+codeBlocksQueued: 已暂存，请在工作台确认需要指定语言的项目。
+codeBlocksRestoreHost: 在此网站恢复按钮
+codeBlocksRetry: 重试
+codeBlocksSave: 保存网站列表
+codeBlocksScan: 提取当前页代码块
+codeBlocksScanning: 处理中…
+codeBlocksSelect: 选择代码块
+codeBlocksSelected: 已选择 $1 / 8 项
+codeBlocksSend: 发送到 Prettier Now
+codeBlocksSendResult: 已暂存 $1 项，失败 $2 项。
+codeBlocksSendSelected: 发送所选代码块
+codeBlocksSending: 正在发送…
+codeBlocksSize: $1 行 · $2 字节
+codeBlocksSource: 查看来源
+codeBlocksTitle: 网页代码块
+codeBlocksUnknown: 待识别
+codeBlocksUnsupported: 已识别 $1，当前不支持格式化。
 copiedToClipboard: 已复制到剪贴板
 copyResult: 复制结果
 deleteHistoryEntry: 删除历史记录

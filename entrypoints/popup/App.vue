@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { i18n } from '#i18n'
 import { browser } from '#imports'
+import CodeBlockPicker from '@/components/codeBlocks/CodeBlockPicker.vue'
 import { Button } from '@/components/ui/button'
 import { useThemeColor } from '@/composables/themeColor'
 
@@ -14,7 +15,7 @@ function openOptionsPage() {
 </script>
 
 <template>
-  <div class="flex h-40 w-60 flex-col items-center justify-center gap-5">
+  <div class="flex w-96 flex-col items-center justify-center gap-4 pt-5">
     <Button
       @click="openOptionsPage"
       type="button"
@@ -29,5 +30,6 @@ function openOptionsPage() {
         {{ `${isMac ? 'Option' : 'Alt'}+O` }}
       </kbd>
     </p>
+    <CodeBlockPicker />
   </div>
 </template>

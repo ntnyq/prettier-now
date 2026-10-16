@@ -247,16 +247,20 @@ function showErrorMessage(message: string) {
 export default defineContentScript({
   matches: MATCHES,
   main() {
-    browser.runtime.onMessage.addListener(async message => {
+    browser.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       if (message?.type !== FOCUSED_EDITOR_MESSAGE.formatFocusedEditor) {
         return
       }
 
-      try {
-        await formatFocusedEditor()
-      } catch (error: unknown) {
-        showErrorMessage((error as Error)?.message || 'Failed to format editor')
-      }
+      formatFocusedEditor()
+        .then(() => sendResponse({ ok: true }))
+        .catch((error: unknown) => {
+          showErrorMessage(
+            (error as Error)?.message || 'Failed to format editor',
+          )
+          sendResponse({ ok: false })
+        })
+      return true
     })
   },
 })

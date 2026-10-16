@@ -4,6 +4,7 @@ import { Codemirror } from 'vue-codemirror'
 import { isDark } from '@/composables/dark'
 import { loadCodemirrorLanguage } from '@/utils/cache'
 import { githubDark, githubLight } from './theme'
+import type { ViewUpdate } from '@codemirror/view'
 import type { CodemirrorExtension } from '@/types/vendor'
 
 const props = withDefaults(
@@ -23,7 +24,20 @@ const props = withDefaults(
     indentWithTab: true,
   },
 )
+const emit = defineEmits<{ userChange: [source: string] }>()
 const code = defineModel<string>()
+function handleUpdate(update: ViewUpdate) {
+  if (
+    update.docChanged
+    && update.transactions.some(transaction =>
+      ['input', 'delete', 'undo', 'redo', 'move'].some(event =>
+        transaction.isUserEvent(event),
+      ),
+    )
+  ) {
+    emit('userChange', update.state.doc.toString())
+  }
+}
 
 const languageExtension = shallowRef<CodemirrorExtension>()
 let languageLoadRequestId = 0
@@ -64,6 +78,7 @@ watch(
 <template>
   <div class="relative">
     <Codemirror
+      @update="handleUpdate"
       v-model="code"
       :extensions="resolvedExtensions"
       :tab-size

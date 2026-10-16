@@ -13,6 +13,57 @@ clearAll: すべてクリア
 clearAllConfirmDescription: この操作は元に戻せません。
 clearSuccess: クリアしました
 close: 閉じる
+codeBlocksChooseLanguage: 言語を選択
+codeBlocksCopy: 原文をコピー
+codeBlocksDiscard: 破棄
+codeBlocksDownload: 原文をダウンロード
+codeBlocksEnable: ウェブページにコードボタンを表示
+codeBlocksErrors:
+  BLOCK_STALE: ページが変更されました。再スキャンしてください。
+  BLOCK_TOO_LARGE: 256 KiB またはDOMの複雑さの上限を超えています。切り詰めていません。
+  EMPTY_BLOCK: このコードブロックは空です。
+  INVALID_MESSAGE: リクエストを確認できません。再スキャンしてください。
+  NO_CODE_BLOCKS: コードが見つかりません。ワークスペースに貼り付けることもできます。
+  PAGE_UNAVAILABLE: このページにアクセスできません。再読み込みや権限を確認してください。
+  PRIVATE_WINDOW_UNSUPPORTED: プライベートウィンドウでの抽出には未対応です。
+  QUEUE_FULL: キューがいっぱいです。保留中の項目を処理して再試行してください。
+  REQUEST_EXPIRED: リクエストの期限が切れました。ページから再抽出してください。
+  STORAGE_UNAVAILABLE: セッション転送または設定の保存を利用できません。再試行するか対応状況を確認してください。
+  STRUCTURE_UNCERTAIN: この構造は正確に抽出できません。手動でコピーしてください。
+  WORKSPACE_OPEN_FAILED: 保存しましたがワークスペースを開けませんでした。再試行してください。
+codeBlocksEvidence:
+  attribute: 言語属性
+  class: 言語クラス
+  content: 内容からの候補
+  filename: ファイル名
+  label: 言語ラベル
+  none: 言語の根拠なし
+codeBlocksFrom: $1 から取り込み
+codeBlocksHideHost: このサイトのボタンを非表示
+codeBlocksHistoryNotice: 抽出内容はブラウザーのセッション内に保存されます。整形すると原文と結果がローカル履歴に保存されます。プライベートウィンドウは未対応です。
+codeBlocksHosts: 非表示にするホスト（1行に1つ、完全一致）
+codeBlocksImport: 取り込む
+codeBlocksImported: 取り込み済み
+codeBlocksInvalidHosts: パスやワイルドカードを含まないホスト名を200件以内で入力してください。
+codeBlocksLimit: 最初の200件のみ表示します。
+codeBlocksPending: 言語を確認 · $1件保留
+codeBlocksQueued: 取り込み用に保存しました。必要に応じてワークスペースで言語を確認してください。
+codeBlocksRestoreHost: このサイトのボタンを表示
+codeBlocksRetry: 再試行
+codeBlocksSave: ホストを保存
+codeBlocksScan: このページのコードを抽出
+codeBlocksScanning: 処理中…
+codeBlocksSelect: コードブロックを選択
+codeBlocksSelected: $1 / 8 件選択
+codeBlocksSend: Prettier Now に送信
+codeBlocksSendResult: $1件を保存、$2件が失敗しました.
+codeBlocksSendSelected: 選択したコードを送信
+codeBlocksSending: 送信中…
+codeBlocksSize: $1 行 · $2 バイト
+codeBlocksSource: 出典を表示
+codeBlocksTitle: ウェブのコードブロック
+codeBlocksUnknown: 言語不明
+codeBlocksUnsupported: $1を検出しましたが、整形には未対応です.
 copiedToClipboard: クリップボードにコピーしました
 copyResult: 結果をコピー
 deleteHistoryEntry: 履歴を削除

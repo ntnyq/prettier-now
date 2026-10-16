@@ -1,0 +1,45 @@
+:host {
+  all: initial;
+  pointer-events: none;
+}
+.pn-send {
+  position: fixed;
+  z-index: 2147483646;
+  box-sizing: border-box;
+  height: 26px;
+  max-width: min(340px, 90vw);
+  padding: 3px 9px;
+  border: 1px solid #616674;
+  border-radius: 5px;
+  background: #20232b;
+  color: #fff;
+  font:
+    12px/18px system-ui,
+    sans-serif;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.pn-send:focus-visible {
+  outline: 3px solid #52c6ff;
+  outline-offset: 2px;
+}
+.pn-send:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+.pn-status {
+  position: fixed;
+  z-index: 2147483647;
+  max-width: 300px;
+  margin: 0;
+  padding: 8px;
+  border-radius: 4px;
+  background: #20232b;
+  color: #fff;
+  font:
+    12px/1.5 system-ui,
+    sans-serif;
+}
+.pn-status:empty {
+  display: none;
+}

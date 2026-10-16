@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Code extraction fixtures</title>
+  <style>
+    body {
+      font: 16px system-ui;
+      max-width: 850px;
+      margin: 60px auto;
+    }
+    pre {
+      padding: 24px;
+      background: #eef1f4;
+      overflow: auto;
+      margin: 40px 0;
+    }
+    .line {
+      display: block;
+    }
+    .line-numbers-rows {
+      float: left;
+    }
+    button {
+      float: right;
+    }
+  </style>
+  <h1>Code extraction fixtures</h1>
+  <pre
+    id="plain"
+  ><code class="language-ts">&#9;const text = &quot;&amp;lt;&quot;;  
+
+const nbsp = &quot;a&nbsp;b&quot;;
+</code></pre>
+  <pre
+    id="prism"
+  ><code class="language-js"><span class="token keyword">const</span> answer=42;<br><span aria-hidden="true">+1</span><span class="line-numbers-rows"><span>1</span><span>2</span></span><button>Copy</button></code></pre>
+  <pre
+    id="shiki"
+    class="shiki"
+  ><code class="language-ts"><span class="line">const a=1</span><span class="line"></span><span class="line">const b=2</span></code></pre>
+  <pre id="shiki-newlines"><code class="language-ts"><span class="line">a</span>
+<span class="line"></span>
+<span class="line">b</span>
+</code></pre>
+  <pre
+    id="highlight"
+  ><code class="language-json hljs">{<span class="hljs-attr">"a"</span>:1}</code></pre>
+  <pre id="shell"><code class="language-bash">$ echo 1
+&gt; output
+-real
++real</code></pre>
+  <pre id="unknown">unlabeled text</pre>
+  <pre hidden><code>hidden</code></pre>
+</html>

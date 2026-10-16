@@ -16,11 +16,13 @@ import {
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
 import {
+  createFormatJobFromExtraction,
   createFormatJobsFromFiles,
   downloadTextFile,
   getFormattedFileName,
   updateFormatJobLanguage,
 } from '@/utils/workspace'
+import type { ConfirmedExtractedCode } from '@/types/codeBlocks'
 import type { FormatHistoryEntry } from '@/types/history'
 import type { FormatJob } from '@/types/workspace'
 
@@ -47,7 +49,8 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     [],
     FormatHistoryEntryListSchema,
   )
-  let formatRequestId = 0
+  const formatVersions = new Map<string, number>()
+  let formatSequence = 0
 
   const optionsStore = useOptionsStore()
   const logStore = useLogStore()
@@ -77,7 +80,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         errorMessage: '',
         formatCost: 0,
       })
-      invalidateFormatRequest()
+      invalidateFormatRequest(job.id)
     },
   })
   const resultCode = computed({
@@ -89,8 +92,12 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   })
   const formatCost = computed(() => activeJob.value?.formatCost ?? 0)
 
-  function invalidateFormatRequest() {
-    formatRequestId += 1
+  function invalidateFormatRequest(id?: string) {
+    if (id) {
+      formatVersions.delete(id)
+    } else {
+      formatVersions.clear()
+    }
   }
 
   function ensureActiveJob() {
@@ -134,7 +141,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
       activeJobId.value = jobs.value[0]?.id ?? MANUAL_JOB_ID
     }
 
-    invalidateFormatRequest()
+    invalidateFormatRequest(id)
   }
 
   function clearWorkspace() {
@@ -145,10 +152,52 @@ export const useWorkspaceStore = defineStore('workspace', () => {
 
   function setLanguageId(id: string) {
     const job = ensureActiveJob()
-    invalidateFormatRequest()
+    invalidateFormatRequest(job.id)
     jobs.value = jobs.value.map(item =>
       item.id === job.id ? updateFormatJobLanguage(item, id) : item,
     )
+  }
+
+  /**
+   * Append confirmed snippets without replacing drafts or cancelling other jobs.
+   */
+  function appendExtractedJobs(items: ConfirmedExtractedCode[]) {
+    const added: FormatJob[] = []
+    const existingItemIds: string[] = []
+    const ids = new Set(jobs.value.map(job => job.id))
+    const names = new Set(jobs.value.map(job => job.fileName))
+    for (const input of items) {
+      const job = createFormatJobFromExtraction(input)
+      if (ids.has(job.id)) {
+        existingItemIds.push(input.item.id)
+        continue
+      }
+      let suffix = 2
+      const originalName = job.fileName
+      while (names.has(job.fileName)) {
+        const dot = originalName.lastIndexOf('.')
+        job.fileName = `${originalName.slice(0, dot)}-${suffix++}${originalName.slice(dot)}`
+      }
+      names.add(job.fileName)
+      ids.add(job.id)
+      added.push(job)
+    }
+    if (added.length) {
+      jobs.value = [
+        ...jobs.value.filter(
+          job =>
+            !(
+              job.id === MANUAL_JOB_ID
+              && !job.sourceCode
+              && !job.resultCode
+              && job.status !== 'formatting'
+            ),
+        ),
+        ...added,
+      ]
+      activeJobId.value = added[0]!.id
+    }
+    return { jobIds: added.map(job => job.id), existingItemIds }
   }
 
   async function loadFileList(files?: FileList | File[] | null) {
@@ -199,13 +248,22 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   }
 
   async function formatJob(id: string, options: { notify: boolean }) {
-    const requestId = ++formatRequestId
+    const requestId = ++formatSequence
+    formatVersions.set(id, requestId)
     const job = jobs.value.find(item => item.id === id)
 
     if (!job) {
       return false
     }
 
+    const optionSnapshot = {
+      ...optionsStore.options,
+      ...optionsStore.xmlPluginOptions,
+      ...optionsStore.phpPluginOptions,
+      ...optionsStore.javaPluginOptions,
+      ...optionsStore.sveltePluginOptions,
+      ...optionsStore.tomlPluginOptions,
+    }
     const formatStartTime = window.performance.now()
     const parser =
       languages.find(item => item.id === job.languageId)?.parser
@@ -220,17 +278,15 @@ export const useWorkspaceStore = defineStore('workspace', () => {
       await loadCodemirrorLanguage(job.languageId)
 
       const formattedCode = await formatViaPrettier(job.sourceCode, {
-        ...optionsStore.options,
-        ...optionsStore.xmlPluginOptions,
-        ...optionsStore.phpPluginOptions,
-        ...optionsStore.javaPluginOptions,
-        ...optionsStore.sveltePluginOptions,
-        ...optionsStore.tomlPluginOptions,
+        ...optionSnapshot,
         parser,
         languageId: job.languageId,
       })
 
-      if (requestId !== formatRequestId) {
+      if (
+        requestId !== formatVersions.get(id)
+        || !jobs.value.some(item => item.id === id)
+      ) {
         return false
       }
 
@@ -265,6 +321,12 @@ export const useWorkspaceStore = defineStore('workspace', () => {
 
       return true
     } catch (error: unknown) {
+      if (
+        requestId !== formatVersions.get(id)
+        || !jobs.value.some(item => item.id === id)
+      ) {
+        return false
+      }
       const message = (error as Error)?.message || 'Unknown error'
 
       patchJob(id, {
@@ -364,6 +426,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     clearWorkspace,
     setLanguageId,
     loadFileList,
+    appendExtractedJobs,
     formatActiveJob,
     formatJobs,
     downloadActiveJob,

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import OptionsPresetPanel from '../OptionsPresetPanel.vue'
+import SettingsCodeBlocksSection from './SettingsCodeBlocksSection.vue'
 import SettingsJavaSection from './SettingsJavaSection.vue'
 import SettingsPhpSection from './SettingsPhpSection.vue'
 import SettingsPrettierSection from './SettingsPrettierSection.vue'
@@ -19,5 +20,6 @@ import SettingsXmlSection from './SettingsXmlSection.vue'
     <SettingsSvelteSection />
     <SettingsTomlSection />
     <SettingsUserConfigSection />
+    <SettingsCodeBlocksSection />
   </div>
 </template>

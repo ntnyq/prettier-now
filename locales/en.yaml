@@ -13,6 +13,57 @@ clearAll: Clear All
 clearAllConfirmDescription: This action cannot be undone.
 clearSuccess: Clear Success
 close: Close
+codeBlocksChooseLanguage: Choose language
+codeBlocksCopy: Copy original
+codeBlocksDiscard: Discard
+codeBlocksDownload: Download original
+codeBlocksEnable: Show code block buttons on webpages
+codeBlocksErrors:
+  BLOCK_STALE: The page changed. Scan again.
+  BLOCK_TOO_LARGE: This block exceeds the 256 KiB or DOM complexity limit. Nothing was truncated.
+  EMPTY_BLOCK: This code block is empty.
+  INVALID_MESSAGE: The request could not be verified. Scan again.
+  NO_CODE_BLOCKS: No code blocks found. You can paste code into the workspace.
+  PAGE_UNAVAILABLE: This page cannot be accessed. Refresh older tabs or check page permissions.
+  PRIVATE_WINDOW_UNSUPPORTED: Code extraction is not supported in private windows.
+  QUEUE_FULL: Import queue is full. Process pending items before retrying.
+  REQUEST_EXPIRED: This request expired. Extract the code from the page again.
+  STORAGE_UNAVAILABLE: Session transfer or settings storage is unavailable. Retry or check browser support.
+  STRUCTURE_UNCERTAIN: This code layout cannot be extracted reliably. Copy it manually.
+  WORKSPACE_OPEN_FAILED: 'Saved for import, but the workspace could not open. Retry to open it.'
+codeBlocksEvidence:
+  attribute: Language attribute
+  class: Language class
+  content: Content suggestion
+  filename: Filename
+  label: Language label
+  none: No language evidence
+codeBlocksFrom: Imported from $1
+codeBlocksHideHost: Hide buttons on this site
+codeBlocksHistoryNotice: Extraction stays in this browser session. Formatting later saves source and results in local history. Private windows are not supported.
+codeBlocksHosts: Hide buttons on these hosts (one exact hostname per line)
+codeBlocksImport: Import
+codeBlocksImported: Imported
+codeBlocksInvalidHosts: Enter up to 200 hostnames without paths or wildcards.
+codeBlocksLimit: Only the first 200 blocks are listed.
+codeBlocksPending: Confirm language · $1 pending
+codeBlocksQueued: Saved for import. Confirm the language in the workspace if needed.
+codeBlocksRestoreHost: Restore buttons on this site
+codeBlocksRetry: Retry
+codeBlocksSave: Save hosts
+codeBlocksScan: Extract code blocks from this page
+codeBlocksScanning: Working…
+codeBlocksSelect: Select code blocks
+codeBlocksSelected: Selected $1 / 8
+codeBlocksSend: Send to Prettier Now
+codeBlocksSendResult: Saved $1 for import; $2 failed.
+codeBlocksSendSelected: Send selected code blocks
+codeBlocksSending: Sending…
+codeBlocksSize: $1 lines · $2 bytes
+codeBlocksSource: View source
+codeBlocksTitle: Web code blocks
+codeBlocksUnknown: Unknown language
+codeBlocksUnsupported: 'Detected $1, which is not supported for formatting.'
 copiedToClipboard: Copied to clipboard
 copyResult: Copy Result
 deleteHistoryEntry: Delete History Entry

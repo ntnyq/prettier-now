@@ -1,3 +1,5 @@
+import type { CodeBlockOrigin } from './codeBlocks'
+
 /**
  * Lifecycle state for a queued formatting job.
  */
@@ -46,4 +48,9 @@ export interface FormatJob {
    * Current formatting status.
    */
   status: FormatJobStatus
+
+  /**
+   * In-memory webpage provenance, excluded from persistent history.
+   */
+  origin?: CodeBlockOrigin
 }

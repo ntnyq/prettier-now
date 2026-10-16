@@ -1,4 +1,5 @@
-import { languageExtensions } from '@/constants/language'
+import { languageExtensions, languages } from '@/constants/language'
+import type { ConfirmedExtractedCode } from '@/types/codeBlocks'
 import type { FormatJob } from '@/types/workspace'
 
 /**
@@ -131,4 +132,43 @@ export function downloadTextFile(fileName: string, content: string) {
   anchor.download = fileName
   anchor.click()
   window.setTimeout(() => URL.revokeObjectURL(url))
+}
+
+/**
+ * Create a pending job with a controlled filename and stable transport identity.
+ */
+export function createFormatJobFromExtraction(
+  input: ConfirmedExtractedCode,
+): FormatJob {
+  if (!languages.some(language => language.id === input.languageId)) {
+    throw new Error('INVALID_MESSAGE')
+  }
+  const rawLabel = input.item.language.rawLabel?.toLowerCase()
+  const extension =
+    (rawLabel === 'tsx' && input.languageId === 'typescript')
+    || (rawLabel === 'jsx' && input.languageId === 'javascript')
+      ? rawLabel
+      : (Object.entries(languageExtensions).find(
+          ([extension, language]) =>
+            language === input.languageId
+            && !['cjs', 'mjs', 'cts', 'mts', 'jsx', 'tsx'].includes(extension),
+        )?.[0] ?? input.languageId)
+  return {
+    id: `extract-${input.requestId}-${input.item.id}`,
+    fileName: `snippet-${String(input.item.blockIndex).padStart(3, '0')}.${extension}`,
+    languageId: input.languageId,
+    sourceCode: input.item.sourceCode,
+    resultCode: '',
+    status: 'pending',
+    errorMessage: '',
+    formatCost: 0,
+    origin: {
+      ...input.source,
+      kind: 'web-code-block',
+      requestId: input.requestId,
+      itemId: input.item.id,
+      capturedAt: input.item.capturedAt,
+      language: input.item.language,
+    },
+  }
 }

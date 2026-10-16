@@ -13,6 +13,57 @@ clearAll: 清除全部
 clearAllConfirmDescription: 此操作無法復原。
 clearSuccess: 清除成功
 close: 關閉
+codeBlocksChooseLanguage: 選擇語言
+codeBlocksCopy: 複製原文
+codeBlocksDiscard: 捨棄
+codeBlocksDownload: 下載原文
+codeBlocksEnable: 顯示網頁程式碼區塊按鈕
+codeBlocksErrors:
+  BLOCK_STALE: 頁面內容已變更，請重新掃描。
+  BLOCK_TOO_LARGE: 此程式碼區塊超過 256 KiB 或節點複雜度限制，未截斷匯入。
+  EMPTY_BLOCK: 此程式碼區塊沒有可擷取內容。
+  INVALID_MESSAGE: 請求驗證失敗，請重新掃描。
+  NO_CODE_BLOCKS: 未找到程式碼區塊，可複製貼上至工作台。
+  PAGE_UNAVAILABLE: 目前頁面無法擷取，請重新整理舊分頁或檢查頁面權限。
+  PRIVATE_WINDOW_UNSUPPORTED: 程式碼區塊擷取暫不支援隱私視窗。
+  QUEUE_FULL: 暫存佇列已滿，請先處理待匯入項目後重試。
+  REQUEST_EXPIRED: 請求已過期，請回到網頁重新擷取。
+  STORAGE_UNAVAILABLE: 工作階段傳遞或設定儲存無法使用，請重試或檢查瀏覽器支援。
+  STRUCTURE_UNCERTAIN: 此程式碼結構無法可靠擷取，請手動複製。
+  WORKSPACE_OPEN_FAILED: 已暫存，但工作台開啟失敗，請重試開啟。
+codeBlocksEvidence:
+  attribute: 語言屬性
+  class: 語言類別
+  content: 內容建議
+  filename: 檔名
+  label: 語言標籤
+  none: 沒有語言依據
+codeBlocksFrom: 匯入自 $1
+codeBlocksHideHost: 在此網站隱藏按鈕
+codeBlocksHistoryNotice: 擷取內容暫存於本次瀏覽器工作階段；後續格式化會將原文與結果寫入本機歷史。暫不支援隱私視窗。
+codeBlocksHosts: 在這些網站隱藏按鈕（每行一個完整主機名稱）
+codeBlocksImport: 匯入
+codeBlocksImported: 已匯入
+codeBlocksInvalidHosts: 請輸入不含路徑或萬用字元的主機名稱，最多 200 個。
+codeBlocksLimit: 僅列出前 200 個程式碼區塊。
+codeBlocksPending: 確認語言 · 待匯入 $1 項
+codeBlocksQueued: 已暫存，請在工作台確認需要指定語言的項目。
+codeBlocksRestoreHost: 在此網站恢復按鈕
+codeBlocksRetry: 重試
+codeBlocksSave: 儲存網站清單
+codeBlocksScan: 擷取目前頁面程式碼區塊
+codeBlocksScanning: 處理中…
+codeBlocksSelect: 選擇程式碼區塊
+codeBlocksSelected: 已選擇 $1 / 8 項
+codeBlocksSend: 傳送至 Prettier Now
+codeBlocksSendResult: 已暫存 $1 項，失敗 $2 項。
+codeBlocksSendSelected: 傳送所選程式碼區塊
+codeBlocksSending: 正在傳送…
+codeBlocksSize: $1 行 · $2 位元組
+codeBlocksSource: 查看來源
+codeBlocksTitle: 網頁程式碼區塊
+codeBlocksUnknown: 待辨識
+codeBlocksUnsupported: 已辨識 $1，目前不支援格式化。
 copiedToClipboard: 已複製到剪貼簿
 copyResult: 複製結果
 deleteHistoryEntry: 刪除歷史記錄

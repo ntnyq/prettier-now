@@ -7,6 +7,7 @@ import { browser, defineBackground } from '#imports'
 import { COMMANDS } from '@/constants/command'
 import { FOCUSED_EDITOR_MESSAGE } from '@/constants/focusedEditor'
 import { CONTEXT_MENU_ID } from '@/constants/meta'
+import { registerCodeBlockTransfer } from '@/utils/codeBlocks/transfer'
 
 type BackgroundMessageKey = 'formatFocusedEditor' | 'openOptionsPage'
 type BackgroundMessageTranslator = (key: BackgroundMessageKey) => string
@@ -34,6 +35,7 @@ export async function registerContextMenus(t: BackgroundMessageTranslator) {
 export default defineBackground({
   type: 'module',
   main() {
+    registerCodeBlockTransfer()
     async function formatFocusedTab(tabId?: number) {
       if (!tabId) {
         return
