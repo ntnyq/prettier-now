@@ -63,7 +63,7 @@
     "@vueuse/core": "^15.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cm6-graphql": "^0.2.2",
+    "cm6-graphql": "^1.0.0",
     "codemirror": "^6.0.2",
     "dayjs": "^1.11.23",
     "pinia": "^4.1.0",
