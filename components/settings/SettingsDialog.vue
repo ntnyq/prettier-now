@@ -9,13 +9,13 @@ import {
 } from '@/components/ui/dialog'
 import SettingsContent from './SettingsContent.vue'
 
-const open = defineModel<boolean>('open', { default: false })
+const open = defineModel<boolean>('open', { required: true })
 </script>
 
 <template>
   <Dialog v-model:open="open">
     <DialogContent
-      class="max-h-[min(860px,92vh)] !w-[min(960px,96vw)] !max-w-[min(960px,96vw)] grid-rows-[auto_minmax(0,1fr)] p-0"
+      class="max-h-[min(860px,92vh)] w-[min(960px,96vw)]! max-w-[min(960px,96vw)]! grid-rows-[auto_minmax(0,1fr)] p-0"
     >
       <DialogHeader class="border-b px-6 py-4">
         <DialogTitle>{{ i18n.t('settings') }}</DialogTitle>

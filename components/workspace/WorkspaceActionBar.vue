@@ -86,7 +86,7 @@ function selectFile() {
 
 <template>
   <div
-    class="flex flex-wrap items-center justify-center gap-2 border-t border-border bg-background/95 px-4 py-3 shadow-[0_-1px_12px_rgba(15,23,42,0.06)] backdrop-blur supports-[backdrop-filter]:bg-background/80"
+    class="flex flex-wrap items-center justify-center gap-2 border-t border-border bg-background/95 px-4 py-3 shadow-[0_-1px_12px_rgba(15,23,42,0.06)] backdrop-blur supports-backdrop-filter:bg-background/80"
   >
     <Tooltip>
       <TooltipTrigger as-child>
@@ -137,7 +137,7 @@ function selectFile() {
       @click="formatSource"
       size="lg"
       type="button"
-      class="min-w-[10.5rem] shadow-sm"
+      class="min-w-42 shadow-sm"
     >
       <Sparkles class="size-4" />
       {{ i18n.t('formatSource') }}

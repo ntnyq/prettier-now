@@ -20,13 +20,19 @@ const diffLines = computed(() =>
   createLineDiff(workspaceStore.sourceCode, workspaceStore.resultCode),
 )
 const hasDiff = computed(() => diffLines.value.length > 0)
+
+const DIFF_MARKERS = {
+  added: '+',
+  removed: '-',
+  unchanged: '',
+}
 </script>
 
 <template>
   <Dialog v-model:open="appStore.isDiffPanelVisible">
     <DialogContent
       :show-close-button="false"
-      class="min-h-[min(520px,72vh)] max-h-[min(860px,92vh)] !w-[min(960px,96vw)] !max-w-[min(960px,96vw)] grid-rows-[auto_minmax(0,1fr)] gap-0 p-0"
+      class="min-h-[min(520px,72vh)] max-h-[min(860px,92vh)] w-[min(960px,96vw)]! max-w-[min(960px,96vw)]! grid-rows-[auto_minmax(0,1fr)] gap-0 p-0"
     >
       <DialogHeader
         class="flex-row items-center justify-between gap-3 border-b border-border px-4 py-2 text-left"
@@ -63,9 +69,7 @@ const hasDiff = computed(() => diffLines.value.length > 0)
             {{ line.lineNumber }}
           </span>
           <span class="select-none px-2 py-1">
-            {{
-              line.kind === 'added' ? '+' : line.kind === 'removed' ? '-' : ''
-            }}
+            {{ DIFF_MARKERS[line.kind] }}
           </span>
           <pre class="whitespace-pre-wrap break-all px-2 py-1">{{
             line.text

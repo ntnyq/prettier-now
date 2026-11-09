@@ -4,7 +4,17 @@ import { defineESLintConfig } from '@ntnyq/eslint-config'
 
 export default defineESLintConfig({
   svgo: true,
+  specials: {
+    shadcnVue: {
+      overrides: {
+        'vue-perfectionist/prefer-define-model': 'off',
+      },
+    },
+  },
   vue: {
-    vuePerfectionist: {},
+    vuePerfectionist: {
+      autoImport: true,
+      overrides: {},
+    },
   },
 })

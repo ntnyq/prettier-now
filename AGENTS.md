@@ -6,7 +6,7 @@ This is a WXT-powered Vue browser extension. Extension entry points live in `ent
 
 ## Build, Test, and Development Commands
 
-Use pnpm 11 as pinned in `package.json`.
+Use the pnpm version pinned in `package.json`.
 
 - `pnpm install --frozen-lockfile`: install dependencies reproducibly.
 - `pnpm run dev`: start WXT development for Chromium.
