@@ -33,11 +33,6 @@ export function createEditorAdapter(element: HTMLElement) {
   return null
 }
 
-/**
- * Backward-compatible alias for creating markdown-capable editor adapters.
- */
-export const createMarkdownEditor = createEditorAdapter
-
 export { AceEditor } from './ace'
 export { TextareaEditor } from './textarea'
 export { CodeMirrorEditor } from './codeMirror'

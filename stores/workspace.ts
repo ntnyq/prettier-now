@@ -47,7 +47,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     [],
     FormatHistoryEntryListSchema,
   )
-  let formatRequestId = 0
+  const formatRequests = new Map<string, symbol>()
 
   const optionsStore = useOptionsStore()
   const logStore = useLogStore()
@@ -77,7 +77,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         errorMessage: '',
         formatCost: 0,
       })
-      invalidateFormatRequest()
+      invalidateFormatRequest(job.id)
     },
   })
   const resultCode = computed({
@@ -89,8 +89,12 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   })
   const formatCost = computed(() => activeJob.value?.formatCost ?? 0)
 
-  function invalidateFormatRequest() {
-    formatRequestId += 1
+  function invalidateFormatRequest(id?: string) {
+    if (id) {
+      formatRequests.delete(id)
+    } else {
+      formatRequests.clear()
+    }
   }
 
   function ensureActiveJob() {
@@ -134,7 +138,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
       activeJobId.value = jobs.value[0]?.id ?? MANUAL_JOB_ID
     }
 
-    invalidateFormatRequest()
+    invalidateFormatRequest(id)
   }
 
   function clearWorkspace() {
@@ -145,7 +149,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
 
   function setLanguageId(id: string) {
     const job = ensureActiveJob()
-    invalidateFormatRequest()
+    invalidateFormatRequest(job.id)
     jobs.value = jobs.value.map(item =>
       item.id === job.id ? updateFormatJobLanguage(item, id) : item,
     )
@@ -199,13 +203,14 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   }
 
   async function formatJob(id: string, options: { notify: boolean }) {
-    const requestId = ++formatRequestId
     const job = jobs.value.find(item => item.id === id)
 
     if (!job) {
       return false
     }
 
+    const requestId = Symbol(id)
+    formatRequests.set(id, requestId)
     const formatStartTime = window.performance.now()
     const parser =
       languages.find(item => item.id === job.languageId)?.parser
@@ -219,6 +224,10 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     try {
       await loadCodemirrorLanguage(job.languageId)
 
+      if (formatRequests.get(id) !== requestId) {
+        return false
+      }
+
       const formattedCode = await formatViaPrettier(job.sourceCode, {
         ...optionsStore.options,
         ...optionsStore.xmlPluginOptions,
@@ -230,7 +239,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         languageId: job.languageId,
       })
 
-      if (requestId !== formatRequestId) {
+      if (formatRequests.get(id) !== requestId) {
         return false
       }
 
@@ -265,6 +274,10 @@ export const useWorkspaceStore = defineStore('workspace', () => {
 
       return true
     } catch (error: unknown) {
+      if (formatRequests.get(id) !== requestId) {
+        return false
+      }
+
       const message = (error as Error)?.message || 'Unknown error'
 
       patchJob(id, {
@@ -284,6 +297,10 @@ export const useWorkspaceStore = defineStore('workspace', () => {
       }
 
       return false
+    } finally {
+      if (formatRequests.get(id) === requestId) {
+        formatRequests.delete(id)
+      }
     }
   }
 

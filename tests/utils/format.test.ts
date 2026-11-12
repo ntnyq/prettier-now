@@ -9,6 +9,17 @@ function readSource(path: string) {
 }
 
 describe('format via prettier', () => {
+  it.each([
+    ['vue', '<script setup lang="ts">const x:number=1</script>'],
+    ['svelte', '<script lang="ts">let x:number=1</script><p>{x}</p>'],
+    ['markdown', '```typescript\nconst x:number=1\n```'],
+  ])('formats embedded TypeScript in %s', async (languageId, source) => {
+    const result = await formatViaPrettier(source, {
+      languageId,
+      parser: languageId,
+    })
+    expect(result).toMatch(/(?:const|let) x: number = 1;/)
+  })
   it('formats pug through the browser-compatible plugin chain', async () => {
     await expect(
       formatViaPrettier(

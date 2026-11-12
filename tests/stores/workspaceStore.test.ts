@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const storageMock = vi.hoisted(() => ({
+  watch: vi.fn(() => vi.fn()),
   getItem: vi.fn(async () => null),
   setItem: vi.fn(async () => {}),
 }))
@@ -99,5 +100,69 @@ describe('workspace store', () => {
     expect(workspaceStore.jobs.some(job => job.status === 'formatting')).toBe(
       false,
     )
+  })
+
+  it('keeps file A valid when file B is edited or removed', async () => {
+    const workspaceStore = useWorkspaceStore()
+    const loading = workspaceStore.loadFileList([
+      new File(['const a=1'], 'a.ts'),
+      new File(['const b=2'], 'b.ts'),
+    ])
+    await vi.waitFor(() =>
+      expect(formatterMock.formatViaPrettier).toHaveBeenCalledOnce(),
+    )
+    const firstJobId = workspaceStore.jobs[0]!.id
+    const secondJobId = workspaceStore.jobs[1]!.id
+    workspaceStore.selectJob(secondJobId)
+    workspaceStore.sourceCode = 'const b=3'
+    workspaceStore.removeJob(secondJobId)
+    formatterMock.resolveFirstFormat('const a = 1\n')
+    await loading
+    expect(
+      workspaceStore.jobs.find(job => job.id === firstJobId),
+    ).toMatchObject({ status: 'formatted', resultCode: 'const a = 1\n' })
+  })
+
+  it('ignores failures from a request superseded by a successful format', async () => {
+    const workspaceStore = useWorkspaceStore()
+    const deferred = Promise.withResolvers<string>()
+    formatterMock.formatViaPrettier.mockImplementationOnce(
+      () => deferred.promise,
+    )
+    workspaceStore.sourceCode = 'bad source'
+    const oldRequest = workspaceStore.formatActiveJob()
+    await vi.waitFor(() =>
+      expect(formatterMock.formatViaPrettier).toHaveBeenCalledOnce(),
+    )
+    workspaceStore.sourceCode = 'const corrected=1'
+    await workspaceStore.formatActiveJob()
+    deferred.reject(new Error('old syntax error'))
+    await oldRequest
+    expect(workspaceStore.activeJob).toMatchObject({
+      status: 'formatted',
+      errorMessage: '',
+      resultCode: 'const corrected=1\n',
+    })
+  })
+
+  it('does not let a cleared manual job receive an older failure', async () => {
+    const workspaceStore = useWorkspaceStore()
+    const deferred = Promise.withResolvers<string>()
+    formatterMock.formatViaPrettier.mockImplementationOnce(
+      () => deferred.promise,
+    )
+    workspaceStore.sourceCode = 'bad source'
+    const pending = workspaceStore.formatActiveJob()
+    await vi.waitFor(() =>
+      expect(formatterMock.formatViaPrettier).toHaveBeenCalledOnce(),
+    )
+    workspaceStore.clearWorkspace()
+    deferred.reject(new Error('old syntax error'))
+    await pending
+    expect(workspaceStore.activeJob).toMatchObject({
+      sourceCode: '',
+      status: 'pending',
+      errorMessage: '',
+    })
   })
 })

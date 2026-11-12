@@ -12,6 +12,7 @@ const routeMock = vi.hoisted(() => ({
 }))
 
 const storageMock = vi.hoisted(() => ({
+  watch: vi.fn(() => vi.fn()),
   getItem: vi.fn(async () => null),
   setItem: vi.fn(async () => {}),
 }))

@@ -18,6 +18,7 @@ vi.mock('vue-sonner', () => ({
 
 vi.mock('#imports', () => ({
   storage: {
+    watch: () => () => {},
     getItem: vi.fn(async () => null),
     setItem: vi.fn(async () => {}),
   },

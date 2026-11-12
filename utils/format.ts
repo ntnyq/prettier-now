@@ -23,6 +23,13 @@ const PUG_DEFAULT_FORMAT_OPTIONS = {
   pugSortAttributesBeginning: [],
   pugSortAttributesEnd: [],
 } as const
+const TYPESCRIPT_CONTAINER_LANGUAGE_IDS = new Set([
+  LANGUAGE_ID.vue,
+  LANGUAGE_ID.svelte,
+  LANGUAGE_ID.markdown,
+  LANGUAGE_ID.html,
+  LANGUAGE_ID.angular,
+])
 const PRELOADED_PLUGIN_LANGUAGE_IDS = new Set([
   LANGUAGE_ID.css,
   LANGUAGE_ID.less,
@@ -80,6 +87,15 @@ export async function formatViaPrettier(
     ? undefined
     : await loadPrettierPlugin(languageId)
   const languagePlugins: PrettierPlugin[] = loadedPlugin ? [loadedPlugin] : []
+  if (
+    TYPESCRIPT_CONTAINER_LANGUAGE_IDS.has(languageId)
+    && formatOptions.embeddedLanguageFormatting !== 'off'
+  ) {
+    const typescriptPlugin = await loadPrettierPlugin(LANGUAGE_ID.typescript)
+    if (typescriptPlugin) {
+      languagePlugins.push(typescriptPlugin)
+    }
+  }
   const languageOptions =
     languageId === LANGUAGE_ID.pug ? PUG_DEFAULT_FORMAT_OPTIONS : {}
 

@@ -3,7 +3,11 @@
  */
 
 import { defineContentScript } from '#imports'
-import { FOCUSED_EDITOR_EVENT } from '@/constants/focusedEditor'
+import {
+  FOCUSED_EDITOR_EVENT,
+  FOCUSED_EDITOR_FORMAT_TIMEOUT,
+  FOCUSED_EDITOR_REQUEST_TIMEOUT,
+} from '@/constants/focusedEditor'
 import { createEditorAdapter } from '@/utils/editors'
 import {
   rememberFocusedEditorElement,
@@ -15,6 +19,40 @@ import type {
 } from '@/types/focusedEditor'
 
 const MATCHES = ['http://*/*', 'https://*/*', 'file:///*']
+
+/**
+ * Editor and source bound to the most recent formatting request.
+ */
+interface FocusedEditorSnapshot {
+  /**
+   * Original request identifier, also required when writing the result.
+   */
+  requestId: string
+  /**
+   * DOM element that owned the source at read time.
+   */
+  element: HTMLElement
+  /**
+   * Adapter bound to the original editor instance.
+   */
+  editor: NonNullable<ReturnType<typeof createEditorAdapter>>
+  /**
+   * Source used to reject writes after intervening edits.
+   */
+  source: string
+}
+
+let editorSnapshot: FocusedEditorSnapshot | undefined
+let snapshotTimeout: number | undefined
+
+/**
+ * Release editor references after completion, replacement, or timeout.
+ */
+function clearEditorSnapshot() {
+  window.clearTimeout(snapshotTimeout)
+  snapshotTimeout = undefined
+  editorSnapshot = undefined
+}
 
 function getAttributeHints(element: HTMLElement) {
   const hints = new Set<string>()
@@ -63,57 +101,73 @@ function dispatchInputEvents(element: HTMLElement) {
 }
 
 function readFocusedEditor(requestId: string) {
-  const element = resolveFocusedEditorElement()
-  const editor = element ? createEditorAdapter(element) : null
-  const source = editor?.getValue()
+  clearEditorSnapshot()
+  try {
+    const element = resolveFocusedEditorElement()
+    const editor = element ? createEditorAdapter(element) : null
+    const source = editor?.getValue()
 
-  if (!element || !editor || typeof source !== 'string') {
+    if (!element || !editor || typeof source !== 'string') {
+      throw new Error('No focused editor found')
+    }
+
+    editorSnapshot = { requestId, element, editor, source }
+    snapshotTimeout = window.setTimeout(
+      clearEditorSnapshot,
+      2 * (FOCUSED_EDITOR_FORMAT_TIMEOUT + FOCUSED_EDITOR_REQUEST_TIMEOUT),
+    )
+
+    window.dispatchEvent(
+      new CustomEvent(FOCUSED_EDITOR_EVENT.getValueResponse, {
+        detail: { hints: getAttributeHints(element), requestId, source },
+      }),
+    )
+  } catch (error) {
+    clearEditorSnapshot()
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.getValueResponse, {
         detail: {
-          errorMessage: 'No focused editor found',
+          errorMessage:
+            error instanceof Error ? error.message : 'Failed to read editor',
           requestId,
         },
       }),
     )
-    return
   }
-
-  window.dispatchEvent(
-    new CustomEvent(FOCUSED_EDITOR_EVENT.getValueResponse, {
-      detail: {
-        hints: getAttributeHints(element),
-        requestId,
-        source,
-      },
-    }),
-  )
 }
 
 function writeFocusedEditor(requestId: string, value: string) {
-  const element = resolveFocusedEditorElement()
-  const editor = element ? createEditorAdapter(element) : null
-
-  if (!element || !editor) {
+  try {
+    const snapshot = editorSnapshot
+    if (!snapshot || snapshot.requestId !== requestId) {
+      throw new Error('Formatting request is no longer active')
+    }
+    clearEditorSnapshot()
+    const { element, editor, source } = snapshot
+    if (!element.isConnected || resolveFocusedEditorElement() !== element) {
+      throw new Error('Focused editor changed while formatting')
+    }
+    if (editor.getValue() !== source) {
+      throw new Error('Editor content changed while formatting')
+    }
+    editor.setValue(value)
+    dispatchInputEvents(element)
+    window.dispatchEvent(
+      new CustomEvent(FOCUSED_EDITOR_EVENT.setValueResponse, {
+        detail: { requestId },
+      }),
+    )
+  } catch (error) {
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.setValueResponse, {
         detail: {
-          errorMessage: 'No focused editor found',
+          errorMessage:
+            error instanceof Error ? error.message : 'Failed to update editor',
           requestId,
         },
       }),
     )
-    return
   }
-
-  editor.setValue(value)
-  dispatchInputEvents(element)
-
-  window.dispatchEvent(
-    new CustomEvent(FOCUSED_EDITOR_EVENT.setValueResponse, {
-      detail: { requestId },
-    }),
-  )
 }
 
 export default defineContentScript({

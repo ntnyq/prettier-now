@@ -41,8 +41,11 @@ export class TextareaEditor {
    * @param value - New textarea content.
    */
   public setValue(value: string) {
+    this.editor.focus({ preventScroll: true })
     this.editor.selectionStart = 0
     this.editor.selectionEnd = this.editor.value.length
-    document.execCommand('insertText', false, value)
+    if (!document.execCommand?.('insertText', false, value)) {
+      this.editor.value = value
+    }
   }
 }

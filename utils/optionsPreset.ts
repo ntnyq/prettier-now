@@ -16,7 +16,7 @@ import {
 import type { OptionsPreset, OptionsSnapshot } from '@/types/optionsPreset'
 
 const OPTIONS_SNAPSHOT_VERSION = 2
-const positiveIntegerSchema = v.pipe(v.number(), v.integer(), v.minValue(1))
+const nonNegativeIntegerSchema = v.pipe(v.number(), v.integer(), v.minValue(0))
 
 const OptionsSnapshotVersionSchema = v.object({
   version: v.picklist([1, OPTIONS_SNAPSHOT_VERSION]),
@@ -34,13 +34,13 @@ const sharedSnapshotEntries = {
     htmlWhitespaceSensitivity: v.picklist(['css', 'ignore', 'strict']),
     jsxSingleQuote: v.boolean(),
     objectWrap: v.picklist(['collapse', 'preserve']),
-    printWidth: positiveIntegerSchema,
+    printWidth: nonNegativeIntegerSchema,
     proseWrap: v.picklist(['always', 'never', 'preserve']),
     quoteProps: v.picklist(['as-needed', 'consistent', 'preserve']),
     semi: v.boolean(),
     singleAttributePerLine: v.boolean(),
     singleQuote: v.boolean(),
-    tabWidth: positiveIntegerSchema,
+    tabWidth: nonNegativeIntegerSchema,
     trailingComma: v.picklist(['all', 'es5', 'none']),
     useTabs: v.boolean(),
     vueIndentScriptAndStyle: v.boolean(),

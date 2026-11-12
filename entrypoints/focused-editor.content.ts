@@ -212,7 +212,7 @@ async function formatFocusedEditor() {
 
   const formatted = await formatViaFormatterFrame(editorValue)
 
-  const writeResponse = await waitForEditorWrite(createRequestId(), formatted)
+  const writeResponse = await waitForEditorWrite(requestId, formatted)
 
   if (writeResponse.errorMessage) {
     throw new Error(writeResponse.errorMessage)

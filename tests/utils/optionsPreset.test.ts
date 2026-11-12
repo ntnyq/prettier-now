@@ -8,6 +8,7 @@ import {
   OptionsSnapshotSchema,
   parseOptionsSnapshot,
   removeOptionsPreset,
+  stringifyOptionsSnapshot,
   upsertOptionsPreset,
 } from '@/utils/optionsPreset'
 
@@ -24,7 +25,7 @@ describe('options preset utilities', () => {
         ...preset.snapshot,
         options: {
           ...preset.snapshot.options,
-          printWidth: 0,
+          printWidth: 0.5,
         },
       },
     }
@@ -63,6 +64,15 @@ describe('options preset utilities', () => {
         groupBlankLinesLimit: null,
       },
     })
+  })
+
+  it('round-trips zero width settings accepted by the formatter', () => {
+    const snapshot = createDefaultOptionsSnapshot()
+    snapshot.options.printWidth = 0
+    snapshot.options.tabWidth = 0
+    expect(parseOptionsSnapshot(stringifyOptionsSnapshot(snapshot))).toEqual(
+      snapshot,
+    )
   })
 
   it('parses a valid options snapshot from json', () => {
@@ -173,7 +183,7 @@ describe('options preset utilities', () => {
           ...snapshot,
           options: {
             ...snapshot.options,
-            printWidth: 0,
+            printWidth: 0.5,
           },
         }),
       ),
@@ -197,7 +207,7 @@ describe('options preset utilities', () => {
           ...snapshot,
           options: {
             ...snapshot.options,
-            tabWidth: 0,
+            tabWidth: 0.5,
           },
         }),
       ),

@@ -1,3 +1,34 @@
+import type { EditorView } from '@codemirror/view'
+
+/**
+ * DOM metadata exposed by older and newer CodeMirror 6 releases.
+ */
+interface CodeMirrorContentElement extends HTMLElement {
+  /**
+   * View metadata used before the tile-based renderer.
+   */
+  cmView?: {
+    /**
+     * Owning editor view.
+     */
+    view?: EditorView
+  }
+  /**
+   * Tile metadata used by the current renderer.
+   */
+  cmTile?: {
+    /**
+     * Root tile containing the editor view.
+     */
+    root?: {
+      /**
+       * Owning editor view.
+       */
+      view?: EditorView
+    }
+  }
+}
+
 /**
  * Adapter for CodeMirror v5 and v6 editor instances.
  */
@@ -18,7 +49,7 @@ export class CodeMirrorEditor {
    * @param element - Element inside or equal to a CodeMirror editor.
    */
   constructor(element: HTMLElement) {
-    this.editor = this.resolveEditor(element)
+    this.resolveEditor(element)
   }
 
   /**
@@ -36,7 +67,7 @@ export class CodeMirrorEditor {
     }
 
     const editor = wrapper.classList.contains('cm-editor')
-      ? (wrapper.querySelector('.cm-content') as any)?.cmView?.view
+      ? CodeMirrorEditor.resolveV6Editor(wrapper)
       : (wrapper as any).CodeMirror
 
     return Boolean(editor)
@@ -52,8 +83,7 @@ export class CodeMirrorEditor {
     const editorWrapperV5 = element.closest('.CodeMirror')
 
     if (editorWrapperV6) {
-      const editor = (editorWrapperV6.querySelector('.cm-content') as any)
-        ?.cmView?.view
+      const editor = CodeMirrorEditor.resolveV6Editor(editorWrapperV6)
 
       this.isCodeMirrorV6 = true
       this.editor = editor
@@ -63,6 +93,18 @@ export class CodeMirrorEditor {
       this.isCodeMirrorV6 = false
       this.editor = editor
     }
+  }
+
+  /**
+   * Resolve a CodeMirror 6 view across both DOM metadata layouts.
+   *
+   * @param wrapper - Editor wrapper containing the editable surface.
+   * @returns Owning view when available.
+   */
+  private static resolveV6Editor(wrapper: Element) {
+    const content =
+      wrapper.querySelector<CodeMirrorContentElement>('.cm-content')
+    return content?.cmView?.view ?? content?.cmTile?.root?.view
   }
 
   /**
