@@ -1,0 +1,10 @@
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 0f8ca3da4f5e4a0180f23fd2049e4baeb75666d0..5551744ef06a827596bf855ec9ef6702600305d2 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -1,4 +1,5 @@
+ export * from "./tombi_wasm";
++export { default } from "./tombi_wasm";
+ 
+ /** A diagnostic reported by Tombi. */
+ export interface Diagnostic {

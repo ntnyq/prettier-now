@@ -13,8 +13,10 @@ type WxtViteConfigFactory = NonNullable<WxtConfig['vite']>
 
 const viteConfig = (() => ({
   build: {
-    // Max per file size for Firefox is 4MB.
-    chunkSizeWarningLimit: 4 * 1024,
+    // AMO's text parsing limit is 5 MiB; binary WASM assets are exempt.
+    // Vite measures this JS chunk warning threshold in decimal kB.
+    // https://github.com/mozilla/addons-linter/blob/master/src/const.js
+    chunkSizeWarningLimit: (5 * 1024 ** 2) / 1000,
     rolldownOptions: {
       logLevel: 'silent',
     },
@@ -37,6 +39,13 @@ const viteConfig = (() => ({
       resolvers: [],
     }),
   ],
+
+  resolve: {
+    alias: {
+      // Use single-threaded WASM in extension pages, including Firefox.
+      tombit: resolve('utils/tomlBrowser.ts'),
+    },
+  },
 })) satisfies WxtViteConfigFactory
 
 export default defineConfig({

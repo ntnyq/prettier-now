@@ -33,12 +33,14 @@
     "defu",
     "Destructurable",
     "dtrace",
+    "emnapi",
     "esbuild",
     "estree",
     "iconify",
     "INTLIFY",
     "lezer",
     "lucide",
+    "napi",
     "nocheck",
     "noopener",
     "noreferrer",
@@ -51,6 +53,7 @@
     "sonner",
     "sxzz",
     "taplo",
+    "tombi",
     "unann",
     "unplugin",
     "unrs",
@@ -58,6 +61,7 @@
     "upserts",
     "valibot",
     "vercel",
-    "vueuse"
+    "vueuse",
+    "wasi"
   ]
 }
