@@ -84,4 +84,34 @@ describe('useStorage', () => {
 
     expect(storageMock.setItem).not.toHaveBeenCalled()
   })
+
+  it('persists changes to nested TOML settings after hydration', async () => {
+    const { useStorage } = await import('@/composables/storage')
+    const { TomlOptionsSchema } = await import('@/utils/tomlOptions')
+    const defaults = createDefaultOptionsSnapshot().tomlPluginOptions
+    storageMock.getItem.mockResolvedValue({
+      ...defaults,
+      stringQuoteStyle: 'single',
+    })
+    const value = useStorage(
+      'tomlPluginOptions',
+      { ...defaults },
+      TomlOptionsSchema,
+    )
+
+    await nextTick()
+    await Promise.resolve()
+    await nextTick()
+    value.value.arrayBracketSpaceWidth = 2
+    await nextTick()
+
+    expect(storageMock.setItem).toHaveBeenCalledWith(
+      'local:tomlPluginOptions',
+      {
+        ...defaults,
+        stringQuoteStyle: 'single',
+        arrayBracketSpaceWidth: 2,
+      },
+    )
+  })
 })

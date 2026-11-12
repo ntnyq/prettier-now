@@ -99,6 +99,8 @@ declare module 'vue' {
     SettingColorPicker: typeof import('./../components/settings/SettingColorPicker.vue')['default']
     SettingItem: typeof import('./../components/settings/SettingItem.vue')['default']
     SettingNumberField: typeof import('./../components/settings/SettingNumberField.vue')['default']
+    SettingOptionalNumberField: typeof import('./../components/settings/SettingOptionalNumberField.vue')['default']
+    SettingOptionalSelect: typeof import('./../components/settings/SettingOptionalSelect.vue')['default']
     SettingsContent: typeof import('./../components/settings/SettingsContent.vue')['default']
     SettingsDialog: typeof import('./../components/settings/SettingsDialog.vue')['default']
     SettingSelect: typeof import('./../components/settings/SettingSelect.vue')['default']

@@ -55,53 +55,62 @@ nothingToCopy: Nothing to copy
 nothingToDownload: Nothing to download
 nothingToFormat: Nothing to format
 openOptionsPage: Open Options Page
-optDescAlignComments: Align consecutive comments after entries and items vertically. This applies to comments that are after entries or array items.
-optDescAlignEntries: Align consecutive entries vertically.
-optDescAllowedBlankLines: The maximum number of allowed blank lines between entries and tables.
-optDescArrayAutoCollapse: Collapse arrays that do not exceed the maximum column width and do not contain comments.
-optDescArrayAutoExpand: Expand arrays to multiple lines that exceed the maximum column width.
+optDescArrayBracketSpaceWidth: Spaces inside single-line array brackets.
+optDescArrayCommaSpaceWidth: Spaces after commas in single-line arrays.
 optDescArrowParens: Include parentheses around a sole arrow function parameter.
 optDescAutoFormat: Auto format source code after pasting.
 optDescBraceStyle: Print one space or newline for code blocks (classes and functions).
 optDescBracketSameLine: Put the > of a multi-line HTML (HTML, JSX, Vue, Angular) element at the end of the last line instead of being alone on the next line (does not apply to self-closing elements).
 optDescBracketSpacing: Print spaces between brackets in object literals.
-optDescCompactArrays: Omit white space padding from single-line arrays.
-optDescCompactEntries: Omit white space around =.
-optDescCompactInlineTables: Omit white space padding from the start and end of inline tables.
+optDescCommentStyle: Normalize comment text or preserve the original text.
+optDescDateTimeDelimiter: Delimiter between date and time.
 optDescDebug: Whether to log runtime information in console.
 optDescEndOfLine: Specify the end of line style.
 optDescEntrypoint: Prettify from the entrypoint, allowing prettier to format snippets.
 optDescExperimentalOperatorPosition: Where to print operators when binary expressions wrap lines.
 optDescExperimentalTernaries: Specify the ternaries style.
+optDescGroupBlankLinesLimit: Maximum blank lines between groups (1–255).
 optDescHtmlWhitespaceSensitivity: Specify the global whitespace sensitivity for HTML, Vue, Angular, and Handlebars.
 optDescImportExportOptions: Import a JSON options file, export the current options, or restore defaults.
-optDescIndentEntries: Indent entries under tables.
-optDescIndentTables: Indent based on tables and arrays of tables and their subtables; subtables out of order are not indented.
+optDescIndentSubTables: Indent sub-tables.
+optDescIndentTableKeyValuePairs: Indent key-value pairs within tables.
+optDescInlineTableBraceSpaceWidth: Spaces inside single-line inline table braces. Default inherits BracketSpacing.
+optDescInlineTableCommaSpaceWidth: Spaces after commas in single-line inline tables.
 optDescJsxSingleQuote: Use single quotes instead of double quotes in JSX.
+optDescKeyQuoteStyle: Quote style for keys. Default follows the string quote style.
+optDescKeyValueEqualsSignAlignment: Align equals signs in consecutive key-value pairs.
+optDescKeyValueEqualsSignSpaceWidth: Spaces around equals signs in key-value pairs.
 optDescManagePresets: Apply or remove a saved formatting preset.
 optDescObjectWrap: How to wrap object literals.
 optDescPhpVersion: Specify the minimum target PHP version.
 optDescPrintWidth: Specify the line length that the printer will wrap on.
 optDescQuoteProps: Change when properties in objects are quoted.
-optDescReorderKeys: Alphabetically reorder keys that are not separated by empty lines.
 optDescSavePreset: Save the current formatting options as a named preset.
 optDescSemi: Print semicolons at the ends of statements.
 optDescSilent: Whether to show toast message after user action.
 optDescSingleAttributePerLine: Enforce single attribute per line in HTML, Vue and JSX.
 optDescSingleQuote: Use single quotes instead of double quotes.
+optDescStringQuoteStyle: Quote style for strings. Default inherits SingleQuote.
 optDescSvelteAllowShorthand: Enable or disable component attribute shorthand if attribute name and expression are the same.
 optDescSvelteIndentScriptAndStyle: Whether or not to indent the code inside <script> and <style> tags in Svelte files.
 optDescSvelteSortOrder: Sort order for scripts, markup, and styles.
 optDescTabWidth: Specify the number of spaces per indentation level.
+optDescTableBlankLines: Blank lines between tables.
 optDescThemeColor: Pick the primary app theme color using RGB values.
+optDescTomlVersion: TOML syntax version. Default uses the formatter default.
 optDescTrailingComma: Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
 optDescTrailingCommaPHP: Print trailing commas wherever possible when multi-line.
+optDescTrailingCommentAlignment: Align trailing comments in key-value pairs.
+optDescTrailingCommentSpaceWidth: Spaces before trailing comments.
 optDescUseTabs: Indent lines with tabs instead of spaces.
 optDescVueIndentScriptAndStyle: Whether or not to indent the code inside <script> and <style> tags in Vue files.
 optDescXmlQuoteAttributes: How to quote attributes in XML.
 optDescXmlSelfClosingSpace: Add a space before self-closing tags.
 optDescXmlSortAttributesByKey: Order XML attributes by key alphabetically while prioritizing xmlns attributes.
 optDescXmlWhitespaceSensitivity: How to handle whitespaces in XML.
+optionDefault: Default
+optionDisabled: Disabled
+optionEnabled: Enabled
 optionsPresets: Options Presets
 pluginJavaOptions: Java Plugin Options
 pluginPHPOptions: PHP Plugin Options

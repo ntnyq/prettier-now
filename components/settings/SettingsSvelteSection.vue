@@ -50,6 +50,7 @@ const optionsStore = useOptionsStore()
         />
       </template>
     </SettingItem>
+
     <SettingItem
       :description="i18n.t('optDescSvelteAllowShorthand')"
       title="SvelteAllowShorthand"
@@ -62,6 +63,7 @@ const optionsStore = useOptionsStore()
         />
       </template>
     </SettingItem>
+
     <SettingItem
       :description="i18n.t('optDescSvelteIndentScriptAndStyle')"
       title="SvelteIndentScriptAndStyle"

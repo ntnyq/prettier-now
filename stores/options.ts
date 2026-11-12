@@ -20,6 +20,7 @@ import {
   removeOptionsPreset,
   upsertOptionsPreset,
 } from '@/utils/optionsPreset'
+import { TomlOptionsSchema } from '@/utils/tomlOptions'
 import type {
   PluginJavaOptions,
   PluginPHPOptions,
@@ -200,67 +201,15 @@ export const useOptionsStore = defineStore('options', () => {
     svelteIndentScriptAndStyle: svelteIndentScriptAndStyle.value,
   }))
 
-  const alignComments = useStorage<boolean>(
-    'alignComments',
-    DEFAULT_TOML_OPTIONS.alignComments,
+  const tomlPluginOptions = useStorage<PluginTOMLOptions>(
+    'tomlPluginOptions',
+    { ...DEFAULT_TOML_OPTIONS },
+    TomlOptionsSchema,
   )
-  const alignEntries = useStorage<boolean>(
-    'alignEntries',
-    DEFAULT_TOML_OPTIONS.alignEntries,
-  )
-  const allowedBlankLines = useStorage<number>(
-    'allowedBlankLines',
-    DEFAULT_TOML_OPTIONS.allowedBlankLines,
-  )
-  const arrayAutoCollapse = useStorage<boolean>(
-    'arrayAutoCollapse',
-    DEFAULT_TOML_OPTIONS.arrayAutoCollapse,
-  )
-  const arrayAutoExpand = useStorage<boolean>(
-    'arrayAutoExpand',
-    DEFAULT_TOML_OPTIONS.arrayAutoExpand,
-  )
-  const compactArrays = useStorage<boolean>(
-    'compactArrays',
-    DEFAULT_TOML_OPTIONS.compactArrays,
-  )
-  const compactEntries = useStorage<boolean>(
-    'compactEntries',
-    DEFAULT_TOML_OPTIONS.compactEntries,
-  )
-  const compactInlineTables = useStorage<boolean>(
-    'compactInlineTables',
-    DEFAULT_TOML_OPTIONS.compactInlineTables,
-  )
-  const indentEntries = useStorage<boolean>(
-    'indentEntries',
-    DEFAULT_TOML_OPTIONS.indentEntries,
-  )
-  const indentTables = useStorage<boolean>(
-    'indentTables',
-    DEFAULT_TOML_OPTIONS.indentTables,
-  )
-  const reorderKeys = useStorage<boolean>(
-    'reorderKeys',
-    DEFAULT_TOML_OPTIONS.reorderKeys,
-  )
-  const tomlPluginOptions = computed<PluginTOMLOptions>(() => ({
-    alignComments: alignComments.value,
-    alignEntries: alignEntries.value,
-    allowedBlankLines: allowedBlankLines.value,
-    arrayAutoCollapse: arrayAutoCollapse.value,
-    arrayAutoExpand: arrayAutoExpand.value,
-    compactArrays: compactArrays.value,
-    compactEntries: compactEntries.value,
-    compactInlineTables: compactInlineTables.value,
-    indentEntries: indentEntries.value,
-    indentTables: indentTables.value,
-    reorderKeys: reorderKeys.value,
-  }))
 
   function createSnapshot() {
     return {
-      version: 1,
+      version: 2,
       options: { ...options.value },
       xmlPluginOptions: { ...xmlPluginOptions.value },
       phpPluginOptions: { ...phpPluginOptions.value },
@@ -313,17 +262,7 @@ export const useOptionsStore = defineStore('options', () => {
     svelteIndentScriptAndStyle.value =
       snapshot.sveltePluginOptions.svelteIndentScriptAndStyle
 
-    alignComments.value = snapshot.tomlPluginOptions.alignComments
-    alignEntries.value = snapshot.tomlPluginOptions.alignEntries
-    allowedBlankLines.value = snapshot.tomlPluginOptions.allowedBlankLines
-    arrayAutoCollapse.value = snapshot.tomlPluginOptions.arrayAutoCollapse
-    arrayAutoExpand.value = snapshot.tomlPluginOptions.arrayAutoExpand
-    compactArrays.value = snapshot.tomlPluginOptions.compactArrays
-    compactEntries.value = snapshot.tomlPluginOptions.compactEntries
-    compactInlineTables.value = snapshot.tomlPluginOptions.compactInlineTables
-    indentEntries.value = snapshot.tomlPluginOptions.indentEntries
-    indentTables.value = snapshot.tomlPluginOptions.indentTables
-    reorderKeys.value = snapshot.tomlPluginOptions.reorderKeys
+    tomlPluginOptions.value = { ...snapshot.tomlPluginOptions }
   }
 
   function resetOptions() {
@@ -418,17 +357,6 @@ export const useOptionsStore = defineStore('options', () => {
     /**
      * TOML
      */
-    alignComments,
-    alignEntries,
-    allowedBlankLines,
-    arrayAutoCollapse,
-    arrayAutoExpand,
-    compactArrays,
-    compactEntries,
-    compactInlineTables,
-    indentEntries,
-    indentTables,
-    reorderKeys,
     tomlPluginOptions,
 
     createSnapshot,

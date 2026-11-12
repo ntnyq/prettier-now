@@ -40,6 +40,7 @@ const optionsStore = useOptionsStore()
         />
       </template>
     </SettingItem>
+
     <SettingItem
       :description="i18n.t('optDescTrailingCommaPHP')"
       title="TrailingCommaPHP"
@@ -52,6 +53,7 @@ const optionsStore = useOptionsStore()
         />
       </template>
     </SettingItem>
+
     <SettingItem
       :description="i18n.t('optDescBraceStyle')"
       title="BraceStyle"

@@ -42,7 +42,7 @@ describe('options preset utilities', () => {
 
   it('creates a versioned default options snapshot', () => {
     expect(createDefaultOptionsSnapshot()).toMatchObject({
-      version: 1,
+      version: 2,
       options: {
         printWidth: 80,
         tabWidth: 2,
@@ -60,7 +60,7 @@ describe('options preset utilities', () => {
         svelteAllowShorthand: true,
       },
       tomlPluginOptions: {
-        allowedBlankLines: 1,
+        groupBlankLinesLimit: null,
       },
     })
   })
@@ -71,11 +71,52 @@ describe('options preset utilities', () => {
     expect(parseOptionsSnapshot(JSON.stringify(snapshot))).toEqual(snapshot)
   })
 
+  it('upgrades version 1 imports and saved presets without losing other settings', () => {
+    const legacySnapshot = {
+      ...createDefaultOptionsSnapshot(),
+      version: 1,
+      tomlPluginOptions: {
+        alignComments: true,
+        alignEntries: false,
+        allowedBlankLines: 2,
+        arrayAutoCollapse: true,
+        arrayAutoExpand: true,
+        compactArrays: true,
+        compactEntries: false,
+        compactInlineTables: false,
+        indentEntries: true,
+        indentTables: false,
+        reorderKeys: true,
+      },
+    }
+    const migrated = parseOptionsSnapshot(JSON.stringify(legacySnapshot))
+
+    expect(migrated.version).toBe(2)
+    expect(migrated.options).toEqual(legacySnapshot.options)
+    expect(migrated.tomlPluginOptions).toMatchObject({
+      groupBlankLinesLimit: 2,
+      arrayBracketSpaceWidth: 0,
+      indentTableKeyValuePairs: true,
+    })
+    expect(migrated.tomlPluginOptions).not.toHaveProperty('reorderKeys')
+    const result = v.parse(OptionsPresetListSchema, [
+      {
+        id: 'legacy',
+        name: 'Legacy',
+        createdAt: 1,
+        updatedAt: 1,
+        snapshot: legacySnapshot,
+      },
+    ])
+    expect(result[0]?.snapshot).toEqual(migrated)
+    expect(parseOptionsSnapshot(JSON.stringify(migrated))).toEqual(migrated)
+  })
+
   it('rejects invalid imported snapshots', () => {
     expect(() => parseOptionsSnapshot('{ bad json')).toThrow(
       'Invalid options file',
     )
-    expect(() => parseOptionsSnapshot(JSON.stringify({ version: 2 }))).toThrow(
+    expect(() => parseOptionsSnapshot(JSON.stringify({ version: 3 }))).toThrow(
       'Unsupported options file',
     )
     expect(() =>
@@ -168,7 +209,7 @@ describe('options preset utilities', () => {
           ...snapshot,
           tomlPluginOptions: {
             ...snapshot.tomlPluginOptions,
-            allowedBlankLines: -1,
+            groupBlankLinesLimit: 0,
           },
         }),
       ),

@@ -63,17 +63,23 @@ export const DEFAULT_JAVA_OPTIONS: PluginJavaOptions = {
 }
 
 export const DEFAULT_TOML_OPTIONS: PluginTOMLOptions = {
-  alignComments: true,
-  alignEntries: false,
-  allowedBlankLines: 1,
-  arrayAutoCollapse: true,
-  arrayAutoExpand: true,
-  compactArrays: true,
-  compactEntries: false,
-  compactInlineTables: false,
-  indentEntries: false,
-  indentTables: false,
-  reorderKeys: false,
+  arrayBracketSpaceWidth: null,
+  arrayCommaSpaceWidth: null,
+  commentStyle: null,
+  dateTimeDelimiter: null,
+  groupBlankLinesLimit: null,
+  indentSubTables: null,
+  indentTableKeyValuePairs: null,
+  inlineTableBraceSpaceWidth: null,
+  inlineTableCommaSpaceWidth: null,
+  keyQuoteStyle: null,
+  keyValueEqualsSignAlignment: null,
+  keyValueEqualsSignSpaceWidth: null,
+  stringQuoteStyle: null,
+  tableBlankLines: null,
+  tomlVersion: null,
+  trailingCommentAlignment: null,
+  trailingCommentSpaceWidth: null,
 }
 
 export const JAVA_ENTRYPOINTS = [

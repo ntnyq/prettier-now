@@ -64,6 +64,14 @@
 - Svelte (via [prettier-plugin-svelte](https://github.com/sveltejs/prettier-plugin-svelte))
 - TOML (via [prettier-plugin-toml ](https://github.com/un-ts/prettier/tree/master/packages/toml))
 
+TOML settings expose Tombi's 17 plugin options. Select **Default** to use the
+formatter default; string quotes and inline table spacing inherit `SingleQuote`
+and `BracketSpacing` unless explicitly overridden. Existing Taplo preferences and
+version 1 option presets migrate automatically where an equivalent setting exists.
+Array auto-collapse/expansion and key sorting have no equivalent. Blank-line
+limits migrate to `GroupBlankLinesLimit`, clamped to its supported range of 1–255.
+New exports use snapshot version 2.
+
 ## Screenshots
 
 ![light](./screenshots/light.png)

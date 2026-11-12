@@ -29,8 +29,8 @@ describe('settings overlay', () => {
 
     const content = wrapper.find('[class*="min(960px,96vw)"]')
     expect(content.exists()).toBe(true)
-    expect(content.attributes('class')).toContain('!w-[min(960px,96vw)]')
-    expect(content.attributes('class')).toContain('!max-w-[min(960px,96vw)]')
+    expect(content.classes()).toContain('w-[min(960px,96vw)]!')
+    expect(content.classes()).toContain('max-w-[min(960px,96vw)]!')
     expect(wrapper.text()).toContain('settings')
     expect(wrapper.text()).toContain('prettierOptions')
   })

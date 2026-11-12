@@ -68,6 +68,14 @@ export async function formatViaPrettier(
 
   const { languageId, ...formatOptions } = options
 
+  // Null represents an inherited TOML setting in storage, but Prettier rejects
+  // null plugin values. Omit them before Prettier validates its options.
+  for (const [name, value] of Object.entries(formatOptions)) {
+    if (value === null) {
+      delete formatOptions[name]
+    }
+  }
+
   const loadedPlugin = PRELOADED_PLUGIN_LANGUAGE_IDS.has(languageId)
     ? undefined
     : await loadPrettierPlugin(languageId)

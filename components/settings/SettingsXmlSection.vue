@@ -23,6 +23,7 @@ const optionsStore = useOptionsStore()
         />
       </template>
     </SettingItem>
+
     <SettingItem
       :description="i18n.t('optDescXmlSortAttributesByKey')"
       title="XMLSortAttributesByKey"
@@ -35,6 +36,7 @@ const optionsStore = useOptionsStore()
         />
       </template>
     </SettingItem>
+
     <SettingItem
       :description="i18n.t('optDescXmlQuoteAttributes')"
       title="XMLQuoteAttributes"
@@ -48,6 +50,7 @@ const optionsStore = useOptionsStore()
         />
       </template>
     </SettingItem>
+
     <SettingItem
       :description="i18n.t('optDescXmlWhitespaceSensitivity')"
       title="XMLWhitespaceSensitivity"

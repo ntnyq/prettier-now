@@ -55,53 +55,62 @@ nothingToCopy: 沒有可複製的內容
 nothingToDownload: 沒有可下載的內容
 nothingToFormat: 沒有可格式化的內容
 openOptionsPage: 開啟選項頁
-optDescAlignComments: 將項目與陣列項目後方的連續註解垂直對齊。僅對位於項目或陣列項目後方的註解生效。
-optDescAlignEntries: 將連續項目垂直對齊。
-optDescAllowedBlankLines: 項目與資料表之間允許的最大空白行數。
-optDescArrayAutoCollapse: 自動摺疊未超過最大欄寬且不含註解的陣列。
-optDescArrayAutoExpand: 自動展開超過最大欄寬的陣列為多行。
+optDescArrayBracketSpaceWidth: 單行陣列方括號內側的空格數。
+optDescArrayCommaSpaceWidth: 單行陣列逗號後的空格數。
 optDescArrowParens: 為只有一個參數的箭頭函式加上括號。
 optDescAutoFormat: 貼上後自動格式化原始碼。
 optDescBraceStyle: 為程式碼區塊（類別與函式）使用空格或換行樣式。
 optDescBracketSameLine: 多行 HTML（HTML、JSX、Vue、Angular）元素的 > 放在最後一行末尾，而不是單獨換到下一行（不適用於自閉合元素）。
 optDescBracketSpacing: 在物件常值的大括號內加入空格。
-optDescCompactArrays: 移除單行陣列中的空白填充。
-optDescCompactEntries: 移除 = 兩側空白。
-optDescCompactInlineTables: 移除行內資料表首尾的空白填充。
+optDescCommentStyle: 標準化註解文字，或保留原始文字。
+optDescDateTimeDelimiter: 日期與時間之間的分隔符號。
 optDescDebug: 是否在主控台輸出執行期資訊。
 optDescEndOfLine: 指定換行符號樣式。
 optDescEntrypoint: 從入口點開始格式化，讓 prettier 可用於程式碼片段。
 optDescExperimentalOperatorPosition: 二元表達式換行時，指定運算子位置。
 optDescExperimentalTernaries: 指定三元運算式樣式。
+optDescGroupBlankLinesLimit: 群組之間允許的最大空行數（1–255）。
 optDescHtmlWhitespaceSensitivity: 指定 HTML、Vue、Angular 與 Handlebars 的全域空白敏感度。
 optDescImportExportOptions: 匯入 JSON 選項檔、匯出目前選項，或還原預設值。
-optDescIndentEntries: 對資料表中的項目進行縮排。
-optDescIndentTables: 依資料表、資料表陣列及其子表進行縮排；亂序子表不縮排。
+optDescIndentSubTables: 縮排子表。
+optDescIndentTableKeyValuePairs: 縮排表內的鍵值對。
+optDescInlineTableBraceSpaceWidth: 單行行內表大括號內側的空格數。預設繼承 BracketSpacing。
+optDescInlineTableCommaSpaceWidth: 單行行內表逗號後的空格數。
 optDescJsxSingleQuote: 在 JSX 中使用單引號而非雙引號。
+optDescKeyQuoteStyle: 鍵的引號樣式。預設跟隨字串引號樣式。
+optDescKeyValueEqualsSignAlignment: 對齊連續鍵值對的等號。
+optDescKeyValueEqualsSignSpaceWidth: 鍵值對等號兩側的空格數。
 optDescManagePresets: 套用或移除已儲存的格式化預設。
 optDescObjectWrap: 指定物件常值的換行方式。
 optDescPhpVersion: 指定最低目標 PHP 版本。
 optDescPrintWidth: 指定程式碼格式化時的換行寬度。
 optDescQuoteProps: 控制物件屬性何時加上引號。
-optDescReorderKeys: 依字母順序重排未被空白行分隔的鍵。
 optDescSavePreset: 將目前格式化選項儲存為命名預設。
 optDescSemi: 在敘述句結尾輸出分號。
 optDescSilent: 使用者操作後是否顯示 Toast 提示。
 optDescSingleAttributePerLine: 在 HTML、Vue、JSX 中強制每行僅一個屬性。
 optDescSingleQuote: 使用單引號而非雙引號。
+optDescStringQuoteStyle: 字串的引號樣式。預設繼承 SingleQuote。
 optDescSvelteAllowShorthand: 當屬性名稱與表達式相同時，啟用或停用元件屬性簡寫。
 optDescSvelteIndentScriptAndStyle: 是否縮排 Svelte 檔案中 <script> 與 <style> 標籤內的程式碼。
 optDescSvelteSortOrder: 指定 scripts、markup、styles 的排序順序。
 optDescTabWidth: 指定每層縮排的空格數。
+optDescTableBlankLines: 表之間的空行數。
 optDescThemeColor: 使用 RGB 值選擇應用主題色。
+optDescTomlVersion: TOML 語法版本。預設使用格式化器的預設版本。
 optDescTrailingComma: 在多行逗號分隔語法結構中盡可能加上尾隨逗號。
 optDescTrailingCommaPHP: 在多行情境中盡可能加上尾隨逗號。
+optDescTrailingCommentAlignment: 對齊鍵值對的行尾註解。
+optDescTrailingCommentSpaceWidth: 行尾註解前的空格數。
 optDescUseTabs: 使用 Tab 縮排而非空格。
 optDescVueIndentScriptAndStyle: 是否縮排 Vue 檔案中 <script> 與 <style> 標籤內的程式碼。
 optDescXmlQuoteAttributes: 指定 XML 屬性引號樣式。
 optDescXmlSelfClosingSpace: 在自閉合標籤前加入空格。
 optDescXmlSortAttributesByKey: 依鍵名字母順序排序 XML 屬性，並優先 xmlns 屬性。
 optDescXmlWhitespaceSensitivity: 指定 XML 空白處理方式。
+optionDefault: 預設
+optionDisabled: 停用
+optionEnabled: 啟用
 optionsPresets: 選項預設
 pluginJavaOptions: Java 外掛選項
 pluginPHPOptions: PHP 外掛選項

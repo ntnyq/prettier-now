@@ -40,7 +40,7 @@ export interface OptionsSnapshot extends JsonObject {
   /**
    * Snapshot schema version.
    */
-  version: 1
+  version: 2
 
   /**
    * XML plugin option values.

@@ -8,9 +8,9 @@ import {
   DEFAULT_OPTIONS,
   DEFAULT_PHP_OPTIONS,
   DEFAULT_SVELTE_OPTIONS,
-  DEFAULT_TOML_OPTIONS,
   DEFAULT_XML_OPTIONS,
 } from '@/constants/options'
+import { readStoredTomlOptions } from '@/utils/tomlOptions'
 import type { JsonValue } from '@/types/json'
 import type { FormatOptions } from '@/utils/format'
 
@@ -144,50 +144,7 @@ export async function readStoredFormatOptions(
       DEFAULT_SVELTE_OPTIONS.svelteSortOrder,
     ),
 
-    alignComments: await readStoredValue(
-      'alignComments',
-      DEFAULT_TOML_OPTIONS.alignComments,
-    ),
-    alignEntries: await readStoredValue(
-      'alignEntries',
-      DEFAULT_TOML_OPTIONS.alignEntries,
-    ),
-    allowedBlankLines: await readStoredValue(
-      'allowedBlankLines',
-      DEFAULT_TOML_OPTIONS.allowedBlankLines,
-    ),
-    arrayAutoCollapse: await readStoredValue(
-      'arrayAutoCollapse',
-      DEFAULT_TOML_OPTIONS.arrayAutoCollapse,
-    ),
-    arrayAutoExpand: await readStoredValue(
-      'arrayAutoExpand',
-      DEFAULT_TOML_OPTIONS.arrayAutoExpand,
-    ),
-    compactArrays: await readStoredValue(
-      'compactArrays',
-      DEFAULT_TOML_OPTIONS.compactArrays,
-    ),
-    compactEntries: await readStoredValue(
-      'compactEntries',
-      DEFAULT_TOML_OPTIONS.compactEntries,
-    ),
-    compactInlineTables: await readStoredValue(
-      'compactInlineTables',
-      DEFAULT_TOML_OPTIONS.compactInlineTables,
-    ),
-    indentEntries: await readStoredValue(
-      'indentEntries',
-      DEFAULT_TOML_OPTIONS.indentEntries,
-    ),
-    indentTables: await readStoredValue(
-      'indentTables',
-      DEFAULT_TOML_OPTIONS.indentTables,
-    ),
-    reorderKeys: await readStoredValue(
-      'reorderKeys',
-      DEFAULT_TOML_OPTIONS.reorderKeys,
-    ),
+    ...(await readStoredTomlOptions()),
 
     languageId,
     parser,

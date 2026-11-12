@@ -146,85 +146,94 @@ export type PluginXMLOptions = {
 }
 
 /**
- * TOML plugin-specific Prettier options.
+ * Tombi plugin options. Null leaves an option unset so formatter defaults and
+ * inherited core Prettier options remain effective.
  */
 export type PluginTOMLOptions = {
   /**
-   * Align consecutive comments after entries and items vertically. This applies to comments that are after entries or array items
-   *
-   * @default true
+   * Spaces inside single-line array brackets.
    */
-  alignComments: boolean
+  arrayBracketSpaceWidth: number | null
 
   /**
-   * Align consecutive entries vertically
-   *
-   * @default false
+   * Spaces after commas in single-line arrays.
    */
-  alignEntries: boolean
+  arrayCommaSpaceWidth: number | null
 
   /**
-   * The maximum number of allowed blank lines between entries and tables
-   *
-   * @default 1
+   * Comment text normalization style.
    */
-  allowedBlankLines: number
+  commentStyle: 'normalize' | 'preserve' | null
 
   /**
-   * Collapse arrays that don't exceed the maximum column width and don't contain comments
-   *
-   * @default true
+   * Delimiter between date and time.
    */
-  arrayAutoCollapse: boolean
+  dateTimeDelimiter: 'preserve' | 'space' | 'T' | null
 
   /**
-   * Expand arrays to multiple lines that exceed the maximum column width
-   *
-   * @default true
+   * Maximum blank lines between groups, from 1 to 255.
    */
-  arrayAutoExpand: boolean
+  groupBlankLinesLimit: number | null
 
   /**
-   * Omit white space padding from single-line arrays
-   *
-   * @default true
+   * Whether to indent sub-tables.
    */
-  compactArrays: boolean
+  indentSubTables: boolean | null
 
   /**
-   * Omit white space around `=`
-   *
-   * @default false
+   * Whether to indent key-value pairs within tables.
    */
-  compactEntries: boolean
+  indentTableKeyValuePairs: boolean | null
 
   /**
-   * Omit white space padding from the start and end of inline tables
-   *
-   * @default false
+   * Spaces inside single-line inline table braces; null inherits bracketSpacing.
    */
-  compactInlineTables: boolean
+  inlineTableBraceSpaceWidth: number | null
 
   /**
-   * Indent entries under tables
-   *
-   * @default false
+   * Spaces after commas in single-line inline tables.
    */
-  indentEntries: boolean
+  inlineTableCommaSpaceWidth: number | null
 
   /**
-   * Indent based on tables and arrays of tables and their subtables, subtables out of order are not indented
-   *
-   * @default false
+   * Quote style for keys; null inherits the string quote style.
    */
-  indentTables: boolean
+  keyQuoteStyle: 'double' | 'preserve' | 'single' | null
 
   /**
-   * Alphabetically reorder keys that are not separated by empty lines
-   *
-   * @default false
+   * Whether to align equals signs in consecutive key-value pairs.
    */
-  reorderKeys: boolean
+  keyValueEqualsSignAlignment: boolean | null
+
+  /**
+   * Spaces around equals signs in key-value pairs.
+   */
+  keyValueEqualsSignSpaceWidth: number | null
+
+  /**
+   * Quote style for strings; null inherits singleQuote.
+   */
+  stringQuoteStyle: 'double' | 'preserve' | 'single' | null
+
+  /**
+   * Blank lines between tables.
+   */
+  tableBlankLines: number | null
+
+  /**
+   * TOML syntax version; null uses the formatter default.
+   */
+  tomlVersion: 'v1.0.0' | 'v1.1.0-preview' | 'v1.1.0' | null
+
+  /**
+   * Whether to align trailing comments.
+   */
+  trailingCommentAlignment: boolean | null
+
+  /**
+   * Spaces before trailing comments.
+   */
+  trailingCommentSpaceWidth: number | null
 }
 
 /**

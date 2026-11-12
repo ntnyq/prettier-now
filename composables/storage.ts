@@ -71,24 +71,28 @@ export function useStorage<V extends JsonValue>(
     Logger.error(message)
   })
 
-  watch(value, async () => {
-    if (shouldSkipNextWrite) {
-      shouldSkipNextWrite = false
-      return
-    }
+  watch(
+    value,
+    async () => {
+      if (shouldSkipNextWrite) {
+        shouldSkipNextWrite = false
+        return
+      }
 
-    if (!isHydrated) {
-      hasLocalMutationBeforeHydration = true
-      return
-    }
+      if (!isHydrated) {
+        hasLocalMutationBeforeHydration = true
+        return
+      }
 
-    try {
-      await storage.setItem(syncKey, value.value)
-    } catch (error: unknown) {
-      const message = (error as Error)?.message || 'Failed to write storage'
-      Logger.error(message)
-    }
-  })
+      try {
+        await storage.setItem(syncKey, value.value)
+      } catch (error: unknown) {
+        const message = (error as Error)?.message || 'Failed to write storage'
+        Logger.error(message)
+      }
+    },
+    { deep: true },
+  )
 
   return value
 }

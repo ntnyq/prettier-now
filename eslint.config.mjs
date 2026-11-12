@@ -14,7 +14,19 @@ export default defineESLintConfig({
   vue: {
     vuePerfectionist: {
       autoImport: true,
-      overrides: {},
+      overrides: {
+        'vue-perfectionist/padding-line-between-tags': [
+          'error',
+          {
+            ignoreComments: true,
+            targets: [
+              {
+                tag: 'SettingItem',
+              },
+            ],
+          },
+        ],
+      },
     },
   },
 })

@@ -11,17 +11,18 @@ import {
 import { join } from 'node:path'
 import process from 'node:process'
 import { pathToFileURL } from 'node:url'
-import pluginBabel from 'prettier/plugins/babel'
-import pluginEstree from 'prettier/plugins/estree'
-import { format } from 'prettier/standalone'
 import { build } from 'vite'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { DEFAULT_TOML_OPTIONS } from '@/constants/options'
+import * as prettierCache from '@/utils/cache'
+import { formatViaPrettier as format } from '@/utils/format'
 import wxtConfig from '../../wxt.config'
 
 const outputDirs: string[] = []
 
 describe('toml prettier plugin browser bundle', () => {
   afterEach(async () => {
+    vi.restoreAllMocks()
     vi.unstubAllGlobals()
     await Promise.all(
       outputDirs.splice(0).map(dir =>
@@ -97,9 +98,11 @@ describe('toml prettier plugin browser bundle', () => {
     const { default: plugin } = await import(
       pathToFileURL(join(outDir, 'toml-browser.js')).href
     )
+    vi.spyOn(prettierCache, 'loadPrettierPlugin').mockResolvedValue(plugin)
     const options = {
+      ...DEFAULT_TOML_OPTIONS,
+      languageId: 'toml',
       parser: 'toml',
-      plugins: [pluginBabel, pluginEstree, plugin],
     }
     const results = await Promise.all([
       format('a=1\n', options),
@@ -107,6 +110,34 @@ describe('toml prettier plugin browser bundle', () => {
     ])
     expect(results).toEqual(['a = 1\n', "title = 'hello'\n"])
     expect(fetchWasm).toHaveBeenCalledOnce()
+
+    expect(
+      await format('a=[1,2]\n', {
+        ...options,
+        arrayBracketSpaceWidth: 2,
+        arrayCommaSpaceWidth: 2,
+      }),
+    ).toBe('a = [  1,  2  ]\n')
+    expect(
+      await format('a="hello"\n', {
+        ...options,
+        singleQuote: true,
+        stringQuoteStyle: 'double',
+      }),
+    ).toBe('a = "hello"\n')
+    expect(
+      await format('a={b=1}\n', {
+        ...options,
+        bracketSpacing: false,
+      }),
+    ).toBe('a = {b = 1}\n')
+    expect(
+      await format('a={b=1}\n', {
+        ...options,
+        bracketSpacing: false,
+        inlineTableBraceSpaceWidth: 2,
+      }),
+    ).toBe('a = {  b = 1  }\n')
 
     await expect(format('a = [', options)).rejects.toMatchObject({
       name: 'TombiFormatError',

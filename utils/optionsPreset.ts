@@ -8,21 +8,21 @@ import {
   DEFAULT_XML_OPTIONS,
   JAVA_ENTRYPOINTS,
 } from '@/constants/options'
+import {
+  LegacyTomlOptionsSchema,
+  migrateLegacyTomlOptions,
+  TomlOptionsSchema,
+} from '@/utils/tomlOptions'
 import type { OptionsPreset, OptionsSnapshot } from '@/types/optionsPreset'
 
-const OPTIONS_SNAPSHOT_VERSION = 1
-const nonNegativeIntegerSchema = v.pipe(v.number(), v.integer(), v.minValue(0))
+const OPTIONS_SNAPSHOT_VERSION = 2
 const positiveIntegerSchema = v.pipe(v.number(), v.integer(), v.minValue(1))
 
 const OptionsSnapshotVersionSchema = v.object({
-  version: v.literal(OPTIONS_SNAPSHOT_VERSION),
+  version: v.picklist([1, OPTIONS_SNAPSHOT_VERSION]),
 })
 
-/**
- * Schema for validating imported options snapshots.
- */
-export const OptionsSnapshotSchema = v.object({
-  version: v.literal(OPTIONS_SNAPSHOT_VERSION),
+const sharedSnapshotEntries = {
   options: v.object({
     arrowParens: v.picklist(['always', 'avoid']),
     bracketSameLine: v.boolean(),
@@ -106,20 +106,36 @@ export const OptionsSnapshotSchema = v.object({
       'styles-scripts-options-markup',
     ]),
   }),
-  tomlPluginOptions: v.object({
-    alignComments: v.boolean(),
-    alignEntries: v.boolean(),
-    allowedBlankLines: nonNegativeIntegerSchema,
-    arrayAutoCollapse: v.boolean(),
-    arrayAutoExpand: v.boolean(),
-    compactArrays: v.boolean(),
-    compactEntries: v.boolean(),
-    compactInlineTables: v.boolean(),
-    indentEntries: v.boolean(),
-    indentTables: v.boolean(),
-    reorderKeys: v.boolean(),
-  }),
-})
+}
+
+/**
+ * Validate snapshots and upgrade version 1 Taplo settings to Tombi settings.
+ */
+export const OptionsSnapshotSchema = v.pipe(
+  v.union([
+    v.object({
+      ...sharedSnapshotEntries,
+      version: v.literal(OPTIONS_SNAPSHOT_VERSION),
+      tomlPluginOptions: TomlOptionsSchema,
+    }),
+    v.object({
+      ...sharedSnapshotEntries,
+      version: v.literal(1),
+      tomlPluginOptions: LegacyTomlOptionsSchema,
+    }),
+  ]),
+  v.transform((snapshot): OptionsSnapshot =>
+    snapshot.version === 1
+      ? {
+          ...snapshot,
+          version: OPTIONS_SNAPSHOT_VERSION,
+          tomlPluginOptions: migrateLegacyTomlOptions(
+            snapshot.tomlPluginOptions,
+          ),
+        }
+      : snapshot,
+  ),
+)
 
 /**
  * Schema for validating one options preset.
@@ -187,11 +203,12 @@ export function parseOptionsSnapshot(source: string) {
     throw new Error('Unsupported options file')
   }
 
-  if (!v.safeParse(OptionsSnapshotSchema, parsed).success) {
+  const result = v.safeParse(OptionsSnapshotSchema, parsed)
+  if (!result.success) {
     throw new Error('Invalid options file')
   }
 
-  return parsed as unknown as OptionsSnapshot
+  return result.output
 }
 
 /**
