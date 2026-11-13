@@ -2,6 +2,7 @@
  * @file Isolated-world focused editor formatter bridge
  */
 
+import * as v from 'valibot'
 import { browser, defineContentScript } from '#imports'
 import {
   FOCUSED_EDITOR_EVENT,
@@ -11,8 +12,13 @@ import {
   FOCUSED_EDITOR_REQUEST_TIMEOUT,
 } from '@/constants/focusedEditor'
 import { LANGUAGE_ID } from '@/constants/language'
+import {
+  FocusedEditorCommandSchema,
+  FocusedEditorFormatterResponseSchema,
+  FocusedEditorReadResponseSchema,
+  FocusedEditorWriteResponseSchema,
+} from '@/utils/focusedEditorProtocol'
 import type {
-  FocusedEditorFormatterResponse,
   FocusedEditorGetValueResponseDetail,
   FocusedEditorSetValueResponseDetail,
 } from '@/types/focusedEditor'
@@ -95,12 +101,14 @@ function waitForEditorValue(requestId: string) {
     }, FOCUSED_EDITOR_REQUEST_TIMEOUT)
 
     function handleResponse(evt: Event) {
-      const detail = (evt as CustomEvent<FocusedEditorGetValueResponseDetail>)
-        .detail
-
-      if (!detail || detail.requestId !== requestId) {
+      const parsed = v.safeParse(
+        FocusedEditorReadResponseSchema,
+        (evt as CustomEvent<unknown>).detail,
+      )
+      if (!parsed.success || parsed.output.requestId !== requestId) {
         return
       }
+      const detail = parsed.output
 
       window.clearTimeout(timeoutId)
       window.removeEventListener(
@@ -133,12 +141,14 @@ function waitForEditorWrite(requestId: string, value: string) {
     }, FOCUSED_EDITOR_REQUEST_TIMEOUT)
 
     function handleResponse(evt: Event) {
-      const detail = (evt as CustomEvent<FocusedEditorSetValueResponseDetail>)
-        .detail
-
-      if (!detail || detail.requestId !== requestId) {
+      const parsed = v.safeParse(
+        FocusedEditorWriteResponseSchema,
+        (evt as CustomEvent<unknown>).detail,
+      )
+      if (!parsed.success || parsed.output.requestId !== requestId) {
         return
       }
+      const detail = parsed.output
 
       window.clearTimeout(timeoutId)
       window.removeEventListener(
@@ -179,25 +189,26 @@ async function formatViaFormatterFrame(
       reject(new Error('Formatter runtime timed out'))
     }, FOCUSED_EDITOR_FORMAT_TIMEOUT)
 
-    function handleResponse(evt: MessageEvent<FocusedEditorFormatterResponse>) {
-      if (
-        evt.origin !== getExtensionOrigin()
-        || evt.source !== targetWindow
-        || evt.data?.type !== FOCUSED_EDITOR_MESSAGE.formatterFormatResponse
-        || evt.data.requestId !== requestId
-      ) {
+    function handleResponse(evt: MessageEvent<unknown>) {
+      if (evt.origin !== getExtensionOrigin() || evt.source !== targetWindow) {
         return
       }
+
+      const parsed = v.safeParse(FocusedEditorFormatterResponseSchema, evt.data)
+      if (!parsed.success || parsed.output.requestId !== requestId) {
+        return
+      }
+      const response = parsed.output
 
       window.clearTimeout(timeoutId)
       window.removeEventListener('message', handleResponse)
 
-      if (!evt.data.ok) {
-        reject(new Error(evt.data.errorMessage))
+      if (!response.ok) {
+        reject(new Error(response.errorMessage))
         return
       }
 
-      resolve(evt.data.formatted)
+      resolve(response.formatted)
     }
 
     window.addEventListener('message', handleResponse)
@@ -267,11 +278,12 @@ export default defineContentScript({
   matchAboutBlank: true,
   main() {
     browser.runtime.onMessage.addListener(async message => {
-      if (message?.type !== FOCUSED_EDITOR_MESSAGE.formatFocusedEditor) {
+      const parsed = v.safeParse(FocusedEditorCommandSchema, message)
+      if (!parsed.success) {
         return
       }
 
-      if (message.requireFocus) {
+      if (parsed.output.requireFocus) {
         let activeElement = document.activeElement
         while (activeElement?.shadowRoot?.activeElement) {
           activeElement = activeElement.shadowRoot.activeElement
@@ -287,7 +299,9 @@ export default defineContentScript({
       try {
         await formatFocusedEditor()
       } catch (error: unknown) {
-        showErrorMessage((error as Error)?.message || 'Failed to format editor')
+        showErrorMessage(
+          error instanceof Error ? error.message : 'Failed to format editor',
+        )
       }
     })
   },

@@ -68,6 +68,7 @@ describe('editor adapters', () => {
     const wrapper = Object.assign(document.createElement('div'), {
       env: {
         editor: {
+          getValue: () => 'original',
           getReadOnly: () => true,
           setValue() {
             throw new Error('Unexpected write')

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import OptionsPresetPanel from '../OptionsPresetPanel.vue'
+import OptionsPresetPanel from './OptionsPresetPanel.vue'
 import SettingsJavaSection from './SettingsJavaSection.vue'
 import SettingsPhpSection from './SettingsPhpSection.vue'
 import SettingsPrettierSection from './SettingsPrettierSection.vue'

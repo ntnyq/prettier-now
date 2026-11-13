@@ -1,5 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { useHistoryStore } from '@/stores/history'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const storageMock = vi.hoisted(() => ({
@@ -37,10 +38,6 @@ vi.mock('#i18n', () => ({
       return params?.length ? `${key}:${params.join(',')}` : key
     },
   },
-}))
-
-vi.mock('@/utils/cache', () => ({
-  loadCodemirrorLanguage: vi.fn(async () => {}),
 }))
 
 vi.mock('@/utils/format', () => ({
@@ -106,20 +103,21 @@ describe('workspace store', () => {
   )
 
   it('reports unreadable files without losing the current workspace', async () => {
-    const { Toast } = await import('@/utils/toast')
     const store = useWorkspaceStore()
     store.sourceCode = 'current source'
     const file = new File(['source'], 'source.ts')
     vi.spyOn(file, 'text').mockRejectedValue(new Error('Cannot read file'))
-    await expect(store.loadFileList([file])).resolves.toBeUndefined()
+    await expect(store.loadFileList([file])).resolves.toEqual({
+      status: 'error',
+      message: 'Cannot read file',
+    })
     expect(store.sourceCode).toBe('current source')
-    expect(Toast.error).toHaveBeenCalledWith('Cannot read file')
   })
 
   it('does not restore history entries whose contents were discarded', () => {
     const store = useWorkspaceStore()
     store.sourceCode = 'current source'
-    store.formatHistory = [
+    useHistoryStore().entries = [
       {
         id: 'large',
         fileName: 'large.ts',

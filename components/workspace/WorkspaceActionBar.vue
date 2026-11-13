@@ -22,13 +22,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useFileHandler } from '@/composables/fileHandler'
+import { useWorkspaceActions } from '@/composables/workspaceActions'
 import { useWorkspaceStore } from '@/stores/workspace'
 import { Logger } from '@/utils/logger'
 import { Toast } from '@/utils/toast'
 
 const workspaceStore = useWorkspaceStore()
-const { loadFileList } = useFileHandler()
+const { loadFiles, formatActiveJob, downloadResults, clearWorkspace } =
+  useWorkspaceActions()
 const { copy } = useClipboard({ legacy: true })
 
 const {
@@ -41,15 +42,11 @@ const {
 
 handleFileDialogChange(async files => {
   try {
-    await loadFileList(files)
+    await loadFiles(files)
   } finally {
     resetSelectedFile()
   }
 })
-
-async function formatSource() {
-  await workspaceStore.formatActiveJob()
-}
 
 async function copyResult() {
   if (!workspaceStore.resultCode) {
@@ -65,18 +62,6 @@ async function copyResult() {
     Logger.error(i18n.t('failedToCopyToClipboard'))
     Toast.error(i18n.t('failedToCopyToClipboard'))
   }
-}
-
-function clearAll() {
-  if (!workspaceStore.sourceCode && !workspaceStore.resultCode) {
-    Logger.warn(i18n.t('nothingToClear'))
-    return Toast.info(i18n.t('nothingToClear'))
-  }
-
-  workspaceStore.clearWorkspace()
-
-  Logger.success(i18n.t('clearSuccess'))
-  Toast.info(i18n.t('clearSuccess'))
 }
 
 function selectFile() {
@@ -121,7 +106,7 @@ function selectFile() {
     <Tooltip>
       <TooltipTrigger as-child>
         <Button
-          @click="workspaceStore.downloadActiveJob"
+          @click="downloadResults()"
           :aria-label="i18n.t('downloadResult')"
           variant="outline"
           size="icon-lg"
@@ -134,7 +119,7 @@ function selectFile() {
     </Tooltip>
 
     <Button
-      @click="formatSource"
+      @click="formatActiveJob"
       size="lg"
       type="button"
       class="min-w-42 shadow-sm"
@@ -158,12 +143,12 @@ function selectFile() {
         align="end"
         class="w-48"
       >
-        <DropdownMenuItem @click="workspaceStore.downloadAllJobs">
+        <DropdownMenuItem @click="downloadResults(true)">
           <FileDown class="size-4" />
           {{ i18n.t('downloadAll') }}
         </DropdownMenuItem>
         <DropdownMenuItem
-          @click="clearAll"
+          @click="clearWorkspace"
           variant="destructive"
         >
           <Trash2 class="size-4" />

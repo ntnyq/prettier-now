@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { i18n } from '#i18n'
+import { TOML_OPTION_VALUES } from '@/constants/optionValues'
 import { useOptionsStore } from '@/stores/options'
 import SettingItem from './SettingItem.vue'
 import SettingOptionalNumberField from './SettingOptionalNumberField.vue'
@@ -20,7 +21,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.tomlPluginOptions.tomlVersion"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['v1.0.0', 'v1.1.0', 'v1.1.0-preview']"
+          :items="TOML_OPTION_VALUES.tomlVersion"
         />
       </template>
     </SettingItem>
@@ -64,7 +65,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.tomlPluginOptions.commentStyle"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['normalize', 'preserve']"
+          :items="TOML_OPTION_VALUES.commentStyle"
         />
       </template>
     </SettingItem>
@@ -78,7 +79,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.tomlPluginOptions.dateTimeDelimiter"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['T', 'space', 'preserve']"
+          :items="TOML_OPTION_VALUES.dateTimeDelimiter"
         />
       </template>
     </SettingItem>
@@ -179,7 +180,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.tomlPluginOptions.keyQuoteStyle"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['double', 'single', 'preserve']"
+          :items="TOML_OPTION_VALUES.quoteStyle"
         />
       </template>
     </SettingItem>
@@ -193,7 +194,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.tomlPluginOptions.stringQuoteStyle"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['double', 'single', 'preserve']"
+          :items="TOML_OPTION_VALUES.quoteStyle"
         />
       </template>
     </SettingItem>

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { downloadTextFile } from '@/utils/download'
 import {
   createFormatJobsFromFiles,
-  downloadTextFile,
   getFormattedFileName,
   updateFormatJobLanguage,
 } from '@/utils/workspace'

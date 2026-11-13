@@ -8,6 +8,8 @@ import {
   languages,
 } from '@/constants/language'
 
+import type { LanguageId } from '@/types/language'
+
 /**
  * Alternative editor and file tokens mapped to supported language ids.
  */
@@ -30,7 +32,7 @@ const LANGUAGE_ALIASES = {
 /**
  * Supported language ids used for direct token lookup.
  */
-const languageIds = new Set(languages.map(language => language.id))
+const languageIds = new Set<string>(languages.map(language => language.id))
 
 /**
  * Context values used to infer the language for focused editor source.
@@ -39,7 +41,7 @@ export interface InferLanguageContext {
   /**
    * Language id used when no hints or content rules match.
    */
-  fallbackLanguageId?: string
+  fallbackLanguageId?: LanguageId
 
   /**
    * Editor, DOM, or class-name hints that may contain language tokens.
@@ -95,7 +97,7 @@ function getLanguageIdForToken(value: string) {
   const token = normalizeHint(value).replace(/^[._-]+|[._-]+$/g, '')
 
   if (languageIds.has(token)) {
-    return token
+    return token as LanguageId
   }
 
   if (Object.hasOwn(LANGUAGE_ALIASES, token)) {
@@ -244,7 +246,7 @@ function inferLanguageFromContent(source: string) {
  * @param languageId - Language id to resolve.
  * @returns Parser id configured for the language, or the language id itself.
  */
-export function resolveLanguageParser(languageId: string) {
+export function resolveLanguageParser(languageId: LanguageId) {
   return languages.find(item => item.id === languageId)?.parser || languageId
 }
 

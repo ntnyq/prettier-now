@@ -12,6 +12,11 @@ import type {
 } from '@/types/options'
 
 /**
+ * Current version of exported formatting option snapshots.
+ */
+export const OPTIONS_SNAPSHOT_VERSION = 2
+
+/**
  * Prettier default options
  *
  * @see {@link https://prettier.io/docs/en/options}
@@ -286,4 +291,4 @@ export const JAVA_ENTRYPOINTS = [
   'typeArgument',
   'wildcard',
   'wildcardBounds',
-]
+] as const

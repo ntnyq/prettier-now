@@ -65,6 +65,7 @@ optDescBracketSpacing: オブジェクトリテラルの括弧内に空白を入
 optDescCommentStyle: コメントを正規化するか、元のテキストを保持します。
 optDescDateTimeDelimiter: 日付と時刻の区切り文字。
 optDescDebug: 実行時情報をコンソールに出力するかどうか。
+optDescEmbeddedLanguageFormatting: Markdown コードブロックなど、埋め込みコードの整形を設定します。
 optDescEndOfLine: 改行コードのスタイルを指定します。
 optDescEntrypoint: エントリポイントから整形し、prettier をスニペットにも適用できるようにします。
 optDescExperimentalOperatorPosition: 二項式が改行されるときの演算子位置を指定します。
@@ -84,6 +85,7 @@ optDescManagePresets: 保存済みの整形プリセットを適用または削�
 optDescObjectWrap: オブジェクトリテラルの折り返し方法を指定します。
 optDescPhpVersion: 対象とする最小 PHP バージョンを指定します。
 optDescPrintWidth: プリンタが折り返す行長を指定します。
+optDescProseWrap: Markdown の文章の折り返し方法を設定します。
 optDescQuoteProps: オブジェクトプロパティを引用符で囲むタイミングを変更します。
 optDescSavePreset: 現在の整形オプションを名前付きプリセットとして保存します。
 optDescSemi: 文末にセミコロンを出力します。

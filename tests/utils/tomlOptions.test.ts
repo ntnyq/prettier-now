@@ -4,12 +4,20 @@ import { DEFAULT_TOML_OPTIONS } from '@/constants/options'
 import { readStoredFormatOptions } from '@/utils/formatOptions'
 import {
   migrateLegacyTomlOptions,
-  readStoredTomlOptions,
   TomlOptionsSchema,
 } from '@/utils/tomlOptions'
+import { readStoredTomlOptions } from '@/utils/tomlStorage'
 
 const storageMock = vi.hoisted(() => ({
   getItem: vi.fn(),
+  getItems: vi.fn(async (keys: string[]) =>
+    Promise.all(
+      keys.map(async key => ({
+        key,
+        value: await storageMock.getItem(key),
+      })),
+    ),
+  ),
   setItem: vi.fn(),
 }))
 
@@ -122,7 +130,7 @@ describe('Tombi options', () => {
       key === 'local:compactArrays' ? true : null,
     )
 
-    const options = await readStoredFormatOptions('toml', 'toml')
+    const options = await readStoredFormatOptions('toml')
 
     expect(options.arrayBracketSpaceWidth).toBe(0)
     expect(options).not.toHaveProperty('compactArrays')

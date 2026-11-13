@@ -6,6 +6,7 @@ import { AceEditor } from '@/utils/editors/ace'
 import { CodeMirrorEditor } from '@/utils/editors/codeMirror'
 import { ContentEditableEditor } from '@/utils/editors/contentEditable'
 import { TextareaEditor } from '@/utils/editors/textarea'
+import type { EditorAdapter } from '@/types/editor'
 
 /**
  * Create an editor adapter for a supported editor element.
@@ -13,7 +14,9 @@ import { TextareaEditor } from '@/utils/editors/textarea'
  * @param element - Element to inspect.
  * @returns Editor adapter when the element is supported.
  */
-export function createEditorAdapter(element: HTMLElement) {
+export function createEditorAdapter(
+  element: HTMLElement,
+): EditorAdapter | null {
   if (CodeMirrorEditor.validate(element)) {
     return new CodeMirrorEditor(element)
   }

@@ -65,6 +65,7 @@ optDescBracketSpacing: 在物件常值的大括號內加入空格。
 optDescCommentStyle: 標準化註解文字，或保留原始文字。
 optDescDateTimeDelimiter: 日期與時間之間的分隔符號。
 optDescDebug: 是否在主控台輸出執行期資訊。
+optDescEmbeddedLanguageFormatting: 控制嵌入程式碼的格式化，例如 Markdown 程式碼區塊。
 optDescEndOfLine: 指定換行符號樣式。
 optDescEntrypoint: 從入口點開始格式化，讓 prettier 可用於程式碼片段。
 optDescExperimentalOperatorPosition: 二元表達式換行時，指定運算子位置。
@@ -84,6 +85,7 @@ optDescManagePresets: 套用或移除已儲存的格式化預設。
 optDescObjectWrap: 指定物件常值的換行方式。
 optDescPhpVersion: 指定最低目標 PHP 版本。
 optDescPrintWidth: 指定程式碼格式化時的換行寬度。
+optDescProseWrap: 控制 Markdown 中段落文字的換行方式。
 optDescQuoteProps: 控制物件屬性何時加上引號。
 optDescSavePreset: 將目前格式化選項儲存為命名預設。
 optDescSemi: 在敘述句結尾輸出分號。

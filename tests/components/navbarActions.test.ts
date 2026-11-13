@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import Navbar from '@/components/navbar/index.vue'
-import MoreAction from '@/components/navbar/MoreAction.vue'
+import MoreActionsMenu from '@/components/navbar/MoreActionsMenu.vue'
+import Navbar from '@/components/navbar/Navbar.vue'
 import { useAppStore } from '@/stores/app'
 import { useLogStore } from '@/stores/log'
 import { ButtonStub, PassthroughStub } from '../helpers/vue'
@@ -89,7 +89,7 @@ describe('navbar actions', () => {
   it('opens history and log panels from the more menu', async () => {
     const appStore = useAppStore()
     const logStore = useLogStore()
-    const wrapper = mount(MoreAction, {
+    const wrapper = mount(MoreActionsMenu, {
       props: {
         showWorkspaceActions: true,
       },
@@ -115,7 +115,7 @@ describe('navbar actions', () => {
   })
 
   it('hides workspace actions when requested', () => {
-    const wrapper = mount(MoreAction, {
+    const wrapper = mount(MoreActionsMenu, {
       props: {
         showWorkspaceActions: false,
       },
@@ -143,7 +143,7 @@ describe('navbar actions', () => {
           GitMerge: PassthroughStub,
           LanguageSelect: PassthroughStub,
           Moon: PassthroughStub,
-          MoreAction: {
+          MoreActionsMenu: {
             props: ['showWorkspaceActions'],
             template:
               '<div data-testid="more-action" :data-workspace="showWorkspaceActions" />',
@@ -176,7 +176,7 @@ describe('navbar actions', () => {
           GitMerge: PassthroughStub,
           LanguageSelect: PassthroughStub,
           Moon: PassthroughStub,
-          MoreAction: PassthroughStub,
+          MoreActionsMenu: PassthroughStub,
           PanelLeft: PassthroughStub,
           RouterLink: PassthroughStub,
           Settings: PassthroughStub,

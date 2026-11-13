@@ -43,6 +43,9 @@ export const useConfigStore = defineStore('config', () => {
   }
 })
 
-export const useConfigStoreWithout = () => {
+/**
+ * Access preferences through the application's Pinia outside component setup.
+ */
+export const useConfigStoreOutsideSetup = () => {
   return useConfigStore(pinia)
 }

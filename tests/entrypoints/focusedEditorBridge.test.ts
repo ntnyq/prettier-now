@@ -92,6 +92,20 @@ function writeEditor(requestId: string, value: string) {
 }
 
 describe('focused editor bridge', () => {
+  it('ignores malformed page events without consuming a valid editor snapshot', () => {
+    const element = createTextarea('const a=1')
+    readEditor('valid')
+    window.dispatchEvent(new CustomEvent(FOCUSED_EDITOR_EVENT.getValueRequest))
+    window.dispatchEvent(
+      new CustomEvent(FOCUSED_EDITOR_EVENT.setValueRequest, {
+        detail: { requestId: 'valid', value: 42 },
+      }),
+    )
+    expect(element.value).toBe('const a=1')
+    expect(writeEditor('valid', 'const a = 1;\n')?.errorMessage).toBeUndefined()
+    expect(element.value).toBe('const a = 1;\n')
+  })
+
   it('does not replace another editor after focus changes', () => {
     const a = createTextarea('const a=1')
     expect(readEditor('a')?.source).toBe('const a=1')

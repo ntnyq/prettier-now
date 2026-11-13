@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { i18n } from '#i18n'
+import { PRETTIER_OPTION_VALUES } from '@/constants/optionValues'
 import { useOptionsStore } from '@/stores/options'
 import SettingItem from './SettingItem.vue'
 import SettingNumberField from './SettingNumberField.vue'
@@ -86,7 +87,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.quoteProps"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['as-needed', 'consistent', 'preserve']"
+          :items="PRETTIER_OPTION_VALUES.quoteProps"
         />
       </template>
     </SettingItem>
@@ -100,7 +101,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.objectWrap"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['preserve', 'collapse']"
+          :items="PRETTIER_OPTION_VALUES.objectWrap"
         />
       </template>
     </SettingItem>
@@ -114,7 +115,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.experimentalOperatorPosition"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['start', 'end']"
+          :items="PRETTIER_OPTION_VALUES.experimentalOperatorPosition"
         />
       </template>
     </SettingItem>
@@ -141,7 +142,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.trailingComma"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['all', 'es5', 'none']"
+          :items="PRETTIER_OPTION_VALUES.trailingComma"
         />
       </template>
     </SettingItem>
@@ -181,7 +182,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.arrowParens"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['always', 'avoid']"
+          :items="PRETTIER_OPTION_VALUES.arrowParens"
         />
       </template>
     </SettingItem>
@@ -195,7 +196,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.htmlWhitespaceSensitivity"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['css', 'strict', 'ignore']"
+          :items="PRETTIER_OPTION_VALUES.htmlWhitespaceSensitivity"
         />
       </template>
     </SettingItem>
@@ -222,7 +223,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.endOfLine"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['lf', 'crlf', 'cr', 'auto']"
+          :items="PRETTIER_OPTION_VALUES.endOfLine"
         />
       </template>
     </SettingItem>
@@ -249,6 +250,34 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.experimentalTernaries"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
+        />
+      </template>
+    </SettingItem>
+
+    <SettingItem
+      :description="i18n.t('optDescProseWrap')"
+      title="ProseWrap"
+    >
+      <template #action="{ descriptionId, titleId }">
+        <SettingSelect
+          v-model="optionsStore.proseWrap"
+          :aria-describedby="descriptionId"
+          :aria-labelledby="titleId"
+          :items="PRETTIER_OPTION_VALUES.proseWrap"
+        />
+      </template>
+    </SettingItem>
+
+    <SettingItem
+      :description="i18n.t('optDescEmbeddedLanguageFormatting')"
+      title="EmbeddedLanguageFormatting"
+    >
+      <template #action="{ descriptionId, titleId }">
+        <SettingSelect
+          v-model="optionsStore.embeddedLanguageFormatting"
+          :aria-describedby="descriptionId"
+          :aria-labelledby="titleId"
+          :items="PRETTIER_OPTION_VALUES.embeddedLanguageFormatting"
         />
       </template>
     </SettingItem>

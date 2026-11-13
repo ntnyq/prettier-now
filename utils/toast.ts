@@ -4,7 +4,7 @@
 
 import { getActivePinia } from 'pinia'
 import { toast } from 'vue-sonner'
-import { useConfigStore, useConfigStoreWithout } from '@/stores/config'
+import { useConfigStore, useConfigStoreOutsideSetup } from '@/stores/config'
 import type { ExternalToast } from 'vue-sonner'
 
 /**
@@ -52,7 +52,7 @@ export const Toast = {
     }
     const configStore = getActivePinia()
       ? useConfigStore()
-      : useConfigStoreWithout()
+      : useConfigStoreOutsideSetup()
 
     if (configStore.silent) {
       return

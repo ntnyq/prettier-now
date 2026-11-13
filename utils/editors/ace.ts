@@ -1,47 +1,71 @@
+import type { AceEditorInstance, EditorAdapter } from '@/types/editor'
+
 /**
  * Adapter for Ace editor instances.
  */
-export class AceEditor {
+export class AceEditor implements EditorAdapter {
   /**
-   * Underlying Ace editor instance.
+   * Underlying Ace instance resolved at the DOM boundary.
    */
-  public editor: any
+  private readonly editor: AceEditorInstance
 
   /**
-   * Create an Ace editor adapter.
+   * Bind an adapter to an Ace editor.
    *
-   * @param element - Element inside or equal to an Ace editor.
+   * @param element - Element inside or equal to the editor wrapper.
    */
   constructor(element: HTMLElement) {
-    this.editor = this.resolveEditor(element)
+    const editor = AceEditor.resolveEditor(element)
+    if (!editor) {
+      throw new Error('Ace editor is unavailable')
+    }
+    this.editor = editor
   }
 
   /**
-   * Check whether an element belongs to an Ace editor.
+   * Check whether the element exposes the required Ace operations.
    *
-   * @param element - Element to inspect.
-   * @returns Ace editor wrapper when found.
+   * @param element - Candidate editor element.
+   * @returns Whether an Ace instance can be resolved.
    */
   public static validate(element: HTMLElement) {
-    const wrapper = element.closest('.ace_editor')
-
-    return Boolean(wrapper && (wrapper as any).env?.editor)
+    return Boolean(AceEditor.resolveEditor(element))
   }
 
   /**
-   * Resolve the underlying Ace editor instance.
+   * Resolve and validate Ace's DOM-owned instance.
    *
-   * @param element - Element inside or equal to an Ace editor.
-   * @returns Ace editor instance.
+   * @param element - Element inside the Ace wrapper.
+   * @returns Supported Ace instance, when available.
    */
-  public resolveEditor(element: HTMLElement) {
-    return (element.closest('.ace_editor') as any)?.env?.editor
+  private static resolveEditor(
+    element: HTMLElement,
+  ): AceEditorInstance | undefined {
+    const wrapper = element.closest('.ace_editor') as
+      | (Element & {
+          /**
+           * Ace's wrapper metadata.
+           */
+          env?: {
+            /**
+             * Instance exposed by the page's Ace integration.
+             */
+            editor?: AceEditorInstance
+          }
+        })
+      | null
+    const editor = wrapper?.env?.editor
+    return editor
+      && typeof editor.getValue === 'function'
+      && typeof editor.setValue === 'function'
+      ? editor
+      : undefined
   }
 
   /**
    * Read the current editor content.
    *
-   * @returns Current editor content.
+   * @returns Current source text.
    */
   public getValue() {
     return this.editor.getValue()
@@ -50,7 +74,7 @@ export class AceEditor {
   /**
    * Replace the current editor content.
    *
-   * @param value - New editor content.
+   * @param value - New source text.
    */
   public setValue(value: string) {
     if (this.editor.getReadOnly?.()) {

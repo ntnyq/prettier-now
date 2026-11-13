@@ -1,7 +1,9 @@
+import type { EditorAdapter } from '@/types/editor'
+
 /**
  * Adapter for textarea elements.
  */
-export class TextareaEditor {
+export class TextareaEditor implements EditorAdapter {
   /**
    * Underlying textarea element.
    */

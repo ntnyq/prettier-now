@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { i18n } from '#i18n'
+import { XML_OPTION_VALUES } from '@/constants/optionValues'
 import { useOptionsStore } from '@/stores/options'
 import SettingItem from './SettingItem.vue'
 import SettingSelect from './SettingSelect.vue'
@@ -46,7 +47,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.xmlQuoteAttributes"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['preserve', 'double', 'single']"
+          :items="XML_OPTION_VALUES.xmlQuoteAttributes"
         />
       </template>
     </SettingItem>
@@ -60,7 +61,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.xmlWhitespaceSensitivity"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['strict', 'ignore', 'preserve']"
+          :items="XML_OPTION_VALUES.xmlWhitespaceSensitivity"
         />
       </template>
     </SettingItem>

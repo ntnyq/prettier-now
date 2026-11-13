@@ -78,6 +78,24 @@ New exports use snapshot version 2.
 
 ![dark](./screenshots/dark.png)
 
+## Development
+
+Install dependencies with `pnpm install --frozen-lockfile`, then run `pnpm run dev`
+for Chromium or `pnpm run dev:firefox` for Firefox.
+
+Validate changes with `pnpm run test`, `pnpm run lint`, and `pnpm run typecheck`.
+Build both browser targets with `pnpm run build` and `pnpm run build:firefox`.
+
+Workspace components live in `components/workspace/`; settings and presets live
+in `components/settings/`. The workspace store coordinates formatting jobs and
+rejects stale results, while the history store owns persisted history. UI command
+notifications and downloads belong to `composables/workspaceActions.ts`.
+
+Prettier plugin loading and CodeMirror language loading are independent. Shared
+option values and schemas drive the settings store, presets, and the webpage
+formatter. Existing per-option storage keys and version 1 preset migration remain
+supported.
+
 ## Credits
 
 - UI design from [AST Explorer](https://ast-explorer.dev/) created by [sxzz](https://github.com/sxzz)

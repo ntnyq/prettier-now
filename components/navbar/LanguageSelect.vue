@@ -32,7 +32,7 @@ function getLanguageIcon(icon: ThemeableValue<string>) {
   return isString(icon) ? icon : isDark.value ? icon.dark : icon.light
 }
 
-function handSelectLanguage(language: Language) {
+function selectLanguage(language: Language) {
   workspaceStore.setLanguageId(language.id)
 }
 </script>
@@ -60,7 +60,7 @@ function handSelectLanguage(language: Language) {
       class="w-44"
     >
       <DropdownMenuItem
-        @click="handSelectLanguage(language)"
+        @click="selectLanguage(language)"
         v-for="language in languages"
         :key="language.id"
       >

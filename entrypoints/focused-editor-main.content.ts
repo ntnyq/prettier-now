@@ -2,6 +2,7 @@
  * @file Main-world focused editor reader and writer
  */
 
+import * as v from 'valibot'
 import { defineContentScript } from '#imports'
 import {
   FOCUSED_EDITOR_EVENT,
@@ -13,10 +14,10 @@ import {
   rememberFocusedEditorElement,
   resolveFocusedEditorElement,
 } from '@/utils/focusedEditorElement'
-import type {
-  FocusedEditorGetValueRequestDetail,
-  FocusedEditorSetValueRequestDetail,
-} from '@/types/focusedEditor'
+import {
+  FocusedEditorReadRequestSchema,
+  FocusedEditorWriteRequestSchema,
+} from '@/utils/focusedEditorProtocol'
 
 const MATCHES = ['http://*/*', 'https://*/*', 'file:///*']
 
@@ -189,19 +190,23 @@ export default defineContentScript({
     }
 
     window.addEventListener(FOCUSED_EDITOR_EVENT.getValueRequest, evt => {
-      const { requestId } = (
-        evt as CustomEvent<FocusedEditorGetValueRequestDetail>
-      ).detail
-
-      readFocusedEditor(requestId)
+      const parsed = v.safeParse(
+        FocusedEditorReadRequestSchema,
+        (evt as CustomEvent<unknown>).detail,
+      )
+      if (parsed.success) {
+        readFocusedEditor(parsed.output.requestId)
+      }
     })
 
     window.addEventListener(FOCUSED_EDITOR_EVENT.setValueRequest, evt => {
-      const { requestId, value } = (
-        evt as CustomEvent<FocusedEditorSetValueRequestDetail>
-      ).detail
-
-      writeFocusedEditor(requestId, value)
+      const parsed = v.safeParse(
+        FocusedEditorWriteRequestSchema,
+        (evt as CustomEvent<unknown>).detail,
+      )
+      if (parsed.success) {
+        writeFocusedEditor(parsed.output.requestId, parsed.output.value)
+      }
     })
   },
 })

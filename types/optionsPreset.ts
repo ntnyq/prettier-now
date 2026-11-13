@@ -1,3 +1,4 @@
+import type { OPTIONS_SNAPSHOT_VERSION } from '@/constants/options'
 import type { JsonObject } from '@/types/json'
 import type {
   PluginJavaOptions,
@@ -40,7 +41,7 @@ export interface OptionsSnapshot extends JsonObject {
   /**
    * Snapshot schema version.
    */
-  version: 2
+  version: typeof OPTIONS_SNAPSHOT_VERSION
 
   /**
    * XML plugin option values.

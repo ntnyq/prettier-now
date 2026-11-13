@@ -2,6 +2,8 @@
  * @file Focused editor formatting types
  */
 
+import type { LanguageId } from '@/types/language'
+
 /**
  * Detail payload requesting the active editor content.
  */
@@ -89,7 +91,7 @@ export interface FocusedEditorFormatterRequest {
   /**
    * Language id used when the source language cannot be inferred.
    */
-  fallbackLanguageId?: string
+  fallbackLanguageId?: LanguageId
 
   /**
    * Language or editor hints used to infer the source language.
@@ -114,7 +116,7 @@ export interface FocusedEditorFormatterSuccessResponse {
   /**
    * Language id selected for formatting.
    */
-  languageId: string
+  languageId: LanguageId
 
   /**
    * Discriminant indicating successful formatting.

@@ -4,6 +4,10 @@
 
 This is a WXT-powered Vue browser extension. Extension entry points live in `entrypoints/`: `background.ts` handles background behavior, while `popup/` and `options/` contain their own Vue apps, pages, styles, and routing. Shared UI belongs in `components/`, reusable logic in `composables/`, Pinia stores in `stores/`, constants in `constants/`, utilities in `utils/`, shared types in `types/`, and global styles in `styles/`. Static assets live in `assets/` and `public/`; localized messages are in `locales/*.yaml`. Tests are in `tests/`. Generated output in `dist/` must not be edited by hand.
 
+Keep workspace UI in `components/workspace/`, settings and presets in `components/settings/`, and navigation in `components/navbar/`. The `Editor/` component owns CodeMirror highlighting; formatting must not depend on a highlighting loader. `stores/workspace.ts` coordinates jobs and request invalidation, `stores/history.ts` owns persisted history, and `composables/workspaceActions.ts` presents command outcomes and downloads.
+
+Finite option values live in `constants/optionValues.ts`; settings and preset validation share `utils/optionsSchema.ts`. Keep storage readers separate from pure normalization and migration functions. Preserve existing storage keys when renaming internal state; add an explicit migration when a persisted representation changes.
+
 ## Build, Test, and Development Commands
 
 Use the pnpm version pinned in `package.json`.
@@ -20,7 +24,7 @@ Use the pnpm version pinned in `package.json`.
 
 ## Coding Style & Naming Conventions
 
-Write TypeScript and Vue 3 SFCs with Composition API and `<script setup>`. Keep components PascalCase, such as `EditorResult.vue`, composables camelCase, such as `fileHandler.ts`, and stores/constants named by domain. UI primitives under `components/ui/` follow shadcn-vue patterns. Formatting uses `@ntnyq/prettier-config`; linting uses `@ntnyq/eslint-config`. Let ESLint and the pre-commit `nano-staged` hook handle mechanical formatting.
+Write TypeScript and Vue 3 SFCs with Composition API and `<script setup>`. Keep components PascalCase, such as `EditorResult.vue`, composables camelCase, such as `storedOptions.ts`, and stores/constants named by domain. UI primitives under `components/ui/` follow shadcn-vue patterns. Formatting uses `@ntnyq/prettier-config`; linting uses `@ntnyq/eslint-config`. Let ESLint and the pre-commit `nano-staged` hook handle mechanical formatting.
 
 Use multiline TSDoc blocks (`/** ... */`) for TypeScript methods, functions, classes, interfaces, object-shaped type aliases, and exported constants in `types/` and `utils/`. Every property inside an interface or object-shaped type must have its own TSDoc block, including nested parameter object properties.
 

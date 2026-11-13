@@ -2,7 +2,7 @@ import './style.css'
 import { createApp } from 'vue'
 import pinia from '@/stores'
 import { Logger } from '@/utils/logger'
-import { readStoredTomlOptions } from '@/utils/tomlOptions'
+import { readStoredTomlOptions } from '@/utils/tomlStorage'
 import App from './App.vue'
 import router from './router'
 

@@ -1,3 +1,5 @@
+import type { EditorAdapter } from '@/types/editor'
+
 const BLOCK_TAGS = new Set([
   'DIV',
   'P',
@@ -41,7 +43,7 @@ function readEditableText(node: Node): string {
 /**
  * Adapter for contenteditable elements.
  */
-export class ContentEditableEditor {
+export class ContentEditableEditor implements EditorAdapter {
   /**
    * Underlying contenteditable element.
    */

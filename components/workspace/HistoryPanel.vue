@@ -21,19 +21,23 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet'
 import { useAppStore } from '@/stores/app'
+import { useHistoryStore } from '@/stores/history'
 import { useWorkspaceStore } from '@/stores/workspace'
+import { Toast } from '@/utils/toast'
 
 const appStore = useAppStore()
 const workspaceStore = useWorkspaceStore()
+const historyStore = useHistoryStore()
 
 function restoreEntry(id: string) {
   if (workspaceStore.restoreHistoryEntry(id)) {
+    Toast.info(i18n.t('restoreHistorySuccess'))
     appStore.setIsHistoryPanelVisible(false)
   }
 }
 
 function clearHistory() {
-  workspaceStore.clearFormatHistory()
+  historyStore.clearHistory()
   appStore.setIsHistoryPanelVisible(false)
 }
 </script>
@@ -89,11 +93,11 @@ function clearHistory() {
       </SheetHeader>
 
       <div
-        v-if="workspaceStore.formatHistory.length"
+        v-if="historyStore.entries.length"
         class="min-h-0 flex-1 overflow-y-auto"
       >
         <div
-          v-for="entry in workspaceStore.formatHistory"
+          v-for="entry in historyStore.entries"
           :key="entry.id"
           class="border-b border-border px-4 py-3"
         >
@@ -114,7 +118,7 @@ function clearHistory() {
               </span>
             </button>
             <Button
-              @click="workspaceStore.removeHistoryEntry(entry.id)"
+              @click="historyStore.removeEntry(entry.id)"
               :aria-label="i18n.t('deleteHistoryEntry')"
               :title="i18n.t('deleteHistoryEntry')"
               variant="ghost"

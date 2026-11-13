@@ -2,31 +2,14 @@
  * @file Hidden extension page used to run Prettier outside content scripts
  */
 
+import * as v from 'valibot'
 import { FOCUSED_EDITOR_MESSAGE } from '@/constants/focusedEditor'
 import { LANGUAGE_ID } from '@/constants/language'
+import { FocusedEditorFormatterRequestSchema } from '@/utils/focusedEditorProtocol'
 import { formatViaPrettier } from '@/utils/format'
 import { readStoredFormatOptions } from '@/utils/formatOptions'
-import {
-  inferLanguageFromEditorContext,
-  resolveLanguageParser,
-} from '@/utils/languageInference'
-import type {
-  FocusedEditorFormatterRequest,
-  FocusedEditorFormatterResponse,
-} from '@/types/focusedEditor'
-
-function isFormatterRequest(
-  value: unknown,
-): value is FocusedEditorFormatterRequest {
-  return (
-    typeof value === 'object'
-    && value !== null
-    && (value as FocusedEditorFormatterRequest).type
-      === FOCUSED_EDITOR_MESSAGE.formatterFormatRequest
-    && typeof (value as FocusedEditorFormatterRequest).requestId === 'string'
-    && typeof (value as FocusedEditorFormatterRequest).source === 'string'
-  )
-}
+import { inferLanguageFromEditorContext } from '@/utils/languageInference'
+import type { FocusedEditorFormatterResponse } from '@/types/focusedEditor'
 
 function postFormatterResponse(
   source: MessageEventSource | null,
@@ -43,11 +26,12 @@ function postFormatterResponse(
 }
 
 window.addEventListener('message', async evt => {
-  if (!isFormatterRequest(evt.data)) {
+  const parsed = v.safeParse(FocusedEditorFormatterRequestSchema, evt.data)
+  if (!parsed.success) {
     return
   }
 
-  const request = evt.data
+  const request = parsed.output
 
   try {
     const languageId = inferLanguageFromEditorContext({
@@ -56,8 +40,7 @@ window.addEventListener('message', async evt => {
       source: request.source,
       url: request.url,
     })
-    const parser = resolveLanguageParser(languageId)
-    const options = await readStoredFormatOptions(languageId, parser)
+    const options = await readStoredFormatOptions(languageId)
     const formatted = await formatViaPrettier(request.source, options)
 
     postFormatterResponse(evt.source, evt.origin, {
@@ -69,7 +52,8 @@ window.addEventListener('message', async evt => {
     })
   } catch (error: unknown) {
     postFormatterResponse(evt.source, evt.origin, {
-      errorMessage: (error as Error)?.message || 'Failed to format editor',
+      errorMessage:
+        error instanceof Error ? error.message : 'Failed to format editor',
       ok: false,
       requestId: request.requestId,
       type: FOCUSED_EDITOR_MESSAGE.formatterFormatResponse,

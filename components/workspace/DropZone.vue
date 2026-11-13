@@ -2,9 +2,9 @@
 import { useEventListener } from '@vueuse/core'
 import { shallowRef } from 'vue'
 import { i18n } from '#i18n'
-import { useFileHandler } from '@/composables/fileHandler'
+import { useWorkspaceActions } from '@/composables/workspaceActions'
 
-const { loadFileList } = useFileHandler()
+const { loadFiles } = useWorkspaceActions()
 
 useEventListener('dragenter', onDragEnter)
 useEventListener('dragleave', onDragLeave)
@@ -51,7 +51,7 @@ function onDrop(evt: DragEvent) {
   isDragging.value = false
   dragCounter = 0
 
-  loadFileList(evt.dataTransfer?.files)
+  loadFiles(evt.dataTransfer?.files)
 }
 </script>
 

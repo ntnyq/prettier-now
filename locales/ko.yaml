@@ -65,6 +65,7 @@ optDescBracketSpacing: 객체 리터럴의 괄호 사이에 공백을 출력합�
 optDescCommentStyle: 주석 텍스트를 정규화하거나 원본을 유지합니다.
 optDescDateTimeDelimiter: 날짜와 시간 사이의 구분자입니다.
 optDescDebug: 런타임 정보를 콘솔에 기록할지 여부입니다.
+optDescEmbeddedLanguageFormatting: Markdown 코드 블록 등 포함된 코드의 서식을 설정합니다.
 optDescEndOfLine: 줄바꿈 스타일을 지정합니다.
 optDescEntrypoint: 엔트리포인트부터 포맷하여 스니펫에도 prettier 를 적용할 수 있게 합니다.
 optDescExperimentalOperatorPosition: 이항 표현식이 줄바꿈될 때 연산자 위치를 지정합니다.
@@ -84,6 +85,7 @@ optDescManagePresets: 저장된 포맷 프리셋을 적용하거나 삭제합니
 optDescObjectWrap: 객체 리터럴 줄바꿈 방식을 지정합니다.
 optDescPhpVersion: 최소 대상 PHP 버전을 지정합니다.
 optDescPrintWidth: 프린터가 줄바꿈할 줄 길이를 지정합니다.
+optDescProseWrap: Markdown 문장의 줄 바꿈 방식을 설정합니다.
 optDescQuoteProps: 객체 속성에 따옴표를 언제 붙일지 변경합니다.
 optDescSavePreset: 현재 포맷 옵션을 이름 있는 프리셋으로 저장합니다.
 optDescSemi: 문장 끝에 세미콜론을 출력합니다.

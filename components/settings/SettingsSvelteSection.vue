@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { i18n } from '#i18n'
+import { SVELTE_SORT_ORDERS } from '@/constants/optionValues'
 import { useOptionsStore } from '@/stores/options'
 import SettingItem from './SettingItem.vue'
 import SettingSelect from './SettingSelect.vue'
@@ -20,33 +21,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.svelteSortOrder"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="[
-            'options-scripts-markup-styles',
-            'options-scripts-styles-markup',
-            'options-markup-styles-scripts',
-            'options-markup-scripts-styles',
-            'options-styles-markup-scripts',
-            'options-styles-scripts-markup',
-            'scripts-options-markup-styles',
-            'scripts-options-styles-markup',
-            'markup-options-styles-scripts',
-            'markup-options-scripts-styles',
-            'styles-options-markup-scripts',
-            'styles-options-scripts-markup',
-            'scripts-markup-options-styles',
-            'scripts-styles-options-markup',
-            'markup-styles-options-scripts',
-            'markup-scripts-options-styles',
-            'styles-markup-options-scripts',
-            'styles-scripts-options-markup',
-            'scripts-markup-styles-options',
-            'scripts-styles-markup-options',
-            'markup-styles-scripts-options',
-            'markup-scripts-styles-options',
-            'styles-markup-scripts-options',
-            'styles-scripts-markup-options',
-            'none',
-          ]"
+          :items="SVELTE_SORT_ORDERS"
         />
       </template>
     </SettingItem>

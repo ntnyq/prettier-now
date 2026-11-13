@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { watch } from 'vue'
+import { useWorkspaceActions } from '@/composables/workspaceActions'
 import { useConfigStore } from '@/stores/config'
 import { useWorkspaceStore } from '@/stores/workspace'
 
+const { formatActiveJob } = useWorkspaceActions()
 const configStore = useConfigStore()
 const workspaceStore = useWorkspaceStore()
 
@@ -17,7 +19,7 @@ watch(
       return
     }
 
-    const timer = setTimeout(() => workspaceStore.formatActiveJob(), 300)
+    const timer = setTimeout(() => formatActiveJob(), 300)
     onCleanup(() => clearTimeout(timer))
   },
 )

@@ -1,4 +1,10 @@
+import type { LANGUAGE_ID } from '@/constants/language'
 import type { ThemeableValue } from '@/types'
+
+/**
+ * Identifier accepted by the supported formatter languages.
+ */
+export type LanguageId = (typeof LANGUAGE_ID)[keyof typeof LANGUAGE_ID]
 
 /**
  * Supported formatting language definition.
@@ -12,7 +18,7 @@ export interface Language {
   /**
    * Unique language identifier used by options and stores.
    */
-  id: string
+  id: LanguageId
 
   /**
    * Human-readable language name.

@@ -7,7 +7,8 @@ import pluginBabel from 'prettier/plugins/babel'
 import pluginEstree from 'prettier/plugins/estree'
 import pluginPostcss from 'prettier/plugins/postcss'
 import { LANGUAGE_ID } from '@/constants/language'
-import { loadPrettierPlugin } from '@/utils/cache'
+import { loadPrettierPlugin } from '@/utils/prettierPlugins'
+import type { LanguageId } from '@/types/language'
 import type {
   PluginJavaOptions,
   PluginPHPOptions,
@@ -23,14 +24,14 @@ const PUG_DEFAULT_FORMAT_OPTIONS = {
   pugSortAttributesBeginning: [],
   pugSortAttributesEnd: [],
 } as const
-const TYPESCRIPT_CONTAINER_LANGUAGE_IDS = new Set([
+const TYPESCRIPT_CONTAINER_LANGUAGE_IDS = new Set<LanguageId>([
   LANGUAGE_ID.vue,
   LANGUAGE_ID.svelte,
   LANGUAGE_ID.markdown,
   LANGUAGE_ID.html,
   LANGUAGE_ID.angular,
 ])
-const PRELOADED_PLUGIN_LANGUAGE_IDS = new Set([
+const PRELOADED_PLUGIN_LANGUAGE_IDS = new Set<LanguageId>([
   LANGUAGE_ID.css,
   LANGUAGE_ID.less,
   LANGUAGE_ID.scss,
@@ -50,7 +51,7 @@ export type FormatOptions = PrettierCoreOptions
     /**
      * Language identifier used to resolve the parser and plugin.
      */
-    languageId: string
+    languageId: LanguageId
   }
 
 /**

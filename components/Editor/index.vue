@@ -2,13 +2,14 @@
 import { computed, shallowRef, watch } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { isDark } from '@/composables/dark'
-import { loadCodemirrorLanguage } from '@/utils/cache'
+import { loadCodemirrorLanguage } from '@/utils/codemirrorLanguages'
 import { githubDark, githubLight } from './theme'
+import type { LanguageId } from '@/types/language'
 import type { CodemirrorExtension } from '@/types/vendor'
 
 const props = withDefaults(
   defineProps<{
-    language?: string
+    language?: LanguageId
     extensions?: CodemirrorExtension[]
     placeholder?: string
     disabled?: boolean
@@ -48,13 +49,17 @@ watch(
       return
     }
 
-    const extension = await loadCodemirrorLanguage(language)
-
-    if (requestId !== languageLoadRequestId) {
-      return
+    try {
+      const extension = await loadCodemirrorLanguage(language)
+      if (requestId === languageLoadRequestId) {
+        languageExtension.value = extension
+      }
+    } catch (error) {
+      if (requestId === languageLoadRequestId) {
+        languageExtension.value = undefined
+        console.error('Failed to load editor language', error)
+      }
     }
-
-    languageExtension.value = extension
   },
   {
     immediate: true,

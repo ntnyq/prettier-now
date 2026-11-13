@@ -3,8 +3,9 @@
  */
 
 import dayjs from 'dayjs'
+import { getActivePinia } from 'pinia'
 import { META } from '@/constants/meta'
-import { useConfigStoreWithout } from '@/stores/config'
+import { useConfigStore, useConfigStoreOutsideSetup } from '@/stores/config'
 
 /**
  * Log message category.
@@ -44,7 +45,9 @@ export const Logger = {
    * @param options - Log options.
    */
   log(msg: string, options: LogOptions) {
-    const configStore = useConfigStoreWithout()
+    const configStore = getActivePinia()
+      ? useConfigStore()
+      : useConfigStoreOutsideSetup()
     if (!configStore.debug) {
       return
     }

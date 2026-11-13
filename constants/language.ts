@@ -2,7 +2,7 @@
  * @file Supported languages
  */
 
-import type { Language } from '@/types/language'
+import type { Language, LanguageId } from '@/types/language'
 
 /**
  * supported language id
@@ -15,7 +15,6 @@ export const LANGUAGE_ID = {
   java: 'java',
   javascript: 'javascript',
   json: 'json',
-  jsx: 'jsx',
   less: 'less',
   markdown: 'markdown',
   php: 'php',
@@ -23,12 +22,11 @@ export const LANGUAGE_ID = {
   scss: 'scss',
   svelte: 'svelte',
   toml: 'toml',
-  tsx: 'tsx',
   typescript: 'typescript',
   vue: 'vue',
   xml: 'xml',
   yaml: 'yaml',
-}
+} as const
 
 /**
  * Supported languages, both prettier and codemirror
@@ -43,23 +41,11 @@ export const languages: Language[] = [
      */
     parser: 'babel',
   },
-  // {
-  //   id: LANGUAGE_ID.jsx,
-  //   name: 'JSX',
-  //   icon: '',
-  //   parser: 'babel',
-  // },
   {
     icon: 'vscode-icons:file-type-typescript-official',
     id: LANGUAGE_ID.typescript,
     name: 'TypeScript',
   },
-  // {
-  //   id: LANGUAGE_ID.tsx,
-  //   name: 'TSX',
-  //   icon: '',
-  //   parser: 'typescript',
-  // },
   {
     icon: 'vscode-icons:file-type-html',
     id: LANGUAGE_ID.html,
@@ -209,4 +195,4 @@ export const languageExtensions = {
   css: 'css',
   less: 'less',
   scss: 'scss',
-}
+} as const satisfies Record<string, LanguageId>

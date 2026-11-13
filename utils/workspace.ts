@@ -1,4 +1,5 @@
 import { languageExtensions } from '@/constants/language'
+import type { LanguageId } from '@/types/language'
 import type { FormatJob } from '@/types/workspace'
 
 /**
@@ -107,7 +108,10 @@ export function getFormattedFileName(fileName: string) {
  * @param languageId - New language id.
  * @returns Reset format job with the selected language.
  */
-export function updateFormatJobLanguage(job: FormatJob, languageId: string) {
+export function updateFormatJobLanguage(
+  job: FormatJob,
+  languageId: LanguageId,
+) {
   return {
     ...job,
     languageId,
@@ -116,21 +120,4 @@ export function updateFormatJobLanguage(job: FormatJob, languageId: string) {
     errorMessage: '',
     formatCost: 0,
   } satisfies FormatJob
-}
-
-/**
- * Download a text file in the browser.
- *
- * @param fileName - Download file name.
- * @param content - Text content to download.
- */
-export function downloadTextFile(fileName: string, content: string) {
-  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
-  const url = URL.createObjectURL(blob)
-  const anchor = document.createElement('a')
-
-  anchor.href = url
-  anchor.download = fileName
-  anchor.click()
-  window.setTimeout(() => URL.revokeObjectURL(url))
 }

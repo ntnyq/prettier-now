@@ -31,7 +31,7 @@ type SettingSelectItem = string | { label: string; value: string }
 const props = defineProps<{
   ariaDescribedby?: string
   ariaLabelledby?: string
-  items: SettingSelectItem[]
+  items: readonly SettingSelectItem[]
 }>()
 
 const model = defineModel<string>({ required: true })
@@ -46,7 +46,7 @@ const normalizedItems = computed(() =>
 const selectedItem = computed(() =>
   normalizedItems.value.find(item => item.value === model.value),
 )
-const isNativeSelect = computed(() => normalizedItems.value.length <= 20)
+const isCompactSelect = computed(() => normalizedItems.value.length <= 20)
 const searchLabel = computed(() => i18n.t('searchItems'))
 
 function selectItem(value: string) {
@@ -58,7 +58,7 @@ function selectItem(value: string) {
 <template>
   <Select
     v-model="model"
-    v-if="isNativeSelect"
+    v-if="isCompactSelect"
   >
     <SelectTrigger
       :aria-describedby="props.ariaDescribedby"

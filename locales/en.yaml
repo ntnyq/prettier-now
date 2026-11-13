@@ -65,6 +65,7 @@ optDescBracketSpacing: Print spaces between brackets in object literals.
 optDescCommentStyle: Normalize comment text or preserve the original text.
 optDescDateTimeDelimiter: Delimiter between date and time.
 optDescDebug: Whether to log runtime information in console.
+optDescEmbeddedLanguageFormatting: Control formatting of embedded code, such as Markdown code blocks.
 optDescEndOfLine: Specify the end of line style.
 optDescEntrypoint: Prettify from the entrypoint, allowing prettier to format snippets.
 optDescExperimentalOperatorPosition: Where to print operators when binary expressions wrap lines.
@@ -84,6 +85,7 @@ optDescManagePresets: Apply or remove a saved formatting preset.
 optDescObjectWrap: How to wrap object literals.
 optDescPhpVersion: Specify the minimum target PHP version.
 optDescPrintWidth: Specify the line length that the printer will wrap on.
+optDescProseWrap: Control how prose is wrapped in Markdown.
 optDescQuoteProps: Change when properties in objects are quoted.
 optDescSavePreset: Save the current formatting options as a named preset.
 optDescSemi: Print semicolons at the ends of statements.

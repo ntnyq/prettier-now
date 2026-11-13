@@ -3,6 +3,14 @@
  */
 
 import type { Options, RequiredOptions } from 'prettier'
+import type { JAVA_ENTRYPOINTS } from '@/constants/options'
+import type {
+  PHP_BRACE_STYLES,
+  PHP_VERSIONS,
+  SVELTE_SORT_ORDERS,
+  TOML_OPTION_VALUES,
+  XML_OPTION_VALUES,
+} from '@/constants/optionValues'
 
 /**
  * Java plugin-specific Prettier options.
@@ -15,7 +23,7 @@ export type PluginJavaOptions = {
    *
    * @default `compilationUnit`
    */
-  entrypoint: string
+  entrypoint: (typeof JAVA_ENTRYPOINTS)[number]
 }
 
 /**
@@ -29,7 +37,14 @@ export type PluginPHPOptions = {
    *
    * @default `per-cs`
    */
-  braceStyle: '1tbs' | 'per-cs'
+  braceStyle: (typeof PHP_BRACE_STYLES)[number]
+
+  /**
+   * Minimum target PHP version
+   *
+   * @default `7.0`
+   */
+  phpVersion: (typeof PHP_VERSIONS)[number]
 
   /**
    * Print trailing commas wherever possible when multi-line
@@ -37,28 +52,6 @@ export type PluginPHPOptions = {
    * @default true
    */
   trailingCommaPHP: boolean
-
-  /**
-   * Minimum target PHP version
-   *
-   * @default `7.0`
-   */
-  phpVersion:
-    | '5.0'
-    | '5.1'
-    | '5.2'
-    | '5.3'
-    | '5.4'
-    | '5.5'
-    | '5.6'
-    | '7.0'
-    | '7.1'
-    | '7.2'
-    | '7.3'
-    | '7.4'
-    | '8.0'
-    | '8.1'
-    | '8.2'
 }
 
 /**
@@ -84,32 +77,7 @@ export type PluginSvelteOptions = {
    *
    * @default `options-scripts-markup-styles`
    */
-  svelteSortOrder:
-    | 'markup-options-scripts-styles'
-    | 'markup-options-styles-scripts'
-    | 'markup-scripts-options-styles'
-    | 'markup-scripts-styles-options'
-    | 'markup-styles-options-scripts'
-    | 'markup-styles-scripts-options'
-    | 'none'
-    | 'options-markup-scripts-styles'
-    | 'options-markup-styles-scripts'
-    | 'options-scripts-markup-styles'
-    | 'options-scripts-styles-markup'
-    | 'options-styles-markup-scripts'
-    | 'options-styles-scripts-markup'
-    | 'scripts-markup-options-styles'
-    | 'scripts-markup-styles-options'
-    | 'scripts-options-markup-styles'
-    | 'scripts-options-styles-markup'
-    | 'scripts-styles-markup-options'
-    | 'scripts-styles-options-markup'
-    | 'styles-markup-options-scripts'
-    | 'styles-markup-scripts-options'
-    | 'styles-options-markup-scripts'
-    | 'styles-options-scripts-markup'
-    | 'styles-scripts-markup-options'
-    | 'styles-scripts-options-markup'
+  svelteSortOrder: (typeof SVELTE_SORT_ORDERS)[number]
 }
 
 /**
@@ -121,7 +89,7 @@ export type PluginXMLOptions = {
    *
    * @default `preserve`
    */
-  xmlQuoteAttributes: 'double' | 'preserve' | 'single'
+  xmlQuoteAttributes: (typeof XML_OPTION_VALUES.xmlQuoteAttributes)[number]
 
   /**
    * Adds a space before self-closing tags
@@ -142,7 +110,7 @@ export type PluginXMLOptions = {
    *
    * @default `strict`
    */
-  xmlWhitespaceSensitivity: 'ignore' | 'preserve' | 'strict'
+  xmlWhitespaceSensitivity: (typeof XML_OPTION_VALUES.xmlWhitespaceSensitivity)[number]
 }
 
 /**
@@ -163,12 +131,7 @@ export type PluginTOMLOptions = {
   /**
    * Comment text normalization style.
    */
-  commentStyle: 'normalize' | 'preserve' | null
-
-  /**
-   * Delimiter between date and time.
-   */
-  dateTimeDelimiter: 'preserve' | 'space' | 'T' | null
+  commentStyle: (typeof TOML_OPTION_VALUES.commentStyle)[number] | null
 
   /**
    * Maximum blank lines between groups, from 1 to 255.
@@ -198,7 +161,7 @@ export type PluginTOMLOptions = {
   /**
    * Quote style for keys; null inherits the string quote style.
    */
-  keyQuoteStyle: 'double' | 'preserve' | 'single' | null
+  keyQuoteStyle: (typeof TOML_OPTION_VALUES.quoteStyle)[number] | null
 
   /**
    * Whether to align equals signs in consecutive key-value pairs.
@@ -213,7 +176,7 @@ export type PluginTOMLOptions = {
   /**
    * Quote style for strings; null inherits singleQuote.
    */
-  stringQuoteStyle: 'double' | 'preserve' | 'single' | null
+  stringQuoteStyle: (typeof TOML_OPTION_VALUES.quoteStyle)[number] | null
 
   /**
    * Blank lines between tables.
@@ -223,7 +186,7 @@ export type PluginTOMLOptions = {
   /**
    * TOML syntax version; null uses the formatter default.
    */
-  tomlVersion: 'v1.0.0' | 'v1.1.0-preview' | 'v1.1.0' | null
+  tomlVersion: (typeof TOML_OPTION_VALUES.tomlVersion)[number] | null
 
   /**
    * Whether to align trailing comments.
@@ -234,6 +197,12 @@ export type PluginTOMLOptions = {
    * Spaces before trailing comments.
    */
   trailingCommentSpaceWidth: number | null
+
+  /**
+   * Delimiter between date and time.
+   */
+  dateTimeDelimiter:
+    (typeof TOML_OPTION_VALUES.dateTimeDelimiter)[number] | null
 }
 
 /**

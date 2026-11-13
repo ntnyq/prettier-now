@@ -1,6 +1,6 @@
 import * as v from 'valibot'
-import { storage } from '#imports'
 import { DEFAULT_TOML_OPTIONS } from '@/constants/options'
+import { TOML_OPTION_VALUES } from '@/constants/optionValues'
 import type { PluginTOMLOptions } from '@/types/options'
 
 const spaceWidthSchema = v.pipe(
@@ -9,17 +9,19 @@ const spaceWidthSchema = v.pipe(
   v.minValue(0),
   v.maxValue(255),
 )
-const quoteStyleSchema = v.picklist(['double', 'single', 'preserve'])
+const quoteStyleSchema = v.picklist(TOML_OPTION_VALUES.quoteStyle)
 
 /**
  * Persisted Tombi settings; null delegates to the formatter or core options.
  */
 export const TomlOptionsSchema = v.object({
-  tomlVersion: v.nullable(v.picklist(['v1.0.0', 'v1.1.0', 'v1.1.0-preview'])),
+  tomlVersion: v.nullable(v.picklist(TOML_OPTION_VALUES.tomlVersion)),
   arrayBracketSpaceWidth: v.nullable(spaceWidthSchema),
   arrayCommaSpaceWidth: v.nullable(spaceWidthSchema),
-  commentStyle: v.nullable(v.picklist(['normalize', 'preserve'])),
-  dateTimeDelimiter: v.nullable(v.picklist(['T', 'space', 'preserve'])),
+  commentStyle: v.nullable(v.picklist(TOML_OPTION_VALUES.commentStyle)),
+  dateTimeDelimiter: v.nullable(
+    v.picklist(TOML_OPTION_VALUES.dateTimeDelimiter),
+  ),
   groupBlankLinesLimit: v.nullable(
     v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(255)),
   ),
@@ -88,32 +90,4 @@ export function migrateLegacyTomlOptions(
     indentTableKeyValuePairs: legacy.indentEntries ?? null,
     indentSubTables: legacy.indentTables ?? null,
   }
-}
-
-/**
- * Read validated Tombi settings and migrate the old per-option storage once.
- * Existing Tombi settings always win, including explicit default selections.
- *
- * @returns Persisted settings or formatter defaults for invalid stored data.
- */
-export async function readStoredTomlOptions(): Promise<PluginTOMLOptions> {
-  const stored = await storage.getItem<unknown>('local:tomlPluginOptions')
-  if (stored !== null) {
-    const result = v.safeParse(TomlOptionsSchema, stored)
-    return result.success ? result.output : { ...DEFAULT_TOML_OPTIONS }
-  }
-
-  const entries = await Promise.all(
-    Object.keys(LegacyTomlOptionsSchema.entries).map(
-      async key =>
-        [key, await storage.getItem<unknown>(`local:${key}`)] as const,
-    ),
-  )
-  const legacy = v.safeParse(
-    v.partial(LegacyTomlOptionsSchema),
-    Object.fromEntries(entries.filter(([, value]) => value !== null)),
-  )
-  const options = migrateLegacyTomlOptions(legacy.success ? legacy.output : {})
-  await storage.setItem('local:tomlPluginOptions', options)
-  return options
 }

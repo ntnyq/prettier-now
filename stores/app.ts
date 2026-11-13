@@ -6,23 +6,23 @@ import { defineStore } from 'pinia'
 import { useStorage } from '@/composables/storage'
 
 export const useAppStore = defineStore('app', () => {
-  const showLeftLayout = useStorage<boolean>('showLeftLayout', true)
-  const showRightLayout = useStorage<boolean>('showRightLayout', true)
+  const isSourceEditorVisible = useStorage<boolean>('showLeftLayout', true)
+  const isResultEditorVisible = useStorage<boolean>('showRightLayout', true)
   const isDiffPanelVisible = useStorage<boolean>('isDiffPanelVisible', false)
   const isHistoryPanelVisible = useStorage<boolean>(
     'isHistoryPanelVisible',
     false,
   )
-  const isSettingsSheetVisible = useStorage<boolean>(
+  const isSettingsDialogOpen = useStorage<boolean>(
     'isSettingsSheetVisible',
     false,
   )
 
-  const toggleLeftLayout = () => {
-    showLeftLayout.value = !showLeftLayout.value
+  const toggleSourceEditor = () => {
+    isSourceEditorVisible.value = !isSourceEditorVisible.value
   }
-  const toggleRightLayout = () => {
-    showRightLayout.value = !showRightLayout.value
+  const toggleResultEditor = () => {
+    isResultEditorVisible.value = !isResultEditorVisible.value
   }
   const setIsDiffPanelVisible = (visible: boolean) => {
     isDiffPanelVisible.value = visible
@@ -30,20 +30,20 @@ export const useAppStore = defineStore('app', () => {
   const setIsHistoryPanelVisible = (visible: boolean) => {
     isHistoryPanelVisible.value = visible
   }
-  const setIsSettingsSheetVisible = (visible: boolean) => {
-    isSettingsSheetVisible.value = visible
+  const setSettingsDialogOpen = (visible: boolean) => {
+    isSettingsDialogOpen.value = visible
   }
 
   return {
     isDiffPanelVisible,
     isHistoryPanelVisible,
-    isSettingsSheetVisible,
-    showLeftLayout,
-    showRightLayout,
+    isSettingsDialogOpen,
+    isSourceEditorVisible,
+    isResultEditorVisible,
     setIsDiffPanelVisible,
     setIsHistoryPanelVisible,
-    setIsSettingsSheetVisible,
-    toggleLeftLayout,
-    toggleRightLayout,
+    setSettingsDialogOpen,
+    toggleSourceEditor,
+    toggleResultEditor,
   }
 })

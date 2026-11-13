@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { i18n } from '#i18n'
+import { PHP_BRACE_STYLES, PHP_VERSIONS } from '@/constants/optionValues'
 import { useOptionsStore } from '@/stores/options'
 import SettingItem from './SettingItem.vue'
 import SettingSelect from './SettingSelect.vue'
@@ -20,23 +21,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.phpVersion"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="[
-            '5.0',
-            '5.1',
-            '5.2',
-            '5.3',
-            '5.4',
-            '5.5',
-            '5.6',
-            '7.0',
-            '7.1',
-            '7.2',
-            '7.3',
-            '7.4',
-            '8.0',
-            '8.1',
-            '8.2',
-          ]"
+          :items="PHP_VERSIONS"
         />
       </template>
     </SettingItem>
@@ -63,7 +48,7 @@ const optionsStore = useOptionsStore()
           v-model="optionsStore.braceStyle"
           :aria-describedby="descriptionId"
           :aria-labelledby="titleId"
-          :items="['per-cs', '1tbs']"
+          :items="PHP_BRACE_STYLES"
         />
       </template>
     </SettingItem>

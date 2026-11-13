@@ -14,9 +14,10 @@ import { pathToFileURL } from 'node:url'
 import { build } from 'vite'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { DEFAULT_TOML_OPTIONS } from '@/constants/options'
-import * as prettierCache from '@/utils/cache'
 import { formatViaPrettier as format } from '@/utils/format'
+import * as prettierCache from '@/utils/prettierPlugins'
 import wxtConfig from '../../wxt.config'
+import type { FormatOptions } from '@/utils/format'
 
 const outputDirs: string[] = []
 
@@ -103,7 +104,7 @@ describe('toml prettier plugin browser bundle', () => {
       ...DEFAULT_TOML_OPTIONS,
       languageId: 'toml',
       parser: 'toml',
-    }
+    } satisfies FormatOptions
     const results = await Promise.all([
       format('a=1\n', options),
       format('title="hello"\n', { ...options, singleQuote: true }),

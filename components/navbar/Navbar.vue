@@ -79,7 +79,7 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
         <Tooltip>
           <TooltipTrigger as-child>
             <Button
-              @click="appStore.setIsSettingsSheetVisible(true)"
+              @click="appStore.setSettingsDialogOpen(true)"
               :aria-label="i18n.t('settings')"
               variant="ghost"
               size="icon-sm"
@@ -109,14 +109,14 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
         <Tooltip>
           <TooltipTrigger as-child>
             <Button
-              @click="appStore.toggleLeftLayout"
+              @click="appStore.toggleSourceEditor"
               :aria-label="i18n.t('toggleLeftLayout')"
               variant="ghost"
               size="icon-sm"
               type="button"
             >
               <Columns2
-                v-if="appStore.showLeftLayout"
+                v-if="appStore.isSourceEditorVisible"
                 class="size-4"
               />
               <PanelLeft
@@ -131,14 +131,14 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
         <Tooltip>
           <TooltipTrigger as-child>
             <Button
-              @click="appStore.toggleRightLayout"
+              @click="appStore.toggleResultEditor"
               :aria-label="i18n.t('toggleRightLayout')"
               variant="ghost"
               size="icon-sm"
               type="button"
             >
               <Columns2
-                v-if="appStore.showRightLayout"
+                v-if="appStore.isResultEditorVisible"
                 class="size-4"
               />
               <PanelLeft
@@ -180,7 +180,7 @@ const logoUrl = browser.runtime.getURL('/icons/48.png')
         </TooltipTrigger>
         <TooltipContent>{{ i18n.t('toggleColorMode') }}</TooltipContent>
       </Tooltip>
-      <MoreAction :show-workspace-actions="route.name === 'Home'" />
+      <MoreActionsMenu :show-workspace-actions="route.name === 'Home'" />
     </div>
   </div>
 </template>

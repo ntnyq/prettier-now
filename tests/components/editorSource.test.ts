@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick, reactive } from 'vue'
-import EditorSource from '@/components/EditorSource.vue'
+import EditorSource from '@/components/workspace/EditorSource.vue'
 
 const state = vi.hoisted(() => ({
   workspace: {},
@@ -23,7 +23,9 @@ describe('source auto formatting', () => {
       activeJobId: 'a',
       sourceCode: '',
       languageId: 'javascript',
-      formatActiveJob: vi.fn(),
+      formatActiveJob: vi.fn(async () => ({
+        status: 'superseded',
+      })),
     })
     const config = reactive({ autoFormat: true })
     state.workspace = workspace

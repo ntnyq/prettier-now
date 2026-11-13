@@ -23,7 +23,7 @@ describe('format via prettier', () => {
     ['php', 'php', '<?php $value=1;'],
     ['java', 'java', 'class Main{int value=1;}'],
     ['graphql', 'graphql', 'query Demo{user{id name}}'],
-  ])('formats %s consistently', async (languageId, parser, source) => {
+  ] as const)('formats %s consistently', async (languageId, parser, source) => {
     const options = { languageId, parser }
     const result = await formatViaPrettier(source, options)
     expect(result.trim()).not.toBe(source)
@@ -59,13 +59,16 @@ describe('format via prettier', () => {
     ['vue', '<script setup lang="ts">const x:number=1</script>'],
     ['svelte', '<script lang="ts">let x:number=1</script><p>{x}</p>'],
     ['markdown', '```typescript\nconst x:number=1\n```'],
-  ])('formats embedded TypeScript in %s', async (languageId, source) => {
-    const result = await formatViaPrettier(source, {
-      languageId,
-      parser: languageId,
-    })
-    expect(result).toMatch(/(?:const|let) x: number = 1;/)
-  })
+  ] as const)(
+    'formats embedded TypeScript in %s',
+    async (languageId, source) => {
+      const result = await formatViaPrettier(source, {
+        languageId,
+        parser: languageId,
+      })
+      expect(result).toMatch(/(?:const|let) x: number = 1;/)
+    },
+  )
   it('formats pug through the browser-compatible plugin chain', async () => {
     await expect(
       formatViaPrettier(
@@ -85,21 +88,10 @@ style.
   })
 
   it('caches the normalized pug plugin shape', async () => {
-    const { clearPrettierPluginCache, getAllPrettierPlugins } =
-      await import('@/utils/cache')
-
-    clearPrettierPluginCache()
-
-    await formatViaPrettier('div hello', {
-      languageId: LANGUAGE_ID.pug,
-      parser: 'pug',
-    })
-
-    const pugPlugin = getAllPrettierPlugins().find(plugin => {
-      const parsers = plugin.parsers
-      return Boolean(parsers && 'pug' in parsers)
-    })
-
+    const { loadPrettierPlugin } = await import('@/utils/prettierPlugins')
+    const pugPlugin = await loadPrettierPlugin(LANGUAGE_ID.pug)
+    expect(await loadPrettierPlugin(LANGUAGE_ID.pug)).toBe(pugPlugin)
+    expect(pugPlugin?.parsers).toHaveProperty('pug')
     expect(pugPlugin).toBeDefined()
     expect(pugPlugin).not.toHaveProperty('plugin')
   })

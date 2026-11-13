@@ -15,7 +15,7 @@ interface Props {
   /**
    * Explicit supported values, in display order.
    */
-  items: T[]
+  items: readonly T[]
 }
 
 const props = defineProps<Props>()

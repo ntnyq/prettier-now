@@ -1,5 +1,7 @@
 import * as v from 'valibot'
+import { LANGUAGE_ID } from '@/constants/language'
 import type { FormatHistoryEntry } from '@/types/history'
+import type { LanguageId } from '@/types/language'
 
 /**
  * Maximum number of history entries retained in storage.
@@ -19,7 +21,7 @@ export const FormatHistoryEntrySchema = v.object({
   formatCost: v.number(),
   formattedAt: v.number(),
   id: v.string(),
-  languageId: v.string(),
+  languageId: v.picklist(Object.values(LANGUAGE_ID)),
   resultCode: v.string(),
   sourceCode: v.string(),
 })
@@ -91,7 +93,7 @@ export function createFormatHistoryEntry(params: {
   /**
    * Language identifier used for formatting.
    */
-  languageId: string
+  languageId: LanguageId
 
   /**
    * Formatted output code.

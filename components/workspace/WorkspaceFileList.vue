@@ -6,19 +6,16 @@ import {
   TriangleAlert,
   X,
 } from '@lucide/vue'
-import { computed } from 'vue'
 import { i18n } from '#i18n'
 import { Button } from '@/components/ui/button'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const workspaceStore = useWorkspaceStore()
-
-const hasVisibleJobs = computed(() => workspaceStore.jobs.length > 1)
 </script>
 
 <template>
   <aside
-    v-if="hasVisibleJobs"
+    v-if="workspaceStore.hasMultipleJobs"
     class="max-w-64 min-w-56 border-r border-border bg-zinc-50 dark:bg-zinc-900"
   >
     <div

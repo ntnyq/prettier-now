@@ -1,32 +1,25 @@
 import { defineStore } from 'pinia'
 import { computed, shallowRef } from 'vue'
 import { i18n } from '#i18n'
-import { useStorage } from '@/composables/storage'
-import { languages } from '@/constants/language'
+import { useHistoryStore } from '@/stores/history'
 import { useLogStore } from '@/stores/log'
 import { useOptionsStore } from '@/stores/options'
-import { loadCodemirrorLanguage } from '@/utils/cache'
 import { formatViaPrettier } from '@/utils/format'
-import {
-  addFormatHistoryEntry,
-  createFormatHistoryEntry,
-  FormatHistoryEntryListSchema,
-  removeFormatHistoryEntry,
-} from '@/utils/history'
-import { Logger } from '@/utils/logger'
-import { Toast } from '@/utils/toast'
+import { resolveFormatOptions } from '@/utils/resolveFormatOptions'
 import {
   createFormatJobsFromFiles,
-  downloadTextFile,
-  getFormattedFileName,
   updateFormatJobLanguage,
 } from '@/utils/workspace'
-import type { FormatHistoryEntry } from '@/types/history'
-import type { FormatJob } from '@/types/workspace'
+import type { LanguageId } from '@/types/language'
+import type {
+  FileImportResult,
+  FormatJob,
+  FormatJobResult,
+} from '@/types/workspace'
 
 const MANUAL_JOB_ID = 'manual'
 
-function createManualJob(languageId = 'javascript'): FormatJob {
+function createManualJob(languageId: LanguageId = 'javascript'): FormatJob {
   return {
     id: MANUAL_JOB_ID,
     fileName: 'untitled',
@@ -42,31 +35,31 @@ function createManualJob(languageId = 'javascript'): FormatJob {
 export const useWorkspaceStore = defineStore('workspace', () => {
   const jobs = shallowRef<FormatJob[]>([createManualJob()])
   const activeJobId = shallowRef(MANUAL_JOB_ID)
-  const formatHistory = useStorage<FormatHistoryEntry[]>(
-    'formatHistory',
-    [],
-    FormatHistoryEntryListSchema,
-  )
   const formatRequests = new Map<string, symbol>()
   let fileLoadRevision = 0
+  // Replacing the workspace cancels batch notifications; editing one job does not.
+  let workspaceRevision = 0
 
   const optionsStore = useOptionsStore()
   const logStore = useLogStore()
+  const historyStore = useHistoryStore()
 
   const activeJob = computed(
     () => jobs.value.find(job => job.id === activeJobId.value) ?? jobs.value[0],
   )
   const hasMultipleJobs = computed(() => jobs.value.length > 1)
+  const canClearWorkspace = computed(
+    () =>
+      jobs.value.length > 1
+      || jobs.value.some(
+        job => job.id !== MANUAL_JOB_ID || job.sourceCode || job.resultCode,
+      ),
+  )
   const formattedJobs = computed(() =>
     jobs.value.filter(job => job.status === 'formatted' && job.resultCode),
   )
 
   const languageId = computed(() => activeJob.value?.languageId ?? 'javascript')
-  const languageParser = computed(
-    () =>
-      languages.find(item => item.id === languageId.value)?.parser
-      || languageId.value,
-  )
   const sourceCode = computed({
     get: () => activeJob.value?.sourceCode ?? '',
     set(value) {
@@ -133,6 +126,10 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     fileLoadRevision += 1
     const nextJobs = jobs.value.filter(job => job.id !== id)
 
+    if (!nextJobs.length) {
+      workspaceRevision += 1
+    }
+
     jobs.value = nextJobs.length
       ? nextJobs
       : [createManualJob(languageId.value)]
@@ -146,12 +143,13 @@ export const useWorkspaceStore = defineStore('workspace', () => {
 
   function clearWorkspace() {
     fileLoadRevision += 1
+    workspaceRevision += 1
     invalidateFormatRequest()
     jobs.value = [createManualJob(languageId.value)]
     activeJobId.value = MANUAL_JOB_ID
   }
 
-  function setLanguageId(id: string) {
+  function setLanguageId(id: LanguageId) {
     fileLoadRevision += 1
     const job = ensureActiveJob()
     invalidateFormatRequest(job.id)
@@ -160,9 +158,13 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     )
   }
 
-  async function loadFileList(files?: FileList | File[] | null) {
+  async function loadFileList(
+    files?: FileList | File[] | null,
+  ): Promise<FileImportResult> {
     if (!files?.length) {
-      return
+      return {
+        status: 'empty',
+      }
     }
 
     const revision = ++fileLoadRevision
@@ -170,98 +172,99 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     try {
       nextJobs = await createFormatJobsFromFiles(files)
     } catch (error) {
-      if (revision === fileLoadRevision) {
-        const message =
-          error instanceof Error ? error.message : 'Failed to read files'
-        Logger.error(message)
-        Toast.error(message)
-      }
-      return
+      return revision === fileLoadRevision
+        ? {
+            status: 'error',
+            message:
+              error instanceof Error ? error.message : 'Failed to read files',
+          }
+        : { status: 'superseded' }
     }
 
     if (revision !== fileLoadRevision) {
-      return
+      return {
+        status: 'superseded',
+      }
     }
-
     if (!nextJobs.length) {
-      Logger.warn(i18n.t('unsupportedFileFormat'))
-      Toast.error(i18n.t('unsupportedFileFormat'))
-      return
+      return {
+        status: 'unsupported',
+      }
     }
 
     invalidateFormatRequest()
     jobs.value = nextJobs
     activeJobId.value = nextJobs[0]?.id ?? MANUAL_JOB_ID
 
-    await formatJobs(nextJobs.map(job => job.id))
+    const importedWorkspaceRevision = ++workspaceRevision
+    const result = await formatJobs(nextJobs.map(job => job.id))
+    if (importedWorkspaceRevision !== workspaceRevision) {
+      return {
+        status: 'superseded',
+      }
+    }
+    return {
+      status: 'imported',
+      ...result,
+    }
   }
 
-  async function formatActiveJob() {
+  async function formatActiveJob(): Promise<FormatJobResult> {
     const job = activeJob.value
-
     if (!job?.sourceCode) {
-      Logger.warn(i18n.t('nothingToFormat'))
-      Toast.info(i18n.t('nothingToFormat'))
-      return
+      return {
+        status: 'empty',
+      }
     }
-
-    await formatJob(job.id, { notify: true })
+    return formatJob(job.id)
   }
 
   async function formatJobs(jobIds = jobs.value.map(job => job.id)) {
     let successCount = 0
+    const results: FormatJobResult[] = []
 
     for (const id of jobIds) {
-      const isSuccess = await formatJob(id, { notify: false })
-      if (isSuccess) {
+      const result = await formatJob(id)
+      results.push(result)
+      if (result.status === 'formatted') {
         successCount += 1
       }
     }
 
-    if (jobIds.length > 1) {
-      Toast.info(i18n.t('formatBatchSuccess', [successCount, jobIds.length]))
+    return {
+      successCount,
+      totalCount: jobIds.length,
+      results,
     }
   }
 
-  async function formatJob(id: string, options: { notify: boolean }) {
+  async function formatJob(id: string): Promise<FormatJobResult> {
     const job = jobs.value.find(item => item.id === id)
 
     if (!job) {
-      return false
+      return {
+        status: 'superseded',
+      }
     }
 
     const requestId = Symbol(id)
     formatRequests.set(id, requestId)
     const formatStartTime = window.performance.now()
-    const parser =
-      languages.find(item => item.id === job.languageId)?.parser
-      || job.languageId
-
     patchJob(id, {
       status: 'formatting',
       errorMessage: '',
     })
 
     try {
-      await loadCodemirrorLanguage(job.languageId)
+      const formattedCode = await formatViaPrettier(
+        job.sourceCode,
+        resolveFormatOptions(optionsStore.createSnapshot(), job.languageId),
+      )
 
       if (formatRequests.get(id) !== requestId) {
-        return false
-      }
-
-      const formattedCode = await formatViaPrettier(job.sourceCode, {
-        ...optionsStore.options,
-        ...optionsStore.xmlPluginOptions,
-        ...optionsStore.phpPluginOptions,
-        ...optionsStore.javaPluginOptions,
-        ...optionsStore.sveltePluginOptions,
-        ...optionsStore.tomlPluginOptions,
-        parser,
-        languageId: job.languageId,
-      })
-
-      if (formatRequests.get(id) !== requestId) {
-        return false
+        return {
+          status: 'superseded',
+        }
       }
 
       const cost = window.performance.now() - formatStartTime
@@ -271,35 +274,30 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         formatCost: cost,
         status: 'formatted',
       })
-      formatHistory.value = addFormatHistoryEntry(
-        formatHistory.value,
-        createFormatHistoryEntry({
-          fileName: job.fileName,
-          languageId: job.languageId,
-          sourceCode: job.sourceCode,
-          resultCode: formattedCode,
-          formatCost: cost,
-        }),
-      )
+      historyStore.addEntry({
+        fileName: job.fileName,
+        languageId: job.languageId,
+        sourceCode: job.sourceCode,
+        resultCode: formattedCode,
+        formatCost: cost,
+      })
       logStore.addLog({
         type: 'success',
         message: i18n.t('formatSuccess'),
         fileName: job.fileName,
         languageId: job.languageId,
       })
-      Logger.success(i18n.t('formatSuccess'))
-
-      if (options.notify) {
-        Toast.info(i18n.t('formatSuccess'))
+      return {
+        status: 'formatted',
       }
-
-      return true
     } catch (error: unknown) {
       if (formatRequests.get(id) !== requestId) {
-        return false
+        return {
+          status: 'superseded',
+        }
       }
 
-      const message = (error as Error)?.message || 'Unknown error'
+      const message = error instanceof Error ? error.message : 'Unknown error'
 
       patchJob(id, {
         status: 'error',
@@ -311,13 +309,10 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         fileName: job.fileName,
         languageId: job.languageId,
       })
-      Logger.error(message)
-
-      if (options.notify) {
-        Toast.error(message)
+      return {
+        status: 'error',
+        message,
       }
-
-      return false
     } finally {
       if (formatRequests.get(id) === requestId) {
         formatRequests.delete(id)
@@ -325,38 +320,15 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     }
   }
 
-  function downloadActiveJob() {
-    const job = activeJob.value
-
-    if (!job?.resultCode) {
-      Logger.warn(i18n.t('nothingToDownload'))
-      Toast.info(i18n.t('nothingToDownload'))
-      return
-    }
-
-    downloadTextFile(getFormattedFileName(job.fileName), job.resultCode)
-  }
-
-  function downloadAllJobs() {
-    if (!formattedJobs.value.length) {
-      Logger.warn(i18n.t('nothingToDownload'))
-      Toast.info(i18n.t('nothingToDownload'))
-      return
-    }
-
-    for (const job of formattedJobs.value) {
-      downloadTextFile(getFormattedFileName(job.fileName), job.resultCode)
-    }
-  }
-
   function restoreHistoryEntry(id: string) {
-    const entry = formatHistory.value.find(item => item.id === id)
+    const entry = historyStore.entries.find(item => item.id === id)
 
     if (!entry || (!entry.sourceCode && !entry.resultCode)) {
       return false
     }
 
     fileLoadRevision += 1
+    workspaceRevision += 1
     invalidateFormatRequest()
     jobs.value = [
       {
@@ -371,17 +343,8 @@ export const useWorkspaceStore = defineStore('workspace', () => {
       },
     ]
     activeJobId.value = jobs.value[0]!.id
-    Toast.info(i18n.t('restoreHistorySuccess'))
 
     return true
-  }
-
-  function removeHistoryEntry(id: string) {
-    formatHistory.value = removeFormatHistoryEntry(formatHistory.value, id)
-  }
-
-  function clearFormatHistory() {
-    formatHistory.value = []
   }
 
   return {
@@ -389,11 +352,10 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     activeJobId,
     activeJob,
     hasMultipleJobs,
+    canClearWorkspace,
     formattedJobs,
-    formatHistory,
 
     languageId,
-    languageParser,
     sourceCode,
     resultCode,
     formatCost,
@@ -405,10 +367,6 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     loadFileList,
     formatActiveJob,
     formatJobs,
-    downloadActiveJob,
-    downloadAllJobs,
     restoreHistoryEntry,
-    removeHistoryEntry,
-    clearFormatHistory,
   }
 })

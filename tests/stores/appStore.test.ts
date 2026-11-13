@@ -22,15 +22,15 @@ describe('app store', () => {
     setActivePinia(createPinia())
   })
 
-  it('controls the settings sheet visibility', () => {
+  it('controls the settings dialog visibility', () => {
     const appStore = useAppStore()
 
-    expect(appStore.isSettingsSheetVisible).toBe(false)
+    expect(appStore.isSettingsDialogOpen).toBe(false)
 
-    appStore.setIsSettingsSheetVisible(true)
-    expect(appStore.isSettingsSheetVisible).toBe(true)
+    appStore.setSettingsDialogOpen(true)
+    expect(appStore.isSettingsDialogOpen).toBe(true)
 
-    appStore.setIsSettingsSheetVisible(false)
-    expect(appStore.isSettingsSheetVisible).toBe(false)
+    appStore.setSettingsDialogOpen(false)
+    expect(appStore.isSettingsDialogOpen).toBe(false)
   })
 })

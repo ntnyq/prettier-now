@@ -5,16 +5,10 @@
 import * as v from 'valibot'
 import { getCurrentScope, onScopeDispose, ref, watch } from 'vue'
 import { storage } from '#imports'
-import { Logger } from '@/utils/logger'
 import type { Ref } from 'vue'
 import type { StorageItemKey } from '#imports'
 import type { JsonValue } from '@/types/json'
-
-type StorageSchema<V extends JsonValue> = v.BaseSchema<
-  unknown,
-  V,
-  v.BaseIssue<unknown>
->
+import type { StorageSchema } from '@/types/storage'
 
 export function useStorage<V extends JsonValue>(key: string): Ref<V | null>
 export function useStorage<V extends JsonValue>(
@@ -109,7 +103,7 @@ export function useStorage<V extends JsonValue>(
         applyStorageValue(parsedValue)
       }
     } catch (error) {
-      Logger.error(
+      console.error(
         error instanceof Error ? error.message : 'Failed to refresh storage',
       )
     }
@@ -124,7 +118,7 @@ export function useStorage<V extends JsonValue>(
     writeQueue = writeQueue
       .then(() => storage.setItem(syncKey, snapshot))
       .catch((error: unknown) => {
-        Logger.error((error as Error)?.message || 'Failed to write storage')
+        console.error((error as Error)?.message || 'Failed to write storage')
       })
       .finally(() => {
         pendingWrites -= 1
@@ -186,7 +180,7 @@ export function useStorage<V extends JsonValue>(
       persistStorageValue()
     }
     const message = (error as Error)?.message || 'Failed to sync storage'
-    Logger.error(message)
+    console.error(message)
   })
 
   watch(

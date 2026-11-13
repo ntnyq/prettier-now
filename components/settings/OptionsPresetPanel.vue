@@ -3,9 +3,6 @@ import { Check, Download, RotateCcw, Save, Trash2, Upload } from '@lucide/vue'
 import { useFileDialog } from '@vueuse/core'
 import { computed, shallowRef } from 'vue'
 import { i18n } from '#i18n'
-import SettingItem from '@/components/settings/SettingItem.vue'
-import SettingSelect from '@/components/settings/SettingSelect.vue'
-import SettingsSection from '@/components/settings/SettingsSection.vue'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -14,12 +11,15 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useOptionsStore } from '@/stores/options'
+import { downloadTextFile } from '@/utils/download'
 import {
   parseOptionsSnapshot,
   stringifyOptionsSnapshot,
 } from '@/utils/optionsPreset'
 import { Toast } from '@/utils/toast'
-import { downloadTextFile } from '@/utils/workspace'
+import SettingItem from './SettingItem.vue'
+import SettingSelect from './SettingSelect.vue'
+import SettingsSection from './SettingsSection.vue'
 
 const optionsStore = useOptionsStore()
 const {

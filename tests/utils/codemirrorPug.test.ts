@@ -1,18 +1,21 @@
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { syntaxTree } from '@codemirror/language'
+import { EditorState } from '@codemirror/state'
+import { classHighlighter, highlightTree } from '@lezer/highlight'
 import { describe, expect, it } from 'vitest'
-
-function readSource(path: string) {
-  return readFileSync(resolve(import.meta.dirname, `../../${path}`), 'utf8')
-}
+import { loadCodemirrorLanguage } from '@/utils/codemirrorLanguages'
 
 describe('codemirror pug language', () => {
-  it('maps legacy pug token names to known highlight tags', () => {
-    const cacheSource = readSource('utils/cache.ts')
-
-    expect(cacheSource).toContain('tokenTable')
-    expect(cacheSource).toContain('indent: t.meta')
-    expect(cacheSource).toContain('colon: t.punctuation')
-    expect(cacheSource).toContain('dot: t.punctuation')
+  it('highlights legacy Pug tokens with supported tags', async () => {
+    const language = await loadCodemirrorLanguage('pug')
+    const state = EditorState.create({
+      doc: 'main.app: p Hello\n  .child\n',
+      extensions: language ? [language] : [],
+    })
+    const classes: string[] = []
+    highlightTree(syntaxTree(state), classHighlighter, (_from, _to, tokens) => {
+      classes.push(tokens)
+    })
+    expect(classes).toContain('tok-punctuation')
+    expect(classes).toContain('tok-meta')
   })
 })

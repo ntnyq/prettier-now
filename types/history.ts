@@ -1,4 +1,5 @@
 import type { JsonObject } from '@/types/json'
+import type { LanguageId } from '@/types/language'
 
 /**
  * Persisted record for one successful formatting action.
@@ -27,7 +28,7 @@ export interface FormatHistoryEntry extends JsonObject {
   /**
    * Language identifier used to format the source.
    */
-  languageId: string
+  languageId: LanguageId
 
   /**
    * Formatted output code.

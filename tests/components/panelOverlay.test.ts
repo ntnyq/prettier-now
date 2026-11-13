@@ -1,12 +1,12 @@
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import DiffPanel from '@/components/DiffPanel.vue'
-import HistoryPanel from '@/components/HistoryPanel.vue'
-import LogPanel from '@/components/LogPanel.vue'
+import DiffPanel from '@/components/workspace/DiffPanel.vue'
+import HistoryPanel from '@/components/workspace/HistoryPanel.vue'
+import LogPanel from '@/components/workspace/LogPanel.vue'
 import { useAppStore } from '@/stores/app'
+import { useHistoryStore } from '@/stores/history'
 import { useLogStore } from '@/stores/log'
-import { useWorkspaceStore } from '@/stores/workspace'
 import { ButtonStub, PassthroughStub } from '../helpers/vue'
 
 const storageMock = vi.hoisted(() => ({
@@ -68,9 +68,8 @@ describe('panel overlays', () => {
 
   it('confirms before clearing history entries', async () => {
     const appStore = useAppStore()
-    const workspaceStore = useWorkspaceStore()
     appStore.setIsHistoryPanelVisible(true)
-    workspaceStore.formatHistory = [
+    useHistoryStore().entries = [
       {
         id: 'entry',
         fileName: 'index.ts',
@@ -98,7 +97,7 @@ describe('panel overlays', () => {
       .find(button => button.text() === 'clearAll')
       ?.trigger('click')
 
-    expect(workspaceStore.formatHistory).toEqual([])
+    expect(useHistoryStore().entries).toEqual([])
     expect(appStore.isHistoryPanelVisible).toBe(false)
   })
 
