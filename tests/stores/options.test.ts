@@ -27,6 +27,47 @@ vi.mock('#imports', () => ({
 }))
 
 describe('Tombi settings in the options store', () => {
+  it('honors an immediate reset even before old settings have hydrated', async () => {
+    stored.values.set('local:semi', false)
+    stored.values.set('local:printWidth', 120)
+    const store = useOptionsStore()
+    await store.resetOptions()
+    expect(store.semi).toBe(true)
+    expect(store.printWidth).toBe(80)
+    expect(stored.values.get('local:semi')).toBe(true)
+    expect(stored.values.get('local:printWidth')).toBe(80)
+  })
+  it('merges concurrent edits to different TOML fields', async () => {
+    const first = useOptionsStore(createPinia())
+    const second = useOptionsStore(createPinia())
+    await flushPromises()
+    first.tomlPluginOptions.stringQuoteStyle = 'single'
+    second.tomlPluginOptions.arrayBracketSpaceWidth = 2
+    await Promise.all([first.savePreset('first'), second.savePreset('second')])
+    expect(stored.values.get('local:tomlPluginOptions')).toMatchObject({
+      stringQuoteStyle: 'single',
+      arrayBracketSpaceWidth: 2,
+    })
+  })
+
+  it('keeps unmigrated TOML preferences readable and preserves them on the first edit', async () => {
+    stored.values.set('local:alignComments', true)
+    stored.values.set('local:indentTables', true)
+    const store = useOptionsStore()
+    await flushPromises()
+    expect(store.tomlPluginOptions).toMatchObject({
+      trailingCommentAlignment: true,
+      indentSubTables: true,
+    })
+    expect(stored.values.has('local:tomlPluginOptions')).toBe(false)
+    store.tomlPluginOptions.arrayBracketSpaceWidth = 2
+    await store.savePreset('Migrated')
+    expect(stored.values.get('local:tomlPluginOptions')).toMatchObject({
+      trailingCommentAlignment: true,
+      indentSubTables: true,
+      arrayBracketSpaceWidth: 2,
+    })
+  })
   beforeEach(() => {
     stored.values.clear()
     setActivePinia(createPinia())
@@ -60,13 +101,13 @@ describe('Tombi settings in the options store', () => {
     store.tomlPluginOptions.stringQuoteStyle = 'preserve'
     store.tomlPluginOptions.arrayBracketSpaceWidth = 0
     store.tomlPluginOptions.indentSubTables = false
-    store.savePreset('TOML')
+    await store.savePreset('TOML')
     const preset = store.presets[0]
 
     expect(preset?.snapshot.version).toBe(2)
-    store.resetOptions()
+    await store.resetOptions()
     expect(store.tomlPluginOptions).toEqual(DEFAULT_TOML_OPTIONS)
-    expect(store.applyPreset(preset?.id ?? '')).toBe(true)
+    expect(await store.applyPreset(preset?.id ?? '')).toBe(true)
     expect(store.tomlPluginOptions).toMatchObject({
       stringQuoteStyle: 'preserve',
       arrayBracketSpaceWidth: 0,

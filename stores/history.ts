@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useStorage } from '@/composables/storage'
+import { useStoredCollection } from '@/composables/storedCollection'
 import {
   addFormatHistoryEntry,
   createFormatHistoryEntry,
@@ -9,25 +9,22 @@ import {
 import type { FormatHistoryEntry } from '@/types/history'
 
 export const useHistoryStore = defineStore('history', () => {
-  const entries = useStorage<FormatHistoryEntry[]>(
+  const { items: entries, update } = useStoredCollection<FormatHistoryEntry>(
     'formatHistory',
-    [],
     FormatHistoryEntryListSchema,
   )
 
   function addEntry(input: Parameters<typeof createFormatHistoryEntry>[0]) {
-    entries.value = addFormatHistoryEntry(
-      entries.value,
-      createFormatHistoryEntry(input),
-    )
+    const entry = createFormatHistoryEntry(input)
+    return update(current => addFormatHistoryEntry(current, entry))
   }
 
   function removeEntry(id: string) {
-    entries.value = removeFormatHistoryEntry(entries.value, id)
+    return update(current => removeFormatHistoryEntry(current, id))
   }
 
   function clearHistory() {
-    entries.value = []
+    return update(() => [], { reset: true })
   }
 
   return {

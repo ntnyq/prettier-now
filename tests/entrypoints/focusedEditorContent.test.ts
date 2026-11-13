@@ -17,6 +17,7 @@ import {
 const runtime = vi.hoisted(() => ({
   main: () => {},
   receive: async (_message: unknown) => {},
+  eventDetails: [] as unknown[],
 }))
 
 vi.mock('#imports', () => ({
@@ -40,18 +41,24 @@ beforeAll(async () => {
   await import('@/entrypoints/focused-editor.content')
   runtime.main()
   window.addEventListener(FOCUSED_EDITOR_EVENT.getValueRequest, event => {
-    const { requestId } = (event as CustomEvent<{ requestId: string }>).detail
+    runtime.eventDetails.push((event as CustomEvent).detail)
+    const { requestId } = JSON.parse((event as CustomEvent<string>).detail) as {
+      requestId: string
+    }
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.getValueResponse, {
-        detail: { requestId, source: 'const a=1', hints: [] },
+        detail: JSON.stringify({ requestId, source: 'const a=1', hints: [] }),
       }),
     )
   })
   window.addEventListener(FOCUSED_EDITOR_EVENT.setValueRequest, event => {
-    const { requestId } = (event as CustomEvent<{ requestId: string }>).detail
+    runtime.eventDetails.push((event as CustomEvent).detail)
+    const { requestId } = JSON.parse((event as CustomEvent<string>).detail) as {
+      requestId: string
+    }
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.setValueResponse, {
-        detail: { requestId },
+        detail: JSON.stringify({ requestId }),
       }),
     )
   })
@@ -103,6 +110,10 @@ describe('focused editor content runtime', () => {
       throw new Error('UUID is unavailable')
     })
     const { pending, frame } = await startFormat()
+    expect(runtime.eventDetails.length).toBeGreaterThan(0)
+    expect(
+      runtime.eventDetails.every(detail => typeof detail === 'string'),
+    ).toBe(true)
     expect(frame).not.toBeNull()
     frame.dispatchEvent(new Event('error'))
     await pending

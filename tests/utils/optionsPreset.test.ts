@@ -13,6 +13,17 @@ import {
 } from '@/utils/optionsPreset'
 
 describe('options preset utilities', () => {
+  it('keeps separate preset identities for simultaneous saves with the same name', () => {
+    const params = {
+      name: 'Team',
+      now: 1,
+      snapshot: createDefaultOptionsSnapshot(),
+    }
+    const first = createOptionsPreset(params)
+    const second = createOptionsPreset(params)
+    expect(first.id).not.toBe(second.id)
+    expect(upsertOptionsPreset([first], second)).toHaveLength(2)
+  })
   it('reuses snapshot schemas for persisted option presets', () => {
     const preset = createOptionsPreset({
       name: 'Team',

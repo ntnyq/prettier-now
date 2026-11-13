@@ -11,6 +11,7 @@ import {
   updateFormatJobLanguage,
 } from '@/utils/workspace'
 import type { LanguageId } from '@/types/language'
+import type { OptionsSnapshot } from '@/types/optionsPreset'
 import type {
   FileImportResult,
   FormatJob,
@@ -220,11 +221,12 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   }
 
   async function formatJobs(jobIds = jobs.value.map(job => job.id)) {
+    const snapshot = optionsStore.createSnapshot()
     let successCount = 0
     const results: FormatJobResult[] = []
 
     for (const id of jobIds) {
-      const result = await formatJob(id)
+      const result = await formatJob(id, snapshot)
       results.push(result)
       if (result.status === 'formatted') {
         successCount += 1
@@ -238,7 +240,10 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     }
   }
 
-  async function formatJob(id: string): Promise<FormatJobResult> {
+  async function formatJob(
+    id: string,
+    snapshot: OptionsSnapshot = optionsStore.createSnapshot(),
+  ): Promise<FormatJobResult> {
     const job = jobs.value.find(item => item.id === id)
 
     if (!job) {
@@ -258,7 +263,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     try {
       const formattedCode = await formatViaPrettier(
         job.sourceCode,
-        resolveFormatOptions(optionsStore.createSnapshot(), job.languageId),
+        resolveFormatOptions(snapshot, job.languageId),
       )
 
       if (formatRequests.get(id) !== requestId) {
@@ -274,13 +279,16 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         formatCost: cost,
         status: 'formatted',
       })
-      historyStore.addEntry({
-        fileName: job.fileName,
-        languageId: job.languageId,
-        sourceCode: job.sourceCode,
-        resultCode: formattedCode,
-        formatCost: cost,
-      })
+      // Persistence errors are exposed separately; keep successful output usable.
+      historyStore
+        .addEntry({
+          fileName: job.fileName,
+          languageId: job.languageId,
+          sourceCode: job.sourceCode,
+          resultCode: formattedCode,
+          formatCost: cost,
+        })
+        .catch(() => {})
       logStore.addLog({
         type: 'success',
         message: i18n.t('formatSuccess'),

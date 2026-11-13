@@ -23,6 +23,12 @@ vi.mock('@/utils/toast', () => ({
 }))
 
 describe('workspace actions', () => {
+  it('reports a single imported file formatting error', async () => {
+    formatter.format.mockRejectedValueOnce(new Error('Invalid syntax'))
+    await useWorkspaceActions().loadFiles([new File(['invalid'], 'bad.ts')])
+    expect(Toast.error).toHaveBeenCalledWith('Invalid syntax')
+    expect(useWorkspaceStore().activeJob?.status).toBe('error')
+  })
   beforeEach(() => {
     setActivePinia(createPinia())
     vi.clearAllMocks()
@@ -61,7 +67,7 @@ describe('workspace actions', () => {
       } else if (action === 'replace') {
         await loadFiles([new File(['const c=3'], 'c.ts')])
       } else if (action === 'restore') {
-        useHistoryStore().addEntry({
+        await useHistoryStore().addEntry({
           fileName: 'restored.ts',
           languageId: 'typescript',
           sourceCode: 'const restored=1',

@@ -134,6 +134,7 @@ selectFile: 파일 선택
 selectPresetFirst: 먼저 프리셋을 선택하세요
 settings: 설정
 sourceCode: 소스 코드
+storageSaveFailed: '변경 사항을 저장하지 못했습니다: $1'
 toggleColorMode: 색상 모드 전환
 toggleLeftLayout: 왼쪽 레이아웃 전환
 toggleRightLayout: 오른쪽 레이아웃 전환

@@ -56,6 +56,9 @@ export function useWorkspaceActions() {
       Toast.error(i18n.t('unsupportedFileFormat'))
     } else if (result.status === 'imported') {
       result.results.forEach(logFormatResult)
+      if (result.totalCount === 1 && result.results[0]?.status === 'error') {
+        Toast.error(result.results[0].message)
+      }
       if (result.totalCount > 1) {
         Toast.info(
           i18n.t('formatBatchSuccess', [

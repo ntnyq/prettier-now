@@ -134,6 +134,7 @@ selectFile: Select File
 selectPresetFirst: Select a preset first
 settings: Settings
 sourceCode: Source Code
+storageSaveFailed: 'Changes could not be saved: $1'
 toggleColorMode: Toggle Color Mode
 toggleLeftLayout: Toggle Left Layout
 toggleRightLayout: Toggle Right Layout

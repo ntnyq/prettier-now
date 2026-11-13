@@ -33,6 +33,7 @@ const {
 
 const presetName = shallowRef('')
 const selectedPresetId = shallowRef('')
+const isPersisting = shallowRef(false)
 const presetItems = computed(() =>
   optionsStore.presets.map(preset => ({
     label: preset.name,
@@ -50,7 +51,7 @@ handleImportChange(async files => {
 
   try {
     const snapshot = parseOptionsSnapshot(await file.text())
-    optionsStore.applySnapshot(snapshot)
+    await optionsStore.applySnapshot(snapshot)
     Toast.info(i18n.t('importOptionsSuccess'))
   } catch (error: unknown) {
     const message =
@@ -61,7 +62,32 @@ handleImportChange(async files => {
   }
 })
 
-function savePreset() {
+/**
+ * Acknowledge explicit commands only after their storage writes settle.
+ */
+async function persistCommand(
+  command: () => Promise<unknown>,
+  successMessage: string,
+) {
+  if (isPersisting.value) {
+    return
+  }
+  isPersisting.value = true
+  try {
+    await command()
+    Toast.info(successMessage)
+  } catch (error) {
+    Toast.error(
+      i18n.t('storageSaveFailed', [
+        error instanceof Error ? error.message : String(error),
+      ]),
+    )
+  } finally {
+    isPersisting.value = false
+  }
+}
+
+async function savePreset() {
   const name = presetName.value.trim()
 
   if (!name) {
@@ -69,31 +95,40 @@ function savePreset() {
     return
   }
 
-  optionsStore.savePreset(name)
-  presetName.value = ''
-  Toast.info(i18n.t('savePresetSuccess'))
+  await persistCommand(async () => {
+    await optionsStore.savePreset(name)
+    if (presetName.value.trim() === name) {
+      presetName.value = ''
+    }
+  }, i18n.t('savePresetSuccess'))
 }
 
-function applySelectedPreset() {
+async function applySelectedPreset() {
   if (!selectedPresetId.value) {
     Toast.info(i18n.t('selectPresetFirst'))
     return
   }
 
-  if (optionsStore.applyPreset(selectedPresetId.value)) {
-    Toast.info(i18n.t('applyPresetSuccess'))
-  }
+  await persistCommand(async () => {
+    if (!(await optionsStore.applyPreset(selectedPresetId.value))) {
+      throw new Error(i18n.t('selectPresetFirst'))
+    }
+  }, i18n.t('applyPresetSuccess'))
 }
 
-function deleteSelectedPreset() {
+async function deleteSelectedPreset() {
   if (!selectedPresetId.value) {
     Toast.info(i18n.t('selectPresetFirst'))
     return
   }
 
-  optionsStore.deletePreset(selectedPresetId.value)
-  selectedPresetId.value = ''
-  Toast.info(i18n.t('deletePresetSuccess'))
+  const id = selectedPresetId.value
+  await persistCommand(async () => {
+    await optionsStore.deletePreset(id)
+    if (selectedPresetId.value === id) {
+      selectedPresetId.value = ''
+    }
+  }, i18n.t('deletePresetSuccess'))
 }
 
 function exportOptions() {
@@ -103,9 +138,11 @@ function exportOptions() {
   )
 }
 
-function resetOptions() {
-  optionsStore.resetOptions()
-  Toast.info(i18n.t('resetOptionsSuccess'))
+async function resetOptions() {
+  await persistCommand(
+    () => optionsStore.resetOptions(),
+    i18n.t('resetOptionsSuccess'),
+  )
 }
 </script>
 
@@ -129,6 +166,7 @@ function resetOptions() {
             <TooltipTrigger as-child>
               <Button
                 @click="savePreset"
+                :disabled="isPersisting"
                 :aria-label="i18n.t('savePreset')"
                 size="icon"
                 variant="outline"
@@ -159,6 +197,7 @@ function resetOptions() {
             <TooltipTrigger as-child>
               <Button
                 @click="applySelectedPreset"
+                :disabled="isPersisting"
                 :aria-label="i18n.t('applyPreset')"
                 size="icon"
                 variant="outline"
@@ -172,6 +211,7 @@ function resetOptions() {
             <TooltipTrigger as-child>
               <Button
                 @click="deleteSelectedPreset"
+                :disabled="isPersisting"
                 :aria-label="i18n.t('deletePreset')"
                 size="icon"
                 variant="outline"
@@ -221,6 +261,7 @@ function resetOptions() {
             <TooltipTrigger as-child>
               <Button
                 @click="resetOptions"
+                :disabled="isPersisting"
                 :aria-label="i18n.t('resetOptions')"
                 size="icon"
                 variant="outline"

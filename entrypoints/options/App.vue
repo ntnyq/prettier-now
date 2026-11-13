@@ -11,7 +11,8 @@ useThemeColor()
   <TooltipProvider>
     <main class="h-screen min-w-180 flex flex-col">
       <Navbar class="h-(--h-header)" />
-      <RouterView class="h-[calc(100vh-var(--h-header))]" />
+      <StorageStatus />
+      <RouterView class="min-h-0 flex-1" />
     </main>
     <Toaster class="pointer-events-auto" />
   </TooltipProvider>

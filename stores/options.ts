@@ -3,7 +3,8 @@
  */
 
 import { defineStore } from 'pinia'
-import { useStorage } from '@/composables/storage'
+import { useStorageBinding } from '@/composables/storage'
+import { useStoredCollection } from '@/composables/storedCollection'
 import { useStoredOptions } from '@/composables/storedOptions'
 import {
   DEFAULT_JAVA_OPTIONS,
@@ -23,15 +24,16 @@ import {
 } from '@/utils/optionsPreset'
 import { FORMAT_OPTION_SCHEMAS } from '@/utils/optionsSchema'
 import { TomlOptionsSchema } from '@/utils/tomlOptions'
+import { readStoredTomlOptions } from '@/utils/tomlStorage'
 import type { PluginTOMLOptions } from '@/types/options'
 import type { OptionsPreset, OptionsSnapshot } from '@/types/optionsPreset'
 
 export const useOptionsStore = defineStore('options', () => {
-  const presets = useStorage<OptionsPreset[]>(
-    'optionsPresets',
-    [],
-    OptionsPresetListSchema,
-  )
+  const { items: presets, update: updatePresets } =
+    useStoredCollection<OptionsPreset>(
+      'optionsPresets',
+      OptionsPresetListSchema,
+    )
 
   const core = useStoredOptions(
     DEFAULT_OPTIONS,
@@ -54,11 +56,27 @@ export const useOptionsStore = defineStore('options', () => {
     FORMAT_OPTION_SCHEMAS.sveltePluginOptions.entries,
   )
 
-  const tomlPluginOptions = useStorage<PluginTOMLOptions>(
+  const toml = useStorageBinding<PluginTOMLOptions>(
     'tomlPluginOptions',
     { ...DEFAULT_TOML_OPTIONS },
     TomlOptionsSchema,
+    {
+      mergeFields: true,
+      read: () => readStoredTomlOptions({ persistMigration: false }),
+    },
   )
+  const tomlPluginOptions = toml.value
+
+  function flushOptions() {
+    return Promise.all([
+      core.flush(),
+      xml.flush(),
+      php.flush(),
+      java.flush(),
+      svelte.flush(),
+      toml.flush({ retry: true }),
+    ])
+  }
 
   function createSnapshot() {
     return {
@@ -78,35 +96,37 @@ export const useOptionsStore = defineStore('options', () => {
     php.apply(snapshot.phpPluginOptions)
     java.apply(snapshot.javaPluginOptions)
     svelte.apply(snapshot.sveltePluginOptions)
-    tomlPluginOptions.value = { ...snapshot.tomlPluginOptions }
+    toml.set({ ...snapshot.tomlPluginOptions })
+    return flushOptions()
   }
 
   function resetOptions() {
-    applySnapshot(createDefaultOptionsSnapshot())
+    return applySnapshot(createDefaultOptionsSnapshot())
   }
 
-  function savePreset(name: string) {
+  async function savePreset(name: string) {
+    await flushOptions()
     const preset = createOptionsPreset({
       name,
       snapshot: createSnapshot(),
     })
 
-    presets.value = upsertOptionsPreset(presets.value, preset)
+    await updatePresets(current => upsertOptionsPreset(current, preset))
   }
 
-  function applyPreset(id: string) {
+  async function applyPreset(id: string) {
     const preset = presets.value.find(item => item.id === id)
 
     if (!preset) {
       return false
     }
 
-    applySnapshot(preset.snapshot)
+    await applySnapshot(preset.snapshot)
     return true
   }
 
   function deletePreset(id: string) {
-    presets.value = removeOptionsPreset(presets.value, id)
+    return updatePresets(current => removeOptionsPreset(current, id))
   }
 
   return {

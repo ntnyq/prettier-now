@@ -134,6 +134,7 @@ selectFile: 選擇檔案
 selectPresetFirst: 請先選擇預設
 settings: 設定
 sourceCode: 原始碼
+storageSaveFailed: 變更未能儲存：$1
 toggleColorMode: 切換色彩模式
 toggleLeftLayout: 切換左側版面
 toggleRightLayout: 切換右側版面

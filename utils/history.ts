@@ -14,6 +14,11 @@ export const MAX_FORMAT_HISTORY_ENTRIES = 50
 export const MAX_FORMAT_HISTORY_ENTRY_BYTES = 128 * 1024
 
 /**
+ * Serialized history budget, leaving local storage space for preferences.
+ */
+export const MAX_FORMAT_HISTORY_STORAGE_BYTES = 4 * 1024 ** 2
+
+/**
  * Schema for validating one persisted format history entry.
  */
 export const FormatHistoryEntrySchema = v.object({
@@ -29,7 +34,10 @@ export const FormatHistoryEntrySchema = v.object({
 /**
  * Schema for validating a persisted format history list.
  */
-export const FormatHistoryEntryListSchema = v.array(FormatHistoryEntrySchema)
+export const FormatHistoryEntryListSchema = v.pipe(
+  v.array(FormatHistoryEntrySchema),
+  v.transform(normalizeFormatHistoryEntries),
+)
 
 /**
  * Read the byte length of a text value.
@@ -60,6 +68,32 @@ function normalizeHistoryEntry(entry: FormatHistoryEntry) {
     resultCode: '',
     sourceCode: '',
   } satisfies FormatHistoryEntry
+}
+
+/**
+ * Bound both entry count and JSON size, retaining the newest available bodies.
+ *
+ * @param entries - Newest-first history, including previously persisted data.
+ * @returns History within its serialized storage budget.
+ */
+export function normalizeFormatHistoryEntries(entries: FormatHistoryEntry[]) {
+  const result: FormatHistoryEntry[] = []
+  let bytes = 2 // JSON array brackets.
+  for (const entry of entries.slice(0, MAX_FORMAT_HISTORY_ENTRIES)) {
+    let normalized = normalizeHistoryEntry(entry)
+    let entryBytes =
+      getTextByteLength(JSON.stringify(normalized)) + (result.length ? 1 : 0)
+    if (bytes + entryBytes > MAX_FORMAT_HISTORY_STORAGE_BYTES) {
+      normalized = { ...normalized, sourceCode: '', resultCode: '' }
+      entryBytes =
+        getTextByteLength(JSON.stringify(normalized)) + (result.length ? 1 : 0)
+    }
+    if (bytes + entryBytes <= MAX_FORMAT_HISTORY_STORAGE_BYTES) {
+      result.push(normalized)
+      bytes += entryBytes
+    }
+  }
+  return result
 }
 
 /**
@@ -129,12 +163,10 @@ export function addFormatHistoryEntry(
   entries: FormatHistoryEntry[],
   entry: FormatHistoryEntry,
 ) {
-  const normalizedEntry = normalizeHistoryEntry(entry)
-
-  return [
-    normalizedEntry,
-    ...entries.filter(item => item.id !== normalizedEntry.id),
-  ].slice(0, MAX_FORMAT_HISTORY_ENTRIES)
+  return normalizeFormatHistoryEntries([
+    entry,
+    ...entries.filter(item => item.id !== entry.id),
+  ])
 }
 
 /**

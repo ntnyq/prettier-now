@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { useStorage } from '@/composables/storage'
+import { useStorageBinding } from '@/composables/storage'
 import type { Ref } from 'vue'
 import type { JsonValue } from '@/types/json'
 import type { StorageSchema } from '@/types/storage'
@@ -18,8 +18,11 @@ export function useStoredOptions<
   schemas: { [Key in keyof Options]: StorageSchema<Options[Key]> },
 ) {
   const keys = Object.keys(defaults) as (keyof Options & string)[]
+  const bindings = keys.map(key =>
+    useStorageBinding(key, defaults[key], schemas[key]),
+  )
   const fields = Object.fromEntries(
-    keys.map(key => [key, useStorage(key, defaults[key], schemas[key])]),
+    keys.map((key, index) => [key, bindings[index]!.value]),
   ) as { [Key in keyof Options]: Ref<Options[Key]> }
 
   const options = computed(() => {
@@ -36,8 +39,8 @@ export function useStoredOptions<
    * @param snapshot - Values for this option group.
    */
   function apply(snapshot: Options) {
-    for (const key of keys) {
-      fields[key].value = snapshot[key]
+    for (const [index, key] of keys.entries()) {
+      bindings[index]!.set(snapshot[key])
     }
   }
 
@@ -45,5 +48,10 @@ export function useStoredOptions<
     fields,
     options,
     apply,
+    flush() {
+      return Promise.all(
+        bindings.map(binding => binding.flush({ retry: true })),
+      )
+    },
   }
 }

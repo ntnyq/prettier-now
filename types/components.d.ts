@@ -123,6 +123,7 @@ declare module 'vue' {
     SheetTitle: typeof import('./../components/ui/sheet/SheetTitle.vue')['default']
     SheetTrigger: typeof import('./../components/ui/sheet/SheetTrigger.vue')['default']
     Sonner: typeof import('./../components/ui/sonner/Sonner.vue')['default']
+    StorageStatus: typeof import('./../components/StorageStatus.vue')['default']
     Switch: typeof import('./../components/ui/switch/Switch.vue')['default']
     Tooltip: typeof import('./../components/ui/tooltip/Tooltip.vue')['default']
     TooltipContent: typeof import('./../components/ui/tooltip/TooltipContent.vue')['default']

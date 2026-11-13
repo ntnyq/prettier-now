@@ -23,6 +23,7 @@ const open = defineModel<boolean>('open', { required: true })
       </DialogHeader>
 
       <div class="min-h-0 overflow-y-auto px-6 py-6">
+        <StorageStatus class="mb-4 rounded-lg border" />
         <SettingsContent />
       </div>
     </DialogContent>

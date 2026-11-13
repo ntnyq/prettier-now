@@ -6,6 +6,23 @@ const requestIdSchema = v.pipe(v.string(), v.nonEmpty())
 const languageIdSchema = v.picklist(Object.values(LANGUAGE_ID))
 
 /**
+ * Decode string-only page events without exposing cross-world objects.
+ *
+ * @param detail - Untrusted CustomEvent detail.
+ * @returns Decoded payload, or undefined for malformed events.
+ */
+export function parseFocusedEditorEventDetail(detail: unknown): unknown {
+  if (typeof detail !== 'string') {
+    return undefined
+  }
+  try {
+    return JSON.parse(detail)
+  } catch {
+    return undefined
+  }
+}
+
+/**
  * Command delivered by the extension background to the content script.
  */
 export const FocusedEditorCommandSchema = v.object({

@@ -5,6 +5,8 @@ import {
   createFormatHistoryEntry,
   FormatHistoryEntryListSchema,
   MAX_FORMAT_HISTORY_ENTRY_BYTES,
+  MAX_FORMAT_HISTORY_STORAGE_BYTES,
+  normalizeFormatHistoryEntries,
   removeFormatHistoryEntry,
 } from '@/utils/history'
 import type { FormatHistoryEntry } from '@/types/history'
@@ -22,6 +24,42 @@ function createEntry(id: string, formattedAt: number): FormatHistoryEntry {
 }
 
 describe('format history utilities', () => {
+  it('bounds serialized history even when source contains many escapes', () => {
+    let entries: FormatHistoryEntry[] = []
+    const source = `const s="${'\\\\'.repeat(32750)}";`
+    for (let index = 0; index < 50; index++) {
+      entries = addFormatHistoryEntry(entries, {
+        ...createEntry(String(index), index),
+        sourceCode: source,
+        resultCode: source,
+      })
+    }
+    expect(new Blob([JSON.stringify(entries)]).size).toBeLessThanOrEqual(
+      MAX_FORMAT_HISTORY_STORAGE_BYTES,
+    )
+    expect(entries[0]?.sourceCode).toBe(source)
+  })
+
+  it('normalizes old stored history and discards metadata exceeding the total budget', () => {
+    const entries = Array.from({ length: 60 }, (_, index) => ({
+      ...createEntry(String(index), index),
+      sourceCode: '\\'.repeat(MAX_FORMAT_HISTORY_ENTRY_BYTES),
+      resultCode: '',
+    }))
+    const normalized = v.parse(FormatHistoryEntryListSchema, entries)
+    expect(normalized).toHaveLength(50)
+    expect(new Blob([JSON.stringify(normalized)]).size).toBeLessThanOrEqual(
+      MAX_FORMAT_HISTORY_STORAGE_BYTES,
+    )
+    expect(
+      normalizeFormatHistoryEntries([
+        {
+          ...createEntry('metadata', 1),
+          fileName: 'x'.repeat(MAX_FORMAT_HISTORY_STORAGE_BYTES),
+        },
+      ]),
+    ).toEqual([])
+  })
   it('creates a stable history entry from formatted job data', () => {
     expect(
       createFormatHistoryEntry({

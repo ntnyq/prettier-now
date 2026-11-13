@@ -36,9 +36,29 @@ function restoreEntry(id: string) {
   }
 }
 
-function clearHistory() {
-  historyStore.clearHistory()
-  appStore.setIsHistoryPanelVisible(false)
+async function clearHistory() {
+  try {
+    await historyStore.clearHistory()
+    appStore.setIsHistoryPanelVisible(false)
+  } catch (error) {
+    Toast.error(
+      i18n.t('storageSaveFailed', [
+        error instanceof Error ? error.message : String(error),
+      ]),
+    )
+  }
+}
+
+async function removeEntry(id: string) {
+  try {
+    await historyStore.removeEntry(id)
+  } catch (error) {
+    Toast.error(
+      i18n.t('storageSaveFailed', [
+        error instanceof Error ? error.message : String(error),
+      ]),
+    )
+  }
 }
 </script>
 
@@ -118,7 +138,7 @@ function clearHistory() {
               </span>
             </button>
             <Button
-              @click="historyStore.removeEntry(entry.id)"
+              @click="removeEntry(entry.id)"
               :aria-label="i18n.t('deleteHistoryEntry')"
               :title="i18n.t('deleteHistoryEntry')"
               variant="ghost"

@@ -17,6 +17,7 @@ import {
   FocusedEditorFormatterResponseSchema,
   FocusedEditorReadResponseSchema,
   FocusedEditorWriteResponseSchema,
+  parseFocusedEditorEventDetail,
 } from '@/utils/focusedEditorProtocol'
 import type {
   FocusedEditorGetValueResponseDetail,
@@ -103,7 +104,7 @@ function waitForEditorValue(requestId: string) {
     function handleResponse(evt: Event) {
       const parsed = v.safeParse(
         FocusedEditorReadResponseSchema,
-        (evt as CustomEvent<unknown>).detail,
+        parseFocusedEditorEventDetail((evt as CustomEvent<unknown>).detail),
       )
       if (!parsed.success || parsed.output.requestId !== requestId) {
         return
@@ -124,7 +125,7 @@ function waitForEditorValue(requestId: string) {
     )
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.getValueRequest, {
-        detail: { requestId },
+        detail: JSON.stringify({ requestId }),
       }),
     )
   })
@@ -143,7 +144,7 @@ function waitForEditorWrite(requestId: string, value: string) {
     function handleResponse(evt: Event) {
       const parsed = v.safeParse(
         FocusedEditorWriteResponseSchema,
-        (evt as CustomEvent<unknown>).detail,
+        parseFocusedEditorEventDetail((evt as CustomEvent<unknown>).detail),
       )
       if (!parsed.success || parsed.output.requestId !== requestId) {
         return
@@ -164,7 +165,7 @@ function waitForEditorWrite(requestId: string, value: string) {
     )
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.setValueRequest, {
-        detail: { requestId, value },
+        detail: JSON.stringify({ requestId, value }),
       }),
     )
   })

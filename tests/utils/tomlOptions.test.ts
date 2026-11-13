@@ -1,5 +1,7 @@
+import { flushPromises } from '@vue/test-utils'
 import * as v from 'valibot'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { useStorageBinding } from '@/composables/storage'
 import { DEFAULT_TOML_OPTIONS } from '@/constants/options'
 import { readStoredFormatOptions } from '@/utils/formatOptions'
 import {
@@ -19,6 +21,7 @@ const storageMock = vi.hoisted(() => ({
     ),
   ),
   setItem: vi.fn(),
+  watch: () => () => {},
 }))
 
 vi.mock('#imports', () => ({
@@ -135,5 +138,59 @@ describe('Tombi options', () => {
     expect(options.arrayBracketSpaceWidth).toBe(0)
     expect(options).not.toHaveProperty('compactArrays')
     expect(options).not.toHaveProperty('reorderKeys')
+  })
+
+  it('reads legacy formatter preferences without requiring migration writes', async () => {
+    storageMock.getItem.mockImplementation(async key =>
+      key === 'local:compactArrays' ? true : null,
+    )
+    storageMock.setItem.mockRejectedValue(new Error('Quota exceeded'))
+    expect(await readStoredFormatOptions('toml')).toMatchObject({
+      arrayBracketSpaceWidth: 0,
+    })
+    expect(storageMock.setItem).not.toHaveBeenCalled()
+  })
+
+  it('serializes a pending legacy migration with an explicit settings replacement', async () => {
+    const values = new Map<string, unknown>()
+    const legacy = Promise.withResolvers<unknown>()
+    const reading = Promise.withResolvers<void>()
+    let shouldWait = true
+    storageMock.getItem.mockImplementation(async (key: string) => {
+      if (key === 'local:alignEntries') {
+        if (shouldWait) {
+          shouldWait = false
+          reading.resolve()
+          return legacy.promise
+        }
+        return true
+      }
+      return values.get(key) ?? null
+    })
+    storageMock.setItem.mockImplementation(
+      async (key: string, value: unknown) => {
+        values.set(key, value)
+      },
+    )
+    const migrating = readStoredTomlOptions()
+    await reading.promise
+    const binding = useStorageBinding(
+      'tomlPluginOptions',
+      { ...DEFAULT_TOML_OPTIONS },
+      TomlOptionsSchema,
+      {
+        mergeFields: true,
+        read: () => readStoredTomlOptions({ persistMigration: false }),
+      },
+    )
+    binding.set({ ...DEFAULT_TOML_OPTIONS, stringQuoteStyle: 'single' })
+    const saving = binding.flush()
+    await flushPromises()
+    expect(storageMock.setItem).not.toHaveBeenCalled()
+    legacy.resolve(true)
+    await Promise.all([migrating, saving])
+    expect(values.get('local:tomlPluginOptions')).toMatchObject({
+      stringQuoteStyle: 'single',
+    })
   })
 })

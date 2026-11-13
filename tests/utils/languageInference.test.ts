@@ -6,6 +6,14 @@ import {
 } from '@/utils/languageInference'
 
 describe('editor language inference', () => {
+  it('does not treat URL path keywords as editor language metadata', () => {
+    expect(
+      inferLanguageFromEditorContext({
+        source: '# Hello\n\nSome prose.',
+        url: 'https://example.com/javascript/tutorial?file=app.ts',
+      }),
+    ).toBe(LANGUAGE_ID.markdown)
+  })
   it.each([
     ['language-jsx', LANGUAGE_ID.javascript],
     ['language-tsx', LANGUAGE_ID.typescript],

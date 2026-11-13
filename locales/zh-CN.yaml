@@ -134,6 +134,7 @@ selectFile: 选择文件
 selectPresetFirst: 请先选择预设
 settings: 设置
 sourceCode: 源代码
+storageSaveFailed: 更改未能保存：$1
 toggleColorMode: 切换色彩模式
 toggleLeftLayout: 切换左侧布局
 toggleRightLayout: 切换右侧布局

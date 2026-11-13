@@ -17,6 +17,7 @@ import {
 import {
   FocusedEditorReadRequestSchema,
   FocusedEditorWriteRequestSchema,
+  parseFocusedEditorEventDetail,
 } from '@/utils/focusedEditorProtocol'
 
 const MATCHES = ['http://*/*', 'https://*/*', 'file:///*']
@@ -67,21 +68,19 @@ function getAttributeHints(element: HTMLElement) {
     element.closest('[data-mode]'),
   ].filter((item): item is HTMLElement => item instanceof HTMLElement)
 
-  for (const item of candidateElements) {
-    hints.add(item.tagName)
-
-    for (const attributeName of [
-      'aria-label',
-      'class',
-      'data-lang',
-      'data-language',
-      'data-mode',
-      'id',
-      'name',
-      'role',
-    ]) {
+  // Explicit metadata on any editor ancestor outranks labels and CSS classes.
+  for (const attributeName of [
+    'data-language',
+    'data-lang',
+    'data-mode',
+    'aria-label',
+    'class',
+    'id',
+    'name',
+    'role',
+  ]) {
+    for (const item of candidateElements) {
       const value = item.getAttribute(attributeName)
-
       if (value) {
         hints.add(value)
       }
@@ -120,18 +119,22 @@ function readFocusedEditor(requestId: string) {
 
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.getValueResponse, {
-        detail: { hints: getAttributeHints(element), requestId, source },
+        detail: JSON.stringify({
+          hints: getAttributeHints(element),
+          requestId,
+          source,
+        }),
       }),
     )
   } catch (error) {
     clearEditorSnapshot()
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.getValueResponse, {
-        detail: {
+        detail: JSON.stringify({
           errorMessage:
             error instanceof Error ? error.message : 'Failed to read editor',
           requestId,
-        },
+        }),
       }),
     )
   }
@@ -155,17 +158,17 @@ function writeFocusedEditor(requestId: string, value: string) {
     dispatchInputEvents(element)
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.setValueResponse, {
-        detail: { requestId },
+        detail: JSON.stringify({ requestId }),
       }),
     )
   } catch (error) {
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.setValueResponse, {
-        detail: {
+        detail: JSON.stringify({
           errorMessage:
             error instanceof Error ? error.message : 'Failed to update editor',
           requestId,
-        },
+        }),
       }),
     )
   }
@@ -192,7 +195,7 @@ export default defineContentScript({
     window.addEventListener(FOCUSED_EDITOR_EVENT.getValueRequest, evt => {
       const parsed = v.safeParse(
         FocusedEditorReadRequestSchema,
-        (evt as CustomEvent<unknown>).detail,
+        parseFocusedEditorEventDetail((evt as CustomEvent<unknown>).detail),
       )
       if (parsed.success) {
         readFocusedEditor(parsed.output.requestId)
@@ -202,7 +205,7 @@ export default defineContentScript({
     window.addEventListener(FOCUSED_EDITOR_EVENT.setValueRequest, evt => {
       const parsed = v.safeParse(
         FocusedEditorWriteRequestSchema,
-        (evt as CustomEvent<unknown>).detail,
+        parseFocusedEditorEventDetail((evt as CustomEvent<unknown>).detail),
       )
       if (parsed.success) {
         writeFocusedEditor(parsed.output.requestId, parsed.output.value)

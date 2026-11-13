@@ -96,6 +96,21 @@ option values and schemas drive the settings store, presets, and the webpage
 formatter. Existing per-option storage keys and version 1 preset migration remain
 supported.
 
+History and preset mutations use origin-scoped Web Locks to serialize updates
+across extension pages while keeping the existing storage keys and array format.
+Explicit settings commands report success after persistence completes; storage
+failures remain visible and can be retried. Each batch uses one settings snapshot.
+
+Nested TOML setting edits merge under the same per-key lock; applying or resetting
+options replaces the full TOML configuration. The webpage formatter reads legacy
+preferences without writing migrations, so a failed repair does not block reading
+valid settings. Unrecognized history and preset data is preserved rather than
+silently replaced by a new entry.
+
+History retains up to 50 entries with a 4 MiB serialized budget. Entries larger
+than 128 KiB of combined source and output, and older bodies beyond the total
+budget, retain metadata without restorable code.
+
 ## Credits
 
 - UI design from [AST Explorer](https://ast-explorer.dev/) created by [sxzz](https://github.com/sxzz)

@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import DiffPanel from '@/components/workspace/DiffPanel.vue'
@@ -97,6 +97,7 @@ describe('panel overlays', () => {
       .find(button => button.text() === 'clearAll')
       ?.trigger('click')
 
+    await flushPromises()
     expect(useHistoryStore().entries).toEqual([])
     expect(appStore.isHistoryPanelVisible).toBe(false)
   })

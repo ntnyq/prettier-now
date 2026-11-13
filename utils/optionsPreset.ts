@@ -167,7 +167,7 @@ export function removeOptionsPreset(presets: OptionsPreset[], id: string) {
  * @param params - Options preset creation parameters.
  * @param params.name - User-facing preset name.
  * @param params.snapshot - Options snapshot stored by the preset.
- * @param params.now - Optional timestamp used for deterministic ids and tests.
+ * @param params.now - Optional timestamp used for creation and update metadata.
  * @returns New options preset.
  */
 export function createOptionsPreset(params: {
@@ -182,14 +182,14 @@ export function createOptionsPreset(params: {
   snapshot: OptionsSnapshot
 
   /**
-   * Optional timestamp used for deterministic ids and tests.
+   * Optional timestamp used for creation and update metadata.
    */
   now?: number
 }) {
   const now = params.now ?? Date.now()
 
   return {
-    id: `${now}-${params.name.trim().toLowerCase().replaceAll(/\s+/g, '-')}`,
+    id: crypto.randomUUID(),
     name: params.name.trim(),
     createdAt: now,
     updatedAt: now,

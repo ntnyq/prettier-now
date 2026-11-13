@@ -78,6 +78,9 @@ function normalizeHint(value: string) {
 function getLanguageIdForName(value: string) {
   const normalized = normalizeHint(value)
   const fileName = normalized.split(/[?#]/)[0] ?? normalized
+  if (!fileName.split('/').pop()?.includes('.')) {
+    return undefined
+  }
   const fileExt = fileName.split('/').pop()?.split('.').pop()
 
   if (fileExt && Object.hasOwn(languageExtensions, fileExt)) {
@@ -266,7 +269,7 @@ export function inferLanguageFromEditorContext(context: InferLanguageContext) {
   }
 
   if (context.url) {
-    const languageId = inferLanguageFromHint(context.url)
+    const languageId = getLanguageIdForName(context.url)
 
     if (languageId) {
       return languageId

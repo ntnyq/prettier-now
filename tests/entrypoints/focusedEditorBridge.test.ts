@@ -60,14 +60,16 @@ function readEditor(requestId: string) {
   window.addEventListener(
     FOCUSED_EDITOR_EVENT.getValueResponse,
     event => {
-      response = (event as CustomEvent<FocusedEditorGetValueResponseDetail>)
-        .detail
+      expect(typeof (event as CustomEvent).detail).toBe('string')
+      response = JSON.parse(
+        (event as CustomEvent<string>).detail,
+      ) as FocusedEditorGetValueResponseDetail
     },
     { once: true },
   )
   window.dispatchEvent(
     new CustomEvent(FOCUSED_EDITOR_EVENT.getValueRequest, {
-      detail: { requestId },
+      detail: JSON.stringify({ requestId }),
     }),
   )
   return response
@@ -78,20 +80,46 @@ function writeEditor(requestId: string, value: string) {
   window.addEventListener(
     FOCUSED_EDITOR_EVENT.setValueResponse,
     event => {
-      response = (event as CustomEvent<FocusedEditorSetValueResponseDetail>)
-        .detail
+      expect(typeof (event as CustomEvent).detail).toBe('string')
+      response = JSON.parse(
+        (event as CustomEvent<string>).detail,
+      ) as FocusedEditorSetValueResponseDetail
     },
     { once: true },
   )
   window.dispatchEvent(
     new CustomEvent(FOCUSED_EDITOR_EVENT.setValueRequest, {
-      detail: { requestId, value },
+      detail: JSON.stringify({ requestId, value }),
     }),
   )
   return response
 }
 
 describe('focused editor bridge', () => {
+  it('prioritizes explicit ancestor metadata over editor classes and labels', () => {
+    const wrapper = document.createElement('div')
+    Object.assign(wrapper.dataset, { language: 'typescript' })
+    document.body.append(wrapper)
+    const element = createTextarea('const a=1')
+    element.className = 'markdown-editor'
+    element.setAttribute('aria-label', 'JavaScript editor')
+    wrapper.append(element)
+    element.focus()
+    expect(readEditor('metadata')?.hints?.[0]).toBe('typescript')
+  })
+
+  it('ignores malformed JSON without replacing a valid snapshot', () => {
+    const element = createTextarea('const a=1')
+    readEditor('valid')
+    window.dispatchEvent(
+      new CustomEvent(FOCUSED_EDITOR_EVENT.getValueRequest, { detail: '{' }),
+    )
+    window.dispatchEvent(
+      new CustomEvent(FOCUSED_EDITOR_EVENT.setValueRequest, { detail: '{' }),
+    )
+    expect(writeEditor('valid', 'const a = 1;\n')?.errorMessage).toBeUndefined()
+    expect(element.value).toBe('const a = 1;\n')
+  })
   it('ignores malformed page events without consuming a valid editor snapshot', () => {
     const element = createTextarea('const a=1')
     readEditor('valid')

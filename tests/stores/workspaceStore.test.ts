@@ -1,6 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useHistoryStore } from '@/stores/history'
+import { useOptionsStore } from '@/stores/options'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const storageMock = vi.hoisted(() => ({
@@ -62,6 +63,24 @@ vi.stubGlobal('window', {
 })
 
 describe('workspace store', () => {
+  it('uses one settings snapshot throughout a batch', async () => {
+    const store = useWorkspaceStore()
+    const options = useOptionsStore()
+    const loading = store.loadFileList([
+      new File(['const a=1'], 'a.ts'),
+      new File(['const b=2'], 'b.ts'),
+    ])
+    await vi.waitFor(() =>
+      expect(formatterMock.formatViaPrettier).toHaveBeenCalledOnce(),
+    )
+    options.semi = false
+    formatterMock.resolveFirstFormat('const a = 1;\n')
+    await loading
+    expect(formatterMock.formatViaPrettier.mock.calls).toEqual([
+      ['const a=1', expect.objectContaining({ semi: true })],
+      ['const b=2', expect.objectContaining({ semi: true })],
+    ])
+  })
   it('does not replace a newer import when an older file finishes reading', async () => {
     const store = useWorkspaceStore()
     const read = Promise.withResolvers<string>()

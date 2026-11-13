@@ -30,7 +30,7 @@ export async function readStoredFormatOptions(
     .map((key): StorageItemKey => `local:${key}`)
   const [entries, tomlPluginOptions] = await Promise.all([
     storage.getItems(keys),
-    readStoredTomlOptions(),
+    readStoredTomlOptions({ persistMigration: false }),
   ])
   const stored = Object.fromEntries(
     entries.map(({ key, value }) => [key.slice('local:'.length), value]),
