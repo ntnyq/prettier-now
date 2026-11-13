@@ -30,7 +30,7 @@ const LANGUAGE_ALIASES = {
 /**
  * Supported language ids used for direct token lookup.
  */
-const languageIds = new Set(Object.values(LANGUAGE_ID))
+const languageIds = new Set(languages.map(language => language.id))
 
 /**
  * Context values used to infer the language for focused editor source.
@@ -78,7 +78,7 @@ function getLanguageIdForName(value: string) {
   const fileName = normalized.split(/[?#]/)[0] ?? normalized
   const fileExt = fileName.split('/').pop()?.split('.').pop()
 
-  if (fileExt && fileExt in languageExtensions) {
+  if (fileExt && Object.hasOwn(languageExtensions, fileExt)) {
     return languageExtensions[fileExt as keyof typeof languageExtensions]
   }
 
@@ -98,7 +98,7 @@ function getLanguageIdForToken(value: string) {
     return token
   }
 
-  if (token in LANGUAGE_ALIASES) {
+  if (Object.hasOwn(LANGUAGE_ALIASES, token)) {
     return LANGUAGE_ALIASES[token as keyof typeof LANGUAGE_ALIASES]
   }
 
@@ -184,11 +184,31 @@ function inferLanguageFromContent(source: string) {
   }
 
   if (
+    /^\s*(?:import|export|const|let|var|function|class|interface|type)\b/.test(
+      value,
+    )
+  ) {
+    return /\b(?:interface|type)\s+\w+\b|:\s*[A-Z_a-z][\w<>[\] |]*(?:[=,);{]|$)/m.test(
+      value,
+    )
+      ? LANGUAGE_ID.typescript
+      : LANGUAGE_ID.javascript
+  }
+
+  if (
     /^\s*<template[\s>]/i.test(value)
     || (/<script[\s>][\s\S]*<\/script>/i.test(value)
       && /<template[\s>]/i.test(value))
   ) {
     return LANGUAGE_ID.vue
+  }
+
+  if (
+    /^\s*(?:```|~~~)|\n\s*(?:```|~~~)|^\s*#{1,6}\s+\S|^\s*[-*+]\s+\S|^\s*\|.+\|\s*$/m.test(
+      value,
+    )
+  ) {
+    return LANGUAGE_ID.markdown
   }
 
   if (
@@ -206,23 +226,10 @@ function inferLanguageFromContent(source: string) {
     return LANGUAGE_ID.css
   }
 
-  if (/^\s*(?:import|export|const|let|var|function|class)\b/m.test(value)) {
-    return /\b(?:interface|type)\s+\w+\b|:\s*[A-Z_a-z][\w<>[\] |]*(?:[=,);{]|$)/m.test(
-      value,
-    )
-      ? LANGUAGE_ID.typescript
-      : LANGUAGE_ID.javascript
-  }
-
   if (
-    /^\s*```|\n\s*```|^\s*#{1,6}\s+\S|^\s*[-*+]\s+\S|^\s*\|.+\|\s*$/m.test(
-      value,
-    )
+    /^\s*\[\[?[\w.-]+\]\]?\s*$/m.test(value)
+    && /^\s*[\w.-]+\s*=/m.test(value)
   ) {
-    return LANGUAGE_ID.markdown
-  }
-
-  if (/^\s*\[[\w.-]+\]\s*$/m.test(value) && /^\s*[\w.-]+\s*=/.test(value)) {
     return LANGUAGE_ID.toml
   }
 

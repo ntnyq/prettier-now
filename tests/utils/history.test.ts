@@ -33,7 +33,7 @@ describe('format history utilities', () => {
         formattedAt: 100,
       }),
     ).toEqual({
-      id: 'index.ts-typescript-100',
+      id: expect.any(String),
       fileName: 'index.ts',
       languageId: 'typescript',
       sourceCode: 'const a=1',
@@ -41,6 +41,14 @@ describe('format history utilities', () => {
       formatCost: 3.2,
       formattedAt: 100,
     })
+  })
+
+  it('retains separate results for the same filename and timestamp', () => {
+    const input = createEntry('same', 100)
+    const first = createFormatHistoryEntry({ ...input })
+    const second = createFormatHistoryEntry({ ...input })
+    expect(first.id).not.toBe(second.id)
+    expect(addFormatHistoryEntry([first], second)).toHaveLength(2)
   })
 
   it('adds newest entries first and replaces matching ids', () => {

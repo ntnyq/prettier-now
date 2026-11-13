@@ -25,7 +25,9 @@ export function getLanguageIdForFileName(fileName: string) {
     return
   }
 
-  return languageExtensions[fileExt as keyof typeof languageExtensions]
+  return Object.hasOwn(languageExtensions, fileExt)
+    ? languageExtensions[fileExt as keyof typeof languageExtensions]
+    : undefined
 }
 
 /**

@@ -25,12 +25,13 @@ export interface AddLogInput {
 
 export const useLogStore = defineStore('log', () => {
   const logList = shallowRef<Log[]>([])
+
   const [isLogPanelVisible, setIsLogPanelVisible] = useToggle()
 
   function addLog(input: AddLogInput) {
     logList.value = [
       {
-        id: `${Date.now()}-${logList.value.length}`,
+        id: crypto.randomUUID(),
         createdAt: Date.now(),
         ...input,
       },

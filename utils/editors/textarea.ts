@@ -41,11 +41,23 @@ export class TextareaEditor {
    * @param value - New textarea content.
    */
   public setValue(value: string) {
+    if (this.editor.disabled || this.editor.readOnly) {
+      throw new Error('Editor is read-only')
+    }
     this.editor.focus({ preventScroll: true })
     this.editor.selectionStart = 0
     this.editor.selectionEnd = this.editor.value.length
     if (!document.execCommand?.('insertText', false, value)) {
-      this.editor.value = value
+      // Bypass instance setters so controlled inputs can observe the input event.
+      const setter = Object.getOwnPropertyDescriptor(
+        HTMLTextAreaElement.prototype,
+        'value',
+      )?.set
+      if (setter) {
+        setter.call(this.editor, value)
+      } else {
+        this.editor.value = value
+      }
     }
   }
 }

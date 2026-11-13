@@ -6,6 +6,33 @@ import {
 } from '@/utils/languageInference'
 
 describe('editor language inference', () => {
+  it.each([
+    ['language-jsx', LANGUAGE_ID.javascript],
+    ['language-tsx', LANGUAGE_ID.typescript],
+    ['constructor', LANGUAGE_ID.markdown],
+    ['__proto__', LANGUAGE_ID.markdown],
+  ])('normalizes %s to a supported language', (hint, expected) => {
+    expect(
+      inferLanguageFromEditorContext({ source: 'hello', hints: [hint] }),
+    ).toBe(expected)
+  })
+
+  it.each([
+    ['```html\n<div>hello</div>\n```', LANGUAGE_ID.markdown],
+    ['~~~css\nbody{color:red;}\n~~~', LANGUAGE_ID.markdown],
+    ['const config = { color: "red" };', LANGUAGE_ID.javascript],
+    ['const view = <div>Hello</div>', LANGUAGE_ID.javascript],
+    ['interface User { name: string }', LANGUAGE_ID.typescript],
+    ['[package]\nname = "demo"', LANGUAGE_ID.toml],
+    ['[[products]]\nname = "demo"', LANGUAGE_ID.toml],
+    [
+      '<script setup>\nconst value = 1\n</script>\n<template><div /></template>',
+      LANGUAGE_ID.vue,
+    ],
+  ])('infers source syntax for %s', (source, expected) => {
+    expect(inferLanguageFromEditorContext({ source })).toBe(expected)
+  })
+
   it('uses explicit editor metadata before content heuristics', () => {
     expect(
       inferLanguageFromEditorContext({

@@ -65,6 +65,75 @@ vi.stubGlobal('window', {
 })
 
 describe('workspace store', () => {
+  it('does not replace a newer import when an older file finishes reading', async () => {
+    const store = useWorkspaceStore()
+    const read = Promise.withResolvers<string>()
+    const slowFile = new File(['slow'], 'slow.ts')
+    vi.spyOn(slowFile, 'text').mockReturnValue(read.promise)
+    const oldImport = store.loadFileList([slowFile])
+    const newImport = store.loadFileList([new File(['new'], 'new.ts')])
+    await vi.waitFor(() =>
+      expect(formatterMock.formatViaPrettier).toHaveBeenCalledOnce(),
+    )
+    formatterMock.resolveFirstFormat('new formatted')
+    await newImport
+    read.resolve('old')
+    await oldImport
+    expect(store.activeJob).toMatchObject({
+      fileName: 'new.ts',
+      sourceCode: 'new',
+    })
+  })
+
+  it.each(['clear', 'edit'] as const)(
+    'preserves a %s action while a file is being read',
+    async action => {
+      const store = useWorkspaceStore()
+      const read = Promise.withResolvers<string>()
+      const file = new File(['slow'], 'slow.ts')
+      vi.spyOn(file, 'text').mockReturnValue(read.promise)
+      const loading = store.loadFileList([file])
+      if (action === 'clear') {
+        store.clearWorkspace()
+      } else {
+        store.sourceCode = 'local edit'
+      }
+      read.resolve('old')
+      await loading
+      expect(store.sourceCode).toBe(action === 'clear' ? '' : 'local edit')
+      expect(formatterMock.formatViaPrettier).not.toHaveBeenCalled()
+    },
+  )
+
+  it('reports unreadable files without losing the current workspace', async () => {
+    const { Toast } = await import('@/utils/toast')
+    const store = useWorkspaceStore()
+    store.sourceCode = 'current source'
+    const file = new File(['source'], 'source.ts')
+    vi.spyOn(file, 'text').mockRejectedValue(new Error('Cannot read file'))
+    await expect(store.loadFileList([file])).resolves.toBeUndefined()
+    expect(store.sourceCode).toBe('current source')
+    expect(Toast.error).toHaveBeenCalledWith('Cannot read file')
+  })
+
+  it('does not restore history entries whose contents were discarded', () => {
+    const store = useWorkspaceStore()
+    store.sourceCode = 'current source'
+    store.formatHistory = [
+      {
+        id: 'large',
+        fileName: 'large.ts',
+        languageId: 'typescript',
+        sourceCode: '',
+        resultCode: '',
+        formatCost: 1,
+        formattedAt: 1,
+      },
+    ]
+    expect(store.restoreHistoryEntry('large')).toBe(false)
+    expect(store.sourceCode).toBe('current source')
+  })
+
   beforeEach(() => {
     localStorage.clear()
     setActivePinia(createPinia())

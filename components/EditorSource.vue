@@ -6,22 +6,19 @@ import { useWorkspaceStore } from '@/stores/workspace'
 const configStore = useConfigStore()
 const workspaceStore = useWorkspaceStore()
 
-let timer: ReturnType<typeof setTimeout> | undefined
-
 watch(
-  () => workspaceStore.sourceCode,
-  () => {
-    if (timer) {
-      clearTimeout(timer)
+  [
+    () => workspaceStore.activeJobId,
+    () => workspaceStore.sourceCode,
+    () => configStore.autoFormat,
+  ],
+  ([jobId, source, autoFormat], [previousJobId], onCleanup) => {
+    if (!autoFormat || !source.length || jobId !== previousJobId) {
+      return
     }
-    if (workspaceStore.sourceCode.length > 0) {
-      if (!configStore.autoFormat) {
-        return
-      }
-      timer = setTimeout(() => {
-        workspaceStore.formatActiveJob()
-      }, 300)
-    }
+
+    const timer = setTimeout(() => workspaceStore.formatActiveJob(), 300)
+    onCleanup(() => clearTimeout(timer))
   },
 )
 </script>

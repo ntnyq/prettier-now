@@ -43,11 +43,52 @@ const CommandProbe = defineComponent({
         h('span', { 'data-testid': 'group-count' }, [
           String(filterState.filtered.groups.size),
         ]),
+        h(
+          'span',
+          { 'data-testid': 'visible-count' },
+          String(filterState.filtered.count),
+        ),
+        h(
+          'button',
+          {
+            onClick() {
+              allItems.value.set('new', 'Alpha new')
+              allGroups.value.get('letters')?.add('new')
+            },
+          },
+          'add',
+        ),
+        h(
+          'button',
+          {
+            onClick() {
+              allItems.value.delete('alpha')
+              allGroups.value.get('letters')?.delete('alpha')
+            },
+          },
+          'remove',
+        ),
       ])
   },
 })
 
 describe('command', () => {
+  it('updates an active search when registered items change', async () => {
+    const wrapper = mount(Command, {
+      global: { stubs: { ListboxRoot: PassthroughStub } },
+      slots: { default: () => h(CommandProbe) },
+    })
+    await nextTick()
+    await wrapper.findAll('button')[0]!.trigger('click')
+    expect(wrapper.find('[data-testid="visible-count"]').text()).toBe('1')
+    await wrapper.findAll('button')[2]!.trigger('click')
+    expect(wrapper.find('[data-testid="visible-count"]').text()).toBe('2')
+    await wrapper.findAll('button')[3]!.trigger('click')
+    expect(wrapper.find('[data-testid="visible-count"]').text()).toBe('1')
+    expect(wrapper.find('[data-testid="item-count"]').text()).toBe('2')
+    wrapper.unmount()
+  })
+
   it('clears filtered item and group caches when search is cleared', async () => {
     const wrapper = mount(Command, {
       global: {

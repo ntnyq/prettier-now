@@ -4,7 +4,7 @@ import SettingNumberField from '@/components/settings/SettingNumberField.vue'
 import SettingSelect from '@/components/settings/SettingSelect.vue'
 import SettingSwitch from '@/components/settings/SettingSwitch.vue'
 import Button from '@/components/ui/button/Button.vue'
-import { ButtonStub, PassthroughStub } from '../helpers/vue'
+import { ButtonStub, InputStub, PassthroughStub } from '../helpers/vue'
 
 describe('vue template bindings', () => {
   it('passes primitive bindings to shadcn buttons', () => {
@@ -59,13 +59,15 @@ describe('vue template bindings', () => {
           NumberFieldContent: PassthroughStub,
           NumberFieldDecrement: ButtonStub,
           NumberFieldIncrement: ButtonStub,
-          NumberFieldInput: PassthroughStub,
+          NumberFieldInput: InputStub,
         },
       },
     })
 
-    const control = wrapper.find('[aria-describedby="description"]')
-    expect(control.attributes('aria-labelledby')).toBe('label')
+    const input = wrapper.find('input')
+    expect(input.attributes('aria-describedby')).toBe('description')
+    expect(input.attributes('aria-labelledby')).toBe('label')
+    const control = wrapper.find('[max="100"]')
     expect(control.attributes('max')).toBe('100')
     expect(control.attributes('min')).toBe('10')
     expect(control.attributes('step')).toBe('5')

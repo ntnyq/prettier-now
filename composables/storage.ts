@@ -181,6 +181,10 @@ export function useStorage<V extends JsonValue>(
 
   syncStorage().catch((error: unknown) => {
     isHydrated = true
+    if (hasLocalMutationBeforeHydration) {
+      hasLocalMutationBeforeHydration = false
+      persistStorageValue()
+    }
     const message = (error as Error)?.message || 'Failed to sync storage'
     Logger.error(message)
   })

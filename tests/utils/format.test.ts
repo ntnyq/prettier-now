@@ -10,6 +10,52 @@ function readSource(path: string) {
 
 describe('format via prettier', () => {
   it.each([
+    ['javascript', 'babel', 'const a={value:1}'],
+    ['typescript', 'typescript', 'const a:number=1'],
+    ['html', 'html', "<main class = 'demo'><p>hello</p></main>"],
+    ['angular', 'angular', '<p>{{value}}</p>'],
+    ['css', 'css', 'body{color:red}'],
+    ['less', 'less', '@color:red;body{color:@color}'],
+    ['scss', 'scss', '$color:red;body{color:$color}'],
+    ['xml', 'xml', '<root><item value="1"/></root>'],
+    ['json', 'json', '{"value":1}'],
+    ['yaml', 'yaml', 'value:  [1,2]'],
+    ['php', 'php', '<?php $value=1;'],
+    ['java', 'java', 'class Main{int value=1;}'],
+    ['graphql', 'graphql', 'query Demo{user{id name}}'],
+  ])('formats %s consistently', async (languageId, parser, source) => {
+    const options = { languageId, parser }
+    const result = await formatViaPrettier(source, options)
+    expect(result.trim()).not.toBe(source)
+    expect(await formatViaPrettier(result, options)).toBe(result)
+  })
+
+  it.each([
+    ['yaml', 'value:  [1,2]', 'value: [1, 2]'],
+    ['graphql', 'query Demo{user{id name}}', 'query Demo {'],
+  ])(
+    'formats %s code fences in Markdown',
+    async (language, source, expected) => {
+      const result = await formatViaPrettier(
+        [`\`\`\`${language}`, source, '```'].join('\n'),
+        { languageId: LANGUAGE_ID.markdown, parser: 'markdown' },
+      )
+      expect(result).toContain(expected)
+    },
+  )
+
+  it('formats HTML code fences in Markdown', async () => {
+    const result = await formatViaPrettier(
+      '```html\n<div><p>hello</p><p>world</p></div>\n```',
+      {
+        languageId: LANGUAGE_ID.markdown,
+        parser: 'markdown',
+      },
+    )
+    expect(result).toContain('<div>\n  <p>hello</p>\n  <p>world</p>\n</div>')
+  })
+
+  it.each([
     ['vue', '<script setup lang="ts">const x:number=1</script>'],
     ['svelte', '<script lang="ts">let x:number=1</script><p>{x}</p>'],
     ['markdown', '```typescript\nconst x:number=1\n```'],

@@ -13,6 +13,14 @@ afterEach(() => {
 })
 
 describe('workspace utilities', () => {
+  it('rejects filenames that match inherited object properties', async () => {
+    const jobs = await createFormatJobsFromFiles([
+      new File(['source'], 'file.constructor'),
+      new File(['source'], 'file.__proto__'),
+    ])
+    expect(jobs).toEqual([])
+  })
+
   it('creates format jobs for supported non-empty files only', async () => {
     const files = [
       new File(['const a=1'], 'index.ts'),

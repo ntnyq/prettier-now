@@ -58,40 +58,54 @@ export default defineConfig({
     baseIconPath: 'assets/images/icon.png',
   },
 
-  manifest: {
-    default_locale: 'en',
-    description: '__MSG_appDescription__',
-    homepage_url: 'https://github.com/ntnyq/prettier-now',
-    name: '__MSG_appName__',
-    permissions: ['storage', 'contextMenus', 'activeTab'],
-    commands: {
-      formatFocusedEditor: {
-        description: '__MSG_formatFocusedEditor__',
-      },
-      openOptionsPage: {
-        description: '__MSG_openOptionsPage__',
-        suggested_key: {
-          default: 'Alt+O',
-        },
-      },
-    },
-    // Browser.Manifest.WebExtensionManifestCommandsType
-    content_security_policy: {
-      // Required by wasm-based parser/runtime chunks used by formatter plugins.
-      // This applies only to extension pages (not web pages) under MV3.
-      extension_pages: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`,
-    },
-    web_accessible_resources: [
-      {
-        matches: ['<all_urls>'],
-        resources: ['focused-editor-formatter.html', 'chunks/*'],
-      },
-    ],
-  },
-
   modules: [
     '@wxt-dev/auto-icons',
     '@wxt-dev/module-vue',
     '@wxt-dev/i18n/module',
   ],
+
+  manifest({ browser }) {
+    return {
+      ...(browser === 'firefox'
+        ? {
+            browser_specific_settings: {
+              gecko: {
+                id: '{883cdd3a-c895-4644-8605-209f643f5fe4}',
+                data_collection_permissions: {
+                  required: ['none'],
+                },
+              },
+            },
+          }
+        : {}),
+      default_locale: 'en',
+      description: '__MSG_appDescription__',
+      homepage_url: 'https://github.com/ntnyq/prettier-now',
+      name: '__MSG_appName__',
+      permissions: ['storage', 'contextMenus', 'activeTab'],
+      commands: {
+        formatFocusedEditor: {
+          description: '__MSG_formatFocusedEditor__',
+        },
+        openOptionsPage: {
+          description: '__MSG_openOptionsPage__',
+          suggested_key: {
+            default: 'Alt+O',
+          },
+        },
+      },
+      // Browser.Manifest.WebExtensionManifestCommandsType
+      content_security_policy: {
+        // Required by wasm-based parser/runtime chunks used by formatter plugins.
+        // This applies only to extension pages (not web pages) under MV3.
+        extension_pages: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`,
+      },
+      web_accessible_resources: [
+        {
+          matches: ['<all_urls>'],
+          resources: ['focused-editor-formatter.html', 'chunks/*'],
+        },
+      ],
+    }
+  },
 })

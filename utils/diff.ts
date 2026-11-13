@@ -55,7 +55,10 @@ export function createLineDiff(before: string, after: string) {
   const beforeLines = splitLines(before)
   const afterLines = splitLines(after)
 
-  if (beforeLines.length * afterLines.length > MAX_DIFF_MATRIX_CELLS) {
+  if (
+    (beforeLines.length + 1) * (afterLines.length + 1)
+    > MAX_DIFF_MATRIX_CELLS
+  ) {
     return [
       {
         id: 'truncated',

@@ -16,6 +16,26 @@ vi.mock('#imports', () => ({
 }))
 
 describe('useStorage', () => {
+  it('recovers local edits and remote updates after hydration fails', async () => {
+    const { useStorage } = await import('@/composables/storage')
+    const hydration = Promise.withResolvers<unknown>()
+    storageMock.getItem.mockReturnValue(hydration.promise)
+    const value = useStorage('records', ['default'])
+    value.value.push('local edit')
+    hydration.reject(new Error('Storage unavailable'))
+    await vi.waitFor(() =>
+      expect(storageMock.setItem).toHaveBeenCalledWith('local:records', [
+        'default',
+        'local edit',
+      ]),
+    )
+    await nextTick()
+    storageMock.watch.mock.calls.find(([key]) => key === 'local:records')![1]([
+      'remote',
+    ])
+    expect(value.value).toEqual(['remote'])
+  })
+
   beforeEach(() => {
     storageMock.getItem.mockReset()
     storageMock.setItem.mockReset()

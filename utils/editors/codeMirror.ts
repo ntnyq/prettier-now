@@ -126,6 +126,14 @@ export class CodeMirrorEditor {
    * @param value - New editor content.
    */
   public setValue(value: string) {
+    if (
+      this.isCodeMirrorV6
+        ? this.editor.state.readOnly
+          || this.editor.contentDOM?.getAttribute('contenteditable') === 'false'
+        : this.editor.getOption?.('readOnly')
+    ) {
+      throw new Error('Editor is read-only')
+    }
     if (this.isCodeMirrorV6) {
       // https://codemirror.net/examples/change/
       return this.editor.dispatch({

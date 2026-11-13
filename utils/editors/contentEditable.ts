@@ -82,6 +82,12 @@ export class ContentEditableEditor {
    * @param value - New text content.
    */
   public setValue(value: string) {
+    if (
+      !ContentEditableEditor.validate(this.editor)
+      || this.editor.getAttribute('aria-readonly') === 'true'
+    ) {
+      throw new Error('Editor is read-only')
+    }
     const fragment = document.createDocumentFragment()
     for (const [index, line] of value.split('\n').entries()) {
       if (index) {

@@ -106,7 +106,7 @@ export function createFormatHistoryEntry(params: {
   const formattedAt = params.formattedAt ?? Date.now()
 
   return {
-    id: `${params.fileName}-${params.languageId}-${formattedAt}`,
+    id: crypto.randomUUID(),
     fileName: params.fileName,
     languageId: params.languageId,
     sourceCode: params.sourceCode,

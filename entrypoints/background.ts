@@ -34,14 +34,28 @@ export async function registerContextMenus(t: BackgroundMessageTranslator) {
 export default defineBackground({
   type: 'module',
   main() {
-    async function formatFocusedTab(tabId?: number) {
-      if (!tabId) {
+    async function formatFocusedTab(tabId?: number, frameId?: number) {
+      if (tabId === undefined) {
         return
       }
 
-      await browser.tabs.sendMessage(tabId, {
-        type: FOCUSED_EDITOR_MESSAGE.formatFocusedEditor,
-      })
+      try {
+        await browser.tabs.sendMessage(
+          tabId,
+          {
+            type: FOCUSED_EDITOR_MESSAGE.formatFocusedEditor,
+            requireFocus: frameId === undefined,
+          },
+          frameId === undefined ? undefined : { frameId },
+        )
+      } catch (error) {
+        // Restricted pages and tabs opened before installation have no receiver.
+        console.warn(
+          error instanceof Error
+            ? error.message
+            : 'Focused editor is unavailable',
+        )
+      }
     }
 
     async function formatActiveTab() {
@@ -60,7 +74,7 @@ export default defineBackground({
 
     browser.contextMenus.onClicked.addListener(async (params, tab) => {
       if (params.menuItemId === CONTEXT_MENU_ID.formatFocusedEditor) {
-        await formatFocusedTab(tab?.id)
+        await formatFocusedTab(tab?.id, params.frameId ?? 0)
         return
       }
 

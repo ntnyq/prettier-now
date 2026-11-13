@@ -172,6 +172,8 @@ function writeFocusedEditor(requestId: string, value: string) {
 
 export default defineContentScript({
   matches: MATCHES,
+  allFrames: true,
+  matchAboutBlank: true,
   world: 'MAIN',
   main() {
     for (const eventName of ['contextmenu', 'focusin', 'pointerdown']) {

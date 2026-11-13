@@ -100,6 +100,7 @@ function clearHistory() {
           <div class="flex items-start justify-between gap-3">
             <button
               @click="restoreEntry(entry.id)"
+              :disabled="!entry.sourceCode && !entry.resultCode"
               type="button"
               class="min-w-0 flex-1 text-left"
             >

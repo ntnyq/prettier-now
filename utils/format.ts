@@ -96,6 +96,19 @@ export async function formatViaPrettier(
       languagePlugins.push(typescriptPlugin)
     }
   }
+  if (
+    languageId === LANGUAGE_ID.markdown
+    && formatOptions.embeddedLanguageFormatting !== 'off'
+  ) {
+    const embeddedPlugins = await Promise.all(
+      [LANGUAGE_ID.html, LANGUAGE_ID.yaml, LANGUAGE_ID.graphql].map(language =>
+        loadPrettierPlugin(language),
+      ),
+    )
+    languagePlugins.push(
+      ...embeddedPlugins.filter(plugin => plugin !== undefined),
+    )
+  }
   const languageOptions =
     languageId === LANGUAGE_ID.pug ? PUG_DEFAULT_FORMAT_OPTIONS : {}
 

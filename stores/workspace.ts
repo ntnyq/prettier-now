@@ -48,6 +48,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     FormatHistoryEntryListSchema,
   )
   const formatRequests = new Map<string, symbol>()
+  let fileLoadRevision = 0
 
   const optionsStore = useOptionsStore()
   const logStore = useLogStore()
@@ -69,6 +70,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   const sourceCode = computed({
     get: () => activeJob.value?.sourceCode ?? '',
     set(value) {
+      fileLoadRevision += 1
       const job = ensureActiveJob()
       patchJob(job.id, {
         sourceCode: value,
@@ -128,6 +130,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   }
 
   function removeJob(id: string) {
+    fileLoadRevision += 1
     const nextJobs = jobs.value.filter(job => job.id !== id)
 
     jobs.value = nextJobs.length
@@ -142,12 +145,14 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   }
 
   function clearWorkspace() {
+    fileLoadRevision += 1
     invalidateFormatRequest()
     jobs.value = [createManualJob(languageId.value)]
     activeJobId.value = MANUAL_JOB_ID
   }
 
   function setLanguageId(id: string) {
+    fileLoadRevision += 1
     const job = ensureActiveJob()
     invalidateFormatRequest(job.id)
     jobs.value = jobs.value.map(item =>
@@ -160,7 +165,23 @@ export const useWorkspaceStore = defineStore('workspace', () => {
       return
     }
 
-    const nextJobs = await createFormatJobsFromFiles(files)
+    const revision = ++fileLoadRevision
+    let nextJobs: FormatJob[]
+    try {
+      nextJobs = await createFormatJobsFromFiles(files)
+    } catch (error) {
+      if (revision === fileLoadRevision) {
+        const message =
+          error instanceof Error ? error.message : 'Failed to read files'
+        Logger.error(message)
+        Toast.error(message)
+      }
+      return
+    }
+
+    if (revision !== fileLoadRevision) {
+      return
+    }
 
     if (!nextJobs.length) {
       Logger.warn(i18n.t('unsupportedFileFormat'))
@@ -331,10 +352,11 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   function restoreHistoryEntry(id: string) {
     const entry = formatHistory.value.find(item => item.id === id)
 
-    if (!entry) {
+    if (!entry || (!entry.sourceCode && !entry.resultCode)) {
       return false
     }
 
+    fileLoadRevision += 1
     invalidateFormatRequest()
     jobs.value = [
       {

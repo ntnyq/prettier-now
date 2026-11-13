@@ -27,8 +27,6 @@ const model = defineModel<number>({ required: true })
 <template>
   <NumberField
     v-model="model"
-    :aria-describedby="props.ariaDescribedby"
-    :aria-labelledby="props.ariaLabelledby"
     :max="props.max"
     :min="props.min"
     :step="props.step"
@@ -36,7 +34,10 @@ const model = defineModel<number>({ required: true })
   >
     <NumberFieldContent>
       <NumberFieldDecrement />
-      <NumberFieldInput />
+      <NumberFieldInput
+        :aria-describedby
+        :aria-labelledby
+      />
       <NumberFieldIncrement />
     </NumberFieldContent>
   </NumberField>

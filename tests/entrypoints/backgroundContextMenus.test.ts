@@ -33,9 +33,27 @@ vi.mock('#imports', () => ({
   defineBackground: vi.fn(options => options),
 }))
 
-const { registerContextMenus } = await import('@/entrypoints/background')
+const { default: background, registerContextMenus } =
+  await import('@/entrypoints/background')
 
 describe('background context menus', () => {
+  it('routes editor actions to the frame that opened the context menu', async () => {
+    background.main()
+    const click =
+      browserMock.contextMenus.onClicked.addListener.mock.lastCall![0]
+    await click({ menuItemId: 'format-focused-editor', frameId: 7 }, { id: 1 })
+    expect(browserMock.tabs.sendMessage).toHaveBeenCalledWith(
+      1,
+      {
+        type: 'prettier-now:format-focused-editor',
+        requireFocus: false,
+      },
+      { frameId: 7 },
+    )
+    browserMock.contextMenus.create.mockClear()
+    browserMock.contextMenus.removeAll.mockClear()
+  })
+
   it('clears existing menus before registering fixed menu ids', async () => {
     await registerContextMenus(key => key)
 

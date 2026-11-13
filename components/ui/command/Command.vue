@@ -47,6 +47,7 @@ function filterItems() {
 
   // Reset the groups
   filterState.filtered.groups = new Set()
+  filterState.filtered.items = new Map()
   let itemCount = 0
 
   // Check which items should be included
@@ -72,10 +73,11 @@ function filterItems() {
 }
 
 watch(
-  () => filterState.search,
+  [() => filterState.search, allItems, allGroups],
   () => {
     filterItems()
   },
+  { deep: true },
 )
 
 provideCommandContext({

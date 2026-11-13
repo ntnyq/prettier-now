@@ -22,9 +22,13 @@ const ERROR_TOAST_ID = 'prettier-now-focused-editor-error'
 const FORMATTER_FRAME_ID = 'prettier-now-focused-editor-formatter'
 
 let formatterFramePromise: Promise<HTMLIFrameElement> | undefined
+let formatterFrame: HTMLIFrameElement | undefined
 
 function createRequestId() {
-  return crypto.randomUUID()
+  // Content scripts also run on HTTP pages, where randomUUID is unavailable.
+  return Array.from(crypto.getRandomValues(new Uint8Array(16)), byte =>
+    byte.toString(16).padStart(2, '0'),
+  ).join('')
 }
 
 function getExtensionOrigin() {
@@ -32,36 +36,47 @@ function getExtensionOrigin() {
 }
 
 function getFormatterFrame() {
-  if (formatterFramePromise) {
+  if (formatterFramePromise && formatterFrame?.isConnected) {
     return formatterFramePromise
   }
 
+  const frame = document.createElement('iframe')
+  formatterFrame = frame
+
   formatterFramePromise = new Promise((resolve, reject) => {
-    const existingFrame = document.querySelector<HTMLIFrameElement>(
-      `#${FORMATTER_FRAME_ID}`,
-    )
-
-    if (existingFrame?.contentWindow) {
-      resolve(existingFrame)
-      return
-    }
-
-    const frame = document.createElement('iframe')
-
     frame.id = FORMATTER_FRAME_ID
     frame.src = browser.runtime.getURL(`/${FOCUSED_EDITOR_FORMATTER_PAGE}`)
     frame.style.display = 'none'
     frame.setAttribute('aria-hidden', 'true')
 
-    frame.addEventListener('load', () => resolve(frame), { once: true })
-    frame.addEventListener(
-      'error',
-      () => {
-        formatterFramePromise = undefined
-        reject(new Error('Failed to load formatter runtime'))
-      },
-      { once: true },
+    const timeoutId = window.setTimeout(
+      handleError,
+      FOCUSED_EDITOR_FORMAT_TIMEOUT,
     )
+
+    function cleanup() {
+      window.clearTimeout(timeoutId)
+      frame.removeEventListener('load', handleLoad)
+      frame.removeEventListener('error', handleError)
+    }
+
+    function handleLoad() {
+      cleanup()
+      resolve(frame)
+    }
+
+    function handleError() {
+      cleanup()
+      frame.remove()
+      if (formatterFrame === frame) {
+        formatterFrame = undefined
+        formatterFramePromise = undefined
+      }
+      reject(new Error('Failed to load formatter runtime'))
+    }
+
+    frame.addEventListener('load', handleLoad, { once: true })
+    frame.addEventListener('error', handleError, { once: true })
 
     document.documentElement.append(frame)
   })
@@ -83,7 +98,7 @@ function waitForEditorValue(requestId: string) {
       const detail = (evt as CustomEvent<FocusedEditorGetValueResponseDetail>)
         .detail
 
-      if (detail.requestId !== requestId) {
+      if (!detail || detail.requestId !== requestId) {
         return
       }
 
@@ -121,7 +136,7 @@ function waitForEditorWrite(requestId: string, value: string) {
       const detail = (evt as CustomEvent<FocusedEditorSetValueResponseDetail>)
         .detail
 
-      if (detail.requestId !== requestId) {
+      if (!detail || detail.requestId !== requestId) {
         return
       }
 
@@ -160,12 +175,14 @@ async function formatViaFormatterFrame(
   return new Promise<string>((resolve, reject) => {
     const timeoutId = window.setTimeout(() => {
       window.removeEventListener('message', handleResponse)
+      frame.remove()
       reject(new Error('Formatter runtime timed out'))
     }, FOCUSED_EDITOR_FORMAT_TIMEOUT)
 
     function handleResponse(evt: MessageEvent<FocusedEditorFormatterResponse>) {
       if (
         evt.origin !== getExtensionOrigin()
+        || evt.source !== targetWindow
         || evt.data?.type !== FOCUSED_EDITOR_MESSAGE.formatterFormatResponse
         || evt.data.requestId !== requestId
       ) {
@@ -246,10 +263,25 @@ function showErrorMessage(message: string) {
 
 export default defineContentScript({
   matches: MATCHES,
+  allFrames: true,
+  matchAboutBlank: true,
   main() {
     browser.runtime.onMessage.addListener(async message => {
       if (message?.type !== FOCUSED_EDITOR_MESSAGE.formatFocusedEditor) {
         return
+      }
+
+      if (message.requireFocus) {
+        let activeElement = document.activeElement
+        while (activeElement?.shadowRoot?.activeElement) {
+          activeElement = activeElement.shadowRoot.activeElement
+        }
+        if (
+          !document.hasFocus()
+          || activeElement instanceof HTMLIFrameElement
+        ) {
+          return
+        }
       }
 
       try {

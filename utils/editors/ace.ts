@@ -53,6 +53,9 @@ export class AceEditor {
    * @param value - New editor content.
    */
   public setValue(value: string) {
+    if (this.editor.getReadOnly?.()) {
+      throw new Error('Editor is read-only')
+    }
     this.editor.setValue(value)
   }
 }
