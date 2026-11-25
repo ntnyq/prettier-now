@@ -21,6 +21,7 @@ describe('options preset utilities', () => {
     }
     const first = createOptionsPreset(params)
     const second = createOptionsPreset(params)
+
     expect(first.id).not.toBe(second.id)
     expect(upsertOptionsPreset([first], second)).toHaveLength(2)
   })
@@ -79,6 +80,7 @@ describe('options preset utilities', () => {
 
   it('round-trips zero width settings accepted by the formatter', () => {
     const snapshot = createDefaultOptionsSnapshot()
+
     snapshot.options.printWidth = 0
     snapshot.options.tabWidth = 0
     expect(parseOptionsSnapshot(stringifyOptionsSnapshot(snapshot))).toEqual(
@@ -129,6 +131,7 @@ describe('options preset utilities', () => {
         snapshot: legacySnapshot,
       },
     ])
+
     expect(result[0]?.snapshot).toEqual(migrated)
     expect(parseOptionsSnapshot(JSON.stringify(migrated))).toEqual(migrated)
   })

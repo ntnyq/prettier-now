@@ -82,6 +82,7 @@ describe('navbar actions', () => {
     routeMock.name = 'Home'
     vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
       callback(0)
+
       return 0
     })
   })

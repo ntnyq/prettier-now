@@ -16,9 +16,11 @@ export class AceEditor implements EditorAdapter {
    */
   constructor(element: HTMLElement) {
     const editor = AceEditor.resolveEditor(element)
+
     if (!editor) {
       throw new Error('Ace editor is unavailable')
     }
+
     this.editor = editor
   }
 
@@ -55,6 +57,7 @@ export class AceEditor implements EditorAdapter {
         })
       | null
     const editor = wrapper?.env?.editor
+
     return editor
       && typeof editor.getValue === 'function'
       && typeof editor.setValue === 'function'
@@ -80,6 +83,7 @@ export class AceEditor implements EditorAdapter {
     if (this.editor.getReadOnly?.()) {
       throw new Error('Editor is read-only')
     }
+
     this.editor.setValue(value)
   }
 }

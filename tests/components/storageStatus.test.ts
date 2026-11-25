@@ -11,6 +11,7 @@ describe('storage failure status', () => {
   it('keeps failures visible until the affected key succeeds', async () => {
     storageErrors.value = {}
     const wrapper = mount(StorageStatus)
+
     expect(wrapper.find('[role="alert"]').exists()).toBe(false)
     reportStorageError('local:semi', new Error('Quota exceeded'))
     reportStorageError('local:printWidth', new Error('Unavailable'))

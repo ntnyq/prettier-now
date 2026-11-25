@@ -79,20 +79,24 @@ function normalizeHistoryEntry(entry: FormatHistoryEntry) {
 export function normalizeFormatHistoryEntries(entries: FormatHistoryEntry[]) {
   const result: FormatHistoryEntry[] = []
   let bytes = 2 // JSON array brackets.
+
   for (const entry of entries.slice(0, MAX_FORMAT_HISTORY_ENTRIES)) {
     let normalized = normalizeHistoryEntry(entry)
     let entryBytes =
       getTextByteLength(JSON.stringify(normalized)) + (result.length ? 1 : 0)
+
     if (bytes + entryBytes > MAX_FORMAT_HISTORY_STORAGE_BYTES) {
       normalized = { ...normalized, sourceCode: '', resultCode: '' }
       entryBytes =
         getTextByteLength(JSON.stringify(normalized)) + (result.length ? 1 : 0)
     }
+
     if (bytes + entryBytes <= MAX_FORMAT_HISTORY_STORAGE_BYTES) {
       result.push(normalized)
       bytes += entryBytes
     }
   }
+
   return result
 }
 

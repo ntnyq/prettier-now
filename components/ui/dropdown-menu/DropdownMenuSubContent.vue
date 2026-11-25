@@ -11,6 +11,7 @@ import type { HTMLAttributes } from 'vue'
 const props = defineProps<
   DropdownMenuSubContentProps & { class?: HTMLAttributes['class'] }
 >()
+
 const emit = defineEmits<DropdownMenuSubContentEmits>()
 
 const delegatedProps = reactiveOmit(props, 'class')

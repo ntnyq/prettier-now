@@ -12,6 +12,7 @@ describe('codemirror pug language', () => {
       extensions: language ? [language] : [],
     })
     const classes: string[] = []
+
     highlightTree(syntaxTree(state), classHighlighter, (_from, _to, tokens) => {
       classes.push(tokens)
     })

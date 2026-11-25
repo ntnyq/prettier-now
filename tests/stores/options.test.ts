@@ -10,6 +10,7 @@ import { resolveFormatOptions } from '@/utils/resolveFormatOptions'
 const stored = vi.hoisted(() => ({
   values: new Map<string, unknown>(),
 }))
+
 vi.mock('#imports', () => ({
   storage: {
     getItem: async (key: string) => stored.values.get(key) ?? null,
@@ -31,6 +32,7 @@ describe('Tombi settings in the options store', () => {
     stored.values.set('local:semi', false)
     stored.values.set('local:printWidth', 120)
     const store = useOptionsStore()
+
     await store.resetOptions()
     expect(store.semi).toBe(true)
     expect(store.printWidth).toBe(80)
@@ -40,6 +42,7 @@ describe('Tombi settings in the options store', () => {
   it('merges concurrent edits to different TOML fields', async () => {
     const first = useOptionsStore(createPinia())
     const second = useOptionsStore(createPinia())
+
     await flushPromises()
     first.tomlPluginOptions.stringQuoteStyle = 'single'
     second.tomlPluginOptions.arrayBracketSpaceWidth = 2
@@ -54,6 +57,7 @@ describe('Tombi settings in the options store', () => {
     stored.values.set('local:alignComments', true)
     stored.values.set('local:indentTables', true)
     const store = useOptionsStore()
+
     await flushPromises()
     expect(store.tomlPluginOptions).toMatchObject({
       trailingCommentAlignment: true,
@@ -82,6 +86,7 @@ describe('Tombi settings in the options store', () => {
     stored.values.set('local:entrypoint', 'block')
     stored.values.set('local:svelteSortOrder', 'none')
     const store = useOptionsStore()
+
     await flushPromises()
     expect(store.semi).toBe(true)
     expect(store.singleQuote).toBe(true)
@@ -97,6 +102,7 @@ describe('Tombi settings in the options store', () => {
 
   it('captures, restores and resets plugin preferences through presets', async () => {
     const store = useOptionsStore()
+
     await nextTick()
     store.tomlPluginOptions.stringQuoteStyle = 'preserve'
     store.tomlPluginOptions.arrayBracketSpaceWidth = 0

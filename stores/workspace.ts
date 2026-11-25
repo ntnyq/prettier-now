@@ -66,6 +66,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     set(value) {
       fileLoadRevision += 1
       const job = ensureActiveJob()
+
       patchJob(job.id, {
         sourceCode: value,
         resultCode: '',
@@ -80,6 +81,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     get: () => activeJob.value?.resultCode ?? '',
     set(value) {
       const job = ensureActiveJob()
+
       patchJob(job.id, { resultCode: value })
     },
   })
@@ -99,8 +101,10 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     }
 
     const job = createManualJob()
+
     jobs.value = [job]
     activeJobId.value = job.id
+
     return job
   }
 
@@ -153,6 +157,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
   function setLanguageId(id: LanguageId) {
     fileLoadRevision += 1
     const job = ensureActiveJob()
+
     invalidateFormatRequest(job.id)
     jobs.value = jobs.value.map(item =>
       item.id === job.id ? updateFormatJobLanguage(item, id) : item,
@@ -170,6 +175,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
 
     const revision = ++fileLoadRevision
     let nextJobs: FormatJob[]
+
     try {
       nextJobs = await createFormatJobsFromFiles(files)
     } catch (error) {
@@ -187,6 +193,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         status: 'superseded',
       }
     }
+
     if (!nextJobs.length) {
       return {
         status: 'unsupported',
@@ -199,11 +206,13 @@ export const useWorkspaceStore = defineStore('workspace', () => {
 
     const importedWorkspaceRevision = ++workspaceRevision
     const result = await formatJobs(nextJobs.map(job => job.id))
+
     if (importedWorkspaceRevision !== workspaceRevision) {
       return {
         status: 'superseded',
       }
     }
+
     return {
       status: 'imported',
       ...result,
@@ -212,11 +221,13 @@ export const useWorkspaceStore = defineStore('workspace', () => {
 
   async function formatActiveJob(): Promise<FormatJobResult> {
     const job = activeJob.value
+
     if (!job?.sourceCode) {
       return {
         status: 'empty',
       }
     }
+
     return formatJob(job.id)
   }
 
@@ -227,7 +238,9 @@ export const useWorkspaceStore = defineStore('workspace', () => {
 
     for (const id of jobIds) {
       const result = await formatJob(id, snapshot)
+
       results.push(result)
+
       if (result.status === 'formatted') {
         successCount += 1
       }
@@ -253,8 +266,10 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     }
 
     const requestId = Symbol(id)
+
     formatRequests.set(id, requestId)
     const formatStartTime = window.performance.now()
+
     patchJob(id, {
       status: 'formatting',
       errorMessage: '',
@@ -295,6 +310,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         fileName: job.fileName,
         languageId: job.languageId,
       })
+
       return {
         status: 'formatted',
       }
@@ -317,6 +333,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         fileName: job.fileName,
         languageId: job.languageId,
       })
+
       return {
         status: 'error',
         message,

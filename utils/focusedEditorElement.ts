@@ -61,6 +61,7 @@ export function resolveFocusedEditorElement() {
 
   if (activeEditorElement) {
     lastFocusedEditorElement = activeEditorElement
+
     return activeEditorElement
   }
 
@@ -69,5 +70,6 @@ export function resolveFocusedEditorElement() {
   }
 
   clearFocusedEditorElement()
+
   return null
 }

@@ -20,6 +20,7 @@ watch(
     }
 
     const timer = setTimeout(() => formatActiveJob(), 300)
+
     onCleanup(() => clearTimeout(timer))
   },
 )

@@ -31,6 +31,7 @@ function updateOverflowState() {
 
   if (!element) {
     isOverflowing.value = false
+
     return
   }
 

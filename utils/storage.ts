@@ -7,10 +7,12 @@
 export function normalizeStoredArray(input: unknown): unknown {
   if (input !== null && typeof input === 'object' && !Array.isArray(input)) {
     const entries = Object.entries(input)
+
     if (entries.every(([key], index) => key === String(index))) {
       return entries.map(([, item]) => item)
     }
   }
+
   return input
 }
 
@@ -25,6 +27,7 @@ export function areStorageValuesEqual(left: unknown, right: unknown): boolean {
   if (Object.is(left, right)) {
     return true
   }
+
   if (
     !left
     || !right
@@ -34,8 +37,10 @@ export function areStorageValuesEqual(left: unknown, right: unknown): boolean {
   ) {
     return false
   }
+
   const leftEntries = Object.entries(left)
   const rightEntries = Object.entries(right)
+
   if (
     Array.isArray(left)
     && Array.isArray(right)
@@ -43,10 +48,13 @@ export function areStorageValuesEqual(left: unknown, right: unknown): boolean {
   ) {
     return false
   }
+
   if (leftEntries.length !== rightEntries.length) {
     return false
   }
+
   const rightValues = new Map(rightEntries)
+
   return leftEntries.every(
     ([key, value]) =>
       rightValues.has(key)
@@ -75,10 +83,13 @@ export function getStorageFieldChanges(
   ) {
     return undefined
   }
+
   if (Object.keys(previous).some(key => !Object.hasOwn(next, key))) {
     return undefined
   }
+
   const previousValues = new Map(Object.entries(previous))
+
   return Object.fromEntries(
     Object.entries(next).filter(
       ([key, value]) => !areStorageValuesEqual(value, previousValues.get(key)),

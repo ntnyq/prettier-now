@@ -51,6 +51,7 @@ handleFileDialogChange(async files => {
 async function copyResult() {
   if (!workspaceStore.resultCode) {
     Logger.warn(i18n.t('nothingToCopy'))
+
     return Toast.info(i18n.t('nothingToCopy'))
   }
 

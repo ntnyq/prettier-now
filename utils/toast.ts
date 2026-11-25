@@ -69,6 +69,7 @@ export const Toast = {
 
     if (isError) {
       toast.error(msg, sonnerOptions)
+
       return
     }
 

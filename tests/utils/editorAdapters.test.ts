@@ -14,6 +14,7 @@ afterEach(() => {
 describe('editor adapters', () => {
   it('uses the native textarea setter when insertText is unavailable', () => {
     const textarea = document.createElement('textarea')
+
     textarea.value = 'original'
     const native = Object.getOwnPropertyDescriptor(
       HTMLTextAreaElement.prototype,
@@ -22,6 +23,7 @@ describe('editor adapters', () => {
     const trackedSetter = vi.fn((value: string) =>
       native.set!.call(textarea, value),
     )
+
     Object.defineProperty(textarea, 'value', {
       get: () => native.get!.call(textarea),
       set: trackedSetter,
@@ -37,6 +39,7 @@ describe('editor adapters', () => {
     'preserves %s textareas',
     property => {
       const textarea = document.createElement('textarea')
+
       textarea.value = 'original'
       textarea[property] = true
       expect(() =>
@@ -54,6 +57,7 @@ describe('editor adapters', () => {
       }),
       parent: document.body,
     })
+
     try {
       expect(() =>
         new CodeMirrorEditor(view.contentDOM).setValue('replacement'),
@@ -76,6 +80,7 @@ describe('editor adapters', () => {
         },
       },
     })
+
     wrapper.className = 'ace_editor'
     expect(() => new AceEditor(wrapper).setValue('replacement')).toThrow(
       'read-only',
@@ -92,9 +97,11 @@ describe('editor adapters', () => {
         },
       },
     })
+
     wrapper.className = 'CodeMirror'
     document.body.append(wrapper)
     const adapter = new CodeMirrorEditor(wrapper)
+
     expect(adapter.getValue()).toBe(source)
     adapter.setValue('const a = 1;\n')
     expect(source).toBe('const a = 1;\n')
@@ -105,8 +112,10 @@ describe('editor adapters', () => {
       state: EditorState.create({ doc: 'const a=1' }),
       parent: document.body,
     })
+
     try {
       const adapter = new CodeMirrorEditor(view.contentDOM)
+
       expect(adapter.getValue()).toBe('const a=1')
       adapter.setValue('const a = 1;\n')
       expect(view.state.doc.toString()).toBe('const a = 1;\n')
@@ -117,11 +126,13 @@ describe('editor adapters', () => {
 
   it('preserves visible line breaks in contenteditable source and output', () => {
     const element = document.createElement('div')
+
     element.contentEditable = 'true'
     element.innerHTML =
       '<div>const a=1 // comment</div><div>const b=2<br>const c=3</div>'
     document.body.append(element)
     const adapter = new ContentEditableEditor(element)
+
     expect(adapter.getValue()).toBe(
       'const a=1 // comment\nconst b=2\nconst c=3',
     )

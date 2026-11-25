@@ -12,9 +12,11 @@ const props = defineProps<
 >()
 
 const { filterState } = useCommand()
+
 const isRender = computed(
   () => !!filterState.search && filterState.filtered.count === 0,
 )
+
 const delegatedProps = reactiveOmit(props, 'class')
 </script>
 

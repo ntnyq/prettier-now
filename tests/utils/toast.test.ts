@@ -5,6 +5,7 @@ import { Toast } from '@/utils/toast'
 
 const toastMock = vi.hoisted(() => {
   const toast = vi.fn()
+
   return Object.assign(toast, {
     dismiss: vi.fn(),
     error: vi.fn(),
@@ -40,6 +41,7 @@ describe('Toast', () => {
 
   it('does not show messages when silent mode is enabled', () => {
     const configStore = useConfigStore()
+
     configStore.silent = true
 
     Toast.info('Saved')

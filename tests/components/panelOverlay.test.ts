@@ -68,6 +68,7 @@ describe('panel overlays', () => {
 
   it('confirms before clearing history entries', async () => {
     const appStore = useAppStore()
+
     appStore.setIsHistoryPanelVisible(true)
     useHistoryStore().entries = [
       {
@@ -104,6 +105,7 @@ describe('panel overlays', () => {
 
   it('confirms before clearing logs', async () => {
     const logStore = useLogStore()
+
     logStore.setIsLogPanelVisible(true)
     logStore.addLog({
       message: 'Formatted',
@@ -132,6 +134,7 @@ describe('panel overlays', () => {
 
   it('uses a wide dialog for diff and shows the empty state', () => {
     const appStore = useAppStore()
+
     appStore.setIsDiffPanelVisible(true)
 
     const wrapper = mount(DiffPanel, {
@@ -141,6 +144,7 @@ describe('panel overlays', () => {
     })
 
     const content = wrapper.find('[class*="min(520px,72vh)"]')
+
     expect(content.exists()).toBe(true)
     expect(content.classes()).toContain('w-[min(960px,96vw)]!')
     expect(content.classes()).toContain('max-w-[min(960px,96vw)]!')

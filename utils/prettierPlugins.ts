@@ -181,11 +181,13 @@ export async function loadPrettierPlugin(languageId?: LanguageId) {
   }
 
   const loader = prettierLoaders[cacheKey]
+
   if (!loader) {
     return
   }
 
   const prettierPlugin = resolvePrettierPlugin(await loader())
+
   if (prettierPlugin) {
     prettierPluginCache.set(cacheKey, prettierPlugin)
   }

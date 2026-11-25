@@ -97,6 +97,7 @@ export const useOptionsStore = defineStore('options', () => {
     java.apply(snapshot.javaPluginOptions)
     svelte.apply(snapshot.sveltePluginOptions)
     toml.set({ ...snapshot.tomlPluginOptions })
+
     return flushOptions()
   }
 
@@ -122,6 +123,7 @@ export const useOptionsStore = defineStore('options', () => {
     }
 
     await applySnapshot(preset.snapshot)
+
     return true
   }
 

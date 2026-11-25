@@ -33,7 +33,9 @@ export function useStoredCollection<Item extends JsonValue>(
     if (input === null) {
       return []
     }
+
     const result = v.safeParse(schema, normalizeStoredArray(input))
+
     return result.success ? result.output : undefined
   }
 
@@ -53,19 +55,23 @@ export function useStoredCollection<Item extends JsonValue>(
       return await withStorageLock(storageKey, async () => {
         const stored = await storage.getItem<unknown>(storageKey)
         const current = parse(stored)
+
         if (current === undefined && !options.reset) {
           throw new Error(`Invalid stored collection: ${key}`)
         }
+
         if (!transform && current !== undefined) {
           // Reading valid legacy data must not depend on a repair write.
           items.value = current
         }
+
         const next = transform
           ? v.parse(schema, transform(current ?? []))
           : (current ?? [])
         // Detach proxies and snapshot references before calling browser storage.
         // eslint-disable-next-line unicorn/prefer-structured-clone -- callers may supply Vue proxies.
         const snapshot = JSON.parse(JSON.stringify(next)) as Item[]
+
         if (
           transform
           || (current !== undefined
@@ -74,11 +80,13 @@ export function useStoredCollection<Item extends JsonValue>(
         ) {
           await storage.setItem(storageKey, snapshot)
         }
+
         items.value = snapshot
         reportStorageError(storageKey)
       })
     } catch (error) {
       reportStorageError(storageKey, error)
+
       throw error
     }
   }
@@ -87,6 +95,7 @@ export function useStoredCollection<Item extends JsonValue>(
     // Notifications may lag behind newer reads or writes; re-read under the lock.
     update().catch(() => {})
   })
+
   if (getCurrentScope()) {
     onScopeDispose(stop)
   }

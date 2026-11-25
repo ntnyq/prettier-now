@@ -4,6 +4,7 @@ import { readStoredFormatOptions } from '@/utils/formatOptions'
 const stored = vi.hoisted(() => ({
   values: new Map<string, unknown>(),
 }))
+
 vi.mock('#imports', () => ({
   storage: {
     getItem: async (key: string) => stored.values.get(key) ?? null,

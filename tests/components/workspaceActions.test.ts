@@ -12,6 +12,7 @@ import { ButtonStub, createNamedStubs, PassthroughStub } from '../helpers/vue'
 const formatter = vi.hoisted(() => ({
   format: vi.fn(async (source: string) => `${source}\n`),
 }))
+
 vi.mock('@/utils/format', () => ({
   formatViaPrettier: formatter.format,
 }))
@@ -40,6 +41,7 @@ describe('workspace actions', () => {
   it('logs each imported formatting outcome and reports the batch summary', async () => {
     formatter.format.mockRejectedValueOnce(new Error('Invalid syntax'))
     const { loadFiles } = useWorkspaceActions()
+
     await loadFiles([
       new File(['invalid'], 'a.ts'),
       new File(['const b=2'], 'b.ts'),
@@ -54,6 +56,7 @@ describe('workspace actions', () => {
     'does not report a stale batch after %s',
     async action => {
       const pending = Promise.withResolvers<string>()
+
       formatter.format.mockImplementationOnce(() => pending.promise)
       const store = useWorkspaceStore()
       const { loadFiles } = useWorkspaceActions()
@@ -61,7 +64,9 @@ describe('workspace actions', () => {
         new File(['const a=1'], 'a.ts'),
         new File(['const b=2'], 'b.ts'),
       ])
+
       await vi.waitFor(() => expect(formatter.format).toHaveBeenCalledOnce())
+
       if (action === 'clear') {
         store.clearWorkspace()
       } else if (action === 'replace') {
@@ -80,6 +85,7 @@ describe('workspace actions', () => {
           store.removeJob(job.id)
         }
       }
+
       pending.resolve('const a = 1;\n')
       await loading
       expect(store.sourceCode).toBe(
@@ -98,8 +104,10 @@ describe('workspace actions', () => {
 
   it('clears all files when the active file has been emptied', async () => {
     const pinia = createPinia()
+
     setActivePinia(pinia)
     const store = useWorkspaceStore()
+
     await store.loadFileList([
       new File(['const a=1'], 'a.ts'),
       new File(['const b=2'], 'b.ts'),
@@ -126,6 +134,7 @@ describe('workspace actions', () => {
         },
       },
     })
+
     await wrapper
       .findAll('button')
       .find(button => button.text() === 'clearAll')!

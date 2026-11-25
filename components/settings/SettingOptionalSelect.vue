@@ -19,6 +19,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
 const model = defineModel<T | null>({ required: true })
 
 const selectedValue = computed({

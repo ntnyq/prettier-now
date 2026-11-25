@@ -69,12 +69,14 @@ export default defineBackground({
 
     registerContextMenus(key => i18n.t(key)).catch((error: unknown) => {
       const message = (error as Error)?.message || 'Failed to register menus'
+
       console.error(message)
     })
 
     browser.contextMenus.onClicked.addListener(async (params, tab) => {
       if (params.menuItemId === CONTEXT_MENU_ID.formatFocusedEditor) {
         await formatFocusedTab(tab?.id, params.frameId ?? 0)
+
         return
       }
 

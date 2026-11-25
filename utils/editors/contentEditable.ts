@@ -22,21 +22,28 @@ function readEditableText(node: Node): string {
   if (node.nodeType === Node.TEXT_NODE) {
     return node.textContent ?? ''
   }
+
   if (node instanceof HTMLElement && node.tagName === 'BR') {
     return '\n'
   }
+
   let text = ''
+
   for (const child of node.childNodes) {
     const isBlock =
       child instanceof HTMLElement && BLOCK_TAGS.has(child.tagName)
+
     if (isBlock && text && !text.endsWith('\n')) {
       text += '\n'
     }
+
     text += readEditableText(child)
+
     if (isBlock && child.nextSibling && !text.endsWith('\n')) {
       text += '\n'
     }
   }
+
   return text
 }
 
@@ -66,6 +73,7 @@ export class ContentEditableEditor implements EditorAdapter {
    */
   public static validate(element: HTMLElement) {
     const value = element.getAttribute('contenteditable')?.toLowerCase()
+
     return ['', 'true', 'plaintext-only'].includes(value ?? 'false')
   }
 
@@ -90,13 +98,17 @@ export class ContentEditableEditor implements EditorAdapter {
     ) {
       throw new Error('Editor is read-only')
     }
+
     const fragment = document.createDocumentFragment()
+
     for (const [index, line] of value.split('\n').entries()) {
       if (index) {
         fragment.append(document.createElement('br'))
       }
+
       fragment.append(document.createTextNode(line))
     }
+
     this.editor.replaceChildren(fragment)
   }
 }

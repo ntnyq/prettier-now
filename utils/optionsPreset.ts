@@ -117,6 +117,7 @@ export function parseOptionsSnapshot(source: string) {
   }
 
   const result = v.safeParse(OptionsSnapshotSchema, parsed)
+
   if (!result.success) {
     throw new Error('Invalid options file')
   }

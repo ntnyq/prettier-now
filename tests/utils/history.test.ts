@@ -27,6 +27,7 @@ describe('format history utilities', () => {
   it('bounds serialized history even when source contains many escapes', () => {
     let entries: FormatHistoryEntry[] = []
     const source = `const s="${'\\\\'.repeat(32750)}";`
+
     for (let index = 0; index < 50; index++) {
       entries = addFormatHistoryEntry(entries, {
         ...createEntry(String(index), index),
@@ -34,6 +35,7 @@ describe('format history utilities', () => {
         resultCode: source,
       })
     }
+
     expect(new Blob([JSON.stringify(entries)]).size).toBeLessThanOrEqual(
       MAX_FORMAT_HISTORY_STORAGE_BYTES,
     )
@@ -47,6 +49,7 @@ describe('format history utilities', () => {
       resultCode: '',
     }))
     const normalized = v.parse(FormatHistoryEntryListSchema, entries)
+
     expect(normalized).toHaveLength(50)
     expect(new Blob([JSON.stringify(normalized)]).size).toBeLessThanOrEqual(
       MAX_FORMAT_HISTORY_STORAGE_BYTES,
@@ -85,6 +88,7 @@ describe('format history utilities', () => {
     const input = createEntry('same', 100)
     const first = createFormatHistoryEntry({ ...input })
     const second = createFormatHistoryEntry({ ...input })
+
     expect(first.id).not.toBe(second.id)
     expect(addFormatHistoryEntry([first], second)).toHaveLength(2)
   })
@@ -113,6 +117,7 @@ describe('format history utilities', () => {
 
   it('drops oversized source and result content before adding entries', () => {
     const entry = createEntry('large', 1)
+
     entry.sourceCode = 'x'.repeat(MAX_FORMAT_HISTORY_ENTRY_BYTES)
     entry.resultCode = 'y'
 

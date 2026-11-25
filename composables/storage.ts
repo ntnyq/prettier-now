@@ -104,11 +104,13 @@ export function useStorageBinding<V extends JsonValue>(
 
   function parseStorageValue(storageValue: unknown) {
     const normalized = normalizeStorageValue(storageValue)
+
     if (!schema) {
       return normalized as V
     }
 
     const result = v.safeParse(schema, normalized)
+
     return result.success ? result.output : undefined
   }
 
@@ -117,6 +119,7 @@ export function useStorageBinding<V extends JsonValue>(
    */
   function applyStorageValue(input: V) {
     isApplyingStorageValue = true
+
     try {
       value.value = cloneStorageValue(input)
       observedSnapshot = cloneStorageValue(input)
@@ -131,6 +134,7 @@ export function useStorageBinding<V extends JsonValue>(
   function acknowledgeRead() {
     readError = undefined
     hasReadError = false
+
     if (!hasFailedWrite) {
       reportStorageError(syncKey)
     }
@@ -143,11 +147,14 @@ export function useStorageBinding<V extends JsonValue>(
     if (pendingWrites || hasFailedWrite || !needsStorageRefresh) {
       return
     }
+
     needsStorageRefresh = false
     const revision = storageRevision
     const editRevision = localRevision
+
     try {
       const stored = await readStorageValue()
+
       if (
         pendingWrites
         || hasFailedWrite
@@ -156,10 +163,13 @@ export function useStorageBinding<V extends JsonValue>(
       ) {
         return
       }
+
       const parsedValue = stored === null ? fallback : parseStorageValue(stored)
+
       if (parsedValue !== undefined) {
         applyStorageValue(parsedValue)
       }
+
       acknowledgeRead()
     } catch (error) {
       if (
@@ -170,6 +180,7 @@ export function useStorageBinding<V extends JsonValue>(
       ) {
         return
       }
+
       readError = error
       hasReadError = true
       reportStorageError(syncKey, error)
@@ -185,6 +196,7 @@ export function useStorageBinding<V extends JsonValue>(
   function persistStorageValue(patch?: Record<string, unknown>) {
     const snapshot = cloneStorageValue(value.value)
     let attemptedPatch: Record<string, unknown> | undefined
+
     pendingWrites += 1
     writeQueue = writeQueue
       .then(async () => {
@@ -192,20 +204,26 @@ export function useStorageBinding<V extends JsonValue>(
           patch === undefined || (hasFailedWrite && failedPatch === undefined)
             ? undefined
             : { ...(hasFailedWrite ? failedPatch : {}), ...patch }
+
         if (!options.mergeFields) {
           await storage.setItem(syncKey, snapshot)
+
           return
         }
+
         await withStorageLock(syncKey, async () => {
           if (attemptedPatch === undefined) {
             await storage.setItem(syncKey, snapshot)
+
             return
           }
+
           const stored = await readStorageValue()
           const current =
             stored === null ? fallback : (parseStorageValue(stored) ?? fallback)
           const merged = Object.assign({}, current, attemptedPatch)
           const validated = schema ? v.parse(schema, merged) : merged
+
           await storage.setItem(syncKey, validated)
         })
         needsStorageRefresh = true
@@ -227,21 +245,27 @@ export function useStorageBinding<V extends JsonValue>(
       })
       .finally(() => {
         pendingWrites -= 1
+
         return reconcileStorageValue()
       })
+
     return writeQueue
   }
 
   const stopStorageWatch = storage.watch<unknown>(syncKey, () => {
     storageRevision += 1
     needsStorageRefresh = true
+
     if (pendingWrites || hasFailedWrite) {
       needsStorageRefresh = true
+
       return
     }
+
     if (hasLocalMutationBeforeHydration) {
       return
     }
+
     refreshQueue = reconcileStorageValue()
   })
 
@@ -253,19 +277,24 @@ export function useStorageBinding<V extends JsonValue>(
     const revision = storageRevision
     const editRevision = localRevision
     let storageValue: unknown
+
     try {
       storageValue = await readStorageValue()
     } catch (error) {
       isHydrated = true
+
       if (
         (revision !== storageRevision || editRevision !== localRevision)
         && !hasLocalMutationBeforeHydration
       ) {
         return
       }
+
       throw error
     }
+
     let shouldRepairArray = false
+
     if (
       storageValue !== null
       && !hasLocalMutationBeforeHydration
@@ -284,6 +313,7 @@ export function useStorageBinding<V extends JsonValue>(
     }
 
     isHydrated = true
+
     if (revision === storageRevision && editRevision === localRevision) {
       acknowledgeRead()
     }
@@ -305,12 +335,15 @@ export function useStorageBinding<V extends JsonValue>(
     readError = error
     hasReadError = true
     reportStorageError(syncKey, error)
+
     if (hasLocalMutationBeforeHydration) {
       hasLocalMutationBeforeHydration = false
       persistStorageValue(options.mergeFields ? unhydratedPatch : undefined)
       unhydratedPatch = {}
     }
+
     const message = (error as Error)?.message || 'Failed to sync storage'
+
     console.error(message)
   }
 
@@ -324,11 +357,14 @@ export function useStorageBinding<V extends JsonValue>(
   function set(input: V) {
     localRevision += 1
     applyStorageValue(input)
+
     if (!isHydrated) {
       hasLocalMutationBeforeHydration = true
       unhydratedPatch = undefined
+
       return
     }
+
     persistStorageValue()
   }
 
@@ -338,12 +374,14 @@ export function useStorageBinding<V extends JsonValue>(
       if (isApplyingStorageValue) {
         return
       }
+
       localRevision += 1
       const snapshot = cloneStorageValue(next)
       const patch =
         options.mergeFields && next === previous
           ? getStorageFieldChanges(observedSnapshot, snapshot)
           : undefined
+
       observedSnapshot = snapshot
 
       if (!isHydrated) {
@@ -352,6 +390,7 @@ export function useStorageBinding<V extends JsonValue>(
           patch === undefined || unhydratedPatch === undefined
             ? undefined
             : { ...unhydratedPatch, ...patch }
+
         return
       }
 
@@ -374,29 +413,37 @@ export function useStorageBinding<V extends JsonValue>(
     await ready
     let hasRetriedWrite = false
     let hasRetriedRead = false
+
     for (;;) {
       const pending = writeQueue
       const refreshing = refreshQueue
+
       await Promise.all([pending, refreshing])
+
       if (pending !== writeQueue || refreshing !== refreshQueue) {
         continue
       }
+
       if (options.retry && hasFailedWrite && !hasRetriedWrite) {
         hasRetriedWrite = true
         persistStorageValue(failedPatch)
         continue
       }
+
       if (hasFailedWrite) {
         throw writeError
       }
+
       if (options.retry && hasReadError && !hasRetriedRead) {
         hasRetriedRead = true
         await syncStorage().catch(handleReadError)
         continue
       }
+
       if (hasReadError) {
         throw readError
       }
+
       return
     }
   }

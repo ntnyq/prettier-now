@@ -43,6 +43,7 @@ describe('language select', () => {
 
   it('renders the active language and selected item marker', async () => {
     const workspaceStore = useWorkspaceStore()
+
     workspaceStore.setLanguageId('typescript')
 
     const wrapper = mount(LanguageSelect, {

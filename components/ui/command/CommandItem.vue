@@ -10,6 +10,7 @@ import type { HTMLAttributes } from 'vue'
 const props = defineProps<
   ListboxItemProps & { class?: HTMLAttributes['class'] }
 >()
+
 const emit = defineEmits<ListboxItemEmits>()
 
 const id = useId()
@@ -17,10 +18,13 @@ const { filterState, allItems, allGroups } = useCommand()
 const groupContext = useCommandGroup()
 
 const itemRef = ref()
+
 const currentElement = useCurrentElement(itemRef)
+
 const isRender = computed(() => {
   if (filterState.search) {
     const filteredCurrentItem = filterState.filtered.items.get(id)
+
     // If the filtered items is undefined means not in the all times map yet
     // Do the first render to add into the map
     if (filteredCurrentItem === undefined) {
@@ -54,6 +58,7 @@ onMounted(() => {
     )
 
     const groupId = groupContext?.id
+
     if (groupId) {
       if (allGroups.value.has(groupId)) {
         allGroups.value.get(groupId)?.add(id)
@@ -67,6 +72,7 @@ onUnmounted(() => {
   allItems.value.delete(id)
 
   const groupId = groupContext?.id
+
   if (groupId) {
     allGroups.value.get(groupId)?.delete(id)
   }

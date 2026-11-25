@@ -41,6 +41,7 @@ describe('background context menus', () => {
     background.main()
     const click =
       browserMock.contextMenus.onClicked.addListener.mock.lastCall![0]
+
     await click({ menuItemId: 'format-focused-editor', frameId: 7 }, { id: 1 })
     expect(browserMock.tabs.sendMessage).toHaveBeenCalledWith(
       1,

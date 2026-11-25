@@ -77,6 +77,7 @@ describe('Tombi options', () => {
       ['local:alignEntries', true],
       ['local:compactArrays', false],
     ])
+
     storageMock.getItem.mockImplementation(
       async (key: string) => legacyValues.get(key) ?? null,
     )
@@ -156,15 +157,19 @@ describe('Tombi options', () => {
     const legacy = Promise.withResolvers<unknown>()
     const reading = Promise.withResolvers<void>()
     let shouldWait = true
+
     storageMock.getItem.mockImplementation(async (key: string) => {
       if (key === 'local:alignEntries') {
         if (shouldWait) {
           shouldWait = false
           reading.resolve()
+
           return legacy.promise
         }
+
         return true
       }
+
       return values.get(key) ?? null
     })
     storageMock.setItem.mockImplementation(
@@ -173,6 +178,7 @@ describe('Tombi options', () => {
       },
     )
     const migrating = readStoredTomlOptions()
+
     await reading.promise
     const binding = useStorageBinding(
       'tomlPluginOptions',
@@ -183,8 +189,10 @@ describe('Tombi options', () => {
         read: () => readStoredTomlOptions({ persistMigration: false }),
       },
     )
+
     binding.set({ ...DEFAULT_TOML_OPTIONS, stringQuoteStyle: 'single' })
     const saving = binding.flush()
+
     await flushPromises()
     expect(storageMock.setItem).not.toHaveBeenCalled()
     legacy.resolve(true)

@@ -7,7 +7,6 @@ import {
   languageExtensions,
   languages,
 } from '@/constants/language'
-
 import type { LanguageId } from '@/types/language'
 
 /**
@@ -78,9 +77,11 @@ function normalizeHint(value: string) {
 function getLanguageIdForName(value: string) {
   const normalized = normalizeHint(value)
   const fileName = normalized.split(/[?#]/)[0] ?? normalized
+
   if (!fileName.split('/').pop()?.includes('.')) {
     return undefined
   }
+
   const fileExt = fileName.split('/').pop()?.split('.').pop()
 
   if (fileExt && Object.hasOwn(languageExtensions, fileExt)) {
@@ -184,6 +185,7 @@ function inferLanguageFromContent(source: string) {
   if (/^[{[]/.test(value)) {
     try {
       JSON.parse(value)
+
       return LANGUAGE_ID.json
     } catch {}
   }

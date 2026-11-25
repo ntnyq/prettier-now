@@ -81,6 +81,7 @@ function getAttributeHints(element: HTMLElement) {
   ]) {
     for (const item of candidateElements) {
       const value = item.getAttribute(attributeName)
+
       if (value) {
         hints.add(value)
       }
@@ -102,6 +103,7 @@ function dispatchInputEvents(element: HTMLElement) {
 
 function readFocusedEditor(requestId: string) {
   clearEditorSnapshot()
+
   try {
     const element = resolveFocusedEditorElement()
     const editor = element ? createEditorAdapter(element) : null
@@ -143,17 +145,22 @@ function readFocusedEditor(requestId: string) {
 function writeFocusedEditor(requestId: string, value: string) {
   try {
     const snapshot = editorSnapshot
+
     if (!snapshot || snapshot.requestId !== requestId) {
       throw new Error('Formatting request is no longer active')
     }
+
     clearEditorSnapshot()
     const { element, editor, source } = snapshot
+
     if (!element.isConnected || resolveFocusedEditorElement() !== element) {
       throw new Error('Focused editor changed while formatting')
     }
+
     if (editor.getValue() !== source) {
       throw new Error('Editor content changed while formatting')
     }
+
     editor.setValue(value)
     dispatchInputEvents(element)
     window.dispatchEvent(
@@ -197,6 +204,7 @@ export default defineContentScript({
         FocusedEditorReadRequestSchema,
         parseFocusedEditorEventDetail((evt as CustomEvent<unknown>).detail),
       )
+
       if (parsed.success) {
         readFocusedEditor(parsed.output.requestId)
       }
@@ -207,6 +215,7 @@ export default defineContentScript({
         FocusedEditorWriteRequestSchema,
         parseFocusedEditorEventDetail((evt as CustomEvent<unknown>).detail),
       )
+
       if (parsed.success) {
         writeFocusedEditor(parsed.output.requestId, parsed.output.value)
       }

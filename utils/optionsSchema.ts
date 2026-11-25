@@ -98,8 +98,10 @@ export function resolveStoredOptions<
   const values = Object.fromEntries(
     Object.entries(schema.entries).map(([key, field]) => {
       const parsed = v.safeParse(field, stored[key])
+
       return [key, parsed.success ? parsed.output : defaults[key]]
     }),
   )
+
   return v.parse(schema, values)
 }

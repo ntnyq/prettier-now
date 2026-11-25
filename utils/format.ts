@@ -88,15 +88,18 @@ export async function formatViaPrettier(
     ? undefined
     : await loadPrettierPlugin(languageId)
   const languagePlugins: PrettierPlugin[] = loadedPlugin ? [loadedPlugin] : []
+
   if (
     TYPESCRIPT_CONTAINER_LANGUAGE_IDS.has(languageId)
     && formatOptions.embeddedLanguageFormatting !== 'off'
   ) {
     const typescriptPlugin = await loadPrettierPlugin(LANGUAGE_ID.typescript)
+
     if (typescriptPlugin) {
       languagePlugins.push(typescriptPlugin)
     }
   }
+
   if (
     languageId === LANGUAGE_ID.markdown
     && formatOptions.embeddedLanguageFormatting !== 'off'
@@ -106,10 +109,12 @@ export async function formatViaPrettier(
         loadPrettierPlugin(language),
       ),
     )
+
     languagePlugins.push(
       ...embeddedPlugins.filter(plugin => plugin !== undefined),
     )
   }
+
   const languageOptions =
     languageId === LANGUAGE_ID.pug ? PUG_DEFAULT_FORMAT_OPTIONS : {}
 

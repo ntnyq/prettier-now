@@ -30,7 +30,9 @@ export function useWorkspaceActions() {
    */
   async function formatActiveJob() {
     const result = await workspaceStore.formatActiveJob()
+
     logFormatResult(result)
+
     if (result.status === 'error') {
       Toast.error(result.message)
     } else if (result.status === 'empty') {
@@ -48,6 +50,7 @@ export function useWorkspaceActions() {
    */
   async function loadFiles(files?: FileList | File[] | null) {
     const result = await workspaceStore.loadFileList(files)
+
     if (result.status === 'error') {
       Logger.error(result.message)
       Toast.error(result.message)
@@ -56,9 +59,11 @@ export function useWorkspaceActions() {
       Toast.error(i18n.t('unsupportedFileFormat'))
     } else if (result.status === 'imported') {
       result.results.forEach(logFormatResult)
+
       if (result.totalCount === 1 && result.results[0]?.status === 'error') {
         Toast.error(result.results[0].message)
       }
+
       if (result.totalCount > 1) {
         Toast.info(
           i18n.t('formatBatchSuccess', [
@@ -81,11 +86,14 @@ export function useWorkspaceActions() {
       : workspaceStore.activeJob?.resultCode
         ? [workspaceStore.activeJob]
         : []
+
     if (!jobs.length) {
       Logger.warn(i18n.t('nothingToDownload'))
       Toast.info(i18n.t('nothingToDownload'))
+
       return
     }
+
     for (const job of jobs) {
       downloadTextFile(getFormattedFileName(job.fileName), job.resultCode)
     }
@@ -98,8 +106,10 @@ export function useWorkspaceActions() {
     if (!workspaceStore.canClearWorkspace) {
       Logger.warn(i18n.t('nothingToClear'))
       Toast.info(i18n.t('nothingToClear'))
+
       return
     }
+
     workspaceStore.clearWorkspace()
     Logger.success(i18n.t('clearSuccess'))
     Toast.info(i18n.t('clearSuccess'))

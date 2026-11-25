@@ -13,11 +13,13 @@ export const storageErrors = shallowRef<Record<string, string>>({})
  */
 export function reportStorageError(key: string, error?: unknown) {
   const errors = { ...storageErrors.value }
+
   if (error === undefined) {
     delete errors[key]
   } else {
     errors[key] =
       error instanceof Error ? error.message : 'Failed to save storage'
   }
+
   storageErrors.value = errors
 }

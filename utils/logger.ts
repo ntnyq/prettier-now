@@ -48,6 +48,7 @@ export const Logger = {
     const configStore = getActivePinia()
       ? useConfigStore()
       : useConfigStoreOutsideSetup()
+
     if (!configStore.debug) {
       return
     }
@@ -58,6 +59,7 @@ export const Logger = {
       `${emoji} ${options.type.toUpperCase()}`,
       `- ${msg}`,
     ]
+
     console.log(content.join(' '))
   },
 

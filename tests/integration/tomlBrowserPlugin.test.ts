@@ -35,14 +35,17 @@ describe('toml prettier plugin browser bundle', () => {
     )
   })
 
-  it('bundles and formats without shared memory, workers or Node addons', async () => {
+  it('bundles and retries WASM initialization without shared memory, workers or Node addons', async () => {
     const tempDir = join(process.cwd(), 'node_modules/.tmp')
+
     await mkdir(tempDir, { recursive: true })
     const root = await mkdtemp(join(tempDir, 'prettier-now-toml-'))
+
     outputDirs.push(root)
 
     const entry = join(root, 'entry.mjs')
     const outDir = join(root, 'dist')
+
     await writeFile(entry, "export { default } from 'prettier-plugin-toml'\n")
     const config = await wxtConfig.vite?.({
       browser: 'firefox',
@@ -68,15 +71,19 @@ describe('toml prettier plugin browser bundle', () => {
     if (!('output' in result)) {
       throw new Error('Expected a single browser build output')
     }
+
     const files = await readdir(join(outDir, 'assets'))
     const wasm = files.find(file => file.endsWith('.wasm'))
+
     if (!wasm) {
       throw new Error('Missing TOML WASM asset')
     }
+
     expect(files.some(file => file.includes('worker'))).toBe(false)
     const imports = result.output.flatMap(chunk =>
       chunk.type === 'chunk' ? chunk.imports : [],
     )
+
     expect(imports).not.toEqual(
       expect.arrayContaining([
         expect.stringMatching(
@@ -86,12 +93,16 @@ describe('toml prettier plugin browser bundle', () => {
     )
 
     const bytes = await readFile(join(outDir, 'assets', wasm))
-    const fetchWasm = vi.fn(
-      async () =>
-        new Response(bytes, {
-          headers: { 'Content-Type': 'application/wasm' },
-        }),
-    )
+    const loadError = new Error('WASM fetch failed')
+    const fetchWasm = vi
+      .fn(
+        async () =>
+          new Response(bytes, {
+            headers: { 'Content-Type': 'application/wasm' },
+          }),
+      )
+      .mockRejectedValueOnce(loadError)
+
     vi.stubGlobal('fetch', fetchWasm)
     vi.stubGlobal('SharedArrayBuffer', undefined)
     vi.stubGlobal('Worker', undefined)
@@ -99,18 +110,24 @@ describe('toml prettier plugin browser bundle', () => {
     const { default: plugin } = await import(
       pathToFileURL(join(outDir, 'toml-browser.js')).href
     )
+
     vi.spyOn(prettierCache, 'loadPrettierPlugin').mockResolvedValue(plugin)
     const options = {
       ...DEFAULT_TOML_OPTIONS,
       languageId: 'toml',
       parser: 'toml',
     } satisfies FormatOptions
+
+    await expect(format('a=1\n', options)).rejects.toBe(loadError)
+    expect(fetchWasm).toHaveBeenCalledOnce()
+
     const results = await Promise.all([
       format('a=1\n', options),
       format('title="hello"\n', { ...options, singleQuote: true }),
     ])
+
     expect(results).toEqual(['a = 1\n', "title = 'hello'\n"])
-    expect(fetchWasm).toHaveBeenCalledOnce()
+    expect(fetchWasm).toHaveBeenCalledTimes(2)
 
     expect(
       await format('a=[1,2]\n', {
@@ -144,5 +161,7 @@ describe('toml prettier plugin browser bundle', () => {
       name: 'TombiFormatError',
       loc: { start: { line: 1 } },
     })
+    expect(await format('a=1\n', options)).toBe('a = 1\n')
+    expect(fetchWasm).toHaveBeenCalledTimes(2)
   })
 })

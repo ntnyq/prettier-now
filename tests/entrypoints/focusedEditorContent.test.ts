@@ -23,6 +23,7 @@ const runtime = vi.hoisted(() => ({
 vi.mock('#imports', () => ({
   defineContentScript(definition: { main: () => void }) {
     runtime.main = definition.main
+
     return definition
   },
   browser: {
@@ -45,6 +46,7 @@ beforeAll(async () => {
     const { requestId } = JSON.parse((event as CustomEvent<string>).detail) as {
       requestId: string
     }
+
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.getValueResponse, {
         detail: JSON.stringify({ requestId, source: 'const a=1', hints: [] }),
@@ -56,6 +58,7 @@ beforeAll(async () => {
     const { requestId } = JSON.parse((event as CustomEvent<string>).detail) as {
       requestId: string
     }
+
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.setValueResponse, {
         detail: JSON.stringify({ requestId }),
@@ -67,15 +70,19 @@ beforeAll(async () => {
 beforeEach(() => {
   vi.useFakeTimers()
   const createElement = document.createElement.bind(document)
+
   vi.spyOn(document, 'createElement').mockImplementation((tagName, options) => {
     if (tagName !== 'iframe') {
       return createElement(tagName, options)
     }
+
     // Keep frame load/error events under test control without network access.
     const frame = createElement('div')
+
     Object.defineProperty(frame, 'contentWindow', {
       value: { postMessage: vi.fn() },
     })
+
     return frame
   })
 })
@@ -94,10 +101,12 @@ async function startFormat() {
   const pending = runtime.receive({
     type: FOCUSED_EDITOR_MESSAGE.formatFocusedEditor,
   })
+
   await flushPromises()
   const frame = document.querySelector<HTMLIFrameElement>(
     '#prettier-now-focused-editor-formatter',
   )!
+
   return {
     pending,
     frame,
@@ -110,6 +119,7 @@ describe('focused editor content runtime', () => {
       throw new Error('UUID is unavailable')
     })
     const { pending, frame } = await startFormat()
+
     expect(runtime.eventDetails.length).toBeGreaterThan(0)
     expect(
       runtime.eventDetails.every(detail => typeof detail === 'string'),
@@ -132,6 +142,7 @@ describe('focused editor content runtime', () => {
 
   it('cleans up stalled iframe loads and allows retry', async () => {
     const first = await startFormat()
+
     await vi.advanceTimersByTimeAsync(FOCUSED_EDITOR_FORMAT_TIMEOUT)
     await first.pending
     expect(first.frame.isConnected).toBe(false)
@@ -139,6 +150,7 @@ describe('focused editor content runtime', () => {
       document.querySelector('#prettier-now-focused-editor-error')?.textContent,
     ).toBe('Failed to load formatter runtime')
     const second = await startFormat()
+
     expect(second.frame).not.toBe(first.frame)
     second.frame.dispatchEvent(new Event('error'))
     await second.pending
@@ -150,9 +162,11 @@ describe('focused editor content runtime', () => {
     const post = vi
       .spyOn(first.frame.contentWindow!, 'postMessage')
       .mockImplementation(() => {})
+
     first.frame.dispatchEvent(new Event('load'))
     await flushPromises()
     const request = post.mock.calls[0]![0] as { requestId: string }
+
     window.dispatchEvent(
       new MessageEvent('message', {
         origin: 'https://extension.test',
@@ -171,6 +185,7 @@ describe('focused editor content runtime', () => {
       document.querySelector('#prettier-now-focused-editor-error')?.textContent,
     ).toBe('Formatter runtime timed out')
     const second = await startFormat()
+
     expect(second.frame).not.toBe(first.frame)
     second.frame.dispatchEvent(new Event('error'))
     await second.pending

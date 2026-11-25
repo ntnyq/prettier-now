@@ -18,6 +18,7 @@ export function useStoredOptions<
   schemas: { [Key in keyof Options]: StorageSchema<Options[Key]> },
 ) {
   const keys = Object.keys(defaults) as (keyof Options & string)[]
+
   const bindings = keys.map(key =>
     useStorageBinding(key, defaults[key], schemas[key]),
   )
@@ -27,9 +28,11 @@ export function useStoredOptions<
 
   const options = computed(() => {
     const snapshot = { ...defaults }
+
     for (const key of keys) {
       snapshot[key] = fields[key].value
     }
+
     return snapshot
   })
 
@@ -44,14 +47,14 @@ export function useStoredOptions<
     }
   }
 
+  function flush() {
+    return Promise.all(bindings.map(binding => binding.flush({ retry: true })))
+  }
+
   return {
     fields,
     options,
     apply,
-    flush() {
-      return Promise.all(
-        bindings.map(binding => binding.flush({ retry: true })),
-      )
-    },
+    flush,
   }
 }

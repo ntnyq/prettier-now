@@ -47,7 +47,11 @@ export async function format(
   sourcePath: string,
   options?: TombiBrowserOptions,
 ): Promise<FormatResult> {
-  initialization ??= init()
+  initialization ??= init().catch((error: unknown) => {
+    initialization = undefined
+
+    throw error
+  })
   await initialization
 
   const config = options?.overrideConfig

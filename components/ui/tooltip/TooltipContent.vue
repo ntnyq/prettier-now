@@ -24,6 +24,7 @@ defineOptions({
 })
 
 const delegatedProps = reactiveOmit(props, 'class')
+
 const forwarded = useForwardPropsEmits(delegatedProps, emit)
 </script>
 

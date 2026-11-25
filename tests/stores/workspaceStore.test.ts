@@ -70,6 +70,7 @@ describe('workspace store', () => {
       new File(['const a=1'], 'a.ts'),
       new File(['const b=2'], 'b.ts'),
     ])
+
     await vi.waitFor(() =>
       expect(formatterMock.formatViaPrettier).toHaveBeenCalledOnce(),
     )
@@ -85,9 +86,11 @@ describe('workspace store', () => {
     const store = useWorkspaceStore()
     const read = Promise.withResolvers<string>()
     const slowFile = new File(['slow'], 'slow.ts')
+
     vi.spyOn(slowFile, 'text').mockReturnValue(read.promise)
     const oldImport = store.loadFileList([slowFile])
     const newImport = store.loadFileList([new File(['new'], 'new.ts')])
+
     await vi.waitFor(() =>
       expect(formatterMock.formatViaPrettier).toHaveBeenCalledOnce(),
     )
@@ -107,13 +110,16 @@ describe('workspace store', () => {
       const store = useWorkspaceStore()
       const read = Promise.withResolvers<string>()
       const file = new File(['slow'], 'slow.ts')
+
       vi.spyOn(file, 'text').mockReturnValue(read.promise)
       const loading = store.loadFileList([file])
+
       if (action === 'clear') {
         store.clearWorkspace()
       } else {
         store.sourceCode = 'local edit'
       }
+
       read.resolve('old')
       await loading
       expect(store.sourceCode).toBe(action === 'clear' ? '' : 'local edit')
@@ -123,8 +129,10 @@ describe('workspace store', () => {
 
   it('reports unreadable files without losing the current workspace', async () => {
     const store = useWorkspaceStore()
+
     store.sourceCode = 'current source'
     const file = new File(['source'], 'source.ts')
+
     vi.spyOn(file, 'text').mockRejectedValue(new Error('Cannot read file'))
     await expect(store.loadFileList([file])).resolves.toEqual({
       status: 'error',
@@ -135,6 +143,7 @@ describe('workspace store', () => {
 
   it('does not restore history entries whose contents were discarded', () => {
     const store = useWorkspaceStore()
+
     store.sourceCode = 'current source'
     useHistoryStore().entries = [
       {
@@ -194,11 +203,13 @@ describe('workspace store', () => {
       new File(['const a=1'], 'a.ts'),
       new File(['const b=2'], 'b.ts'),
     ])
+
     await vi.waitFor(() =>
       expect(formatterMock.formatViaPrettier).toHaveBeenCalledOnce(),
     )
     const firstJobId = workspaceStore.jobs[0]!.id
     const secondJobId = workspaceStore.jobs[1]!.id
+
     workspaceStore.selectJob(secondJobId)
     workspaceStore.sourceCode = 'const b=3'
     workspaceStore.removeJob(secondJobId)
@@ -212,11 +223,13 @@ describe('workspace store', () => {
   it('ignores failures from a request superseded by a successful format', async () => {
     const workspaceStore = useWorkspaceStore()
     const deferred = Promise.withResolvers<string>()
+
     formatterMock.formatViaPrettier.mockImplementationOnce(
       () => deferred.promise,
     )
     workspaceStore.sourceCode = 'bad source'
     const oldRequest = workspaceStore.formatActiveJob()
+
     await vi.waitFor(() =>
       expect(formatterMock.formatViaPrettier).toHaveBeenCalledOnce(),
     )
@@ -234,11 +247,13 @@ describe('workspace store', () => {
   it('does not let a cleared manual job receive an older failure', async () => {
     const workspaceStore = useWorkspaceStore()
     const deferred = Promise.withResolvers<string>()
+
     formatterMock.formatViaPrettier.mockImplementationOnce(
       () => deferred.promise,
     )
     workspaceStore.sourceCode = 'bad source'
     const pending = workspaceStore.formatActiveJob()
+
     await vi.waitFor(() =>
       expect(formatterMock.formatViaPrettier).toHaveBeenCalledOnce(),
     )

@@ -25,6 +25,7 @@ defineOptions({
 const delegatedProps = reactiveOmit(props, 'class')
 
 const forwarded = useForwardPropsEmits(delegatedProps, emit)
+
 /**
  * Keeps scrollbar interactions from dismissing the dialog.
  */
@@ -33,6 +34,7 @@ function handlePointerDownOutside(
 ) {
   const originalEvent = event.detail.originalEvent
   const target = originalEvent.target as HTMLElement
+
   if (
     originalEvent.offsetX > target.clientWidth
     || originalEvent.offsetY > target.clientHeight

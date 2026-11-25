@@ -9,6 +9,7 @@ const outputDirs: string[] = []
 
 async function createBrowserBundle() {
   const tempDir = join(process.cwd(), 'node_modules/.tmp')
+
   await mkdir(tempDir, { recursive: true })
   const root = await mkdtemp(join(tempDir, 'prettier-now-pug-'))
   const outDir = join(root, 'dist')

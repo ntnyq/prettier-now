@@ -40,8 +40,10 @@ async function readTomlOptions(
   persistMigration: boolean,
 ): Promise<PluginTOMLOptions> {
   const stored = await storage.getItem<unknown>('local:tomlPluginOptions')
+
   if (stored !== null) {
     const result = v.safeParse(TomlOptionsSchema, stored)
+
     return result.success ? result.output : { ...DEFAULT_TOML_OPTIONS }
   }
 
@@ -56,8 +58,10 @@ async function readTomlOptions(
     Object.fromEntries(entries.filter(([, value]) => value !== null)),
   )
   const options = migrateLegacyTomlOptions(legacy.success ? legacy.output : {})
+
   if (persistMigration) {
     await storage.setItem('local:tomlPluginOptions', options)
   }
+
   return options
 }

@@ -26,6 +26,7 @@ describe('format via prettier', () => {
   ] as const)('formats %s consistently', async (languageId, parser, source) => {
     const options = { languageId, parser }
     const result = await formatViaPrettier(source, options)
+
     expect(result.trim()).not.toBe(source)
     expect(await formatViaPrettier(result, options)).toBe(result)
   })
@@ -40,6 +41,7 @@ describe('format via prettier', () => {
         [`\`\`\`${language}`, source, '```'].join('\n'),
         { languageId: LANGUAGE_ID.markdown, parser: 'markdown' },
       )
+
       expect(result).toContain(expected)
     },
   )
@@ -52,6 +54,7 @@ describe('format via prettier', () => {
         parser: 'markdown',
       },
     )
+
     expect(result).toContain('<div>\n  <p>hello</p>\n  <p>world</p>\n</div>')
   })
 
@@ -66,6 +69,7 @@ describe('format via prettier', () => {
         languageId,
         parser: languageId,
       })
+
       expect(result).toMatch(/(?:const|let) x: number = 1;/)
     },
   )
@@ -90,6 +94,7 @@ style.
   it('caches the normalized pug plugin shape', async () => {
     const { loadPrettierPlugin } = await import('@/utils/prettierPlugins')
     const pugPlugin = await loadPrettierPlugin(LANGUAGE_ID.pug)
+
     expect(await loadPrettierPlugin(LANGUAGE_ID.pug)).toBe(pugPlugin)
     expect(pugPlugin?.parsers).toHaveProperty('pug')
     expect(pugPlugin).toBeDefined()

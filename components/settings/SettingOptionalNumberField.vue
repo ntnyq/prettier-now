@@ -24,6 +24,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
 const model = defineModel<number | null>({ required: true })
 
 const explicitValue = computed({

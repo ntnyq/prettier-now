@@ -3,6 +3,7 @@
  */
 
 import { useCssVar, watchImmediate } from '@vueuse/core'
+import { computed } from 'vue'
 import { useConfigStore } from '@/stores/config'
 import {
   getThemeForegroundColor,
@@ -12,7 +13,9 @@ import {
 
 export function useThemeColor() {
   const configStore = useConfigStore()
+
   const target = document.documentElement
+
   const primary = useCssVar('--primary', target)
   const primaryForeground = useCssVar('--primary-foreground', target)
   const ring = useCssVar('--ring', target)
@@ -22,6 +25,8 @@ export function useThemeColor() {
     target,
   )
 
+  const configStoreThemeColor = computed(() => configStore.themeColor)
+
   watchImmediate(
     () => configStore.themeColor,
     value => {
@@ -29,6 +34,7 @@ export function useThemeColor() {
 
       if (normalizedColor !== value) {
         configStore.themeColor = normalizedColor
+
         return
       }
 
@@ -44,6 +50,6 @@ export function useThemeColor() {
   )
 
   return {
-    themeColor: configStore.themeColor,
+    themeColor: configStoreThemeColor,
   }
 }

@@ -20,6 +20,7 @@ const supportViewTransition =
 export function toggleDark(event?: MouseEvent) {
   if (!supportViewTransition || !event) {
     isDark.value = !isDark.value
+
     return
   }
 
@@ -39,6 +40,7 @@ export function toggleDark(event?: MouseEvent) {
       `circle(0px at ${x}px ${y}px)`,
       `circle(${endRadius}px at ${x}px ${y}px)`,
     ]
+
     document.documentElement.animate(
       {
         clipPath: isDark.value ? [...clipPath].reverse() : clipPath,

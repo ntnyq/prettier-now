@@ -24,6 +24,7 @@ const props = withDefaults(
     indentWithTab: true,
   },
 )
+
 const code = defineModel<string>()
 
 const languageExtension = shallowRef<CodemirrorExtension>()
@@ -46,11 +47,13 @@ watch(
 
     if (!language) {
       languageExtension.value = undefined
+
       return
     }
 
     try {
       const extension = await loadCodemirrorLanguage(language)
+
       if (requestId === languageLoadRequestId) {
         languageExtension.value = extension
       }

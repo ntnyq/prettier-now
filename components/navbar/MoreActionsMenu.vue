@@ -44,6 +44,7 @@ const appStore = useAppStore()
 const logStore = useLogStore()
 
 const isAboutDialogOpen = shallowRef(false)
+
 const logoUrl = browser.runtime.getURL('/icons/48.png')
 
 function releaseActiveFocus() {

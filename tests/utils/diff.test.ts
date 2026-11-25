@@ -4,6 +4,7 @@ import { createLineDiff } from '@/utils/diff'
 describe('line diff utilities', () => {
   it('bounds comparison tables even when one side is empty', () => {
     const lines = '\n'.repeat(60_000)
+
     expect(createLineDiff(lines, '')[0]?.id).toBe('truncated')
     expect(createLineDiff('', lines)[0]?.id).toBe('truncated')
   })

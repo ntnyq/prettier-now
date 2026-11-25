@@ -34,6 +34,7 @@ const {
 const presetName = shallowRef('')
 const selectedPresetId = shallowRef('')
 const isPersisting = shallowRef(false)
+
 const presetItems = computed(() =>
   optionsStore.presets.map(preset => ({
     label: preset.name,
@@ -51,11 +52,13 @@ handleImportChange(async files => {
 
   try {
     const snapshot = parseOptionsSnapshot(await file.text())
+
     await optionsStore.applySnapshot(snapshot)
     Toast.info(i18n.t('importOptionsSuccess'))
   } catch (error: unknown) {
     const message =
       error instanceof Error ? error.message : i18n.t('importOptionsFailed')
+
     Toast.error(message)
   } finally {
     resetImportDialog()
@@ -72,7 +75,9 @@ async function persistCommand(
   if (isPersisting.value) {
     return
   }
+
   isPersisting.value = true
+
   try {
     await command()
     Toast.info(successMessage)
@@ -92,11 +97,13 @@ async function savePreset() {
 
   if (!name) {
     Toast.info(i18n.t('presetNameRequired'))
+
     return
   }
 
   await persistCommand(async () => {
     await optionsStore.savePreset(name)
+
     if (presetName.value.trim() === name) {
       presetName.value = ''
     }
@@ -106,6 +113,7 @@ async function savePreset() {
 async function applySelectedPreset() {
   if (!selectedPresetId.value) {
     Toast.info(i18n.t('selectPresetFirst'))
+
     return
   }
 
@@ -119,12 +127,15 @@ async function applySelectedPreset() {
 async function deleteSelectedPreset() {
   if (!selectedPresetId.value) {
     Toast.info(i18n.t('selectPresetFirst'))
+
     return
   }
 
   const id = selectedPresetId.value
+
   await persistCommand(async () => {
     await optionsStore.deletePreset(id)
+
     if (selectedPresetId.value === id) {
       selectedPresetId.value = ''
     }

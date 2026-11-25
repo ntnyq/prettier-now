@@ -78,6 +78,7 @@ describe('command', () => {
       global: { stubs: { ListboxRoot: PassthroughStub } },
       slots: { default: () => h(CommandProbe) },
     })
+
     await nextTick()
     await wrapper.findAll('button')[0]!.trigger('click')
     expect(wrapper.find('[data-testid="visible-count"]').text()).toBe('1')

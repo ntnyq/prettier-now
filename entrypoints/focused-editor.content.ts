@@ -48,6 +48,7 @@ function getFormatterFrame() {
   }
 
   const frame = document.createElement('iframe')
+
   formatterFrame = frame
 
   formatterFramePromise = new Promise((resolve, reject) => {
@@ -75,10 +76,12 @@ function getFormatterFrame() {
     function handleError() {
       cleanup()
       frame.remove()
+
       if (formatterFrame === frame) {
         formatterFrame = undefined
         formatterFramePromise = undefined
       }
+
       reject(new Error('Failed to load formatter runtime'))
     }
 
@@ -106,9 +109,11 @@ function waitForEditorValue(requestId: string) {
         FocusedEditorReadResponseSchema,
         parseFocusedEditorEventDetail((evt as CustomEvent<unknown>).detail),
       )
+
       if (!parsed.success || parsed.output.requestId !== requestId) {
         return
       }
+
       const detail = parsed.output
 
       window.clearTimeout(timeoutId)
@@ -146,9 +151,11 @@ function waitForEditorWrite(requestId: string, value: string) {
         FocusedEditorWriteResponseSchema,
         parseFocusedEditorEventDetail((evt as CustomEvent<unknown>).detail),
       )
+
       if (!parsed.success || parsed.output.requestId !== requestId) {
         return
       }
+
       const detail = parsed.output
 
       window.clearTimeout(timeoutId)
@@ -196,9 +203,11 @@ async function formatViaFormatterFrame(
       }
 
       const parsed = v.safeParse(FocusedEditorFormatterResponseSchema, evt.data)
+
       if (!parsed.success || parsed.output.requestId !== requestId) {
         return
       }
+
       const response = parsed.output
 
       window.clearTimeout(timeoutId)
@@ -206,6 +215,7 @@ async function formatViaFormatterFrame(
 
       if (!response.ok) {
         reject(new Error(response.errorMessage))
+
         return
       }
 
@@ -280,15 +290,18 @@ export default defineContentScript({
   main() {
     browser.runtime.onMessage.addListener(async message => {
       const parsed = v.safeParse(FocusedEditorCommandSchema, message)
+
       if (!parsed.success) {
         return
       }
 
       if (parsed.output.requireFocus) {
         let activeElement = document.activeElement
+
         while (activeElement?.shadowRoot?.activeElement) {
           activeElement = activeElement.shadowRoot.activeElement
         }
+
         if (
           !document.hasFocus()
           || activeElement instanceof HTMLIFrameElement

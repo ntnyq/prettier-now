@@ -46,6 +46,7 @@ describe('command item', () => {
 
     const item = wrapper.find('[data-slot="command-item"]')
     const itemId = item.attributes('id')!
+
     expect(allItems.value.get(itemId)).toBe('Alpha')
 
     filterState.search = 'beta'

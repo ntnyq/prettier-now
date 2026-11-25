@@ -18,6 +18,7 @@ describe('workspace utilities', () => {
       new File(['source'], 'file.constructor'),
       new File(['source'], 'file.__proto__'),
     ])
+
     expect(jobs).toEqual([])
   })
 
@@ -118,6 +119,7 @@ describe('workspace utilities', () => {
       .spyOn(URL, 'revokeObjectURL')
       .mockImplementation(() => {})
     const click = vi.fn()
+
     vi.stubGlobal('document', {
       createElement: vi.fn(() => ({
         click,

@@ -11,6 +11,7 @@ const state = vi.hoisted(() => ({
   values: new Map<string, unknown>(),
   setItem: vi.fn(),
 }))
+
 vi.mock('#imports', () => ({
   storage: {
     getItem: async (key: string) => state.values.get(key) ?? null,
@@ -45,8 +46,10 @@ describe('preset persistence feedback', () => {
 
   it('waits for persistence before clearing the name and announcing success', async () => {
     const writing = Promise.withResolvers<void>()
+
     state.setItem.mockReturnValueOnce(writing.promise)
     const wrapper = renderPanel()
+
     await flushPromises()
     await wrapper.get('input').setValue('Team')
     await wrapper.get('button[aria-label="savePreset"]').trigger('click')
@@ -65,6 +68,7 @@ describe('preset persistence feedback', () => {
   it('retains the name and reports failure without a false success', async () => {
     state.setItem.mockRejectedValueOnce(new Error('Quota exceeded'))
     const wrapper = renderPanel()
+
     await flushPromises()
     await wrapper.get('input').setValue('Team')
     await wrapper.get('button[aria-label="savePreset"]').trigger('click')
@@ -81,6 +85,7 @@ describe('preset persistence feedback', () => {
   it('keeps presets saved concurrently by independent windows', async () => {
     const first = useOptionsStore(createPinia())
     const second = useOptionsStore(createPinia())
+
     await Promise.all([first.savePreset('First'), second.savePreset('Second')])
     expect(state.values.get('local:optionsPresets')).toEqual(
       expect.arrayContaining([
@@ -117,6 +122,7 @@ describe('preset persistence feedback', () => {
       },
     })
     const store = useOptionsStore()
+
     await store.savePreset('New')
     expect(store.presets).toHaveLength(2)
     expect(

@@ -21,6 +21,7 @@ export const createGithubLightTheme = (
   options?: Partial<CreateThemeOptions>,
 ) => {
   const { theme = 'light', settings = {}, styles = [] } = options || {}
+
   return createTheme({
     theme,
     settings: {
@@ -70,6 +71,7 @@ export const createGithubDarkTheme = (
   options?: Partial<CreateThemeOptions>,
 ) => {
   const { theme = 'dark', settings = {}, styles = [] } = options || {}
+
   return createTheme({
     theme,
     settings: {

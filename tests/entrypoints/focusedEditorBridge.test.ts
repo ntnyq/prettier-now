@@ -17,9 +17,11 @@ import type {
 const runtime = vi.hoisted(() => ({
   main: () => {},
 }))
+
 vi.mock('#imports', () => ({
   defineContentScript(definition: { main: () => void }) {
     runtime.main = definition.main
+
     return definition
   },
 }))
@@ -31,7 +33,9 @@ beforeAll(async () => {
     if (!(document.activeElement instanceof HTMLTextAreaElement)) {
       return false
     }
+
     document.activeElement.value = value ?? ''
+
     return true
   })
 })
@@ -49,14 +53,17 @@ afterEach(() => {
 
 function createTextarea(source: string) {
   const element = document.createElement('textarea')
+
   element.value = source
   document.body.append(element)
   element.focus()
+
   return element
 }
 
 function readEditor(requestId: string) {
   let response: FocusedEditorGetValueResponseDetail | undefined
+
   window.addEventListener(
     FOCUSED_EDITOR_EVENT.getValueResponse,
     event => {
@@ -72,11 +79,13 @@ function readEditor(requestId: string) {
       detail: JSON.stringify({ requestId }),
     }),
   )
+
   return response
 }
 
 function writeEditor(requestId: string, value: string) {
   let response: FocusedEditorSetValueResponseDetail | undefined
+
   window.addEventListener(
     FOCUSED_EDITOR_EVENT.setValueResponse,
     event => {
@@ -92,15 +101,18 @@ function writeEditor(requestId: string, value: string) {
       detail: JSON.stringify({ requestId, value }),
     }),
   )
+
   return response
 }
 
 describe('focused editor bridge', () => {
   it('prioritizes explicit ancestor metadata over editor classes and labels', () => {
     const wrapper = document.createElement('div')
+
     Object.assign(wrapper.dataset, { language: 'typescript' })
     document.body.append(wrapper)
     const element = createTextarea('const a=1')
+
     element.className = 'markdown-editor'
     element.setAttribute('aria-label', 'JavaScript editor')
     wrapper.append(element)
@@ -110,6 +122,7 @@ describe('focused editor bridge', () => {
 
   it('ignores malformed JSON without replacing a valid snapshot', () => {
     const element = createTextarea('const a=1')
+
     readEditor('valid')
     window.dispatchEvent(
       new CustomEvent(FOCUSED_EDITOR_EVENT.getValueRequest, { detail: '{' }),
@@ -122,6 +135,7 @@ describe('focused editor bridge', () => {
   })
   it('ignores malformed page events without consuming a valid editor snapshot', () => {
     const element = createTextarea('const a=1')
+
     readEditor('valid')
     window.dispatchEvent(new CustomEvent(FOCUSED_EDITOR_EVENT.getValueRequest))
     window.dispatchEvent(
@@ -136,8 +150,10 @@ describe('focused editor bridge', () => {
 
   it('does not replace another editor after focus changes', () => {
     const a = createTextarea('const a=1')
+
     expect(readEditor('a')?.source).toBe('const a=1')
     const b = createTextarea('unrelated draft')
+
     expect(writeEditor('a', 'const a = 1;\n')?.errorMessage).toBeTruthy()
     expect(a.value).toBe('const a=1')
     expect(b.value).toBe('unrelated draft')
@@ -145,6 +161,7 @@ describe('focused editor bridge', () => {
 
   it('preserves edits made while formatting', () => {
     const element = createTextarea('const a=1')
+
     readEditor('a')
     element.value = 'const a=2'
     expect(writeEditor('a', 'const a = 1;\n')?.errorMessage).toBeTruthy()
@@ -153,6 +170,7 @@ describe('focused editor bridge', () => {
 
   it('only accepts the latest snapshot once', () => {
     const element = createTextarea('const a=1')
+
     readEditor('old')
     readEditor('new')
     expect(writeEditor('old', 'old result')?.errorMessage).toBeTruthy()

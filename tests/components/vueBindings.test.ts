@@ -20,6 +20,7 @@ describe('vue template bindings', () => {
     })
 
     const button = wrapper.find('[data-slot="button"]')
+
     expect(button.element.tagName).toBe('A')
     expect(button.attributes('href')).toBe('https://example.com')
     expect(button.text()).toBe('Open')
@@ -40,6 +41,7 @@ describe('vue template bindings', () => {
     })
 
     const control = wrapper.find('[aria-describedby="description"]')
+
     expect(control.attributes('aria-labelledby')).toBe('label')
   })
 
@@ -65,9 +67,11 @@ describe('vue template bindings', () => {
     })
 
     const input = wrapper.find('input')
+
     expect(input.attributes('aria-describedby')).toBe('description')
     expect(input.attributes('aria-labelledby')).toBe('label')
     const control = wrapper.find('[max="100"]')
+
     expect(control.attributes('max')).toBe('100')
     expect(control.attributes('min')).toBe('10')
     expect(control.attributes('step')).toBe('5')
@@ -93,6 +97,7 @@ describe('vue template bindings', () => {
     })
 
     const control = wrapper.find('[aria-describedby="description"]')
+
     expect(control.attributes('aria-labelledby')).toBe('label')
   })
 })

@@ -71,9 +71,11 @@ export class CodeMirrorEditor implements EditorAdapter {
    */
   constructor(element: HTMLElement) {
     const instance = CodeMirrorEditor.resolveEditor(element)
+
     if (!instance) {
       throw new Error('CodeMirror editor is unavailable')
     }
+
     this.instance = instance
   }
 
@@ -98,15 +100,19 @@ export class CodeMirrorEditor implements EditorAdapter {
   ): CodeMirrorInstance | undefined {
     const wrapper =
       element.closest('.cm-editor') || element.closest('.CodeMirror')
+
     if (!wrapper) {
       return
     }
+
     if (wrapper.classList.contains('cm-editor')) {
       const content =
         wrapper.querySelector<CodeMirrorContentElement>('.cm-content')
       const editor = content?.cmView?.view ?? content?.cmTile?.root?.view
+
       return editor ? { version: 6, editor } : undefined
     }
+
     const editor = (
       wrapper as Element & {
         /**
@@ -115,6 +121,7 @@ export class CodeMirrorEditor implements EditorAdapter {
         CodeMirror?: CodeMirror5Instance
       }
     ).CodeMirror
+
     return editor
       && typeof editor.getValue === 'function'
       && typeof editor.setValue === 'function'
@@ -129,6 +136,7 @@ export class CodeMirrorEditor implements EditorAdapter {
    */
   public getValue() {
     const instance = this.instance
+
     return instance.version === 6
       ? instance.editor.state.doc.toString()
       : instance.editor.getValue()
@@ -141,22 +149,28 @@ export class CodeMirrorEditor implements EditorAdapter {
    */
   public setValue(value: string) {
     const instance = this.instance
+
     if (instance.version === 6) {
       const editor = instance.editor
+
       if (
         editor.state.readOnly
         || editor.contentDOM.getAttribute('contenteditable') === 'false'
       ) {
         throw new Error('Editor is read-only')
       }
+
       editor.dispatch({
         changes: { from: 0, to: editor.state.doc.length, insert: value },
       })
+
       return
     }
+
     if (instance.editor.getOption?.('readOnly')) {
       throw new Error('Editor is read-only')
     }
+
     instance.editor.setValue(value)
   }
 }

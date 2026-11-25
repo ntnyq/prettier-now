@@ -23,6 +23,7 @@ afterEach(() => vi.restoreAllMocks())
 describe('focused editor formatter page', () => {
   it('formats a posted request with persisted preferences and returns the correlated result', async () => {
     const post = vi.spyOn(window, 'postMessage').mockImplementation(() => {})
+
     window.dispatchEvent(
       new MessageEvent('message', {
         source: window,
@@ -51,6 +52,7 @@ describe('focused editor formatter page', () => {
 
   it('ignores a request with malformed editor hints', async () => {
     const post = vi.spyOn(window, 'postMessage').mockImplementation(() => {})
+
     window.dispatchEvent(
       new MessageEvent('message', {
         source: window,

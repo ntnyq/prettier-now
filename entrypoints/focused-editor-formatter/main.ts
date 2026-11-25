@@ -27,6 +27,7 @@ function postFormatterResponse(
 
 window.addEventListener('message', async evt => {
   const parsed = v.safeParse(FocusedEditorFormatterRequestSchema, evt.data)
+
   if (!parsed.success) {
     return
   }

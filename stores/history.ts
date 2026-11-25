@@ -16,6 +16,7 @@ export const useHistoryStore = defineStore('history', () => {
 
   function addEntry(input: Parameters<typeof createFormatHistoryEntry>[0]) {
     const entry = createFormatHistoryEntry(input)
+
     return update(current => addFormatHistoryEntry(current, entry))
   }
 

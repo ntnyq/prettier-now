@@ -15,6 +15,7 @@ export function parseFocusedEditorEventDetail(detail: unknown): unknown {
   if (typeof detail !== 'string') {
     return undefined
   }
+
   try {
     return JSON.parse(detail)
   } catch {

@@ -18,6 +18,7 @@ const props = withDefaults(
 const emit = defineEmits<ListboxRootEmits>()
 
 const { contains } = useFilter({ sensitivity: 'base' })
+
 const allItems = ref<Map<string, string>>(new Map())
 const allGroups = ref<Map<string, Set<string>>>(new Map())
 
@@ -42,6 +43,7 @@ function filterItems() {
     filterState.filtered.count = allItems.value.size
     filterState.filtered.items = new Map()
     filterState.filtered.groups = new Set()
+
     return
   }
 
@@ -53,7 +55,9 @@ function filterItems() {
   // Check which items should be included
   for (const [id, value] of allItems.value) {
     const score = contains(value, filterState.search)
+
     filterState.filtered.items.set(id, score ? 1 : 0)
+
     if (score) {
       itemCount++
     }
